@@ -1,5 +1,9 @@
 package io.github.slupik.schemablock.parser.math.rpn;
 
+import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
+import org.apache.commons.lang3.math.NumberUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,22 +12,45 @@ import java.util.List;
  */
 public class RpnTokenizer {
 
+    private static final PatternFinder FUNCTIONS = new PatternFinder();
+
+    static {
+        FUNCTIONS.registerPattern(new MathPatternSqrt());
+    }
+
     public static List<String> getEquationAsTokens(String equation) {
         List<String> tokens = new ArrayList<>();
 
         StringBuilder tokenBuffer = new StringBuilder();
+        int deepness = 0;
         for(int i=0;i<equation.length();i++) {
             char c = equation.charAt(i);
 
-            if(isCharEndingToken(c)) {
-                if(tokenBuffer.length()>0) {
-                    tokens.add(tokenBuffer.toString());
-                    tokenBuffer = new StringBuilder();
+            if(deepness>0) {
+                if(c == '(') {
+                    deepness++;
+                } else if(c == ')') {
+                    deepness--;
                 }
-
-                tokens.add(String.valueOf(c));
-            } else {
                 tokenBuffer.append(c);
+            } else {
+                if(isCharEndingToken(c)) {
+                    if(tokenBuffer.length()>0) {
+                        if(!tokenBuffer.toString().contains("(") && !NumberUtils.isParsable(tokenBuffer.toString())) {
+                            deepness++;
+                            tokenBuffer.append(c);
+                        } else {
+                            tokens.add(tokenBuffer.toString());
+                            tokenBuffer = new StringBuilder();
+                        }
+                    }
+
+                    if(deepness==0) {
+                        tokens.add(String.valueOf(c));
+                    }
+                } else {
+                    tokenBuffer.append(c);
+                }
             }
         }
 

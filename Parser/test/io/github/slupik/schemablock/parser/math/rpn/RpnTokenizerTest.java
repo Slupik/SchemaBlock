@@ -29,6 +29,18 @@ class RpnTokenizerTest {
         String equation4 = "(1.45+(212.234*3.5))";
         assertEquals("[(, 1.45, +, (, 212.234, *, 3.5, ), )]",
                 getAsString(RpnTokenizer.getEquationAsTokens(equation4)));
+
+        String equation5 = "(1.45+(sqrt(3)*3.5))";
+        assertEquals("[(, 1.45, +, (, sqrt(3), *, 3.5, ), )]",
+                getAsString(RpnTokenizer.getEquationAsTokens(equation5)));
+
+        String equation6 = "(1.45+(add(3,2)*3.5))";
+        assertEquals("[(, 1.45, +, (, add(3,2), *, 3.5, ), )]",
+                getAsString(RpnTokenizer.getEquationAsTokens(equation6)));
+
+        String equation7 = "(1.45+(add(3.423,2.6534)*3.5))";
+        assertEquals("[(, 1.45, +, (, add(3.423,2.6534), *, 3.5, ), )]",
+                getAsString(RpnTokenizer.getEquationAsTokens(equation7)));
     }
 
     private static String getAsString(List<String> value) {
