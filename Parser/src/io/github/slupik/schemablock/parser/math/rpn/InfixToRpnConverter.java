@@ -23,7 +23,7 @@ public class InfixToRpnConverter {
         FUNCTIONS.registerPattern(new MathPatternSqrt());
     }
 
-    public Queue<String> convertInfixToRPN(String[] infixNotation) {
+     public static Queue<String> convertInfixToRPN(String[] infixNotation) {
         Queue<String> queue = new LinkedList<>();
         Stack<String> stack = new Stack<>();
 
