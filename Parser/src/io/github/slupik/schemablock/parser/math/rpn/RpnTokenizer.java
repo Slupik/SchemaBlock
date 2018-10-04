@@ -1,7 +1,5 @@
 package io.github.slupik.schemablock.parser.math.rpn;
 
-import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
@@ -11,12 +9,6 @@ import java.util.List;
  * All rights reserved & copyright ©
  */
 public class RpnTokenizer {
-
-    private static final PatternFinder FUNCTIONS = new PatternFinder();
-
-    static {
-        FUNCTIONS.registerPattern(new MathPatternSqrt());
-    }
 
     public static List<String> getEquationAsTokens(String equation) {
         List<String> tokens = new ArrayList<>();
@@ -34,6 +26,9 @@ public class RpnTokenizer {
                 }
                 tokenBuffer.append(c);
             } else {
+                if(Character.isWhitespace(c)) {
+                    continue;
+                }
                 if(isCharEndingToken(c)) {
                     if(tokenBuffer.length()>0) {
                         if(!tokenBuffer.toString().contains("(") && !NumberUtils.isParsable(tokenBuffer.toString())) {

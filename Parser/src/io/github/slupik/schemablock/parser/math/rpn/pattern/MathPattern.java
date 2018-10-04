@@ -1,5 +1,7 @@
 package io.github.slupik.schemablock.parser.math.rpn.pattern;
 
+import io.github.slupik.schemablock.parser.math.rpn.MathCalculation;
+import io.github.slupik.schemablock.parser.math.rpn.value.NotFoundTypeException;
 import io.github.slupik.schemablock.parser.math.rpn.value.Value;
 import io.github.slupik.schemablock.parser.math.rpn.value.ValueType;
 
@@ -27,10 +29,25 @@ public abstract class MathPattern {
         List<Value> values = new ArrayList<>();
         for(String arg:args) {
             arg = arg.trim();
-            Object parsedArg = ValueType.parse(arg);
+            Object parsedArg;
+            try {
+                parsedArg = ValueType.parse(arg);
+            } catch (NotFoundTypeException e) {
+                parsedArg = arg;
+            }
             values.add(new Value(ValueType.getType(parsedArg), parsedArg));
         }
         return calculate(values.toArray(new Value[0]));
+    }
+
+    protected Value[] parseRawValues(Value... args) throws InvalidArgumentsException, UnsupportedValueException {
+        Value[] parsed = new Value[args.length];
+        for(int i=0;i<args.length;i++) {
+            Value arg = args[i];
+            double result = MathCalculation.getResult(arg.getValue().toString());
+            parsed[i] = new Value(ValueType.DOUBLE, result);
+        }
+        return parsed;
     }
 
     public String getName() {

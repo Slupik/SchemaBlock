@@ -23,7 +23,7 @@ public enum ValueType {
         return value.startsWith("\"") && value.endsWith("\"");
     }
 
-    public static Object parse(String valueText) {
+    public static Object parse(String valueText) throws NotFoundTypeException {
         if(isValidValue(valueText)) {
             try {
                 return Double.parseDouble(valueText);
@@ -37,7 +37,7 @@ public enum ValueType {
                 }
             }
         }
-        return null;
+        throw new NotFoundTypeException();
     }
 
     public static ValueType getType(Object value) {

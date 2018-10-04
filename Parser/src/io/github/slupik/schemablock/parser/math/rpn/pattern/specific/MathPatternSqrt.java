@@ -16,7 +16,8 @@ public class MathPatternSqrt extends MathPattern {
     }
 
     @Override
-    public Object calculate(Value... args) throws InvalidArgumentsException, UnsupportedValueException {
+    public Object calculate(Value... rawArgs) throws InvalidArgumentsException, UnsupportedValueException {
+        Value[] args = super.parseRawValues(rawArgs);
         if(isValidArgs(args)) {
             Value value = args[0];
             if(value.getType()== ValueType.DOUBLE) {
