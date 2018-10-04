@@ -1,7 +1,7 @@
-package io.github.slupik.schemablock.parser.math.parser;
+package io.github.slupik.schemablock.parser.math.custom.parser;
 
-import io.github.slupik.schemablock.parser.math.pattern.PatternFinder;
-import io.github.slupik.schemablock.parser.math.pattern.specific.MathPatternSqrt;
+import io.github.slupik.schemablock.parser.math.custom.pattern.PatternFinder;
+import io.github.slupik.schemablock.parser.math.custom.pattern.specific.MathPatternSqrt;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
