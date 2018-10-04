@@ -1,14 +1,14 @@
-package io.github.slupik.schemablock.parser.math.pattern.specific;
+package io.github.slupik.schemablock.parser.math.custom.pattern.specific;
 
-import io.github.slupik.schemablock.parser.math.pattern.InvalidArgumentsException;
-import io.github.slupik.schemablock.parser.math.pattern.MathPattern;
-import io.github.slupik.schemablock.parser.math.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.value.Value;
-import io.github.slupik.schemablock.parser.math.value.ValueType;
+import io.github.slupik.schemablock.parser.math.custom.pattern.InvalidArgumentsException;
+import io.github.slupik.schemablock.parser.math.custom.pattern.MathPattern;
+import io.github.slupik.schemablock.parser.math.custom.pattern.UnsupportedValueException;
+import io.github.slupik.schemablock.parser.math.custom.value.Value;
+import io.github.slupik.schemablock.parser.math.custom.value.ValueType;
 
-import static io.github.slupik.schemablock.parser.math.value.ValueType.DOUBLE;
-import static io.github.slupik.schemablock.parser.math.value.ValueType.INT;
-import static io.github.slupik.schemablock.parser.math.value.ValueType.SHORT;
+import static io.github.slupik.schemablock.parser.math.custom.value.ValueType.DOUBLE;
+import static io.github.slupik.schemablock.parser.math.custom.value.ValueType.INT;
+import static io.github.slupik.schemablock.parser.math.custom.value.ValueType.SHORT;
 
 /**
  * All rights reserved & copyright ©

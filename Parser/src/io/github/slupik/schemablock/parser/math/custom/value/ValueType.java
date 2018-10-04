@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.parser.math.value;
+package io.github.slupik.schemablock.parser.math.custom.value;
 
 import org.apache.commons.lang3.math.NumberUtils;
 

@@ -1,10 +1,10 @@
-package io.github.slupik.schemablock.parser.math.parser;
+package io.github.slupik.schemablock.parser.math.custom.parser;
 
-import io.github.slupik.schemablock.parser.math.pattern.PatternFinder;
-import io.github.slupik.schemablock.parser.math.value.Value;
-import io.github.slupik.schemablock.parser.math.value.ValueType;
-import io.github.slupik.schemablock.parser.math.pattern.InvalidArgumentsException;
-import io.github.slupik.schemablock.parser.math.pattern.UnsupportedValueException;
+import io.github.slupik.schemablock.parser.math.custom.pattern.PatternFinder;
+import io.github.slupik.schemablock.parser.math.custom.value.Value;
+import io.github.slupik.schemablock.parser.math.custom.value.ValueType;
+import io.github.slupik.schemablock.parser.math.custom.pattern.InvalidArgumentsException;
+import io.github.slupik.schemablock.parser.math.custom.pattern.UnsupportedValueException;
 
 import java.util.ArrayList;
 import java.util.List;

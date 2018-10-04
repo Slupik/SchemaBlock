@@ -1,6 +1,6 @@
-package io.github.slupik.schemablock.parser.math.pattern;
+package io.github.slupik.schemablock.parser.math.custom.pattern;
 
-import io.github.slupik.schemablock.parser.math.value.Value;
+import io.github.slupik.schemablock.parser.math.custom.value.Value;
 
 /**
  * All rights reserved & copyright ©

@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.parser.math;
+package io.github.slupik.schemablock.parser.math.custom;
 
 import java.util.HashMap;
 

@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.parser.math.value;
+package io.github.slupik.schemablock.parser.math.custom.value;
 
 /**
  * All rights reserved & copyright ©

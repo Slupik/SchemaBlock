@@ -1,10 +1,10 @@
-package io.github.slupik.schemablock.parser.math.pattern.specific;
+package io.github.slupik.schemablock.parser.math.custom.pattern.specific;
 
-import io.github.slupik.schemablock.parser.math.pattern.InvalidArgumentsException;
-import io.github.slupik.schemablock.parser.math.pattern.MathPattern;
-import io.github.slupik.schemablock.parser.math.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.value.Value;
-import io.github.slupik.schemablock.parser.math.value.ValueType;
+import io.github.slupik.schemablock.parser.math.custom.pattern.InvalidArgumentsException;
+import io.github.slupik.schemablock.parser.math.custom.pattern.MathPattern;
+import io.github.slupik.schemablock.parser.math.custom.pattern.UnsupportedValueException;
+import io.github.slupik.schemablock.parser.math.custom.value.Value;
+import io.github.slupik.schemablock.parser.math.custom.value.ValueType;
 
 /**
  * All rights reserved & copyright ©
