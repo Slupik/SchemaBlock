@@ -4,6 +4,7 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsExce
 import io.github.slupik.schemablock.parser.math.rpn.pattern.MathPattern;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class RpnCalculation {
 
     static {
         FUNCTIONS.registerPattern(new MathPatternSqrt());
+        FUNCTIONS.registerPattern(new MathPatternSum());
     }
 
     public static double calculate(List<String> rpnTokens) throws InvalidArgumentsException, UnsupportedValueException {

@@ -4,7 +4,8 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsExce
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static java.lang.Math.sqrt;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * All rights reserved & copyright ©
@@ -17,12 +18,19 @@ class MathCalculationTest {
         assertEquals(5, MathCalculation.getResult("2 + 3"));
         assertEquals(5.43, MathCalculation.getResult("2.43+3"));
         assertEquals(5.43, MathCalculation.getResult("   2.43  +   3  "));
-        assertEquals(2.43+Math.sqrt(3), MathCalculation.getResult("2.43+sqrt(3)"));
-        assertEquals(2.43+Math.sqrt(3), MathCalculation.getResult("  2.43  + sqrt( 3   )   "));
-        assertEquals(2.43+Math.sqrt(Math.sqrt(3)), MathCalculation.getResult("2.43+sqrt(sqrt(3))"));
-        assertEquals(2.43+Math.sqrt(Math.sqrt(3)), MathCalculation.getResult("2.43  +    sqrt  (  sqrt  (  3  )  )  "));
-        assertEquals(2.43+Math.sqrt(Math.sqrt(Math.sqrt(Math.sqrt(3)))), MathCalculation.getResult("2.43+sqrt(sqrt(sqrt(sqrt(3))))"));
-        assertEquals(2.43+Math.sqrt(Math.sqrt(Math.sqrt(Math.sqrt(3)))), MathCalculation.getResult("2.43   +  \t sqrt  ( sqrt (  sqrt (  sqrt  ( 3) ))  )"));
-        assertEquals(2.43*(2-1)+Math.sqrt(Math.sqrt(Math.sqrt(Math.sqrt((3*4-2))))), MathCalculation.getResult("2.43*(2-1)   +  \t sqrt  ( sqrt (  sqrt (  sqrt  ( (3*4-2)) ))  )"));
+        assertEquals(2.43+ sqrt(3), MathCalculation.getResult("2.43+sqrt(3)"));
+        assertEquals(2.43+ sqrt(3), MathCalculation.getResult("  2.43  + sqrt( 3   )   "));
+        assertEquals(2.43+ sqrt(sqrt(3)), MathCalculation.getResult("2.43+sqrt(sqrt(3))"));
+        assertEquals(2.43+ sqrt(sqrt(3)), MathCalculation.getResult("2.43  +    sqrt  (  sqrt  (  3  )  )  "));
+        assertEquals(2.43+ sqrt(sqrt(sqrt(sqrt(3)))), MathCalculation.getResult("2.43+sqrt(sqrt(sqrt(sqrt(3))))"));
+        assertEquals(2.43+ sqrt(sqrt(sqrt(sqrt(3)))), MathCalculation.getResult("2.43   +  \t sqrt  ( sqrt (  sqrt (  sqrt  ( 3) ))  )"));
+        assertEquals(2.43*(2-1)+ sqrt(sqrt(sqrt(sqrt((3*4-2))))), MathCalculation.getResult("2.43*(2-1)   +  \t sqrt  ( sqrt (  sqrt (  sqrt  ( (3*4-2)) ))  )"));
+//
+        assertEquals(2+3+4+10, MathCalculation.getResult("sum(2, 3, 4, 10)"));
+        assertEquals(2+ sqrt(sqrt(3))+4+10, MathCalculation.getResult("sum(2, sqrt(sqrt(1+2)), 4, 10)"));
+
+        //FIXME bug with nested functions with multiple arguments
+//        assertEquals(2.43+Math.sqrt(Math.sqrt(2+3+4+10)), MathCalculation.getResult("sqrt(sum(2,3,4,10))"));
+//        assertEquals(2.43+ sqrt(sqrt(2+3+4+10)), MathCalculation.getResult("2.43  +    sqrt  (  sum(2, 3, 4, 10)  )  "));
     }
 }

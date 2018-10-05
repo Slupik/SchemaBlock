@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.parser.math.rpn;
 
 import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
 
 import java.util.*;
@@ -21,6 +22,7 @@ public class InfixToRpnConverter {
         OPERATION.put("(", 0);
 
         FUNCTIONS.registerPattern(new MathPatternSqrt());
+        FUNCTIONS.registerPattern(new MathPatternSum());
     }
 
      public static Queue<String> convertInfixToRPN(String[] infixNotation) {
@@ -70,6 +72,9 @@ public class InfixToRpnConverter {
     }
 
     private static String getFunctionName(String token) {
+        if(token.indexOf('(')==-1) {
+            return null;
+        }
         return token.substring(0, token.indexOf('(')).trim();
     }
 

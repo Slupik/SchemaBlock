@@ -41,6 +41,14 @@ class RpnTokenizerTest {
         String equation7 = "(1.45+(add(3.423,2.6534)*3.5))";
         assertEquals("[(, 1.45, +, (, add(3.423,2.6534), *, 3.5, ), )]",
                 getAsString(RpnTokenizer.getEquationAsTokens(equation7)));
+
+        String equation8 = "sum(2,3,4,10)";
+        assertEquals("[sum(2,3,4,10)]",
+                getAsString(RpnTokenizer.getEquationAsTokens(equation8)));
+
+        String equation9 = "sqrt  (  sum(2, 3, 4, 10)  )";
+        assertEquals("[sqrt(  sum(2, 3, 4, 10)  )]",
+                getAsString(RpnTokenizer.getEquationAsTokens(equation9)));
     }
 
     private static String getAsString(List<String> value) {

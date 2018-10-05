@@ -4,6 +4,7 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsExce
 import io.github.slupik.schemablock.parser.math.rpn.pattern.MathPattern;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -20,6 +21,7 @@ public class MathCalculation {
 
     static {
         FUNCTIONS.registerPattern(new MathPatternSqrt());
+        FUNCTIONS.registerPattern(new MathPatternSum());
     }
 
     public static double getResult(String value) throws UnsupportedValueException, InvalidArgumentsException {

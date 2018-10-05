@@ -19,12 +19,18 @@ public abstract class MathPattern {
         this.name = name;
     }
 
-    public abstract Object calculate(Value... args) throws InvalidArgumentsException, UnsupportedValueException;
+    public Object calculate(Value... args) throws InvalidArgumentsException, UnsupportedValueException {
+        Value[] parsed = parseRawValues(args);
+        return getResult(parsed);
+    }
+    protected abstract Object getResult(Value... parsed) throws UnsupportedValueException, InvalidArgumentsException;
     public abstract boolean isValidArgs(Value... args);
     public abstract int maxArgs();
 
     public Object calculate(String token) throws UnsupportedValueException, InvalidArgumentsException {
+        System.out.println("token = " + token);
         String argumentsToken = token.substring(token.indexOf('(')+1, token.lastIndexOf(')'));
+
         String[] args = argumentsToken.split(",");
         List<Value> values = new ArrayList<>();
         for(String arg:args) {
@@ -35,6 +41,7 @@ public abstract class MathPattern {
             } catch (NotFoundTypeException e) {
                 parsedArg = arg;
             }
+            System.out.println("parsedArg = " + parsedArg);
             values.add(new Value(ValueType.getType(parsedArg), parsedArg));
         }
         return calculate(values.toArray(new Value[0]));
@@ -44,6 +51,7 @@ public abstract class MathPattern {
         Value[] parsed = new Value[args.length];
         for(int i=0;i<args.length;i++) {
             Value arg = args[i];
+            System.out.println("arg.getValue().toString() = " + arg.getValue().toString());
             double result = MathCalculation.getResult(arg.getValue().toString());
             parsed[i] = new Value(ValueType.DOUBLE, result);
         }
