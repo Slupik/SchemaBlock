@@ -1,9 +1,8 @@
 package io.github.slupik.schemablock.parser.math.rpn;
 
 import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
-import org.apache.commons.lang3.math.NumberUtils;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
 
 import java.util.*;
 
@@ -26,21 +25,15 @@ public class InfixToRpnConverter {
         FUNCTIONS.registerPattern(new MathPatternSum());
     }
 
-    private static int nestINFO = 0;
-
      public static Queue<String> convertInfixToRPN(String[] infixNotation) {
-         nestINFO++;
-         System.out.println("new convertInfixToRPN!!!! "+nestINFO);
-
         Queue<String> queue = new LinkedList<>();
         Stack<String> stack = new Stack<>();
 
-        for(String token:infixNotation) {
-            System.out.println(nestINFO+" infix token = " + token);
-        }
-
         for (int i=0;i<infixNotation.length;i++) {
             String token = infixNotation[i];
+
+            if(token.equals(",")) continue;
+
 
             if ("(".equals(token)) {
                 stack.push(token);
@@ -48,11 +41,6 @@ public class InfixToRpnConverter {
             }
 
             if (")".equals(token)) {
-                System.out.println(nestINFO+" ++++++++++++++++++++++");
-                for(String value:queue) {
-                    System.out.println("queue value: "+value);
-                }
-                System.out.println(nestINFO+" ++++++++++++++++++++++");
                 while (!"(".equals(stack.peek())) {
                     queue.add(stack.pop());
                 }
@@ -73,81 +61,70 @@ public class InfixToRpnConverter {
                 continue;
             }
 
-            System.out.println(nestINFO+" token = " + token);
-            if (i+1<infixNotation.length && infixNotation[i+1].equals("(")){
-                int functionStartIndex = i;
-                i += 2;
-                for(;i<infixNotation.length;i++) {
-                    String subToken = infixNotation[i];
-                    System.out.println(nestINFO+" subToken = " + subToken);
+            if(infixNotation.length>i+1 && infixNotation[i+1].equals("(")) {
+                String[] function = getFunctionWithArguments(infixNotation, i);
+                String[][] args = getArgsOfFun(function);
 
-                    if(subToken.equals(",")) {
-                        continue;
-                    }
-                    if(isNumber(subToken) && (i+1<infixNotation.length && infixNotation[i+1].equals(","))) {
-                        queue.add(subToken);
-                    }  else if(subToken.equals(")")) {
-                        break;
-                    } else {//if(i+1<infixNotation.length && infixNotation[i+1].equals("("))
-//                        String[] function = getFunctionWithArguments(infixNotation, i);
-                        i--;
-                        String[] function = getValuesUntilBreak(infixNotation, i);
-                        i += function.length;
-                        List<String> convertedFunction = new ArrayList<>(convertInfixToRPN(function));
-                        for(String funToken:convertedFunction) {
-                            System.out.println(nestINFO+" funToken = " + funToken);
-                            queue.add(funToken);
-                        }
-                    }
-//                    else {
-//                        queue.add(subToken);
-//                    }
+                for(String[] arg:args) {
+                    Queue<String> inner = convertInfixToRPN(arg);
+                    queue.addAll(inner);
                 }
-                int argumentsAmount = getAmountOfArguments(infixNotation, functionStartIndex);
-                queue.add(token+";"+argumentsAmount);//OK
 
+                queue.add(token+";"+getAmountOfArguments(infixNotation, i));
+                i += function.length;
                 continue;
             }
 
-            throw new IllegalArgumentException("Invalid input");
+            throw new IllegalArgumentException("Invalid input ("+token+")");
         }
         // at the end, pop all the elements in stack to queue
         while (!stack.isEmpty()) {
             queue.add(stack.pop());
         }
-
-         System.out.println(nestINFO+" ====================");
-         for(String value:queue) {
-             System.out.println("queue value: "+value);
-         }
-         System.out.println(nestINFO+" ====================");
         return queue;
     }
 
-    private static String[] getValuesUntilBreak(String[] infixNotation, int startOfFunction) {
-        List<String> function = new ArrayList<>();
-        int tempIndex = startOfFunction;
-        boolean functionMode = !NumberUtils.isParsable(infixNotation[tempIndex]) && infixNotation[tempIndex+1].equals("(");
-        if(functionMode) {
-            function.add(infixNotation[startOfFunction]);
-        }
+    private static String[][] getArgsOfFun(String[] function) {
+        List<String[]> args = new ArrayList<>();
+        List<String> elements = new ArrayList<>();
+        int argIndex = 0;
         int deepness = 0;
-        for(int i=startOfFunction+1;i<infixNotation.length;i++) {
-            String token = infixNotation[i];
+        boolean addComma = false;
+        if(function.length>4) {
+            addComma = function[4].equals("(");
+        }
+
+        for(int i=2;i<function.length;i++) {
+            String token = function[i];
             if(token.equals("(")) deepness++;
             if(token.equals(")")) deepness--;
 
-            if(functionMode && deepness==0) {
-                break;
-            }
-            if(!functionMode && token.equals(",") || deepness==-1) {
+            if(deepness==-1) {
                 break;
             }
 
-            function.add(token);
-            System.out.println("get values token = " + token);
+            if(deepness == 0 && token.equals(",")) {
+                if(addComma) {
+                    elements.add(token);
+                }
+                args.add(argIndex, elements.toArray(new String[0]));
+                argIndex++;
+                addComma = function[i+2].equals("(");
+                elements.clear();
+                continue;
+            }
+
+            elements.add(token);
         }
-        return function.toArray(new String[0]);
+        if(elements.size()>0) {
+            args.add(argIndex, elements.toArray(new String[0]));
+        }
+
+        String[][] converted = new String[args.size()][];
+        for(int i=0;i<args.size();i++) {
+            converted[i] = args.get(i);
+        }
+        return converted;
     }
 
     //TODO write tests
@@ -157,7 +134,6 @@ public class InfixToRpnConverter {
         int deepness = 0;
         for(int i=argumentsStart;i<infixNotation.length;i++) {
             String token = infixNotation[i];
-            System.out.println("amount of args token = " + token);
             if(token.equals("(")) {
                 deepness++;
                 continue;
@@ -171,7 +147,6 @@ public class InfixToRpnConverter {
             }
 
             if(deepness==0) {
-//                argsAmount++;
                 if(token.equals(",")) {
                     argsAmount++;
                 } else if(argsAmount==0) {
@@ -199,13 +174,6 @@ public class InfixToRpnConverter {
             }
         }
         return function.toArray(new String[0]);
-    }
-
-    private static String getFunctionName(String token) {
-        if(token.indexOf('(')==-1) {
-            return null;
-        }
-        return token.substring(0, token.indexOf('(')).trim();
     }
 
     private static boolean isNumber(String str) {

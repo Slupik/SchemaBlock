@@ -12,7 +12,6 @@ public class RpnTokenizer {
         List<String> tokens = new ArrayList<>();
 
         StringBuilder tokenBuffer = new StringBuilder();
-//        int deepness = 0;
         for(int i=0;i<equation.length();i++) {
             char c = equation.charAt(i);
 
@@ -25,45 +24,11 @@ public class RpnTokenizer {
                     tokenBuffer = new StringBuilder();
                 }
 
-//                if(c!=',') {
-                    tokens.add(String.valueOf(c));
-//                }
+                tokens.add(String.valueOf(c));
             } else {
                 tokenBuffer.append(c);
             }
-
-
-
-//            if(deepness>0) {
-//                if(c == '(') {
-//                    deepness++;
-//                } else if(c == ')') {
-//                    deepness--;
-//                }
-//                tokenBuffer.append(c);
-//            } else {
-//                if(Character.isWhitespace(c)) {
-//                    continue;
-//                }
-//                if(isCharEndingToken(c)) {
-//                    if(tokenBuffer.length()>0) {
-//                        if(!tokenBuffer.toString().contains("(") && !NumberUtils.isParsable(tokenBuffer.toString())) {
-//                            deepness++;
-//                            tokenBuffer.append(c);
-//                        } else {
-//                            tokens.add(tokenBuffer.toString());
-//                            tokenBuffer = new StringBuilder();
-//                        }
-//                    }
-
-//                    if(deepness==0) {
-//                        tokens.add(String.valueOf(c));
-//                    }
-//                } else {
-//                    tokenBuffer.append(c);
-//                }
-            }
-//        }
+        }
 
         if(tokenBuffer.length()>0) {
             tokens.add(tokenBuffer.toString());

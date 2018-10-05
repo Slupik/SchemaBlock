@@ -47,15 +47,6 @@ public class RpnCalculation {
                     value = Double.parseDouble(token);
                     stack.add(value);
                 } catch (Exception e) {
-
-                    System.out.println("===================");
-                    for(double val:stack) {
-                        System.out.println("val = " + val);
-                    }
-                    System.out.println("===================");
-
-                    System.out.println("calculation token = " + token);
-
                     double x = stack.get(stack.size()-2);
                     stack.remove(stack.size()-2);
                     double y = stack.get(stack.size()-1);
