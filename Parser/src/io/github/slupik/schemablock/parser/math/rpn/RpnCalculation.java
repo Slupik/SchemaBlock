@@ -4,8 +4,10 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsExce
 import io.github.slupik.schemablock.parser.math.rpn.pattern.MathPattern;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
+import io.github.slupik.schemablock.parser.math.rpn.value.Value;
+import io.github.slupik.schemablock.parser.math.rpn.value.ValueType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +30,32 @@ public class RpnCalculation {
         for(String token:rpnTokens) {
             token = token.trim();
             double value = 0;
-            MathPattern function = FUNCTIONS.getForName(getFunctionName(token));
-            if(function!=null) {
-                value = ((Double) function.calculate(token));
+
+            if(token.contains(";")) {
+                MathPattern function = FUNCTIONS.getForName(getFunctionName(token));
+                List<Value> args = new ArrayList<>();
+                int argsAmount = getArgsAmount(token);
+                for(;argsAmount>0;argsAmount--) {
+                    double parsedArg = stack.get(stack.size()-argsAmount);
+                    args.add(new Value(ValueType.getType(parsedArg), parsedArg));
+                    stack.remove(stack.size()-argsAmount);
+                }
+                value = ((Double) function.calculate(args.toArray(new Value[0])));
                 stack.add(value);
             } else {
                 try {
                     value = Double.parseDouble(token);
                     stack.add(value);
                 } catch (Exception e) {
+
+                    System.out.println("===================");
+                    for(double val:stack) {
+                        System.out.println("val = " + val);
+                    }
+                    System.out.println("===================");
+
+                    System.out.println("calculation token = " + token);
+
                     double x = stack.get(stack.size()-2);
                     stack.remove(stack.size()-2);
                     double y = stack.get(stack.size()-1);
@@ -63,10 +82,15 @@ public class RpnCalculation {
         return stack.get(0);
     }
 
-    private static String getFunctionName(String token) {
-        if(token.indexOf('(')==-1) {
-            return null;
-        }
-        return token.substring(0, token.indexOf('(')).trim();
+    private static int getArgsAmount(String functionToken) {
+        return Integer.parseInt(functionToken.substring(functionToken.lastIndexOf(";")+1));
+    }
+
+    private static String getFunctionName(String functionToken) {
+        return functionToken.substring(0, functionToken.lastIndexOf(";"));
+//        if(functionToken.indexOf('(')==-1) {
+//            return null;
+//        }
+//        return functionToken.substring(0, functionToken.indexOf('(')).trim();
     }
 }
