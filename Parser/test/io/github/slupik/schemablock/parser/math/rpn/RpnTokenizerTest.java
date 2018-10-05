@@ -61,6 +61,10 @@ class RpnTokenizerTest {
         String equation12 = "-3-2";
         assertEquals("[-3, -, 2]",
                 getAsString(RpnTokenizer.getEquationAsTokens(equation12)));
+
+        String equation13 = "sum(-3, -5, 3, -45, -4.32)";
+        assertEquals("[sum, (, -3, ,, -5, ,, 3, ,, -45, ,, -4.32, )]",
+                getAsString(RpnTokenizer.getEquationAsTokens(equation13)));
     }
 
     private static String getAsString(List<String> value) {

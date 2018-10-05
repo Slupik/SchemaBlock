@@ -30,9 +30,13 @@ public class RpnTokenizer {
                 }
 
                 if(c == '-' || c == '+') {
-                    if(i==0 ||
-                            (i-1<tokens.size() && tokens.get(i-1).endsWith("(")) ||
-                            (i-1<tokens.size() && tokens.get(i-1).endsWith(","))) {
+                    String lastValue = "";
+                    if(tokens.size()>0) {
+                        lastValue = tokens.get(tokens.size()-1);
+                    }
+                    if(lastValue.length()==0 ||
+                            lastValue.endsWith("(") ||
+                            lastValue.endsWith(",")) {
                         bufferToAdd = c;
                         continue;
                     }

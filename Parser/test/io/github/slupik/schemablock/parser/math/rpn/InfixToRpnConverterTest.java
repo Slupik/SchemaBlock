@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 /**
  * All rights reserved & copyright ©
  */
@@ -38,9 +36,9 @@ class InfixToRpnConverterTest {
 
 
 
-        String infixNotation6 = "4 * sqrt ( 3 ) + 3";// * ( 3 - 2 )
-        assertEquals("[4, 3, sqrt;1, *, 3, +]",
-                getAsString(InfixToRpnConverter.convertInfixToRPN(infixNotation6.split(" "))));
+//        String infixNotation6 = "4 * sqrt ( 3 ) + 3";// * ( 3 - 2 )
+//        assertEquals("[4, 3, sqrt;1, *, 3, +]",
+//                getAsString(InfixToRpnConverter.convertInfixToRPN(infixNotation6.split(" "))));
     }
 
     private String getAsString(Queue<String> convertInfixToRPN) {

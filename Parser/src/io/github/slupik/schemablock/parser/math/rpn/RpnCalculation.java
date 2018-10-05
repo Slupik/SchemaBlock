@@ -40,7 +40,7 @@ public class RpnCalculation {
                     args.add(new Value(ValueType.getType(parsedArg), parsedArg));
                     stack.remove(stack.size()-argsAmount);
                 }
-                value = ((Double) function.calculate(args.toArray(new Value[0])));
+                value = new Double(function.calculate(args.toArray(new Value[0])).toString());
                 stack.add(value);
             } else {
                 try {
