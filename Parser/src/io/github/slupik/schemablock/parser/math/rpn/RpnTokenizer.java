@@ -6,9 +6,9 @@ import java.util.List;
 /**
  * All rights reserved & copyright ©
  */
-public class RpnTokenizer {
+class RpnTokenizer {
 
-    public static List<String> getEquationAsTokens(String equation) {
+    static List<String> getEquationAsTokens(String equation) {
         List<String> tokens = new ArrayList<>();
 
         StringBuilder tokenBuffer = new StringBuilder();

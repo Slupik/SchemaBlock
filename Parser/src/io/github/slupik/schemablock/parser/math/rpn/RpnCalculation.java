@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * All rights reserved & copyright ©
  */
-public class RpnCalculation {
+class RpnCalculation {
 
     private static final PatternFinder FUNCTIONS = new PatternFinder();
 
@@ -24,7 +24,7 @@ public class RpnCalculation {
         FUNCTIONS.registerPattern(new MathPatternSum());
     }
 
-    public static double calculate(List<String> rpnTokens) throws InvalidArgumentsException, UnsupportedValueException {
+    static double calculate(List<String> rpnTokens) throws InvalidArgumentsException, UnsupportedValueException {
         List<Double> stack = new ArrayList<>();
 
         for(String token:rpnTokens) {
@@ -79,9 +79,5 @@ public class RpnCalculation {
 
     private static String getFunctionName(String functionToken) {
         return functionToken.substring(0, functionToken.lastIndexOf(";"));
-//        if(functionToken.indexOf('(')==-1) {
-//            return null;
-//        }
-//        return functionToken.substring(0, functionToken.indexOf('(')).trim();
     }
 }

@@ -14,7 +14,6 @@ import java.util.List;
 /**
  * All rights reserved & copyright ©
  */
-//TODO cleanup code
 public class MathCalculation {
 
     private static final PatternFinder FUNCTIONS = new PatternFinder();
@@ -35,7 +34,7 @@ public class MathCalculation {
         return RpnCalculation.calculate(rpn);
     }
 
-    public static String getParsedToken(String raw) throws UnsupportedValueException, InvalidArgumentsException {
+    private static String getParsedToken(String raw) throws UnsupportedValueException, InvalidArgumentsException {
         raw = raw.trim();
         if(raw.equals("+") || raw.equals("-") || raw.equals("/") || raw.equals("*") || raw.equals("(") || raw.equals(")")) {
             return raw;

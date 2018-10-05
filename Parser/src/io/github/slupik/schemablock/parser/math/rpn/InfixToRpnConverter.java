@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * All rights reserved & copyright ©
  */
-public class InfixToRpnConverter {
+class InfixToRpnConverter {
 
     private static final Map<String, Integer> OPERATION = new HashMap<>();
     private static final PatternFinder FUNCTIONS = new PatternFinder();
@@ -25,7 +25,7 @@ public class InfixToRpnConverter {
         FUNCTIONS.registerPattern(new MathPatternSum());
     }
 
-     public static Queue<String> convertInfixToRPN(String[] infixNotation) {
+     static Queue<String> convertInfixToRPN(String[] infixNotation) {
          if(infixNotation.length>0 && infixNotation[0].equals("(") && infixNotation[infixNotation.length-1].equals(")")) {
              return convertInfixToRPN(Arrays.copyOfRange(infixNotation, 1, infixNotation.length-1));
          }
