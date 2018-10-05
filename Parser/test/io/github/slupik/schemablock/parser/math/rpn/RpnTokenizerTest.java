@@ -49,6 +49,18 @@ class RpnTokenizerTest {
         String equation9 = "sqrt  (  sum(2, 3, 4, 10)  )";
 //        assertEquals("[sqrt(  sum(2, 3, 4, 10)  )]",
 //                getAsString(RpnTokenizer.getEquationAsTokens(equation9)));
+
+        String equation10 = "((sqrt(3)))";
+        assertEquals("[(, (, sqrt, (, 3, ), ), )]",
+                getAsString(RpnTokenizer.getEquationAsTokens(equation10)));
+
+        String equation11 = "-3";
+        assertEquals("[-3]",
+                getAsString(RpnTokenizer.getEquationAsTokens(equation11)));
+
+        String equation12 = "-3-2";
+        assertEquals("[-3, -, 2]",
+                getAsString(RpnTokenizer.getEquationAsTokens(equation12)));
     }
 
     private static String getAsString(List<String> value) {
