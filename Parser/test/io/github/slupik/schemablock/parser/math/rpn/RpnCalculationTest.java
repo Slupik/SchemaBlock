@@ -5,6 +5,7 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueExce
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,22 +16,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class RpnCalculationTest {
 
     @Test
-    void calculate() {
-        try {
-            List<String> tokens1 = new ArrayList<>();
-            tokens1.add("3");
-            tokens1.add("sqrt;1");
-//            assertEquals(1.7320508075688772, RpnCalculation.calculate(tokens1));
+    void calculate() throws InvalidArgumentsException, UnsupportedValueException {
+        checkCase(1.7320508075688772, "3", "sqrt;1");
+        checkCase(0.7320508075688772, "3", "sqrt;1", "1", "-");
+    }
 
+    private void checkCase(double expected, String... tokens) throws UnsupportedValueException, InvalidArgumentsException {
+        checkCase(expected, new ArrayList<>(Arrays.asList(tokens)));
+    }
 
-            List<String> tokens2 = new ArrayList<>();
-            tokens2.add("3");
-            tokens2.add("sqrt;1");
-            tokens2.add("1");
-            tokens2.add("-");
-            assertEquals(0.7320508075688772, RpnCalculation.calculate(tokens2));
-        } catch (Exception | InvalidArgumentsException | UnsupportedValueException e) {
-            e.printStackTrace();
-        }
+    private void checkCase(double expected, List<String> tokens) throws UnsupportedValueException, InvalidArgumentsException {
+        assertEquals(expected, RpnCalculation.calculate(tokens));
     }
 }
