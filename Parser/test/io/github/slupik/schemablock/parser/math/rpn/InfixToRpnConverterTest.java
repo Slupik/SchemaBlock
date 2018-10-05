@@ -24,8 +24,8 @@ class InfixToRpnConverterTest {
         checkCase("[4, 3, sqrt;1, *, 3, 3, 2, -, *, +]", "4 * sqrt ( 3 ) + 3 * ( 3 - 2 )".split(" "));
     }
 
-    private void checkCase(String expected, String[] data) {
-        assertEquals(expected, getAsString(InfixToRpnConverter.convertInfixToRPN(data)));
+    private void checkCase(String expected, String[] input) {
+        assertEquals(expected, getAsString(InfixToRpnConverter.convertInfixToRPN(input)));
     }
 
     private String getAsString(Queue<String> convertInfixToRPN) {
