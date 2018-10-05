@@ -46,8 +46,11 @@ class MathCalculationTest {
         assertEquals(-3 + -5 + 3 + -45 + -4.32, MathCalculation.getResult("sum(-3, -5, 3, -45, -4.32)"));
         assertEquals(sqrt(-2+3.53+sqrt(4+3+1-2)+10), MathCalculation.getResult("sqrt(sum(-2,3.53,sqrt(4+3+1-2),10))"));
 
+        //FIXME priority: HIGH
+        assertEquals(4 * sqrt ( 3 ) + 3, MathCalculation.getResult("4 * sqrt ( 3 ) + 3"));
+
         assertEquals(-3, MathCalculation.getResult("sum((-3))"));
-        //FIXME
+        //FIXME priority: LOW
 //        assertEquals(sqrt(3), MathCalculation.getResult("sqrt((3))"));
     }
 

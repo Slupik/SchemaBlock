@@ -26,7 +26,11 @@ public class InfixToRpnConverter {
     }
 
      public static Queue<String> convertInfixToRPN(String[] infixNotation) {
-        Queue<String> queue = new LinkedList<>();
+         if(infixNotation.length>0 && infixNotation[0].equals("(") && infixNotation[infixNotation.length-1].equals(")")) {
+             return convertInfixToRPN(Arrays.copyOfRange(infixNotation, 1, infixNotation.length-1));
+         }
+
+         Queue<String> queue = new LinkedList<>();
         Stack<String> stack = new Stack<>();
 
         for (int i=0;i<infixNotation.length;i++) {
@@ -81,6 +85,7 @@ public class InfixToRpnConverter {
         while (!stack.isEmpty()) {
             queue.add(stack.pop());
         }
+
         return queue;
     }
 
