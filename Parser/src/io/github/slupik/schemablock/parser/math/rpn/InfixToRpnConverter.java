@@ -75,7 +75,7 @@ public class InfixToRpnConverter {
                 }
 
                 queue.add(token+";"+getAmountOfArguments(infixNotation, i));
-                i += function.length;
+                i += function.length-1;
                 continue;
             }
 
