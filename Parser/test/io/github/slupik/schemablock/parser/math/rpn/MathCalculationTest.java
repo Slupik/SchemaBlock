@@ -16,6 +16,7 @@ class MathCalculationTest {
     void getResult() throws InvalidArgumentsException, UnsupportedValueException {
         assertEquals(5, MathCalculation.getResult("2+3"));
         assertEquals(5, MathCalculation.getResult("2 + 3"));
+        assertEquals(2%3, MathCalculation.getResult("2%3"));
         assertEquals(5.43, MathCalculation.getResult("2.43+3"));
         assertEquals(5.43, MathCalculation.getResult("   2.43  +   3  "));
         assertEquals(2.43+ sqrt(3), MathCalculation.getResult("2.43+sqrt(3)"));

@@ -59,11 +59,14 @@ class RpnCalculation {
                         case "-":
                             value = x - y;
                             break;
+                        case "*":
+                            value = x * y;
+                            break;
                         case "/":
                             value = x / y;
                             break;
-                        case "*":
-                            value = x * y;
+                        case "%":
+                            value = x % y;
                             break;
                     }
                     stack.add(value);

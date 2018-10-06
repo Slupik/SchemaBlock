@@ -15,6 +15,7 @@ class RpnTokenizerTest {
     @Test
     void getEquationAsTokens() {
         checkCase("[1, -, 2]", "1-2");
+        checkCase("[1, %, 2]", "1%2");
         checkCase("[(, 1, +, (, 2, *, 3, ), )]", "(1+(2*3))");
         checkCase("[(, 1, +, (, 212, *, 3, ), )]", "(1+(212*3))");
         checkCase("[(, 1.45, +, (, 212.234, *, 3.5, ), )]", "(1.45+(212.234*3.5))");
@@ -28,10 +29,20 @@ class RpnTokenizerTest {
         checkCase("[-3, -, 2]", "-3-2");
         checkCase("[sum, (, -3, ,, -5, ,, 3, ,, -45, ,, -4.32, )]", "sum(-3, -5, 3, -45, -4.32)");
 
+        checkCase("[1, ^, 3]", "1^3");
+        checkCase("[1, <, 3]", "1<3");
+        checkCase("[1, >, 3]", "1>3");
+        checkCase("[1, !, 3]", "1!3");
         checkCase("[1, ==, 3]", "1==3");
         checkCase("[1, !=, 3]", "1!=3");
         checkCase("[1, <=, 3]", "1<=3");
         checkCase("[1, >=, 3]", "1>=3");
+        checkCase("[1, |, 3]", "1|3");
+        checkCase("[1, &, 3]", "1&3");
+        checkCase("[1, ||, 3]", "1||3");
+        checkCase("[1, &&, 3]", "1&&3");
+        checkCase("[1, <<, 3]", "1<<3");
+        checkCase("[1, >>, 3]", "1>>3");
         checkCase("[1, ===, 3]", "1===3");
         checkCase("[1, =====, 3]", "1=====3");
     }

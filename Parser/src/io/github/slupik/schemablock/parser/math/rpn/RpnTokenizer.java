@@ -19,12 +19,12 @@ class RpnTokenizer {
                 continue;
             }
             if(isCharEndingToken(c)) {
-                if(isCharForLogic(c)) {
+                if(isGroupOperator(c)) {
                     Character lastChar = null;
                     if(tokenBuffer.length()>0) {
                         lastChar = tokenBuffer.charAt(tokenBuffer.length()-1);
                     }
-                    if(lastChar != null && isCharForLogic(lastChar)) {
+                    if(lastChar != null && isGroupOperator(lastChar)) {
                         tokenBuffer.append(c);
                     } else {
                         tokens.add(tokenBuffer.toString());
@@ -57,7 +57,7 @@ class RpnTokenizer {
                 if(tokenBuffer.length()>0) {
                     lastChar = tokenBuffer.charAt(tokenBuffer.length()-1);
                 }
-                if(lastChar != null && isCharForLogic(lastChar)) {
+                if(lastChar != null && isGroupOperator(lastChar)) {
                     tokens.add(tokenBuffer.toString());
                     tokenBuffer = new StringBuilder();
                 }
@@ -73,10 +73,10 @@ class RpnTokenizer {
     }
 
     private static boolean isCharEndingToken(char c) {
-        return c == '-' || c == '+' || c == '*' || c == '/' || c == '(' || c == ')' || c == ',' || isCharForLogic(c);
+        return c == '%' || c == '-' || c == '+' || c == '*' || c == '/' || c == '(' || c == ')' || c == ',' || c == '^' || isGroupOperator(c);
     }
 
-    private static boolean isCharForLogic(char c) {
-        return c=='!' || c=='<' || c=='>' || c=='=';
+    private static boolean isGroupOperator(char c) {
+        return c=='!' || c=='<' || c=='>' || c=='=' || c=='|' || c=='&';
     }
 }
