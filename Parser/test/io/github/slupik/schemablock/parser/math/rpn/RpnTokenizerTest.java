@@ -27,6 +27,13 @@ class RpnTokenizerTest {
         checkCase("[-3]", "-3");
         checkCase("[-3, -, 2]", "-3-2");
         checkCase("[sum, (, -3, ,, -5, ,, 3, ,, -45, ,, -4.32, )]", "sum(-3, -5, 3, -45, -4.32)");
+
+        checkCase("[1, ==, 3]", "1==3");
+        checkCase("[1, !=, 3]", "1!=3");
+        checkCase("[1, <=, 3]", "1<=3");
+        checkCase("[1, >=, 3]", "1>=3");
+        checkCase("[1, ===, 3]", "1===3");
+        checkCase("[1, =====, 3]", "1=====3");
     }
 
     private void checkCase(String expected, String input) {
