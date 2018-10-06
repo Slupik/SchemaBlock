@@ -49,6 +49,8 @@ class RpnTokenizerTest {
         checkCase("[write, (, \"Test\", ,, 0]", "write(\"Test\", 0");
         checkCase("[write, (, \"Te,st\", ,, 0]", "write(\"Te,st\", 0");
         checkCase("[write, (, \"T\te,st;\", ,, 0]", "write(\"T\te,st;\", 0");
+
+        checkCase("[write, (, \"T\te,st;\", ,, testValue, ,, 0]", "write(\"T\te,st;\", testValue, 0");
     }
 
     private void checkCase(String expected, String input) {
