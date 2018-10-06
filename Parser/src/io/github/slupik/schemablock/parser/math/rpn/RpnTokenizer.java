@@ -12,18 +12,36 @@ class RpnTokenizer {
         List<String> tokens = new ArrayList<>();
 
         StringBuilder tokenBuffer = new StringBuilder();
+        boolean quotationMode = false;
         for(int i=0;i<equation.length();i++) {
             char c = equation.charAt(i);
+            Character lastChar = null;
+            if(tokenBuffer.length()>0) {
+                lastChar = tokenBuffer.charAt(tokenBuffer.length()-1);
+            }
 
+            if(quotationMode) {
+                tokenBuffer.append(c);
+                if(c=='"') {
+                    if(lastChar != null && lastChar!='\\') {
+                        tokens.add(tokenBuffer.toString());
+                        tokenBuffer = new StringBuilder();
+                        quotationMode = false;
+                    }
+                }
+                continue;
+            } else {
+                if(c=='"') {
+                    tokenBuffer.append(c);
+                    quotationMode = true;
+                    continue;
+                }
+            }
             if(Character.isWhitespace(c)) {
                 continue;
             }
             if(isCharEndingToken(c)) {
                 if(isGroupOperator(c)) {
-                    Character lastChar = null;
-                    if(tokenBuffer.length()>0) {
-                        lastChar = tokenBuffer.charAt(tokenBuffer.length()-1);
-                    }
                     if(lastChar != null && isGroupOperator(lastChar)) {
                         tokenBuffer.append(c);
                     } else {
@@ -53,10 +71,6 @@ class RpnTokenizer {
                 }
                 tokens.add(String.valueOf(c));
             } else {
-                Character lastChar = null;
-                if(tokenBuffer.length()>0) {
-                    lastChar = tokenBuffer.charAt(tokenBuffer.length()-1);
-                }
                 if(lastChar != null && isGroupOperator(lastChar)) {
                     tokens.add(tokenBuffer.toString());
                     tokenBuffer = new StringBuilder();
