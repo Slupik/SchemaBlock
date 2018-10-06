@@ -8,8 +8,20 @@ public class Value {
     private final ValueType type;
     private String value;
 
+    public Value(Object value) throws NotFoundTypeException {
+        this(ValueType.getStandardizedType(stringify(value)), value);
+    }
+
     public Value(ValueType type, Object value) {
-        this(type, String.valueOf(value));
+        this(type, stringify(value));
+    }
+
+    private static String stringify(Object raw) {
+        String value = String.valueOf(raw);
+        if(value.endsWith(".0")) {
+            value = value.substring(0, value.length()-2);
+        }
+        return value;
     }
 
     public Value(ValueType type, String value) {

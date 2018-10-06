@@ -24,7 +24,7 @@ public class MathCalculation {
         FUNCTIONS.registerPattern(new MathPatternSum());
     }
 
-    public static double getResult(String value) throws UnsupportedValueException, InvalidArgumentsException, NotFoundTypeException {
+    public static Object getResult(String value) throws UnsupportedValueException, InvalidArgumentsException, NotFoundTypeException {
 
         List<String> rawTokens = RpnTokenizer.getEquationAsTokens(value);
         List<String> tokens = new ArrayList<>();

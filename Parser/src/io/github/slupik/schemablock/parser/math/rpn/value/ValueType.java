@@ -26,7 +26,7 @@ public enum ValueType {
         this.isByteCompatible = isByteCompatible;
     }
 
-    public static ValueType getType(Object value) throws NotFoundTypeException {
+    public static ValueType getStandardizedType(Object value) throws NotFoundTypeException {
         if(value==null) {
             throw new NotFoundTypeException(null);
         }
@@ -40,6 +40,31 @@ public enum ValueType {
         if(value instanceof Character) return CHAR;
         if(value instanceof Byte) return BYTE;
         throw new NotFoundTypeException(value);
+    }
+
+    public static ValueType getStandardizedType(String value) throws NotFoundTypeException {
+        ValueType type = getType(value);
+        if(type==DOUBLE || type==FLOAT) {
+            double parsed = Double.parseDouble(value);
+            if(parsed>Integer.MIN_VALUE && parsed<Integer.MAX_VALUE) {
+                try {
+                    int casted = Integer.parseInt(value);
+                    if(casted==parsed) {
+                        type = INT;
+                    }
+                } catch (Exception ignore){}
+            } else if(parsed>Long.MIN_VALUE && parsed<Long.MAX_VALUE) {
+                try {
+                    long casted = Long.parseLong(value);
+                    if(casted==parsed) {
+                        type = LONG;
+                    }
+                } catch (Exception ignore){}
+            }
+        }
+        if(type==SHORT) type = INT;
+        if(type==FLOAT) type = DOUBLE;
+        return type;
     }
 
     public static ValueType getType(String value) throws NotFoundTypeException {

@@ -35,7 +35,7 @@ public abstract class MathPattern {
         for(String arg:args) {
             arg = arg.trim();
             try {
-                values.add(new Value(ValueType.getType(arg), arg));
+                values.add(new Value(ValueType.getStandardizedType(arg), arg));
             } catch (NotFoundTypeException e) {
                 e.printStackTrace();
                 throw new InvalidArgumentsException();
@@ -48,14 +48,19 @@ public abstract class MathPattern {
         Value[] parsed = new Value[args.length];
         for(int i=0;i<args.length;i++) {
             Value arg = args[i];
-            double result = 0;
+            Object result = 0;
             try {
                 result = MathCalculation.getResult(arg.getValue().toString());
             } catch (NotFoundTypeException e) {
                 e.printStackTrace();
                 throw new InvalidArgumentsException();
             }
-            parsed[i] = new Value(ValueType.DOUBLE, result);
+            try {
+                parsed[i] = new Value(ValueType.getStandardizedType(result), result);
+            } catch (NotFoundTypeException e) {
+                e.printStackTrace();
+                throw new InvalidArgumentsException();
+            }
         }
         return parsed;
     }

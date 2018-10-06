@@ -24,7 +24,7 @@ public class MathPatternSum extends MathPattern {
                 Double val = args[i].getAsDouble();
                 ValueType type = ValueType.STRING;
                 try {
-                    type = ValueType.getType(val);
+                    type = ValueType.getStandardizedType(val);
                 } catch (NotFoundTypeException e) {
                     e.printStackTrace();
                 }

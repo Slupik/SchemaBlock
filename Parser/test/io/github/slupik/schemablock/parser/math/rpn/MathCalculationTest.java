@@ -15,8 +15,9 @@ class MathCalculationTest {
 
     @Test
     void getResult() throws InvalidArgumentsException, UnsupportedValueException, NotFoundTypeException {
-        assertEquals(5, MathCalculation.getResult("2+3"));
-        assertEquals(5, MathCalculation.getResult("2 + 3"));
+        assertEquals(5, MathCalculation.getResult("5"));
+        assertEquals(2+3, MathCalculation.getResult("2+3"));
+        assertEquals(2+3, MathCalculation.getResult("2 + 3"));
         assertEquals(2%3, MathCalculation.getResult("2%3"));
         assertEquals(5.43, MathCalculation.getResult("2.43+3"));
         assertEquals(5.43, MathCalculation.getResult("   2.43  +   3  "));
@@ -31,7 +32,7 @@ class MathCalculationTest {
         assertEquals(sqrt(sqrt(sqrt(sqrt((3*4-2))))), MathCalculation.getResult("sqrt(sqrt(sqrt(sqrt(3*4-2))))"));
         assertEquals(sqrt(sqrt(sqrt(sqrt((3*4-2))))), MathCalculation.getResult("sqrt  ( sqrt (  sqrt (  sqrt  ( 3*4-2) ))  )"));
 
-        assertEquals(2+3+4+10, MathCalculation.getResult("sum(2, 3, 4, 10)"));
+        assertEquals(2+3+4+10d, MathCalculation.getResult("sum(2, 3, 4, 10)"));
         assertEquals(sqrt(sqrt(3)), MathCalculation.getResult("sqrt(sqrt(3))"));
         assertEquals(sqrt(sqrt(3)), MathCalculation.getResult("sqrt(sqrt(1+2))"));
         assertEquals(2+ sqrt(sqrt(3))+4+10, MathCalculation.getResult("sum(2, sqrt(sqrt(1+2)), 4, 10)"));
