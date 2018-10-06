@@ -20,7 +20,7 @@ public abstract class MathPattern {
     }
 
     public Object calculate(Value... args) throws InvalidArgumentsException, UnsupportedValueException {
-//        Value[] parsed = parseRawValues(args);
+//        OldValue[] parsed = parseRawValues(args);
         return getResult(args);
     }
     protected abstract Object getResult(Value... parsed) throws UnsupportedValueException, InvalidArgumentsException;
@@ -34,13 +34,12 @@ public abstract class MathPattern {
         List<Value> values = new ArrayList<>();
         for(String arg:args) {
             arg = arg.trim();
-            Object parsedArg;
             try {
-                parsedArg = ValueType.parse(arg);
+                values.add(new Value(ValueType.getType(arg), arg));
             } catch (NotFoundTypeException e) {
-                parsedArg = arg;
+                e.printStackTrace();
+                throw new InvalidArgumentsException();
             }
-            values.add(new Value(ValueType.getType(parsedArg), parsedArg));
         }
         return calculate(values.toArray(new Value[0]));
     }
@@ -49,7 +48,13 @@ public abstract class MathPattern {
         Value[] parsed = new Value[args.length];
         for(int i=0;i<args.length;i++) {
             Value arg = args[i];
-            double result = MathCalculation.getResult(arg.getValue().toString());
+            double result = 0;
+            try {
+                result = MathCalculation.getResult(arg.getValue().toString());
+            } catch (NotFoundTypeException e) {
+                e.printStackTrace();
+                throw new InvalidArgumentsException();
+            }
             parsed[i] = new Value(ValueType.DOUBLE, result);
         }
         return parsed;

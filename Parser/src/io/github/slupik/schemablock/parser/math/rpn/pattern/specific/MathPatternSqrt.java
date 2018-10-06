@@ -4,7 +4,6 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsExce
 import io.github.slupik.schemablock.parser.math.rpn.pattern.MathPattern;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
 import io.github.slupik.schemablock.parser.math.rpn.value.Value;
-import io.github.slupik.schemablock.parser.math.rpn.value.ValueType;
 
 /**
  * All rights reserved & copyright ©
@@ -19,10 +18,8 @@ public class MathPatternSqrt extends MathPattern {
     public Object getResult(Value... args) throws InvalidArgumentsException, UnsupportedValueException {
         if(isValidArgs(args)) {
             Value value = args[0];
-            if(value.getType()== ValueType.DOUBLE) {
-                return Math.sqrt(((Double) value.getValue()));
-            } else if (value.getType()== ValueType.INT) {
-                return Math.sqrt(((Double) value.getValue()));
+            if(value.getType().isNumber) {
+                return Math.sqrt(value.getAsDouble());
             }
             throw new UnsupportedValueException();
         } else {
@@ -34,7 +31,7 @@ public class MathPatternSqrt extends MathPattern {
     public boolean isValidArgs(Value... args) {
         if(args.length==1) {
             Value arg = args[0];
-            return ValueType.isNumber(arg.getType());
+            return arg.getType().isNumber;
         }
         return false;
     }

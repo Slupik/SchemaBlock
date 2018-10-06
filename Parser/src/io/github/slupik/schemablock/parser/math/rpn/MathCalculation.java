@@ -6,6 +6,7 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
+import io.github.slupik.schemablock.parser.math.rpn.value.NotFoundTypeException;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class MathCalculation {
         FUNCTIONS.registerPattern(new MathPatternSum());
     }
 
-    public static double getResult(String value) throws UnsupportedValueException, InvalidArgumentsException {
+    public static double getResult(String value) throws UnsupportedValueException, InvalidArgumentsException, NotFoundTypeException {
 
         List<String> rawTokens = RpnTokenizer.getEquationAsTokens(value);
         List<String> tokens = new ArrayList<>();
@@ -34,7 +35,7 @@ public class MathCalculation {
         return RpnCalculation.calculate(rpn);
     }
 
-    private static String getParsedToken(String raw) throws UnsupportedValueException, InvalidArgumentsException {
+    private static String getParsedToken(String raw) throws UnsupportedValueException, InvalidArgumentsException, NotFoundTypeException {
         raw = raw.trim();
         if(raw.equals("+") || raw.equals("-") || raw.equals("/") || raw.equals("*") || raw.equals("(") || raw.equals(")")) {
             return raw;

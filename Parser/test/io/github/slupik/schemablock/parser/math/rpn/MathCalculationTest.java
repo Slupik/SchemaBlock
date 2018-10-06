@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.parser.math.rpn;
 
 import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
+import io.github.slupik.schemablock.parser.math.rpn.value.NotFoundTypeException;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.sqrt;
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class MathCalculationTest {
 
     @Test
-    void getResult() throws InvalidArgumentsException, UnsupportedValueException {
+    void getResult() throws InvalidArgumentsException, UnsupportedValueException, NotFoundTypeException {
         assertEquals(5, MathCalculation.getResult("2+3"));
         assertEquals(5, MathCalculation.getResult("2 + 3"));
         assertEquals(2%3, MathCalculation.getResult("2%3"));
@@ -31,6 +32,8 @@ class MathCalculationTest {
         assertEquals(sqrt(sqrt(sqrt(sqrt((3*4-2))))), MathCalculation.getResult("sqrt  ( sqrt (  sqrt (  sqrt  ( 3*4-2) ))  )"));
 
         assertEquals(2+3+4+10, MathCalculation.getResult("sum(2, 3, 4, 10)"));
+        assertEquals(sqrt(sqrt(3)), MathCalculation.getResult("sqrt(sqrt(3))"));
+        assertEquals(sqrt(sqrt(3)), MathCalculation.getResult("sqrt(sqrt(1+2))"));
         assertEquals(2+ sqrt(sqrt(3))+4+10, MathCalculation.getResult("sum(2, sqrt(sqrt(1+2)), 4, 10)"));
 
         assertEquals(Math.sqrt(Math.sqrt(2+3+4+10)), MathCalculation.getResult("sqrt(sqrt(sum(2,3,4,10)))"));

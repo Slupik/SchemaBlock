@@ -6,6 +6,7 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
+import io.github.slupik.schemablock.parser.math.rpn.value.NotFoundTypeException;
 import io.github.slupik.schemablock.parser.math.rpn.value.Value;
 import io.github.slupik.schemablock.parser.math.rpn.value.ValueType;
 
@@ -24,7 +25,7 @@ class RpnCalculation {
         FUNCTIONS.registerPattern(new MathPatternSum());
     }
 
-    static double calculate(List<String> rpnTokens) throws InvalidArgumentsException, UnsupportedValueException {
+    static double calculate(List<String> rpnTokens) throws InvalidArgumentsException, UnsupportedValueException, NotFoundTypeException {
         List<Double> stack = new ArrayList<>();
 
         for(String token:rpnTokens) {
