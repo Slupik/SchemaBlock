@@ -19,6 +19,7 @@ class InfixToRpnConverter {
         OPERATION.put("*", 5);
         OPERATION.put("+", 4);
         OPERATION.put("-", 4);
+        OPERATION.put("%", 4);
         OPERATION.put("(", 0);
 
         FUNCTIONS.registerPattern(new MathPatternSqrt());
