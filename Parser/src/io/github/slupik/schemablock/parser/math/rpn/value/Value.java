@@ -76,6 +76,6 @@ public class Value {
     }
 
     public String getAsString(){
-        return value.substring(1, value.length()-2);
+        return value.substring(1, value.length()-1);
     }
 }

@@ -12,6 +12,7 @@ import io.github.slupik.schemablock.parser.math.rpn.value.ValueType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * All rights reserved & copyright ©
@@ -26,7 +27,7 @@ class RpnCalculation {
     }
 
     static Object calculate(List<String> rpnTokens) throws InvalidArgumentsException, UnsupportedValueException, NotFoundTypeException {
-        List<Value> stack = new ArrayList<>();
+        Stack<Value> stack = new Stack<>();
 
         for(String token:rpnTokens) {
             token = token.trim();
@@ -44,35 +45,134 @@ class RpnCalculation {
                 Value value = new Value(ValueType.getStandardizedType(result), result);
                 stack.add(value);
             } else {
-                Value value = new Value(ValueType.getStandardizedType(token), token);
-                if(value.getType().isNumber) {
-                    stack.add(value);
-                } else {
-                    double x = stack.get(stack.size()-2).getAsDouble();
-                    stack.remove(stack.size()-2);
-                    double y = stack.get(stack.size()-1).getAsDouble();
-                    stack.remove(stack.size()-1);
-
-                    Value res = null;
-
-                    switch (token) {
-                        case "+":
-                            res = new Value(x + y);
-                            break;
-                        case "-":
-                            res = new Value(x - y);
-                            break;
-                        case "*":
-                            res = new Value(x * y);
-                            break;
-                        case "/":
-                            res = new Value(x / y);
-                            break;
-                        case "%":
-                            res = new Value(x % y);
-                            break;
+                try {
+                    Value value = new Value(ValueType.getStandardizedType(token), token);
+                    if(value.getType().isNumber || value.getType()==ValueType.STRING || value.getType() == ValueType.BOOLEAN) {
+                        stack.add(value);
+                        continue;
                     }
-                    stack.add(res);
+                } catch (NotFoundTypeException ignore){}
+
+                if(isOperatorNeedOneValue(token)) {
+                    //TODO implement
+//                    Value valueX = stack.pop();
+                } else {
+                    Value valueY = stack.pop();
+                    Value valueX = stack.pop();
+                    if(token.equals("+") && valueX.getType()==ValueType.STRING && valueY.getType()==ValueType.STRING) {
+                        String x = valueX.getAsString();
+                        String y = valueY.getAsString();
+
+                        Value res = new Value("\"" + x + y + "\"");
+                        stack.add(res);
+                    } else if(isArithmeticOperator(token)) {
+                        if(valueX.getType().isNumber && valueY.getType().isNumber) {
+                            double x = valueX.getAsDouble();
+                            double y = valueY.getAsDouble();
+
+                            Value res = null;
+                            switch (token) {
+                                case "+":
+                                    res = new Value(x + y);
+                                    break;
+                                case "-":
+                                    res = new Value(x - y);
+                                    break;
+                                case "*":
+                                    res = new Value(x * y);
+                                    break;
+                                case "/":
+                                    res = new Value(x / y);
+                                    break;
+                                case "%":
+                                    res = new Value(x % y);
+                                    break;
+                            }
+                            stack.add(res);
+                        } else {
+                            throw new InvalidArgumentsException();
+                        }
+                    } else if(isByteOperator(token)) {
+                        if(valueX.getType().isByteCompatible && valueY.getType().isByteCompatible) {
+                            long x = valueX.getAsLong();
+                            long y = valueY.getAsLong();
+
+                            Value res = null;
+                            switch (token) {
+                                case "^":
+                                    res = new Value(x ^ y);
+                                    break;
+                                case "<<":
+                                    res = new Value(x << y);
+                                    break;
+                                case ">>":
+                                    res = new Value(x >> y);
+                                    break;
+                                case "|":
+                                    res = new Value(x | y);
+                                    break;
+                                case "&":
+                                    res = new Value(x & y);
+                                    break;
+                            }
+                            stack.add(res);
+                        } else {
+                            throw new InvalidArgumentsException();
+                        }
+                    } else if(isRelationalOperator(token) && valueX.getType().isNumber) {
+                        if(valueX.getType().isNumber && valueY.getType().isNumber) {
+                            double x = valueX.getAsDouble();
+                            double y = valueY.getAsDouble();
+
+                            Value res = null;
+                            switch (token) {
+                                case "==":
+                                    res = new Value(x == y);
+                                    break;
+                                case "!=":
+                                    res = new Value(x != y);
+                                    break;
+                                case ">=":
+                                    res = new Value(x >= y);
+                                    break;
+                                case "<=":
+                                    res = new Value(x <= y);
+                                    break;
+                                case "<":
+                                    res = new Value(x < y);
+                                    break;
+                                case ">":
+                                    res = new Value(x > y);
+                                    break;
+                            }
+                            stack.add(res);
+                        } else {
+                            throw new InvalidArgumentsException();
+                        }
+                    } else if(isLogic(token) && valueX.getType() == ValueType.BOOLEAN) {
+                        boolean x = valueX.getAsBoolean();
+                        boolean y = valueY.getAsBoolean();
+
+                        Value res = null;
+                        switch (token) {
+                            case "^":
+                                res = new Value(x ^ y);
+                                break;
+                            case "&&":
+                                res = new Value(x && y);
+                                break;
+                            case "||":
+                                res = new Value(x || y);
+                                break;
+                            case "==":
+                                res = new Value(x == y);
+                                break;
+                            case "!=":
+                                res = new Value(x != y);
+                                break;
+                        }
+                        stack.add(res);
+                    }
                 }
             }
         }
@@ -106,6 +206,26 @@ class RpnCalculation {
             }
         }
         return stack.get(0).getValue();
+    }
+
+    private static boolean isLogic(String token) {
+        return token.equals("==") || token.equals("!=") || token.equals("&&") || token.equals("||");
+    }
+
+    private static boolean isRelationalOperator(String token) {
+        return token.equals("==") || token.equals("!=") || token.equals("<=") || token.equals(">=") || token.equals("<") || token.equals(">");
+    }
+
+    private static boolean isByteOperator(String token) {
+        return token.equals("^") || token.equals("&") || token.equals("|") || token.equals(">>") || token.equals("<<");
+    }
+
+    private static boolean isOperatorNeedOneValue(String token) {
+        return token.equals("!") || token.equals("~");
+    }
+
+    private static boolean isArithmeticOperator(String token) {
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") || token.equals("%");
     }
 
     private static int getArgsAmount(String functionToken) {

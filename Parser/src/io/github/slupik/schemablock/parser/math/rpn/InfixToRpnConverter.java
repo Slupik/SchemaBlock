@@ -17,9 +17,26 @@ class InfixToRpnConverter {
     static {
         OPERATION.put("/", 5);
         OPERATION.put("*", 5);
+
         OPERATION.put("+", 4);
         OPERATION.put("-", 4);
         OPERATION.put("%", 4);
+
+        OPERATION.put("<<", 4);
+        OPERATION.put(">>", 4);
+        OPERATION.put("^", 4);
+        OPERATION.put("|", 4);
+        OPERATION.put("&", 4);
+
+        OPERATION.put("<", 4);
+        OPERATION.put(">", 4);
+        OPERATION.put("==", 4);
+        OPERATION.put("!=", 4);
+        OPERATION.put(">=", 4);
+        OPERATION.put("<=", 4);
+        OPERATION.put("&&", 4);
+        OPERATION.put("||", 4);
+
         OPERATION.put("(", 0);
 
         FUNCTIONS.registerPattern(new MathPatternSqrt());
@@ -66,6 +83,16 @@ class InfixToRpnConverter {
                 continue;
             }
 
+            if(isString(token)) {
+                queue.add(token);
+                continue;
+            }
+
+            if(isLogic(token)) {
+                queue.add(token);
+                continue;
+            }
+
             if(infixNotation.length>i+1 && infixNotation[i+1].equals("(")) {
                 String[] function = getFunctionWithArguments(infixNotation, i);
                 String[][] args = getArgsOfFun(function);
@@ -88,6 +115,14 @@ class InfixToRpnConverter {
         }
 
         return queue;
+    }
+
+    private static boolean isLogic(String token) {
+        return token.equals("true") || token.equals("false");
+    }
+
+    private static boolean isString(String token) {
+        return token!=null && token.startsWith("\"") && token.endsWith("\"");
     }
 
     private static String[][] getArgsOfFun(String[] function) {

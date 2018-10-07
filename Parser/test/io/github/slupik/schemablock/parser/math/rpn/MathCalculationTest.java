@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.sqrt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * All rights reserved & copyright ©
@@ -56,10 +58,38 @@ class MathCalculationTest {
         assertEquals(-3, MathCalculation.getResult("sum((-3))"));
         //FIXME priority: LOW
 //        assertEquals(sqrt(3), MathCalculation.getResult("sqrt((3))"));
+
+
+        assertEquals(3<<5, MathCalculation.getResult("3<<5"));
+        assertEquals(3>>5, MathCalculation.getResult("3>>5"));
+        assertEquals(3^5, MathCalculation.getResult("3^5"));
+        assertEquals(3|5, MathCalculation.getResult("3|5"));
+        assertEquals(3&5, MathCalculation.getResult("3&5"));
+
+        assertTrue((Boolean) MathCalculation.getResult("3<5"));
+        assertTrue((Boolean) MathCalculation.getResult("5>3"));
+        assertTrue((Boolean) MathCalculation.getResult("3==3"));
+        assertTrue((Boolean) MathCalculation.getResult("3!=5"));
+        assertTrue((Boolean) MathCalculation.getResult("3<=5"));
+        assertTrue((Boolean) MathCalculation.getResult("5>=3"));
+
+        assertEquals("foo"+"bar", MathCalculation.getResult("\"foo\"+\"bar\""));
+        assertEquals("foo"+"bar"+" Lorem", MathCalculation.getResult("\"foo\"+\"bar\"+\" Lorem\""));
+
+        assertTrue((Boolean) MathCalculation.getResult("true&&true"));
+        assertFalse((Boolean) MathCalculation.getResult("false&&false"));
+        assertFalse((Boolean) MathCalculation.getResult("true&&false"));
+        assertFalse((Boolean) MathCalculation.getResult("true==false"));
+        assertTrue((Boolean) MathCalculation.getResult("true!=false"));
+        assertTrue((Boolean) MathCalculation.getResult("true||false"));
+        assertTrue((Boolean) MathCalculation.getResult("false||true"));
+        assertEquals(true==false==true, MathCalculation.getResult("true==false==true"));
+        assertEquals(true&&false&&true, MathCalculation.getResult("true&&false&&true"));
     }
 
-    private static void keepInports(){
+    private static void keepImports(){
         double sqrt = sqrt(10);
         assertEquals(1, 1);
+        assertTrue(true);
     }
 }
