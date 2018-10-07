@@ -40,7 +40,7 @@ public class MathCalculation {
         if(raw.equals("+") || raw.equals("-") || raw.equals("/") || raw.equals("*") || raw.equals("(") || raw.equals(")")) {
             return raw;
         }
-        if(NumberUtils.isParsable(raw)) {
+        if(isNumber(raw)) {
             return raw;
         }
         MathPattern function = FUNCTIONS.getForName(getFunctionName(raw));
@@ -48,6 +48,20 @@ public class MathCalculation {
             return String.valueOf(function.calculate(raw));
         }
         return raw;
+    }
+
+    private static boolean isNumber(String raw) {
+        if(raw.startsWith("0x")) {
+            return NumberUtils.isParsable(raw);
+        } else {
+            for(int i=0;i<raw.length();i++) {
+                char c = raw.charAt(i);
+                if(!Character.isDigit(c)) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
     private static String getFunctionName(String token) {
