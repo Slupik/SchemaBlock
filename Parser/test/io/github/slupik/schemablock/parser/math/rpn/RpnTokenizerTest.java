@@ -46,6 +46,16 @@ class RpnTokenizerTest {
         checkCase("[1, ===, 3]", "1===3");
         checkCase("[1, =====, 3]", "1=====3");
 
+        checkCase("[!, false]", "!false");
+        checkCase("[!, true]", "!true");
+        checkCase("[!, !, true]", "!!true");
+        checkCase("[!, !, !, false]", "!!!false");
+        checkCase("[!, !, !, !, !, true]", "!!!!!true");
+        checkCase("[~, 1]", "~1");
+        checkCase("[~, ~, 1]", "~~1");
+        checkCase("[~, ~, ~, 1]", "~~~1");
+        checkCase("[~, !, ~, 1]", "~!~1");
+
         checkCase("[write, (, \"Test\", ,, 0]", "write(\"Test\", 0");
         checkCase("[write, (, \"Te,st\", ,, 0]", "write(\"Te,st\", 0");
         checkCase("[write, (, \"T\te,st;\", ,, 0]", "write(\"T\te,st;\", 0");

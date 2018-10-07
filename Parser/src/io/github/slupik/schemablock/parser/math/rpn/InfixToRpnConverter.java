@@ -27,6 +27,8 @@ class InfixToRpnConverter {
         OPERATION.put("^", 4);
         OPERATION.put("|", 4);
         OPERATION.put("&", 4);
+        OPERATION.put("!", 4);
+        OPERATION.put("~", 4);
 
         OPERATION.put("<", 4);
         OPERATION.put(">", 4);
@@ -71,7 +73,7 @@ class InfixToRpnConverter {
             }
             // an operator
             if (OPERATION.containsKey(token)) {
-                while (!stack.empty() && OPERATION.get(token) <= OPERATION.get(stack.peek())) {
+                while (!stack.empty() && OPERATION.get(token) <= OPERATION.get(stack.peek()) && !stack.peek().equals(token)) {
                     queue.add(stack.pop());
                 }
                 stack.push(token);

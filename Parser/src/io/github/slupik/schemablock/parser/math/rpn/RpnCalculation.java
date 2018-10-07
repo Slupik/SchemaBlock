@@ -54,8 +54,27 @@ class RpnCalculation {
                 } catch (NotFoundTypeException ignore){}
 
                 if(isOperatorNeedOneValue(token)) {
-                    //TODO implement
-//                    Value valueX = stack.pop();
+                    Value valueX = stack.pop();
+                    Value res = null;
+                    switch (token) {
+                        case "~": {
+                            if(valueX.getType().isByteCompatible) {
+                                res = new Value(~valueX.getAsLong());
+                            } else {
+                                throw new InvalidArgumentsException();
+                            }
+                            break;
+                        }
+                        case "!": {
+                            if(valueX.getType()==ValueType.BOOLEAN) {
+                                res = new Value(!valueX.getAsBoolean());
+                            } else {
+                                throw new InvalidArgumentsException();
+                            }
+                            break;
+                        }
+                    }
+                    stack.add(res);
                 } else {
                     Value valueY = stack.pop();
                     Value valueX = stack.pop();

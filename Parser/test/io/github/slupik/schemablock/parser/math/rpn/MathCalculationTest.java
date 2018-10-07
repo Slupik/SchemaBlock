@@ -3,12 +3,11 @@ package io.github.slupik.schemablock.parser.math.rpn;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
 import io.github.slupik.schemablock.parser.math.rpn.value.NotFoundTypeException;
+import io.github.slupik.schemablock.parser.math.rpn.value.Value;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.sqrt;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * All rights reserved & copyright ©
@@ -54,6 +53,7 @@ class MathCalculationTest {
         assertEquals(sqrt(-2+3.53+sqrt(4+3+1-2)+10), MathCalculation.getResult("sqrt(sum(-2,3.53,sqrt(4+3+1-2),10))"));
 
         assertEquals(4 * sqrt ( 3 ) + 3, MathCalculation.getResult("4 * sqrt ( 3 ) + 3"));
+        assertEquals(0-1+(2*1)+3/(4-1), MathCalculation.getResult("0-1+(2*1)+3/(4-1)"));
 
         assertEquals(-3, MathCalculation.getResult("sum((-3))"));
         //FIXME priority: LOW
@@ -65,6 +65,9 @@ class MathCalculationTest {
         assertEquals(3^5, MathCalculation.getResult("3^5"));
         assertEquals(3|5, MathCalculation.getResult("3|5"));
         assertEquals(3&5, MathCalculation.getResult("3&5"));
+        assertEquals(~3, MathCalculation.getResult("~3"));
+        assertEquals(~~3, MathCalculation.getResult("~~3"));
+        assertEquals(~~~3, MathCalculation.getResult("~~~3"));
 
         assertTrue((Boolean) MathCalculation.getResult("3<5"));
         assertTrue((Boolean) MathCalculation.getResult("5>3"));
@@ -85,11 +88,16 @@ class MathCalculationTest {
         assertTrue((Boolean) MathCalculation.getResult("false||true"));
         assertEquals(true==false==true, MathCalculation.getResult("true==false==true"));
         assertEquals(true&&false&&true, MathCalculation.getResult("true&&false&&true"));
+
+        assertTrue((Boolean) MathCalculation.getResult("!!!false"));
+
+        assertTrue(((Boolean) MathCalculation.getResult("!false")));
     }
 
-    private static void keepImports(){
+    private static void keepImports() throws NotFoundTypeException {
         double sqrt = sqrt(10);
         assertEquals(1, 1);
         assertTrue(true);
+        new Value("");
     }
 }
