@@ -2,7 +2,7 @@ package io.github.slupik.schemablock.parser.math.rpn;
 
 import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.value.NotFoundTypeException;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

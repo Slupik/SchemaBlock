@@ -4,9 +4,11 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsExce
 import io.github.slupik.schemablock.parser.math.rpn.pattern.MathPattern;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
-import io.github.slupik.schemablock.parser.math.rpn.value.NotFoundTypeException;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
+import io.github.slupik.schemablock.parser.math.rpn.variable.Variable;
+import io.github.slupik.schemablock.parser.math.rpn.variable.VariableHeap;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
@@ -25,17 +27,20 @@ public class MathCalculation {
     }
 
     public static Object getResult(String value) throws UnsupportedValueException, InvalidArgumentsException, NotFoundTypeException {
+        return getResult(new VariableHeap(), value);
+    }
 
+    public static Object getResult(VariableHeap heap, String value) throws UnsupportedValueException, InvalidArgumentsException, NotFoundTypeException {
         List<String> rawTokens = RpnTokenizer.getEquationAsTokens(value);
         List<String> tokens = new ArrayList<>();
         for(String raw:rawTokens) {
-            tokens.add(getParsedToken(raw));
+            tokens.add(getParsedToken(heap, raw));
         }
         List<String> rpn = new ArrayList<>(InfixToRpnConverter.convertInfixToRPN(tokens.toArray(new String[0])));
         return RpnCalculation.calculate(rpn);
     }
 
-    private static String getParsedToken(String raw) throws UnsupportedValueException, InvalidArgumentsException, NotFoundTypeException {
+    private static String getParsedToken(VariableHeap heap, String raw) throws UnsupportedValueException, InvalidArgumentsException, NotFoundTypeException {
         raw = raw.trim();
         if(raw.equals("+") || raw.equals("-") || raw.equals("/") || raw.equals("*") || raw.equals("(") || raw.equals(")")) {
             return raw;
@@ -46,6 +51,10 @@ public class MathCalculation {
         MathPattern function = FUNCTIONS.getForName(getFunctionName(raw));
         if(function!=null) {
             return String.valueOf(function.calculate(raw));
+        }
+        Variable variable = heap.getVariable(raw);
+        if(variable!=null) {
+            return variable.getValue();
         }
         return raw;
     }

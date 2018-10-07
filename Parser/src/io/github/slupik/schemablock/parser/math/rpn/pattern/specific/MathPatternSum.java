@@ -3,9 +3,9 @@ package io.github.slupik.schemablock.parser.math.rpn.pattern.specific;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.MathPattern;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.value.NotFoundTypeException;
-import io.github.slupik.schemablock.parser.math.rpn.value.Value;
-import io.github.slupik.schemablock.parser.math.rpn.value.ValueType;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.Value;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.ValueType;
 
 /**
  * All rights reserved & copyright ©

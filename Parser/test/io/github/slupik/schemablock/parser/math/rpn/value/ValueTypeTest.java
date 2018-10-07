@@ -1,5 +1,7 @@
 package io.github.slupik.schemablock.parser.math.rpn.value;
 
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.ValueType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

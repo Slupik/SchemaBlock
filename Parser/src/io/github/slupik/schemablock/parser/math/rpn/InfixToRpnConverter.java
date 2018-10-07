@@ -109,7 +109,8 @@ class InfixToRpnConverter {
                 continue;
             }
 
-            throw new IllegalArgumentException("Invalid input ("+token+")");
+            queue.add(token);
+//            throw new IllegalArgumentException("Invalid input ("+token+")");
         }
         // at the end, pop all the elements in stack to queue
         while (!stack.isEmpty()) {

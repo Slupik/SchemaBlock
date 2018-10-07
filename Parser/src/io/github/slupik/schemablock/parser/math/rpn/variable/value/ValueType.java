@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.parser.math.rpn.value;
+package io.github.slupik.schemablock.parser.math.rpn.variable.value;
 
 import java.io.Serializable;
 

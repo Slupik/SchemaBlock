@@ -3,7 +3,7 @@ package io.github.slupik.schemablock.parser.math.rpn.pattern.specific;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.MathPattern;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.value.Value;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.Value;
 
 /**
  * All rights reserved & copyright ©

@@ -6,9 +6,9 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
-import io.github.slupik.schemablock.parser.math.rpn.value.NotFoundTypeException;
-import io.github.slupik.schemablock.parser.math.rpn.value.Value;
-import io.github.slupik.schemablock.parser.math.rpn.value.ValueType;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.Value;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.ValueType;
 
 import java.util.ArrayList;
 import java.util.List;

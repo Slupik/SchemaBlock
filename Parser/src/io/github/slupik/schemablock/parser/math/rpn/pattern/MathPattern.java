@@ -1,9 +1,9 @@
 package io.github.slupik.schemablock.parser.math.rpn.pattern;
 
 import io.github.slupik.schemablock.parser.math.rpn.MathCalculation;
-import io.github.slupik.schemablock.parser.math.rpn.value.NotFoundTypeException;
-import io.github.slupik.schemablock.parser.math.rpn.value.Value;
-import io.github.slupik.schemablock.parser.math.rpn.value.ValueType;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.Value;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.ValueType;
 
 import java.util.ArrayList;
 import java.util.List;
