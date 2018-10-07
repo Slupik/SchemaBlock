@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class MathCalculationTest {
 
-//    @Test
+    @Test
     void getResult() throws InvalidArgumentsException, UnsupportedValueException, NotFoundTypeException {
         assertEquals(5, MathCalculation.getResult("5"));
         assertEquals(2+3, MathCalculation.getResult("2+3"));
@@ -57,6 +57,7 @@ class MathCalculationTest {
 
         assertEquals(4 * sqrt ( 3 ) + 3, MathCalculation.getResult("4 * sqrt ( 3 ) + 3"));
         assertEquals(0-1+(2*1)+3/(4-1), MathCalculation.getResult("0-1+(2*1)+3/(4-1)"));
+        assertEquals(4 * 5 * ( 3 - 2 ), MathCalculation.getResult("4 * 5 * ( 3 - 2 )"));
 
         assertEquals(-3, MathCalculation.getResult("sum((-3))"));
         //FIXME priority: LOW
@@ -100,8 +101,19 @@ class MathCalculationTest {
     @Test
     void getResultWithVariables() throws InvalidArgumentsException, UnsupportedValueException, NotFoundTypeException, VariableIsAlreadyDefinedException {
         VariableHeap heap = new VariableHeap();
-        heap.registerVariable(new Variable("a", 10));
-        assertEquals(5, MathCalculation.getResult(heap, "a/2"));
+        int a = 10;
+        int b = 2;
+        int c = 3;
+        heap.registerVariable(new Variable("a", a));
+        heap.registerVariable(new Variable("b", b));
+        heap.registerVariable(new Variable("c", c));
+        assertEquals(a/2, MathCalculation.getResult(heap, "a/2"));
+        assertEquals((((1>a)==true) && (b+1)>4) || (c!=0), MathCalculation.getResult(heap, "(((1>a)==true) && (b+1)>4) || (c!=0)"));
+        assertEquals((b+1)>4, MathCalculation.getResult(heap, "(b+1)>4"));
+        assertEquals(((1>a)==true) && (b+1)>4, MathCalculation.getResult(heap, "((1>a)==true) && (b+1)>4"));
+
+        //FIXME priority: LOW
+//        assertEquals((((((1)>a)==true) && ((b=b+1)>4)) || (c!=0)), MathCalculation.getResult(heap, "(((((+1)>a)==0) && ((b=b+1)>4)) || (c!=0))"));
     }
 
     private static void keepImports() throws NotFoundTypeException {
