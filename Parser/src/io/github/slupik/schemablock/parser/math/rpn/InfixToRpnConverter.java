@@ -14,30 +14,51 @@ class InfixToRpnConverter {
     private static final Map<String, Integer> OPERATION = new HashMap<>();
     private static final PatternFinder FUNCTIONS = new PatternFinder();
 
+    //https://introcs.cs.princeton.edu/java/11precedence/
     static {
-        OPERATION.put("/", 5);
-        OPERATION.put("*", 5);
+        //unary logical NOT
+        OPERATION.put("!", 14);
 
-        OPERATION.put("+", 4);
-        OPERATION.put("-", 4);
-        OPERATION.put("%", 4);
+        //unary bitwise NOT
+        OPERATION.put("~", 14);
 
-        OPERATION.put("<<", 4);
-        OPERATION.put(">>", 4);
-        OPERATION.put("^", 4);
-        OPERATION.put("|", 4);
+        //multiplicative
+        OPERATION.put("/", 12);
+        OPERATION.put("*", 12);
+        OPERATION.put("%", 12);
+
+        //additive
+        OPERATION.put("+", 11);
+        OPERATION.put("-", 11);
+
+        //shift
+        OPERATION.put("<<", 10);
+        OPERATION.put(">>", 10);
+
+        //relational
+        OPERATION.put("<", 9);
+        OPERATION.put(">", 9);
+        OPERATION.put(">=", 9);
+        OPERATION.put("<=", 9);
+
+        //equality
+        OPERATION.put("==", 8);
+        OPERATION.put("!=", 8);
+
+        //bitwise AND
         OPERATION.put("&", 4);
-        OPERATION.put("!", 4);
-        OPERATION.put("~", 4);
 
-        OPERATION.put("<", 4);
-        OPERATION.put(">", 4);
-        OPERATION.put("==", 4);
-        OPERATION.put("!=", 4);
-        OPERATION.put(">=", 4);
-        OPERATION.put("<=", 4);
+        //bitwise XOR
+        OPERATION.put("^", 6);
+
+        //bitwise OR
+        OPERATION.put("|", 5);
+
+        //logical AND
         OPERATION.put("&&", 4);
-        OPERATION.put("||", 4);
+
+        //logical OR
+        OPERATION.put("||", 3);
 
         OPERATION.put("(", 0);
 
