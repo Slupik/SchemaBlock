@@ -21,24 +21,10 @@ public class CodeExecutor {
 
     public static boolean execute(VariableHeap heap, List<String> tokens) throws WrongArgumentException, VariableIsAlreadyDefinedException, VariableNotFound, InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException {
 
-        for(int i=0;i<tokens.size();i++) {
+        createVariables(heap, tokens);
+
+        for(int i=tokens.size()-1;i>=0;i--) {
             String token = tokens.get(i);
-
-            //register variable
-            ValueType type = getTypeForTypeName(token);
-            if(type!=null) {
-                if(i+1>=tokens.size()) {
-                    throw new WrongArgumentException("variable name", "nothing");
-                }
-                i++;
-                String varName = tokens.get(i);
-                if(isNumber(varName)) {
-                    throw new WrongArgumentException("variable name", "number");
-                }
-
-                heap.registerVariable(new Variable(varName, type, null));
-                continue;
-            }
 
             //set value to variable
             if(token.equals("=")) {
@@ -57,14 +43,39 @@ public class CodeExecutor {
                     throw new VariableNotFound(varName);
                 }
 
-                i++;
-                String varValue = tokens.get(i);
+                String varValue = tokens.get(i+1);
                 Object result = MathCalculation.getResult(heap, varValue);
                 var.setValue(result.toString());
+                i--;
             }
         }
 
         return false;
+    }
+
+    private static void createVariables(VariableHeap heap, List<String> tokens) throws WrongArgumentException, VariableIsAlreadyDefinedException {
+        for(int i=0;i<tokens.size();i++) {
+            String token = tokens.get(i);
+
+            //register variable
+            ValueType type = getTypeForTypeName(token);
+            if (type != null) {
+                do {
+                    if (i + 1 >= tokens.size()) {
+                        throw new WrongArgumentException("variable name", "nothing");
+                    }
+                    i++;
+                    String varName = tokens.get(i);
+                    if (isNumber(varName)) {
+                        throw new WrongArgumentException("variable name", "number");
+                    }
+
+                    heap.registerVariable(new Variable(varName, type, null));
+                } while(i + 1 < tokens.size() && tokens.get(++i).equals(","));
+
+                continue;
+            }
+        }
     }
 
     private static boolean isNumber(String varName) {

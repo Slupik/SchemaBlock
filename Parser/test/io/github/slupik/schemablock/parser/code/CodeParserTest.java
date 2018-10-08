@@ -26,8 +26,15 @@ class CodeParserTest {
 //        CodeParser.execute("double a = 3;" +
 //                "double b = a;");
 
-        //FIXME Priority: HIGH
-        CodeParser.execute("double b = a = 3;");
+//        CodeParser.execute("double a = 5;" +
+//                "double b = a = 3;");
+
+//        CodeParser.execute("double a, b;" +
+//                "b = a = 3;");
+
+        //FIXME should produce Exception
+        CodeParser.execute("double a, b;" +
+                "b = a = true;");
     }
 
     private static void keepImports(){
