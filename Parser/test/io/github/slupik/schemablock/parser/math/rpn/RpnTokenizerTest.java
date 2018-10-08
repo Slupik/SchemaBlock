@@ -61,6 +61,8 @@ class RpnTokenizerTest {
         checkCase("[write, (, \"T\te,st;\", ,, 0]", "write(\"T\te,st;\", 0");
 
         checkCase("[write, (, \"T\te,st;\", ,, testValue, ,, 0]", "write(\"T\te,st;\", testValue, 0");
+
+        checkCase("[double, b, =, a, =, 3]", "double b = a = 3");
     }
 
     private void checkCase(String expected, String input) {

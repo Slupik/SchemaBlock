@@ -37,9 +37,6 @@ class RpnTokenizer {
                     continue;
                 }
             }
-            if(Character.isWhitespace(c)) {
-                continue;
-            }
             if(isCharEndingToken(c)) {
                 if(isGroupOperator(c)) {
                     if(isSingleOperator(c) && equation.length()>i+1 && (!isGroupOperator(equation.charAt(i+1)) || isSingleOperator(equation.charAt(i+1)))) {
@@ -80,13 +77,17 @@ class RpnTokenizer {
                         continue;
                     }
                 }
-                tokens.add(String.valueOf(c));
+                if(!Character.isWhitespace(c)) {
+                    tokens.add(String.valueOf(c));
+                }
             } else {
                 if(lastChar != null && isGroupOperator(lastChar)) {
                     tokens.add(tokenBuffer.toString());
                     tokenBuffer = new StringBuilder();
                 }
-                tokenBuffer.append(c);
+                if(!Character.isWhitespace(c)) {
+                    tokenBuffer.append(c);
+                }
             }
         }
 
@@ -102,7 +103,7 @@ class RpnTokenizer {
     }
 
     private static boolean isCharEndingToken(char c) {
-        return c == '%' || c == '-' || c == '+' || c == '*' || c == '/' || c == '(' || c == ')' || c == ',' || c == '^' || c=='~' || isGroupOperator(c);
+        return c == '%' || c == '-' || c == '+' || c == '*' || c == '/' || c == '(' || c == ')' || c == ',' || c == '^' || c=='~' || isGroupOperator(c) || Character.isWhitespace(c);
     }
 
     private static boolean isGroupOperator(char c) {
