@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.parser.math.rpn.variable;
 
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * All rights reserved & copyright ©
@@ -17,5 +17,18 @@ public class VariableHeap {
 
     public Variable getVariable(String name) {
         return heap.get(name);
+    }
+
+    public HashMap<String, Variable> getHeap(){
+        return heap;
+    }
+
+    public List<String> getVariableNames(){
+        List<String> names = new ArrayList<>();
+        for (Map.Entry<String, Variable> entry : getHeap().entrySet()) {
+            String key = entry.getKey();
+            names.add(key);
+        }
+        return names;
     }
 }

@@ -29,4 +29,9 @@ public class Variable extends Value {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return getType()+" "+getName()+" = "+getValue()+";";
+    }
 }
