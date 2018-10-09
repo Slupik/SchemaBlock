@@ -13,18 +13,25 @@ import java.util.List;
  */
 public class CodeParser {
 
+    private static final boolean TEST_MODE = false;
     private static final VariableHeap heap = new VariableHeap();
 
-    public static void execute(String codeBlock) throws WrongArgumentException, NotFoundTypeException, InvalidArgumentsException, VariableNotFound, UnsupportedValueException, VariableIsAlreadyDefinedException {
+    public static void execute(String codeBlock) throws WrongArgumentException, NotFoundTypeException, InvalidArgumentsException, VariableNotFound, UnsupportedValueException, VariableIsAlreadyDefinedException, IncompatibleTypeException {
         List<String> lines = BlockTokenizer.tokenize(codeBlock);
         for(String line:lines) {
             List<String> tokens = LineTokenizer.tokenize(line);
             CodeExecutor.execute(heap, tokens);
         }
 
-        for(String varName:heap.getVariableNames()) {
-            String data = heap.getVariable(varName).toString();
-            System.out.println("data: " + data);
+        if(TEST_MODE) {
+            for(String varName:heap.getVariableNames()) {
+                String data = heap.getVariable(varName).toString();
+                System.out.println("data: " + data);
+            }
         }
+    }
+
+    public static void clearHeap() {
+        heap.clear();
     }
 }

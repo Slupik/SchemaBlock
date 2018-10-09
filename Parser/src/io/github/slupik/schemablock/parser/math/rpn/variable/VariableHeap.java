@@ -31,4 +31,11 @@ public class VariableHeap {
         }
         return names;
     }
+
+    public void clear() {
+        List<String> names = getVariableNames();
+        for(String name:names) {
+            heap.remove(name);
+        }
+    }
 }

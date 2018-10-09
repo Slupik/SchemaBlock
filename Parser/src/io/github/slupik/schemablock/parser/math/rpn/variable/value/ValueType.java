@@ -124,6 +124,40 @@ public enum ValueType {
         return false;
     }
 
+    public static boolean isCompatible(ValueType type1, ValueType type2) throws NotFoundTypeException {
+        switch (type1) {
+            case SHORT: {
+                return type2 == SHORT;
+            }
+            case INT: {
+                return type2 == SHORT || type2 == INT;
+            }
+            case LONG: {
+                return type2 == SHORT || type2 == INT || type2 == LONG;
+            }
+            case FLOAT: {
+                return type2 == SHORT || type2 == INT || type2 == LONG || type2 == FLOAT;
+            }
+            case DOUBLE: {
+                return type2 == SHORT || type2 == INT || type2 == LONG || type2 == FLOAT || type2 == DOUBLE;
+            }
+            case STRING: {
+                return type2 == STRING;
+            }
+            case CHAR: {
+                return type2 == CHAR;
+            }
+            case BOOLEAN: {
+                return type2 == BOOLEAN;
+            }
+            case BYTE: {
+                return type2 == SHORT || type2 == INT || type2 == LONG;
+            }
+        }
+        throw new NotFoundTypeException(" type: "+type1.toString());
+//        throw new
+    }
+
     /*
     byte (number, 1 byte)
     short (number, 2 bytes)

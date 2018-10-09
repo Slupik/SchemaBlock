@@ -19,7 +19,7 @@ import static io.github.slupik.schemablock.parser.math.rpn.variable.value.ValueT
  */
 public class CodeExecutor {
 
-    public static boolean execute(VariableHeap heap, List<String> tokens) throws WrongArgumentException, VariableIsAlreadyDefinedException, VariableNotFound, InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException {
+    public static boolean execute(VariableHeap heap, List<String> tokens) throws WrongArgumentException, VariableIsAlreadyDefinedException, VariableNotFound, InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException, IncompatibleTypeException {
 
         createVariables(heap, tokens);
 
@@ -45,7 +45,14 @@ public class CodeExecutor {
 
                 String varValue = tokens.get(i+1);
                 Object result = MathCalculation.getResult(heap, varValue);
-                var.setValue(result.toString());
+
+                ValueType resultType = ValueType.getStandardizedType(result);
+                if(ValueType.isCompatible(var.getType(), resultType)) {
+                    var.setValue(result.toString());
+                } else {
+                    throw new IncompatibleTypeException(resultType, var.getType());
+                }
+
                 i--;
             }
         }
