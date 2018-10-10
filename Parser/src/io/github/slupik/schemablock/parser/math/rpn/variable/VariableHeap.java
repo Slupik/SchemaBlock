@@ -1,5 +1,7 @@
 package io.github.slupik.schemablock.parser.math.rpn.variable;
 
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.ValueType;
+
 import java.util.*;
 
 /**
@@ -36,6 +38,12 @@ public class VariableHeap {
         List<String> names = getVariableNames();
         for(String name:names) {
             heap.remove(name);
+        }
+    }
+
+    public void registerArray(ValueType type, String name, Integer length) throws VariableIsAlreadyDefinedException {
+        for(int i=0;i<length;i++) {
+            registerVariable(new Variable(name + "[" + i + "]", type, null));
         }
     }
 }

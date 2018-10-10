@@ -60,7 +60,7 @@ public class CodeExecutor {
         return false;
     }
 
-    private static void createVariables(VariableHeap heap, List<String> tokens) throws WrongArgumentException, VariableIsAlreadyDefinedException {
+    private static void createVariables(VariableHeap heap, List<String> tokens) throws WrongArgumentException, VariableIsAlreadyDefinedException, InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException {
         for(int i=0;i<tokens.size();i++) {
             String token = tokens.get(i);
 
@@ -68,21 +68,68 @@ public class CodeExecutor {
             ValueType type = getTypeForTypeName(token);
             if (type != null) {
                 do {
-                    if (i + 1 >= tokens.size()) {
-                        throw new WrongArgumentException("variable name", "nothing");
-                    }
-                    i++;
-                    String varName = tokens.get(i);
-                    if (isNumber(varName)) {
-                        throw new WrongArgumentException("variable name", "number");
-                    }
+                    String[] command = getStandardizedCreation(tokens.subList(i, tokens.size()));
 
-                    heap.registerVariable(new Variable(varName, type, null));
+                    String name = command[2];
+                    if(command[1]!=null && command[1].length()>0) {
+                        Object lengthResult = MathCalculation.getResult(heap, command[1]);
+                        if(lengthResult instanceof Integer) {
+                            Integer length = ((Integer) lengthResult);
+                            heap.registerArray(type, name, length);
+                        } else {
+                            throw new WrongArgumentException("length of array in integer", "length in type "+type);
+                        }
+                    } else {
+                        heap.registerVariable(new Variable(name, type, null));
+                    }
                 } while(i + 1 < tokens.size() && tokens.get(++i).equals(","));
-
-                continue;
             }
         }
+    }
+
+    private static String[] getStandardizedCreation(List<String> tokens) throws WrongArgumentException {
+        String varType;
+        String varName;
+        String arrayLength;
+
+        int i=0;
+        varType = tokens.get(i);
+
+        if (i + 1 >= tokens.size()) {
+            throw new WrongArgumentException("variable name", "nothing");
+        }
+        i++;
+        String nameOrBrackets = tokens.get(i);
+
+        if(isBrackets(nameOrBrackets)) {
+            arrayLength = nameOrBrackets.substring(1, nameOrBrackets.length()-1);
+
+            if (i + 1 >= tokens.size()) {
+                throw new WrongArgumentException("array index", "nothing");
+            }
+            i++;
+            nameOrBrackets = tokens.get(i);
+
+            if(isBrackets(nameOrBrackets)) {
+                throw new WrongArgumentException("array name", "array index");
+            }
+            varName = nameOrBrackets;
+            if (isNumber(varName)) {
+                throw new WrongArgumentException("variable name", "number");
+            }
+        } else {
+            arrayLength = "";
+        }
+        varName = nameOrBrackets;
+        if (isNumber(varName)) {
+            throw new WrongArgumentException("variable name", "number");
+        }
+
+        return new String[]{varType, arrayLength, varName};
+    }
+
+    private static boolean isBrackets(String toCheck) {
+        return toCheck.startsWith("[") && toCheck.endsWith("]");
     }
 
     private static boolean isNumber(String varName) {
