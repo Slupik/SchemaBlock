@@ -13,6 +13,7 @@ class RpnTokenizer {
 
         StringBuilder tokenBuffer = new StringBuilder();
         boolean quotationMode = false;
+        int arrayBracketsDeepness = 0;
         for(int i=0;i<equation.length();i++) {
             char c = equation.charAt(i);
             Character lastChar = null;
@@ -20,6 +21,7 @@ class RpnTokenizer {
                 lastChar = tokenBuffer.charAt(tokenBuffer.length()-1);
             }
 
+            //String
             if(quotationMode) {
                 tokenBuffer.append(c);
                 if(c=='"') {
@@ -37,6 +39,34 @@ class RpnTokenizer {
                     continue;
                 }
             }
+
+            //Array index
+            if(c==']') {
+                arrayBracketsDeepness--;
+                tokenBuffer.append(']');
+                if(arrayBracketsDeepness==0) {
+                    if(tokenBuffer.length()>0) {
+                        tokens.add(tokenBuffer.toString());
+                    }
+                    tokenBuffer = new StringBuilder();
+                }
+                continue;
+            }
+            if(c=='[') {
+                if(arrayBracketsDeepness==0) {
+                    if(tokenBuffer.length()>0) {
+                        tokens.add(tokenBuffer.toString());
+                    }
+                    tokenBuffer = new StringBuilder();
+                }
+                arrayBracketsDeepness++;
+            }
+            if(arrayBracketsDeepness>0) {
+                tokenBuffer.append(c);
+                continue;
+            }
+
+            //Normal Code
             if(isCharEndingToken(c)) {
                 if(isGroupOperator(c)) {
                     if(isSingleOperator(c) && equation.length()>i+1 && (!isGroupOperator(equation.charAt(i+1)) || isSingleOperator(equation.charAt(i+1)))) {
