@@ -15,6 +15,7 @@ public class LineTokenizer {
 
         boolean autoAppendMode = false;
         boolean isProbablyEquation = false;
+        int arrayBracketsDeepness = 0;
         StringBuilder tokenBuilder = new StringBuilder();
         for(int i=0;i<line.length();i++) {
             char c = line.charAt(i);
@@ -24,18 +25,44 @@ public class LineTokenizer {
                 continue;
             }
 
-            if(!autoAppendMode) {
-                if(c=='(' || c==')') {
-                    if(isProbablyEquation) {
-                        autoAppendMode = true;
-                        flushBuffer(tokens, tokenBuilder);
-                        tokenBuilder = new StringBuilder();
-                        tokenBuilder.append(c);
-                        continue;
+            //Array index
+            if(c==']') {
+                arrayBracketsDeepness--;
+                tokenBuilder.append(']');
+                if(arrayBracketsDeepness==0) {
+                    if(tokenBuilder.length()>0) {
+                        tokens.add(tokenBuilder.toString());
                     }
+                    tokenBuilder = new StringBuilder();
+                }
+                continue;
+            }
+            if(c=='[') {
+                if(arrayBracketsDeepness==0) {
+                    if(tokenBuilder.length()>0) {
+                        tokens.add(tokenBuilder.toString());
+                    }
+                    tokenBuilder = new StringBuilder();
+                }
+                arrayBracketsDeepness++;
+            }
+            if(arrayBracketsDeepness>0) {
+                tokenBuilder.append(c);
+                continue;
+            }
+
+            //Equation
+            if(c=='(' || c==')') {
+                if(isProbablyEquation) {
+                    autoAppendMode = true;
+                    flushBuffer(tokens, tokenBuilder);
+                    tokenBuilder = new StringBuilder();
+                    tokenBuilder.append(c);
+                    continue;
                 }
             }
 
+            //Normal code
             if(isNumber(tokenBuilder, c)) {
                 if(isProbablyEquation) {
                     autoAppendMode = true;

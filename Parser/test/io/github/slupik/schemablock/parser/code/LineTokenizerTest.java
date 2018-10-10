@@ -21,6 +21,11 @@ class LineTokenizerTest {
         assertEquals("[double, a, =, (3+2*(4-3))]", checkLine("double a = (3+2*(4-3))"));
         assertEquals("[double, a, =, -(3+2*(4-3))]", checkLine("double a = -(3+2*(4-3))"));
         assertEquals("[write, (, a, )]", checkLine("write(a)"));
+        assertEquals("[double, a, []]", checkLine("double a[]"));
+        assertEquals("[double, [], a]", checkLine("double[] a"));
+        assertEquals("[write, (, a, [5], )]", checkLine("write(a[5])"));
+        assertEquals("[write, (, a, [3+2], )]", checkLine("write(a[3+2])"));
+        assertEquals("[write, (, a, [b[3+2]], )]", checkLine("write(a[b[3+2]])"));
     }
 
     private String checkLine(String line) {
