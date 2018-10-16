@@ -24,14 +24,20 @@ public class CodeParser {
         }
 
         if(TEST_MODE) {
+            System.out.println("==============");
             for(String varName:heap.getVariableNames()) {
                 String data = heap.getVariable(varName).toString();
                 System.out.println("data: " + data);
             }
+            System.out.println("==============");
         }
     }
 
     public static void clearHeap() {
         heap.clear();
+    }
+
+    public static VariableHeap getHeap() {
+        return heap;
     }
 }

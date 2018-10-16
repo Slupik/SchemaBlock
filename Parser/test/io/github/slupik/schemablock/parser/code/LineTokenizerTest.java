@@ -26,6 +26,7 @@ class LineTokenizerTest {
         assertEquals("[write, (, a, [5], )]", checkLine("write(a[5])"));
         assertEquals("[write, (, a, [3+2], )]", checkLine("write(a[3+2])"));
         assertEquals("[write, (, a, [b[3+2]], )]", checkLine("write(a[b[3+2]])"));
+        assertEquals("[double, a, ,, b]", checkLine("double a, b"));
     }
 
     private String checkLine(String line) {

@@ -82,6 +82,7 @@ public class CodeExecutor {
                     } else {
                         heap.registerVariable(new Variable(name, type, null));
                     }
+                    i++;
                 } while(i + 1 < tokens.size() && tokens.get(++i).equals(","));
             }
         }
