@@ -119,9 +119,23 @@ public class CodeExecutor {
                 throw new WrongArgumentException("variable name", "number");
             }
         } else {
-            arrayLength = "";
+            if (i + 1 < tokens.size() && isBrackets(tokens.get(i+1))) {
+                nameOrBrackets = tokens.get(i+1);
+                arrayLength = nameOrBrackets.substring(1, nameOrBrackets.length()-1);
+                varName = tokens.get(i);
+
+                if(isBrackets(varName)) {
+                    throw new WrongArgumentException("array name", "array index");
+                }
+                if (isNumber(varName)) {
+                    throw new WrongArgumentException("variable name", "number");
+                }
+
+            } else {
+                arrayLength = "";
+                varName = nameOrBrackets;
+            }
         }
-        varName = nameOrBrackets;
         if (isNumber(varName)) {
             throw new WrongArgumentException("variable name", "number");
         }

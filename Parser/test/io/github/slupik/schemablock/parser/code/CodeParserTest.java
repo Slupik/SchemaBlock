@@ -60,13 +60,12 @@ class CodeParserTest {
         assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a").getType());
         assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("b").getType());
 
-        //FIXME
         CodeParser.clearHeap();
         assertThrows(IncompatibleTypeException.class,
                 () -> CodeParser.execute("double a, b;" +
             "b = a = true;"));
-//        assertEquals("3", CodeParser.getHeap().getVariable("a").getValue());
-//        assertEquals("3", CodeParser.getHeap().getVariable("b").getValue());
+        assertNull(CodeParser.getHeap().getVariable("a").getValue());
+        assertNull(CodeParser.getHeap().getVariable("b").getValue());
         assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a").getType());
         assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("b").getType());
 
@@ -82,9 +81,27 @@ class CodeParserTest {
         assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[3]").getType());
         assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[4]").getType());
 
+        CodeParser.clearHeap();
+        CodeParser.execute("double a[5];");
+        assertNull(CodeParser.getHeap().getVariable("a[0]").getValue());
+        assertNull(CodeParser.getHeap().getVariable("a[1]").getValue());
+        assertNull(CodeParser.getHeap().getVariable("a[2]").getValue());
+        assertNull( CodeParser.getHeap().getVariable("a[3]").getValue());
+        assertNull( CodeParser.getHeap().getVariable("a[4]").getValue());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[0]").getType());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[1]").getType());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[2]").getType());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[3]").getType());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[4]").getType());
+
         //FIXME
-//        CodeParser.clearHeap();
-//        CodeParser.execute("double a[5];");
+        CodeParser.clearHeap();
+        CodeParser.execute("double a[2];" +
+                "a[1]=2;");
+        assertNull(CodeParser.getHeap().getVariable("a[0]").getValue());
+        assertEquals("12", CodeParser.getHeap().getVariable("a[1]").getValue());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[0]").getType());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[1]").getType());
     }
 
     private static void keepImports(){
