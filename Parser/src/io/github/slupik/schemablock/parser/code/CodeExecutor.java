@@ -38,6 +38,20 @@ public class CodeExecutor {
                 if(i+1>=tokens.size()) {
                     throw new WrongArgumentException("variable value", "nothing");
                 }
+                if(isBrackets(varName)) {
+                    String bracketsValue = varName.substring(1, varName.length()-1);
+                    Object result = MathCalculation.getResult(heap, bracketsValue);
+                    int index = ((Integer) result);
+                    if(i>1) {
+                        varName = tokens.get(i-2);
+                        if(isNumber(varName)) {
+                            throw new WrongArgumentException("variable name", "number");
+                        }
+                        varName = varName+"["+index+"]";
+                    } else {
+                        throw new WrongArgumentException("variable value", "nothing");
+                    }
+                }
                 Variable var = heap.getVariable(varName);
                 if(var==null) {
                     throw new VariableNotFound(varName);

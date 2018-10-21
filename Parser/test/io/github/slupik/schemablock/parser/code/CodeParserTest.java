@@ -94,14 +94,47 @@ class CodeParserTest {
         assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[3]").getType());
         assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[4]").getType());
 
-        //FIXME
         CodeParser.clearHeap();
-        CodeParser.execute("double a[2];" +
-                "a[1]=2;");
+        CodeParser.execute("double a[3];" +
+                "a[1]=2;"+
+                "a[2]=3122;"
+        );
         assertNull(CodeParser.getHeap().getVariable("a[0]").getValue());
-        assertEquals("12", CodeParser.getHeap().getVariable("a[1]").getValue());
+        assertEquals("2", CodeParser.getHeap().getVariable("a[1]").getValue());
+        assertEquals("3122", CodeParser.getHeap().getVariable("a[2]").getValue());
         assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[0]").getType());
         assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[1]").getType());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[1]").getType());
+
+        CodeParser.clearHeap();
+        CodeParser.execute(
+                "int i = 2;" +
+                "double a[3];" +
+                "a[1]=2;"+
+                "a[i]=3122;"
+        );
+        assertNull(CodeParser.getHeap().getVariable("a[0]").getValue());
+        assertEquals("2", CodeParser.getHeap().getVariable("a[1]").getValue());
+        assertEquals("3122", CodeParser.getHeap().getVariable("a[2]").getValue());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[0]").getType());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[1]").getType());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[1]").getType());
+
+        //FIXME
+        CodeParser.clearHeap();
+        CodeParser.execute("double a[3];" +
+                "a[1]=2;"+
+                "a[2]=3122;" +
+                "double b = a[2];"
+        );
+        assertNull(CodeParser.getHeap().getVariable("a[0]").getValue());
+        assertEquals("2", CodeParser.getHeap().getVariable("a[1]").getValue());
+        assertEquals("3122", CodeParser.getHeap().getVariable("a[2]").getValue());
+        assertEquals("3122", CodeParser.getHeap().getVariable("b").getValue());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[0]").getType());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[1]").getType());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[1]").getType());
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("b").getType());
     }
 
     private static void keepImports(){
