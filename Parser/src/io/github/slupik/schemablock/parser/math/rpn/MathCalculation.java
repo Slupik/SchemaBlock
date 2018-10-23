@@ -32,12 +32,46 @@ public class MathCalculation {
 
     public static Object getResult(VariableHeap heap, String value) throws UnsupportedValueException, InvalidArgumentsException, NotFoundTypeException {
         List<String> rawTokens = RpnTokenizer.getEquationAsTokens(value);
-        List<String> tokens = new ArrayList<>();
-        for(String raw:rawTokens) {
-            tokens.add(getParsedToken(heap, raw));
-        }
+        List<String> tokens = getParsedTokens(heap, rawTokens);
         List<String> rpn = new ArrayList<>(InfixToRpnConverter.convertInfixToRPN(tokens.toArray(new String[0])));
         return RpnCalculation.calculate(rpn);
+    }
+
+    private static List<String> getParsedTokens(VariableHeap heap, List<String> rawTokens) throws InvalidArgumentsException, UnsupportedValueException, NotFoundTypeException {
+        List<String> parsedTokens = new ArrayList<>();
+        for(int i=0;i<rawTokens.size();i++) {
+            String raw = rawTokens.get(i);
+            raw = raw.trim();
+            if(raw.equals("+") || raw.equals("-") || raw.equals("/") || raw.equals("*") || raw.equals("(") || raw.equals(")")) {
+                parsedTokens.add(raw);
+                continue;
+            }
+            if(isNumber(raw)) {
+                parsedTokens.add(raw);
+                continue;
+            }
+            MathPattern function = FUNCTIONS.getForName(getFunctionName(raw));
+            if(function!=null) {
+                parsedTokens.add(String.valueOf(function.calculate(raw)));
+                continue;
+            }
+            if(i+1<rawTokens.size()) {
+                String brackets = rawTokens.get(i+1);
+                if(isBrackets(brackets)) {
+                    String arrayLength = brackets.substring(1, brackets.length()-1);
+                    Object result = MathCalculation.getResult(heap, arrayLength);
+                    raw = raw+"["+result+"]";
+                    i++;
+                }
+            }
+            Variable variable = heap.getVariable(raw);
+            if(variable!=null) {
+                parsedTokens.add(variable.getValue());
+                continue;
+            }
+            parsedTokens.add(raw);
+        }
+        return parsedTokens;
     }
 
     private static String getParsedToken(VariableHeap heap, String raw) throws UnsupportedValueException, InvalidArgumentsException, NotFoundTypeException {
@@ -57,6 +91,10 @@ public class MathCalculation {
             return variable.getValue();
         }
         return raw;
+    }
+
+    private static boolean isBrackets(String toCheck) {
+        return toCheck.startsWith("[") && toCheck.endsWith("]");
     }
 
     private static boolean isNumber(String raw) {

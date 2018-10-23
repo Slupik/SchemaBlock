@@ -39,15 +39,8 @@ public class CodeExecutor {
                     throw new WrongArgumentException("variable value", "nothing");
                 }
                 if(isBrackets(varName)) {
-                    String bracketsValue = varName.substring(1, varName.length()-1);
-                    Object result = MathCalculation.getResult(heap, bracketsValue);
-                    int index = ((Integer) result);
                     if(i>1) {
-                        varName = tokens.get(i-2);
-                        if(isNumber(varName)) {
-                            throw new WrongArgumentException("variable name", "number");
-                        }
-                        varName = varName+"["+index+"]";
+                        varName = getVarNameForTable(heap, tokens.get(i-2), varName);
                     } else {
                         throw new WrongArgumentException("variable value", "nothing");
                     }
@@ -58,6 +51,12 @@ public class CodeExecutor {
                 }
 
                 String varValue = tokens.get(i+1);
+                if(i+2<tokens.size()) {
+                    String maybeBrackets = tokens.get(i+2);
+                    if(isBrackets(maybeBrackets)) {
+                        varValue = getVarNameForTable(heap, varValue, maybeBrackets);
+                    }
+                }
                 Object result = MathCalculation.getResult(heap, varValue);
 
                 ValueType resultType = ValueType.getStandardizedType(result);
@@ -72,6 +71,17 @@ public class CodeExecutor {
         }
 
         return false;
+    }
+
+    private static String getVarNameForTable(VariableHeap heap, String varName, String brackets) throws WrongArgumentException, InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException {
+        String bracketsValue = brackets.substring(1, brackets.length()-1);
+        Object result = MathCalculation.getResult(heap, bracketsValue);
+        int index = ((Integer) result);
+        if(isNumber(brackets)) {
+            throw new WrongArgumentException("variable name", "number");
+        }
+        varName = varName+"["+index+"]";
+        return varName;
     }
 
     private static void createVariables(VariableHeap heap, List<String> tokens) throws WrongArgumentException, VariableIsAlreadyDefinedException, InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException {
