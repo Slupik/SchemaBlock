@@ -63,7 +63,7 @@ public class CodeExecutor {
                 if(ValueType.isCompatible(var.getType(), resultType)) {
                     var.setValue(result.toString());
                 } else {
-                    throw new IncompatibleTypeException(resultType, var.getType());
+                    throw new IncompatibleTypeException(var.getType(), resultType);
                 }
 
                 i--;
