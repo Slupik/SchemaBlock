@@ -4,6 +4,7 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsExce
 import io.github.slupik.schemablock.parser.math.rpn.pattern.MathPattern;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternPow;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
 import io.github.slupik.schemablock.parser.math.rpn.variable.Variable;
@@ -22,6 +23,7 @@ public class MathCalculation {
     private static final PatternFinder FUNCTIONS = new PatternFinder();
 
     static {
+        FUNCTIONS.registerPattern(new MathPatternPow());
         FUNCTIONS.registerPattern(new MathPatternSqrt());
         FUNCTIONS.registerPattern(new MathPatternSum());
     }

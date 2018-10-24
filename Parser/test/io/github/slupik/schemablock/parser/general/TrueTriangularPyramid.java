@@ -43,7 +43,7 @@ public class TrueTriangularPyramid {
         CodeParser.execute(
                 "double pp = a*a*a*sqrt(3)/4;"+
                         "double pc = 4*pp;"+
-                        "double V = a*a*a*sqrt(2)/12;"
+                        "double V = pow(a, 3)*sqrt(2)/12;"
         );
         assertEquals(field(a), CodeParser.getHeap().getVariable("pc").getAsDouble());
         assertEquals(volume(a), CodeParser.getHeap().getVariable("V").getAsDouble());
