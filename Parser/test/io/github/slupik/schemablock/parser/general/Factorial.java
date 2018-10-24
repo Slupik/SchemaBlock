@@ -30,9 +30,9 @@ public class Factorial {
         int source = 5;
         assertTrue(source>=0);
 
-        CodeParser.execute("long value = 1;" +
-                "int source="+source+";" +
-                "int i = 0;"
+        CodeParser.execute("long    value =     1;" +
+                "int     source     ="+source+";" +
+                "int i =    0;"
         );
         assertEquals(source, CodeParser.getHeap().getVariable("source").getAsInt());
 
@@ -43,10 +43,10 @@ public class Factorial {
             Object result;
             do {
                 CodeParser.execute(
-                        "i=i+1;"+
-                                "value = value*i;"
+                        "i     = i + 1;"+
+                                "value = value * i;"
                 );
-                result = MathCalculation.getResult(CodeParser.getHeap(), "i<source");
+                result = MathCalculation.getResult(CodeParser.getHeap(), "i<   source");
             }while(((Boolean) result));
         }
         assertEquals(factorial(source), CodeParser.getHeap().getVariable("value").getAsLong());
