@@ -44,27 +44,6 @@ public abstract class MathPattern {
         return calculate(values.toArray(new Value[0]));
     }
 
-    protected Value[] parseRawValues(Value... args) throws InvalidArgumentsException, UnsupportedValueException {
-        Value[] parsed = new Value[args.length];
-        for(int i=0;i<args.length;i++) {
-            Value arg = args[i];
-            Object result = 0;
-            try {
-                result = MathCalculation.getResult(arg.getValue().toString());
-            } catch (NotFoundTypeException e) {
-                e.printStackTrace();
-                throw new InvalidArgumentsException();
-            }
-            try {
-                parsed[i] = new Value(ValueType.getStandardizedType(result), result);
-            } catch (NotFoundTypeException e) {
-                e.printStackTrace();
-                throw new InvalidArgumentsException();
-            }
-        }
-        return parsed;
-    }
-
     public String getName() {
         return name;
     }

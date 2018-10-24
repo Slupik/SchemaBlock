@@ -76,25 +76,6 @@ public class MathCalculation {
         return parsedTokens;
     }
 
-    private static String getParsedToken(VariableHeap heap, String raw) throws UnsupportedValueException, InvalidArgumentsException, NotFoundTypeException {
-        raw = raw.trim();
-        if(raw.equals("+") || raw.equals("-") || raw.equals("/") || raw.equals("*") || raw.equals("(") || raw.equals(")")) {
-            return raw;
-        }
-        if(isNumber(raw)) {
-            return raw;
-        }
-        MathPattern function = FUNCTIONS.getForName(getFunctionName(raw));
-        if(function!=null) {
-            return String.valueOf(function.calculate(raw));
-        }
-        Variable variable = heap.getVariable(raw);
-        if(variable!=null) {
-            return variable.getValue();
-        }
-        return raw;
-    }
-
     private static boolean isBrackets(String toCheck) {
         return toCheck.startsWith("[") && toCheck.endsWith("]");
     }
