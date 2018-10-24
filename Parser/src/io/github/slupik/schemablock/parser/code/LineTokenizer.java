@@ -25,6 +25,22 @@ public class LineTokenizer {
                 continue;
             }
 
+            if(isCharEndingToken(c) && (c=='=' || !isProbablyEquation)) {
+                if(c=='=') {
+                    isProbablyEquation = true;
+                }
+
+                flushBuffer(tokens, tokenBuilder);
+                tokenBuilder = new StringBuilder();
+
+                if(!Character.isWhitespace(c)) {
+                    tokenBuilder.append(c);
+                }
+                flushBuffer(tokens, tokenBuilder);
+                tokenBuilder = new StringBuilder();
+                continue;
+            }
+
             //Array index
             if(c==']') {
                 arrayBracketsDeepness--;
@@ -55,8 +71,8 @@ public class LineTokenizer {
             if(c=='(' || c==')') {
                 if(isProbablyEquation) {
                     autoAppendMode = true;
-                    flushBuffer(tokens, tokenBuilder);
-                    tokenBuilder = new StringBuilder();
+//                    flushBuffer(tokens, tokenBuilder);
+//                    tokenBuilder = new StringBuilder();
                     tokenBuilder.append(c);
                     continue;
                 }
@@ -75,26 +91,6 @@ public class LineTokenizer {
                 continue;
             } else if(isProbablyEquation && (c=='+' || c=='-')) {
                 autoAppendMode = true;
-            }
-
-            if (!Character.isWhitespace(c) && c!='+' && c!='-') {
-                isProbablyEquation = false;
-            }
-
-            if(isCharEndingToken(c)) {
-                if(c=='=') {
-                    isProbablyEquation = true;
-                }
-
-                flushBuffer(tokens, tokenBuilder);
-                tokenBuilder = new StringBuilder();
-
-                if(!Character.isWhitespace(c)) {
-                    tokenBuilder.append(c);
-                }
-                flushBuffer(tokens, tokenBuilder);
-                tokenBuilder = new StringBuilder();
-                continue;
             }
 
             if(Character.isWhitespace(c)) {

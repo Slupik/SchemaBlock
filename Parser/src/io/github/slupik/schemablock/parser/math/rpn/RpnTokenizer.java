@@ -16,6 +16,7 @@ class RpnTokenizer {
         int arrayBracketsDeepness = 0;
         for(int i=0;i<equation.length();i++) {
             char c = equation.charAt(i);
+
             Character lastChar = null;
             if(tokenBuffer.length()>0) {
                 lastChar = tokenBuffer.charAt(tokenBuffer.length()-1);
@@ -89,7 +90,6 @@ class RpnTokenizer {
                     }
                     continue;
                 }
-
                 if(tokenBuffer.length()>0) {
                     tokens.add(tokenBuffer.toString());
                     tokenBuffer = new StringBuilder();
