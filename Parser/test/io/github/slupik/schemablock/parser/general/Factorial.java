@@ -48,6 +48,10 @@ public class Factorial {
                 );
                 result = MathCalculation.getResult(CodeParser.getHeap(), "i<   source");
             }while(((Boolean) result));
+        } else {
+            CodeParser.execute(
+                            "value = 1;"
+            );
         }
         assertEquals(factorial(source), CodeParser.getHeap().getVariable("value").getAsLong());
     }
