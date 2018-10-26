@@ -8,11 +8,11 @@ import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
 /**
  * All rights reserved & copyright ©
  */
-public class StopBlock implements Element {
+public class StopBlock extends ElementBase implements Element {
 
     @Override
     public ElementType getType() {
-        return ElementType.START;
+        return ElementType.STOP;
     }
 
     @Override
