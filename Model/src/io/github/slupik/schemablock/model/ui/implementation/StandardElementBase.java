@@ -19,7 +19,7 @@ import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeE
 /**
  * All rights reserved & copyright ©
  */
-public abstract class StandardElementBase implements StandardElement {
+public abstract class StandardElementBase extends ElementBase implements StandardElement {
 
     private String codeToRun = "";
     private ElementInput input;
@@ -44,7 +44,7 @@ public abstract class StandardElementBase implements StandardElement {
         CodeParser.execute(codeToRun);
     }
 
-    protected Object runAndResult() throws InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException {
+    protected Object runAndGetResult() throws InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException {
         return MathCalculation.getResult(CodeParser.getHeap(), codeToRun);
     }
 

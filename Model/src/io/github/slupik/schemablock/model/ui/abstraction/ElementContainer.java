@@ -1,7 +1,8 @@
 package io.github.slupik.schemablock.model.ui.abstraction;
 
 import io.github.slupik.schemablock.model.ui.exception.NextElementNotFound;
-import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
+import io.github.slupik.schemablock.model.ui.implementation.ElementInContainerNotFound;
+import io.github.slupik.schemablock.model.ui.implementation.StartBlockNotFound;
 import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
 import io.github.slupik.schemablock.parser.code.VariableNotFound;
 import io.github.slupik.schemablock.parser.code.WrongArgumentException;
@@ -13,13 +14,11 @@ import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeE
 /**
  * All rights reserved & copyright ©
  */
-public interface Element {
-    ElementType getType();
+public interface ElementContainer {
 
-    void run() throws InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException, NextElementNotFound, VariableNotFound, WrongArgumentException, VariableIsAlreadyDefinedException, IncompatibleTypeException;
+    void run() throws NotFoundTypeException, IncompatibleTypeException, UnsupportedValueException, VariableIsAlreadyDefinedException, NextElementNotFound, WrongArgumentException, InvalidArgumentsException, VariableNotFound, StartBlockNotFound;
 
-    String stringify();
-    void load(String data) throws BlockParserException;
-
-    String getId();
+    void addElement(Element element);
+    Element getElement(String id) throws ElementInContainerNotFound;
+    void removeElement(String id);
 }

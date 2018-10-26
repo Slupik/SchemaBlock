@@ -31,7 +31,7 @@ public class ConditionBlock extends StandardElementBase implements ConditionalEl
 
     @Override
     public void run() throws InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException, NextElementNotFound, VariableNotFound, WrongArgumentException, VariableIsAlreadyDefinedException, IncompatibleTypeException {
-        if(((Boolean) runAndResult())) {
+        if(((Boolean) runAndGetResult())) {
             if(elementOnTrue!=null) {
                 elementOnTrue.run();
             } else {

@@ -61,7 +61,7 @@ class MathCalculationTest {
 
         assertEquals(-3, MathCalculation.getResult("sum((-3))"));
         //FIXME priority: LOW
-//        assertEquals(sqrt(3), MathCalculation.runAndResult("sqrt((3))"));
+//        assertEquals(sqrt(3), MathCalculation.runAndGetResult("sqrt((3))"));
 
 
         assertEquals(3<<5, MathCalculation.getResult("3<<5"));
@@ -113,7 +113,7 @@ class MathCalculationTest {
         assertEquals(((1>a)==true) && (b+1)>4, MathCalculation.getResult(heap, "((1>a)==true) && (b+1)>4"));
 
         //FIXME priority: LOW
-//        assertEquals((((((1)>a)==true) && ((b=b+1)>4)) || (c!=0)), MathCalculation.runAndResult(heap, "(((((+1)>a)==0) && ((b=b+1)>4)) || (c!=0))"));
+//        assertEquals((((((1)>a)==true) && ((b=b+1)>4)) || (c!=0)), MathCalculation.runAndGetResult(heap, "(((((+1)>a)==0) && ((b=b+1)>4)) || (c!=0))"));
     }
 
     private static void keepImports() throws NotFoundTypeException {
