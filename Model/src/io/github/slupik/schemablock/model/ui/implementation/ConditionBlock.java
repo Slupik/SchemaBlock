@@ -26,7 +26,7 @@ public class ConditionBlock extends StandardElementBase implements ConditionalEl
 
     @Override
     public ElementType getType() {
-        return ElementType.START;
+        return ElementType.CONDITION;
     }
 
     @Override
@@ -34,7 +34,11 @@ public class ConditionBlock extends StandardElementBase implements ConditionalEl
         if(((Boolean) runAndResult())) {
             if(elementOnTrue!=null) {
                 elementOnTrue.run();
-            } else if(elementOnFalse!=null) {
+            } else {
+                throw new NextElementNotFound();
+            }
+        } else {
+            if(elementOnFalse!=null) {
                 elementOnFalse.run();
             } else {
                 throw new NextElementNotFound();
