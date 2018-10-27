@@ -1,9 +1,9 @@
-package io.github.slupik.schemablock.model.ui.implementation;
+package io.github.slupik.schemablock.model.ui.implementation.element.specific;
 
-import io.github.slupik.schemablock.model.ui.abstraction.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
-import io.github.slupik.schemablock.model.ui.abstraction.OperationElement;
-import io.github.slupik.schemablock.model.ui.exception.NextElementNotFound;
+import io.github.slupik.schemablock.model.ui.abstraction.element.OperationElement;
+import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
+import io.github.slupik.schemablock.model.ui.implementation.element.StandardElementBase;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
 import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
 import io.github.slupik.schemablock.parser.code.VariableNotFound;
@@ -18,11 +18,11 @@ import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeE
  */
 public class CalculationBlock extends StandardElementBase implements OperationElement {
 
-    private Element nextElement;
+    private String nextElement;
 
     @Override
-    public void setNextElement(Element element) {
-        nextElement = element;
+    public void setNextElement(String elementId) {
+        nextElement = elementId;
     }
 
     @Override
@@ -32,12 +32,10 @@ public class CalculationBlock extends StandardElementBase implements OperationEl
 
     @Override
     public void run() throws InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException, NextElementNotFound, VariableNotFound, WrongArgumentException, VariableIsAlreadyDefinedException, IncompatibleTypeException {
+        onStart();
         justRunCode();
-        if(nextElement!=null) {
-            nextElement.run();
-        } else {
-            throw new NextElementNotFound();
-        }
+        tryRun(nextElement);
+        onStop();
     }
 
     @Override
@@ -45,7 +43,7 @@ public class CalculationBlock extends StandardElementBase implements OperationEl
         ElementPOJO pojo = getPreCreatedPOJO();
         pojo.nextBlocks = new String[1];
         if(nextElement!=null) {
-            pojo.nextBlocks[0] = nextElement.stringify();
+            pojo.nextBlocks[0] = nextElement;
         }
         return pojo;
     }

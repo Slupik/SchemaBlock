@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.model.ui.implementation;
+package io.github.slupik.schemablock.model.ui.implementation.container;
 
 /**
  * All rights reserved & copyright ©

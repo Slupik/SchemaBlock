@@ -1,7 +1,7 @@
 package io.github.slupik.schemablock.model.ui.parser;
 
-import io.github.slupik.schemablock.model.ui.abstraction.Element;
-import io.github.slupik.schemablock.model.ui.implementation.*;
+import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.*;
 
 /**
  * All rights reserved & copyright ©

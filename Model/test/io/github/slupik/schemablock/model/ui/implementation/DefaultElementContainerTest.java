@@ -1,10 +1,16 @@
 package io.github.slupik.schemablock.model.ui.implementation;
 
-import io.github.slupik.schemablock.model.ui.abstraction.ConditionalElement;
-import io.github.slupik.schemablock.model.ui.abstraction.Element;
-import io.github.slupik.schemablock.model.ui.abstraction.OperationElement;
-import io.github.slupik.schemablock.model.ui.abstraction.StartElement;
-import io.github.slupik.schemablock.model.ui.exception.NextElementNotFound;
+import io.github.slupik.schemablock.model.ui.abstraction.element.ConditionalElement;
+import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
+import io.github.slupik.schemablock.model.ui.abstraction.element.OperationElement;
+import io.github.slupik.schemablock.model.ui.abstraction.element.StartElement;
+import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
+import io.github.slupik.schemablock.model.ui.implementation.container.DefaultElementContainer;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.CalculationBlock;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.ConditionBlock;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.StartBlock;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.StopBlock;
+import io.github.slupik.schemablock.model.ui.implementation.container.StartBlockNotFound;
 import io.github.slupik.schemablock.parser.code.CodeParser;
 import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
 import io.github.slupik.schemablock.parser.code.VariableNotFound;
@@ -36,8 +42,8 @@ class DefaultElementContainerTest {
                 "int b = " + b + ";");
         Element stop = new StopBlock();
 
-        start.setNextElement(calc);
-        calc.setNextElement(stop);
+        start.setNextElement(calc.getId());
+        calc.setNextElement(stop.getId());
 
         container.addElement(start);
         container.addElement(calc);
@@ -77,13 +83,13 @@ class DefaultElementContainerTest {
 
         Element stop = new StopBlock();
 
-        start.setNextElement(init);
-        init.setNextElement(zeroCheck);
-        zeroCheck.setOnFalse(calculateIfZero);
-        zeroCheck.setOnTrue(loopCondition);
-        loopCondition.setOnTrue(calculateInLoop);
-        calculateInLoop.setNextElement(loopCondition);
-        loopCondition.setOnFalse(stop);
+        start.setNextElement(init.getId());
+        init.setNextElement(zeroCheck.getId());
+        zeroCheck.setOnFalse(calculateIfZero.getId());
+        zeroCheck.setOnTrue(loopCondition.getId());
+        loopCondition.setOnTrue(calculateInLoop.getId());
+        calculateInLoop.setNextElement(loopCondition.getId());
+        loopCondition.setOnFalse(stop.getId());
 
         container.addElement(start);
         container.addElement(init);
@@ -136,12 +142,12 @@ class DefaultElementContainerTest {
 
         Element stop = new StopBlock();
 
-        start.setNextElement(init);
-        init.setNextElement(loopCondition);
-        loopCondition.setOnTrue(calculateInLoop);
-        calculateInLoop.setNextElement(loopCondition);
-        loopCondition.setOnFalse(calculateNWW);
-        calculateNWW.setNextElement(stop);
+        start.setNextElement(init.getId());
+        init.setNextElement(loopCondition.getId());
+        loopCondition.setOnTrue(calculateInLoop.getId());
+        calculateInLoop.setNextElement(loopCondition.getId());
+        loopCondition.setOnFalse(calculateNWW.getId());
+        calculateNWW.setNextElement(stop.getId());
 
         container.addElement(start);
         container.addElement(init);
@@ -192,11 +198,11 @@ class DefaultElementContainerTest {
 
         Element stop = new StopBlock();
 
-        start.setNextElement(init);
-        init.setNextElement(validation);
-        validation.setOnTrue(mainCalc);
-        mainCalc.setNextElement(stop);
-        validation.setOnFalse(stop);
+        start.setNextElement(init.getId());
+        init.setNextElement(validation.getId());
+        validation.setOnTrue(mainCalc.getId());
+        mainCalc.setNextElement(stop.getId());
+        validation.setOnFalse(stop.getId());
 
         container.addElement(start);
         container.addElement(init);

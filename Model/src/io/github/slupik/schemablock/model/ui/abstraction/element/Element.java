@@ -1,6 +1,8 @@
-package io.github.slupik.schemablock.model.ui.abstraction;
+package io.github.slupik.schemablock.model.ui.abstraction.element;
 
-import io.github.slupik.schemablock.model.ui.exception.NextElementNotFound;
+import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
+import io.github.slupik.schemablock.model.ui.abstraction.controller.ElementCallback;
+import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
 import io.github.slupik.schemablock.parser.code.VariableNotFound;
@@ -20,6 +22,9 @@ public interface Element {
 
     String stringify();
     void load(String data) throws BlockParserException;
+
+    void registerCallback(ElementCallback callback);
+    void unregisterCallback(ElementCallback callback);
 
     String getId();
 }

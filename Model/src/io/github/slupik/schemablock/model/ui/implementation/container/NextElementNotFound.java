@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.model.ui.exception;
+package io.github.slupik.schemablock.model.ui.implementation.container;
 
 /**
  * All rights reserved & copyright ©

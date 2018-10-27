@@ -1,8 +1,9 @@
-package io.github.slupik.schemablock.model.ui.abstraction;
+package io.github.slupik.schemablock.model.ui.abstraction.container;
 
-import io.github.slupik.schemablock.model.ui.exception.NextElementNotFound;
-import io.github.slupik.schemablock.model.ui.implementation.ElementInContainerNotFound;
-import io.github.slupik.schemablock.model.ui.implementation.StartBlockNotFound;
+import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
+import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
+import io.github.slupik.schemablock.model.ui.implementation.container.ElementInContainerNotFound;
+import io.github.slupik.schemablock.model.ui.implementation.container.StartBlockNotFound;
 import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
 import io.github.slupik.schemablock.parser.code.VariableNotFound;
 import io.github.slupik.schemablock.parser.code.WrongArgumentException;

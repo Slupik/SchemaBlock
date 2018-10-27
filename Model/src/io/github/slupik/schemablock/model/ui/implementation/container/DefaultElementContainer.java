@@ -1,9 +1,9 @@
-package io.github.slupik.schemablock.model.ui.implementation;
+package io.github.slupik.schemablock.model.ui.implementation.container;
 
-import io.github.slupik.schemablock.model.ui.abstraction.Element;
-import io.github.slupik.schemablock.model.ui.abstraction.ElementContainer;
+import io.github.slupik.schemablock.model.ui.abstraction.controller.ElementCallback;
+import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
+import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
-import io.github.slupik.schemablock.model.ui.exception.NextElementNotFound;
 import io.github.slupik.schemablock.parser.code.CodeParser;
 import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
 import io.github.slupik.schemablock.parser.code.VariableNotFound;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * All rights reserved & copyright ©
  */
-public class DefaultElementContainer implements ElementContainer {
+public class DefaultElementContainer implements ElementContainer, ElementCallback {
 
     private final List<Element> elements = new ArrayList<>();
     private Element start;
@@ -46,6 +46,7 @@ public class DefaultElementContainer implements ElementContainer {
                 start = element;
             }
             elements.add(element);
+            element.registerCallback(this);
         }
     }
 
@@ -68,10 +69,35 @@ public class DefaultElementContainer implements ElementContainer {
                     start = null;
                 }
                 toDelete.add(element);
+                element.unregisterCallback(this);
             }
         }
         for(Element element:toDelete) {
             elements.remove(element);
+        }
+    }
+
+    @Override
+    public void onStart() {
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
+
+    @Override
+    public void onStop(Object result) {
+
+    }
+
+    @Override
+    public void onTryRun(String elementId) throws NotFoundTypeException, IncompatibleTypeException, UnsupportedValueException, VariableIsAlreadyDefinedException, NextElementNotFound, WrongArgumentException, InvalidArgumentsException, VariableNotFound {
+        try {
+            getElement(elementId).run();
+        } catch (ElementInContainerNotFound elementInContainerNotFound) {
+            throw new NextElementNotFound();
         }
     }
 }

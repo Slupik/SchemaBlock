@@ -1,10 +1,10 @@
-package io.github.slupik.schemablock.model.ui.implementation;
+package io.github.slupik.schemablock.model.ui.implementation.element.specific;
 
 import com.google.gson.Gson;
-import io.github.slupik.schemablock.model.ui.abstraction.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
-import io.github.slupik.schemablock.model.ui.abstraction.StartElement;
-import io.github.slupik.schemablock.model.ui.exception.NextElementNotFound;
+import io.github.slupik.schemablock.model.ui.abstraction.element.StartElement;
+import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
+import io.github.slupik.schemablock.model.ui.implementation.element.ElementBase;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
 import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
 import io.github.slupik.schemablock.parser.code.VariableNotFound;
@@ -19,7 +19,7 @@ import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeE
  */
 public class StartBlock extends ElementBase implements StartElement {
 
-    private Element nextElement;
+    private String nextElement;
 
     @Override
     public ElementType getType() {
@@ -27,17 +27,15 @@ public class StartBlock extends ElementBase implements StartElement {
     }
 
     @Override
-    public void setNextElement(Element element) {
-        nextElement = element;
+    public void setNextElement(String elementId) {
+        nextElement = elementId;
     }
 
     @Override
     public void run() throws NextElementNotFound, NotFoundTypeException, IncompatibleTypeException, UnsupportedValueException, VariableIsAlreadyDefinedException, VariableNotFound, WrongArgumentException, InvalidArgumentsException {
-        if(nextElement!=null) {
-            nextElement.run();
-        } else {
-            throw new NextElementNotFound();
-        }
+        onStart();
+        tryRun(nextElement);
+        onStop();
     }
 
     @Override

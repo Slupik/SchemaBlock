@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.model.ui.abstraction;
+package io.github.slupik.schemablock.model.ui.abstraction.element;
 
 import io.github.slupik.schemablock.model.control.ElementInput;
 import io.github.slupik.schemablock.model.control.ElementOutput;

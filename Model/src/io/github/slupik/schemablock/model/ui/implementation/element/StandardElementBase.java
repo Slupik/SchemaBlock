@@ -1,9 +1,9 @@
-package io.github.slupik.schemablock.model.ui.implementation;
+package io.github.slupik.schemablock.model.ui.implementation.element;
 
 import com.google.gson.Gson;
 import io.github.slupik.schemablock.model.control.ElementInput;
 import io.github.slupik.schemablock.model.control.ElementOutput;
-import io.github.slupik.schemablock.model.ui.abstraction.StandardElement;
+import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
 import io.github.slupik.schemablock.parser.code.CodeParser;
