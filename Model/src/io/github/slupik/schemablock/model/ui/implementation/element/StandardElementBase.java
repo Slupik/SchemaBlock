@@ -1,8 +1,6 @@
 package io.github.slupik.schemablock.model.ui.implementation.element;
 
 import com.google.gson.Gson;
-import io.github.slupik.schemablock.model.control.ElementInput;
-import io.github.slupik.schemablock.model.control.ElementOutput;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
@@ -22,22 +20,10 @@ import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeE
 public abstract class StandardElementBase extends ElementBase implements StandardElement {
 
     private String codeToRun = "";
-    private ElementInput input;
-    private ElementOutput output;
 
     @Override
     public void setContent(String content) {
         codeToRun = content;
-    }
-
-    @Override
-    public void setInput(ElementInput input) {
-        this.input = input;
-    }
-
-    @Override
-    public void setOutput(ElementOutput output) {
-        this.output = output;
     }
 
     protected void justRunCode() throws IncompatibleTypeException, InvalidArgumentsException, UnsupportedValueException, VariableIsAlreadyDefinedException, VariableNotFound, WrongArgumentException, NotFoundTypeException {
