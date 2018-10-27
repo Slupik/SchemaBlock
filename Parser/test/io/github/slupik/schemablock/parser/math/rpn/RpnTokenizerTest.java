@@ -72,6 +72,8 @@ class RpnTokenizerTest {
         checkCase("[double, b, [a[5-4]]]", "double b[a[5-4]]");
 
         checkCase("[a, *, a, *, a, *, sqrt, (, 3, ), /, 4]", "a*a*a*sqrt(3)/4");
+
+        checkCase("[String, aaa, =, \"foo bar\"]", "String aaa = \"foo bar\"");
     }
 
     private void checkCase(String expected, String input) {

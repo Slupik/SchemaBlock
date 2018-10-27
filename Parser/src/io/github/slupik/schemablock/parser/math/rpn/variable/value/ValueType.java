@@ -14,8 +14,8 @@ public enum ValueType {
     LONG(Long.class,true, true),
     FLOAT(Float.class,true, false),
     DOUBLE(Double.class,true, false),
-    STRING(String.class,false, false);
-
+    STRING(String.class,false, false),
+    ENUM(Object.class,false, false);
     public final boolean isNumber;
     public final boolean isByteCompatible;
     public final Serializable javaType;
@@ -28,7 +28,7 @@ public enum ValueType {
 
     public static ValueType getStandardizedType(Object value) throws NotFoundTypeException {
         if(value==null) {
-            throw new NotFoundTypeException(null);
+            return ENUM;
         }
         if(value instanceof Short) return SHORT;
         if(value instanceof Integer) return INT;
@@ -102,6 +102,10 @@ public enum ValueType {
 
         if(value.startsWith("\"") && value.endsWith("\"")) {
             return STRING;
+        }
+
+        if(value.equals("SHORT") || value.equals("INTEGER") || value.equals("DOUBLE") || value.equals("FLOAT") || value.equals("STRING")) {
+            return ENUM;
         }
 
         throw new NotFoundTypeException(value);

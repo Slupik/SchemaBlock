@@ -4,8 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Entity/0 Entity.iml" filepath="$PROJECT_DIR$/Entity/0 Entity.iml" />
       <module fileurl="file://$PROJECT_DIR$/Model/1 Model.iml" filepath="$PROJECT_DIR$/Model/1 Model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Parser/1 Parser.iml" filepath="$PROJECT_DIR$/Parser/1 Parser.iml" />
       <module fileurl="file://$PROJECT_DIR$/Logic/2 Logic.iml" filepath="$PROJECT_DIR$/Logic/2 Logic.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Parser/2 Parser.iml" filepath="$PROJECT_DIR$/Parser/2 Parser.iml" />
       <module fileurl="file://$PROJECT_DIR$/JavaFx/3 JavaFx.iml" filepath="$PROJECT_DIR$/JavaFx/3 JavaFx.iml" />
       <module fileurl="file://$PROJECT_DIR$/SchemaBlock.iml" filepath="$PROJECT_DIR$/SchemaBlock.iml" />
     </modules>

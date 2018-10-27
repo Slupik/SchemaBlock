@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 import static java.lang.Math.sqrt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * All rights reserved & copyright ©
@@ -29,7 +28,6 @@ public class TrueTriangularPyramid {
     @Test
     void checkStandard() throws IncompatibleTypeException, InvalidArgumentsException, UnsupportedValueException, VariableIsAlreadyDefinedException, VariableNotFound, WrongArgumentException, NotFoundTypeException {
         double a = 7;
-        assertTrue(a>0);
 
         CodeParser.execute(
                 "double a="+a+";"

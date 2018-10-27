@@ -25,6 +25,22 @@ public class LineTokenizer {
                 continue;
             }
 
+            if(c=='\"') {
+                if(
+                        (tokenBuilder.length()>1 && tokenBuilder.charAt(tokenBuilder.length()-1)=='\\')
+                                && (tokenBuilder.length()<2 || tokenBuilder.charAt(tokenBuilder.length()-2)!='\\')
+                ) {
+                    tokenBuilder = new StringBuilder(tokenBuilder.substring(0, tokenBuilder.length()-2));
+                    tokenBuilder.append(c);
+                } else {
+                    autoAppendMode = true;
+                    flushBuffer(tokens, tokenBuilder);
+                    tokenBuilder = new StringBuilder();
+                    tokenBuilder.append(c);
+                }
+                continue;
+            }
+
             if(isCharEndingToken(c) && (c=='=' || !isProbablyEquation)) {
                 if(c=='=') {
                     isProbablyEquation = true;

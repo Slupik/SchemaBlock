@@ -4,12 +4,10 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsExce
 import io.github.slupik.schemablock.parser.math.rpn.pattern.MathPattern;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternPow;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
 import io.github.slupik.schemablock.parser.math.rpn.variable.Variable;
 import io.github.slupik.schemablock.parser.math.rpn.variable.VariableHeap;
 import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.ValueType;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
@@ -23,9 +21,7 @@ public class MathCalculation {
     private static final PatternFinder FUNCTIONS = new PatternFinder();
 
     static {
-        FUNCTIONS.registerPattern(new MathPatternPow());
-        FUNCTIONS.registerPattern(new MathPatternSqrt());
-        FUNCTIONS.registerPattern(new MathPatternSum());
+        FUNCTIONS.registerDefaultPatterns();
     }
 
     public static Object getResult(String value) throws UnsupportedValueException, InvalidArgumentsException, NotFoundTypeException {
@@ -68,7 +64,11 @@ public class MathCalculation {
             }
             Variable variable = heap.getVariable(raw);
             if(variable!=null) {
-                parsedTokens.add(variable.getValue());
+                if(variable.getType()== ValueType.STRING) {
+                    parsedTokens.add("\""+variable.getValue()+"\"");
+                } else {
+                    parsedTokens.add(variable.getValue());
+                }
                 continue;
             }
             parsedTokens.add(raw);
