@@ -25,6 +25,9 @@ public class ProgramPrintln extends MathPattern {
     public Object getResult(Value... args) throws InvalidArgumentsException, UnsupportedValueException {
         if(isValidArgs(args)) {
             String value = args[0].getValue();
+            if(value.startsWith("\"") && value.endsWith("\"")) {
+                value = value.substring(1, value.length()-1);
+            }
             io.print(value+'\n');
             return null;
         } else {

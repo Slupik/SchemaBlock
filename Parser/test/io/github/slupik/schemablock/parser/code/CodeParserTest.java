@@ -3,6 +3,8 @@ package io.github.slupik.schemablock.parser.code;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.special.IOproxy;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.special.ProgramPrint;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.special.ProgramPrintln;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.special.ProgramRead;
 import io.github.slupik.schemablock.parser.math.rpn.variable.VariableIsAlreadyDefinedException;
 import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
@@ -179,7 +181,6 @@ class CodeParserTest {
     }
 
     @Test
-    //FIXME
     void checkPrintFunction() throws IncompatibleTypeException, InvalidArgumentsException, UnsupportedValueException, VariableIsAlreadyDefinedException, VariableNotFound, WrongArgumentException, NotFoundTypeException {
         String val1 = "23.5";
         String val2 = "\"Cool test\"";
@@ -195,7 +196,6 @@ class CodeParserTest {
             @Override
             public void print(String print) {
                 loop++;
-                System.out.println(loop);
                 if(loop==1) {
                     assertEquals(val1, print);
                 }
@@ -205,7 +205,8 @@ class CodeParserTest {
                 }
             }
         };
-        ProgramRead.setIo(io);
+        ProgramPrint.setIo(io);
+        ProgramPrintln.setIo(io);
 
         CodeParser.clearHeap();
         CodeParser.execute("double number = " + val1 + ";" +

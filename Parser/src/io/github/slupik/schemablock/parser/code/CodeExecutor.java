@@ -21,13 +21,14 @@ public class CodeExecutor {
 
     public static boolean execute(VariableHeap heap, List<String> tokens) throws WrongArgumentException, VariableIsAlreadyDefinedException, VariableNotFound, InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException, IncompatibleTypeException {
 
-        createVariables(heap, tokens);
+        boolean isSomethingDid = createVariables(heap, tokens);
 
         for(int i=tokens.size()-1;i>=0;i--) {
             String token = tokens.get(i);
 
             //set value to variable
             if(token.equals("=")) {
+                isSomethingDid = true;
                 if(i<1) {
                     throw new WrongArgumentException("variable name", "nothing");
                 }
@@ -69,6 +70,14 @@ public class CodeExecutor {
                 i--;
             }
         }
+        if(!isSomethingDid) {
+            StringBuilder toExecute = new StringBuilder();
+            for(String token:tokens) {
+                toExecute.append(" ");
+                toExecute.append(token);
+            }
+            MathCalculation.getResult(heap, toExecute.toString());
+        }
 
         return false;
     }
@@ -84,7 +93,8 @@ public class CodeExecutor {
         return varName;
     }
 
-    private static void createVariables(VariableHeap heap, List<String> tokens) throws WrongArgumentException, VariableIsAlreadyDefinedException, InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException {
+    private static boolean createVariables(VariableHeap heap, List<String> tokens) throws WrongArgumentException, VariableIsAlreadyDefinedException, InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException {
+        boolean createdVar = false;
         for(int i=0;i<tokens.size();i++) {
             String token = tokens.get(i);
 
@@ -100,16 +110,19 @@ public class CodeExecutor {
                         if(lengthResult instanceof Integer) {
                             Integer length = ((Integer) lengthResult);
                             heap.registerArray(type, name, length);
+                            createdVar = true;
                         } else {
                             throw new WrongArgumentException("length of array in integer", "length in type "+type);
                         }
                     } else {
                         heap.registerVariable(new Variable(name, type, null));
+                        createdVar = true;
                     }
                     i++;
                 } while(i + 1 < tokens.size() && tokens.get(++i).equals(","));
             }
         }
+        return createdVar;
     }
 
     private static String[] getStandardizedCreation(List<String> tokens) throws WrongArgumentException {

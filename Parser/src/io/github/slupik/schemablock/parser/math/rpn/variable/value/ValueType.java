@@ -28,7 +28,7 @@ public enum ValueType {
 
     public static ValueType getStandardizedType(Object value) throws NotFoundTypeException {
         if(value==null) {
-            throw new NotFoundTypeException(null);
+            return ENUM;
         }
         if(value instanceof Short) return SHORT;
         if(value instanceof Integer) return INT;
