@@ -7,6 +7,7 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueExce
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternPow;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.special.ProgramRead;
 import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
 import io.github.slupik.schemablock.parser.math.rpn.variable.value.Value;
 import io.github.slupik.schemablock.parser.math.rpn.variable.value.ValueType;
@@ -26,6 +27,7 @@ class RpnCalculation {
         FUNCTIONS.registerPattern(new MathPatternPow());
         FUNCTIONS.registerPattern(new MathPatternSqrt());
         FUNCTIONS.registerPattern(new MathPatternSum());
+        FUNCTIONS.registerPattern(new ProgramRead());
     }
 
     static Object calculate(List<String> rpnTokens) throws InvalidArgumentsException, UnsupportedValueException, NotFoundTypeException {
@@ -49,7 +51,7 @@ class RpnCalculation {
             } else {
                 try {
                     Value value = new Value(ValueType.getStandardizedType(token), token);
-                    if(value.getType().isNumber || value.getType()==ValueType.STRING || value.getType() == ValueType.BOOLEAN) {
+                    if(value.getType().isNumber || value.getType()==ValueType.STRING || value.getType() == ValueType.BOOLEAN || value.getType() == ValueType.ENUM) {
                         stack.add(value);
                         continue;
                     }

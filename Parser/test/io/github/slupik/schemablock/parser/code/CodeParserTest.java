@@ -2,14 +2,14 @@ package io.github.slupik.schemablock.parser.code;
 
 import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.special.IOproxy;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.special.ProgramRead;
 import io.github.slupik.schemablock.parser.math.rpn.variable.VariableIsAlreadyDefinedException;
 import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
 import io.github.slupik.schemablock.parser.math.rpn.variable.value.ValueType;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * All rights reserved & copyright ©
@@ -136,6 +136,46 @@ class CodeParserTest {
         assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[1]").getType());
         assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("a[1]").getType());
         assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("b").getType());
+    }
+
+    @Test
+    void checkReadFunction() throws IncompatibleTypeException, InvalidArgumentsException, UnsupportedValueException, VariableIsAlreadyDefinedException, VariableNotFound, WrongArgumentException, NotFoundTypeException {
+        String val1 = "23.5";
+        String val2 = "Cool test";
+        String valDefault = "0xDEADBEEF";
+
+        IOproxy io = new IOproxy() {
+            private int loop = 0;
+
+            @Override
+            public String readLine() {
+                loop++;
+                if(loop==1) {
+                    return val1;
+                }
+                if(loop==2) {
+                    return val2;
+                }
+                return valDefault;
+            }
+
+            @Override
+            public void print(String print) {
+
+            }
+        };
+        ProgramRead.setIo(io);
+
+        CodeParser.clearHeap();
+        CodeParser.execute("double number;" +
+                "String value;" +
+                "number = read(DOUBLE);"+
+                "value = read(STRING);"
+        );
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("number").getType());
+        assertEquals(ValueType.STRING, CodeParser.getHeap().getVariable("value").getType());
+        assertEquals(val1, CodeParser.getHeap().getVariable("number").getValue());
+        assertEquals(val2, CodeParser.getHeap().getVariable("value").getValue());
     }
 
     private static void keepImports(){
