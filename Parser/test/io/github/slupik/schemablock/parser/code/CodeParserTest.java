@@ -179,9 +179,10 @@ class CodeParserTest {
     }
 
     @Test
+    //FIXME
     void checkPrintFunction() throws IncompatibleTypeException, InvalidArgumentsException, UnsupportedValueException, VariableIsAlreadyDefinedException, VariableNotFound, WrongArgumentException, NotFoundTypeException {
         String val1 = "23.5";
-        String val2 = "\"Cooltest\"";
+        String val2 = "\"Cool test\"";
 
         IOproxy io = new IOproxy() {
             private int loop = 0;
@@ -194,12 +195,12 @@ class CodeParserTest {
             @Override
             public void print(String print) {
                 loop++;
+                System.out.println(loop);
                 if(loop==1) {
                     assertEquals(val1, print);
                 }
                 if(loop==2) {
                     String excepted = val2.substring(1, val2.length()-1);
-                    System.out.println("value "+excepted);
                     assertEquals(excepted, print);
                 }
             }
