@@ -64,8 +64,7 @@ public abstract class StandardElementBase extends ElementBase implements Standar
     }
 
     @Override
-    public void load(String data) throws BlockParserException {
-        ElementPOJO pojo = new Gson().fromJson(data, ElementPOJO.class);
+    protected void load(ElementPOJO pojo) throws BlockParserException {
         codeToRun = pojo.content;
     }
 }

@@ -1,9 +1,12 @@
 package io.github.slupik.schemablock.model.ui.implementation.container;
 
+import com.google.gson.Gson;
+import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
+import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.abstraction.controller.ElementCallback;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
-import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
-import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
+import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
+import io.github.slupik.schemablock.model.ui.parser.ElementParser;
 import io.github.slupik.schemablock.parser.code.CodeParser;
 import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
 import io.github.slupik.schemablock.parser.code.VariableNotFound;
@@ -22,16 +25,16 @@ import java.util.List;
 public class DefaultElementContainer implements ElementContainer, ElementCallback {
 
     private final List<Element> elements = new ArrayList<>();
-    private Element start;
+    private String start;
 
     @Override
     public void run() throws NotFoundTypeException, IncompatibleTypeException, UnsupportedValueException, VariableIsAlreadyDefinedException, NextElementNotFound, WrongArgumentException, InvalidArgumentsException, VariableNotFound, StartBlockNotFound {
 
         CodeParser.clearHeap();
 
-        if(start!=null) {
-            start.run();
-        } else {
+        try {
+            getElement(start).run();
+        } catch (ElementInContainerNotFound elementInContainerNotFound) {
             throw new StartBlockNotFound();
         }
     }
@@ -43,7 +46,7 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
                 if(start!=null) {
                     removeElement(element.getId());
                 }
-                start = element;
+                start = element.getId();
             }
             elements.add(element);
             element.registerCallback(this);
@@ -74,6 +77,30 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
         }
         for(Element element:toDelete) {
             elements.remove(element);
+        }
+    }
+
+    @Override
+    public String stringify() {
+        ElementContainerPOJO pojo = new ElementContainerPOJO();
+        pojo.startElement = start;
+        for(Element element:elements) {
+            pojo.elements.add(element.stringify());
+        }
+        return new Gson().toJson(pojo);
+    }
+
+    @Override
+    public void load(String data) {
+        ElementContainerPOJO pojo = new Gson().fromJson(data, ElementContainerPOJO.class);
+        start = pojo.startElement;
+        for(String elementString:pojo.elements) {
+            try {
+                Element element = ElementParser.parse(elementString);
+                addElement(element);
+            } catch (BlockParserException e) {
+                e.printStackTrace();
+            }
         }
     }
 

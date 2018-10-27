@@ -1,6 +1,5 @@
 package io.github.slupik.schemablock.model.ui.implementation.element.specific;
 
-import com.google.gson.Gson;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.ConditionalElement;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
@@ -53,9 +52,8 @@ public class ConditionBlock extends StandardElementBase implements ConditionalEl
     }
 
     @Override
-    public void load(String data) throws BlockParserException {
-        ElementPOJO pojo = new Gson().fromJson(data, ElementPOJO.class);
-
+    protected void load(ElementPOJO pojo) throws BlockParserException {
+        super.load(pojo);
         for(String element:pojo.nextBlocks) {
             restoreElement(element);
         }

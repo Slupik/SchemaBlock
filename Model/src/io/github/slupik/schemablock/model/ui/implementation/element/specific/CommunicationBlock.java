@@ -4,6 +4,7 @@ import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.OperationElement;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.element.StandardElementBase;
+import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
 import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
 import io.github.slupik.schemablock.parser.code.VariableNotFound;
@@ -46,5 +47,10 @@ public class CommunicationBlock extends StandardElementBase implements Operation
             pojo.nextBlocks[0] = nextElement;
         }
         return pojo;
+    }
+
+    @Override
+    protected void load(ElementPOJO pojo) throws BlockParserException {
+        nextElement = pojo.nextBlocks[0];
     }
 }

@@ -1,8 +1,11 @@
 package io.github.slupik.schemablock.model.ui.implementation.element;
 
+import com.google.gson.Gson;
 import io.github.slupik.schemablock.model.ui.abstraction.controller.ElementCallback;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
+import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
+import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
 import io.github.slupik.schemablock.model.utils.RandomString;
 import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
 import io.github.slupik.schemablock.parser.code.VariableNotFound;
@@ -37,6 +40,14 @@ public abstract class ElementBase implements Element {
     public void unregisterCallback(ElementCallback callback) {
         callbacks.remove(callback);
     }
+
+    @Override
+    public final void load(String data) throws BlockParserException {
+        ElementPOJO pojo = new Gson().fromJson(data, ElementPOJO.class);
+        load(pojo);
+    }
+
+    protected abstract void load(ElementPOJO pojo) throws BlockParserException;
 
     protected final void onStart(){
         for(ElementCallback callback:callbacks) {

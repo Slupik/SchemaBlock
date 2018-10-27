@@ -223,5 +223,55 @@ class DefaultElementContainerTest {
     private double field(double a) {
         double pp = a*a*a*sqrt(3)/4;
         return 4*pp;
+    }    @Test
+
+    void checkStringify() throws StartBlockNotFound, NotFoundTypeException, VariableNotFound, WrongArgumentException, UnsupportedValueException, NextElementNotFound, IncompatibleTypeException, VariableIsAlreadyDefinedException, InvalidArgumentsException {
+        double a = 7;
+        DefaultElementContainer container = new DefaultElementContainer();
+
+        StartElement start = new StartBlock();
+
+        OperationElement init = new CalculationBlock();
+        init.setContent("double a="+a+";");
+
+        ConditionalElement validation = new ConditionBlock();
+        validation.setContent("a>0");
+
+        OperationElement mainCalc = new CalculationBlock();
+        mainCalc.setContent(
+                "double pp = a*a*a*sqrt(3)/4;"+
+                        "double pc = 4*pp;"+
+                        "double V = pow(a, 3)*sqrt(2)/12;"
+        );
+
+        Element stop = new StopBlock();
+
+        start.setNextElement(init.getId());
+        init.setNextElement(validation.getId());
+        validation.setOnTrue(mainCalc.getId());
+        mainCalc.setNextElement(stop.getId());
+        validation.setOnFalse(stop.getId());
+
+        container.addElement(start);
+        container.addElement(init);
+        container.addElement(validation);
+        container.addElement(mainCalc);
+        container.addElement(stop);
+
+        container.run();
+
+        assertEquals(field(a), CodeParser.getHeap().getVariable("pc").getAsDouble());
+        assertEquals(volume(a), CodeParser.getHeap().getVariable("V").getAsDouble());
+
+        //Restore
+
+        String saved = container.stringify();
+        DefaultElementContainer containerCopy = new DefaultElementContainer();
+        containerCopy.load(saved);
+
+        container.run();
+
+        assertEquals(field(a), CodeParser.getHeap().getVariable("pc").getAsDouble());
+        assertEquals(volume(a), CodeParser.getHeap().getVariable("V").getAsDouble());
     }
 }

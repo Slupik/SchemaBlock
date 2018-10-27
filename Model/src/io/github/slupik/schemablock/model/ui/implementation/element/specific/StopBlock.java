@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.implementation.element.ElementBase;
+import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
 
 /**
@@ -30,7 +31,7 @@ public class StopBlock extends ElementBase implements Element {
     }
 
     @Override
-    public void load(String data) {
-//        ElementPOJO pojo = new Gson().fromJson(data, ElementPOJO.class);
+    protected void load(ElementPOJO pojo) throws BlockParserException {
+
     }
 }

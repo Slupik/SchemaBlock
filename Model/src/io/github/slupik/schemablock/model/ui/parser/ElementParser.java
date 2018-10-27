@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.model.ui.parser;
 
+import com.google.gson.Gson;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.*;
 
@@ -7,26 +8,35 @@ import io.github.slupik.schemablock.model.ui.implementation.element.specific.*;
  * All rights reserved & copyright ©
  */
 public class ElementParser {
-    public static Element parse(ElementPOJO pojo) throws BlockParserException {
+    public static Element parse(String data) throws BlockParserException {
+        ElementPOJO pojo = new Gson().fromJson(data, ElementPOJO.class);
+        Element element;
         switch (pojo.elementType) {
             case START: {
-                return new StartBlock();
+                element = new StartBlock();
+                break;
             }
             case STOP: {
-                return new StopBlock();
+                element = new StopBlock();
+                break;
             }
             case CALCULATION: {
-                return new CalculationBlock();
+                element = new CalculationBlock();
+                break;
             }
             case CONDITION: {
-                return new ConditionBlock();
+                element = new ConditionBlock();
+                break;
             }
             case COMMUNICATION: {
-                return new CommunicationBlock();
+                element = new CommunicationBlock();
+                break;
             }
             default: {
                 throw new BlockParserException("Not found block for type "+pojo.elementType);
             }
         }
+        element.load(data);
+        return element;
     }
 }

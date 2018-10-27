@@ -5,6 +5,7 @@ import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StartElement;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.element.ElementBase;
+import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
 import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
 import io.github.slupik.schemablock.parser.code.VariableNotFound;
@@ -42,11 +43,13 @@ public class StartBlock extends ElementBase implements StartElement {
     public String stringify() {
         ElementPOJO pojo = new ElementPOJO();
         pojo.elementType = getType();
+        pojo.nextBlocks = new String[1];
+        pojo.nextBlocks[0] = nextElement;
         return new Gson().toJson(pojo);
     }
 
     @Override
-    public void load(String data) {
-//        ElementPOJO pojo = new Gson().fromJson(data, ElementPOJO.class);
+    protected void load(ElementPOJO pojo) throws BlockParserException {
+        nextElement = pojo.nextBlocks[0];
     }
 }

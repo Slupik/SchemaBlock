@@ -22,4 +22,7 @@ public interface ElementContainer {
     void addElement(Element element);
     Element getElement(String id) throws ElementInContainerNotFound;
     void removeElement(String id);
+
+    String stringify();
+    void load(String data);
 }
