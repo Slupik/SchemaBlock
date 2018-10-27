@@ -4,10 +4,6 @@ import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsExce
 import io.github.slupik.schemablock.parser.math.rpn.pattern.MathPattern;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.PatternFinder;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternPow;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSqrt;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.MathPatternSum;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.specific.special.ProgramRead;
 import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
 import io.github.slupik.schemablock.parser.math.rpn.variable.value.Value;
 import io.github.slupik.schemablock.parser.math.rpn.variable.value.ValueType;
@@ -24,10 +20,7 @@ class RpnCalculation {
     private static final PatternFinder FUNCTIONS = new PatternFinder();
 
     static {
-        FUNCTIONS.registerPattern(new MathPatternPow());
-        FUNCTIONS.registerPattern(new MathPatternSqrt());
-        FUNCTIONS.registerPattern(new MathPatternSum());
-        FUNCTIONS.registerPattern(new ProgramRead());
+        FUNCTIONS.registerDefaultPatterns();
     }
 
     static Object calculate(List<String> rpnTokens) throws InvalidArgumentsException, UnsupportedValueException, NotFoundTypeException {
