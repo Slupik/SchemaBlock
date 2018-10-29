@@ -19,8 +19,8 @@ import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeE
  */
 public class ConditionBlock extends StandardElementBase implements ConditionalElement {
 
-    private String elementOnFalse;
-    private String elementOnTrue;
+    private String elementOnFalse = "";
+    private String elementOnTrue = "";
 
     @Override
     public ElementType getType() {
@@ -78,5 +78,29 @@ public class ConditionBlock extends StandardElementBase implements ConditionalEl
     @Override
     public void setOnTrue(String elementId) {
         elementOnTrue = elementId;
+    }
+
+    @Override
+    public String getOnFalse() {
+        return elementOnFalse;
+    }
+
+    @Override
+    public String getOnTrue() {
+        return elementOnTrue;
+    }
+
+    @Override
+    public void removeOnFalse(String elementId) {
+        if(elementOnFalse.equals(elementId)) {
+            elementOnFalse = "";
+        }
+    }
+
+    @Override
+    public void removeOnTrue(String elementId) {
+        if(elementOnTrue.equals(elementId)) {
+            elementOnTrue = "";
+        }
     }
 }

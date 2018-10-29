@@ -26,6 +26,11 @@ public abstract class StandardElementBase extends ElementBase implements Standar
         codeToRun = content;
     }
 
+    @Override
+    public String getContent() {
+        return codeToRun;
+    }
+
     protected void justRunCode() throws IncompatibleTypeException, InvalidArgumentsException, UnsupportedValueException, VariableIsAlreadyDefinedException, VariableNotFound, WrongArgumentException, NotFoundTypeException {
         CodeParser.execute(codeToRun);
     }

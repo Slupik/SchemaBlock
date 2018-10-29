@@ -5,4 +5,6 @@ package io.github.slupik.schemablock.model.ui.abstraction.element;
  */
 public interface OperationElement extends StandardElement {
     void setNextElement(String elementId);
+    String getNextElement();
+    void removeNextElement(String elementId);
 }

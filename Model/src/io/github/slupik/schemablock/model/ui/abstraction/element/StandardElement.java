@@ -5,4 +5,5 @@ package io.github.slupik.schemablock.model.ui.abstraction.element;
  */
 public interface StandardElement extends Element {
     void setContent(String content);
+    String getContent();
 }

@@ -19,11 +19,23 @@ import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeE
  */
 public class CalculationBlock extends StandardElementBase implements OperationElement {
 
-    private String nextElement;
+    private String nextElement = "";
 
     @Override
     public void setNextElement(String elementId) {
         nextElement = elementId;
+    }
+
+    @Override
+    public String getNextElement() {
+        return nextElement;
+    }
+
+    @Override
+    public void removeNextElement(String elementId) {
+        if(nextElement.equals(elementId)) {
+            nextElement = "";
+        }
     }
 
     @Override

@@ -5,4 +5,6 @@ package io.github.slupik.schemablock.model.ui.abstraction.element;
  */
 public interface StartElement extends Element {
     void setNextElement(String elementId);
+    String getNextElement();
+    void removeNextElement(String elementId);
 }
