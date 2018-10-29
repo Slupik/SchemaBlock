@@ -36,15 +36,14 @@ public class ElementSizeBinder {
             getMainContainer().setPrefWidth(rect.getWidth());
             getMainContainer().setPrefHeight(rect.getHeight());
 
-            rect.widthProperty().bind(getMainContainer().widthProperty());
-            rect.heightProperty().bind(getMainContainer().heightProperty());
-
-            rect.setLayoutX(0);
-            rect.setLayoutY(0);
+            rect.widthProperty().bind(getMainContainer().prefWidthProperty());
+            rect.heightProperty().bind(getMainContainer().prefHeightProperty());
         }
 
         getDescContainer().minWidthProperty().bind(getMainContainer().widthProperty());
         getDescContainer().minHeightProperty().bind(getMainContainer().heightProperty());
+        getDescContainer().prefWidthProperty().bind(getMainContainer().widthProperty());
+        getDescContainer().prefHeightProperty().bind(getMainContainer().heightProperty());
         getDescContainer().maxWidthProperty().bind(getMainContainer().widthProperty());
         getDescContainer().maxHeightProperty().bind(getMainContainer().heightProperty());
 
@@ -94,13 +93,13 @@ public class ElementSizeBinder {
     }
 
     private Label getDesc() {
-        return input.getDesc();
+        return input.getDescLabel();
     }
 
     public interface Input {
         Pane getMainContainer();
         Shape getVisibleShape();
         VBox getDescContainer();
-        Label getDesc();
+        Label getDescLabel();
     }
 }

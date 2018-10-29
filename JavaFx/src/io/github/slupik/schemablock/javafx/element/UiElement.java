@@ -13,7 +13,7 @@ public interface UiElement {
 
     void setDesc(String desc);
 
-    void setLogicElement(Element element);
+    void setLogicElement(Element element) throws WrongTypeOfElement;
     Element getLogicElement();
 
     String getElementId();

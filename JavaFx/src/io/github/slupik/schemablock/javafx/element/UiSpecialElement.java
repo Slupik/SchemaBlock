@@ -27,6 +27,12 @@ public abstract class UiSpecialElement extends UiElementBase implements ElementS
     private ElementSizeBinder size;
 
     @Override
+    protected void onPostInit() {
+        super.onPostInit();
+        setElementSize(100, 62);
+    }
+
+    @Override
     protected String getResourcePath() {
         return "/element/specialElement.fxml";
     }
@@ -37,8 +43,8 @@ public abstract class UiSpecialElement extends UiElementBase implements ElementS
     }
 
     @Override
-    protected String getContentDesc() {
-        return getDesc().getText();
+    protected String getDesc() {
+        return getDescLabel().getText();
     }
 
     @Override
@@ -57,12 +63,12 @@ public abstract class UiSpecialElement extends UiElementBase implements ElementS
     }
 
     @Override
-    public Label getDesc() {
+    public Label getDescLabel() {
         return desc;
     }
 
     @Override
     public void setDesc(String desc) {
-        getDesc().setText(desc);
+        getDescLabel().setText(desc);
     }
 }

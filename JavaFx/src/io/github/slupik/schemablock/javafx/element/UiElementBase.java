@@ -18,8 +18,7 @@ public abstract class UiElementBase extends Pane implements UiElement {
     private Element element;
 
     public UiElementBase(){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-                getResourcePath()));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(getResourcePath()));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -36,7 +35,6 @@ public abstract class UiElementBase extends Pane implements UiElement {
 
     private void init() {
         size = new ElementSizeBinder(getBinderInput());
-        size.setSize(100, 62);
     }
 
     protected abstract ElementSizeBinder.Input getBinderInput();
@@ -60,7 +58,7 @@ public abstract class UiElementBase extends Pane implements UiElement {
     }
 
     @Override
-    public void setLogicElement(Element element) {
+    public void setLogicElement(Element element) throws WrongTypeOfElement {
         this.element = element;
     }
 
@@ -74,13 +72,13 @@ public abstract class UiElementBase extends Pane implements UiElement {
         UiElementPOJO pojo = new UiElementPOJO();
         pojo.layoutX = getLayoutX();
         pojo.layoutY = getLayoutY();
-        pojo.desc = getContentDesc();
+        pojo.desc = getDesc();
         pojo.elementId = getId();
         pojo.type = getType();
         return new Gson().toJson(pojo);
     }
 
-    protected abstract String getContentDesc();
+    protected abstract String getDesc();
 
     protected abstract UiElementType getType();
 
@@ -92,8 +90,8 @@ public abstract class UiElementBase extends Pane implements UiElement {
         setDesc(pojo.desc);
         try {
             setLogicElement(container.getElement(pojo.elementId));
-        } catch (ElementInContainerNotFound elementInContainerNotFound) {
-            elementInContainerNotFound.printStackTrace();
+        } catch (ElementInContainerNotFound | WrongTypeOfElement e) {
+            e.printStackTrace();
         }
     }
 
