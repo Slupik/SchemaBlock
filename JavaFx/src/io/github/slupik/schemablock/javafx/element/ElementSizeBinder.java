@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.javafx.element;
 
+import io.github.slupik.schemablock.javafx.element.custom.CustomPolygon;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -16,12 +17,17 @@ public class ElementSizeBinder {
 
     private final Input input;
 
+    private double defaultWidth;
+    private double defaultHeight;
+
     public ElementSizeBinder(Input input){
         this.input = input;
         run();
     }
 
     private void run() {
+        defaultWidth = getMainContainer().getPrefWidth();
+        defaultHeight = getMainContainer().getPrefHeight();
         if(getShape() instanceof Ellipse) {
             Ellipse ellipse = (Ellipse) getShape();
 
@@ -38,6 +44,14 @@ public class ElementSizeBinder {
 
             rect.widthProperty().bind(getMainContainer().prefWidthProperty());
             rect.heightProperty().bind(getMainContainer().prefHeightProperty());
+        } else if(getShape() instanceof CustomPolygon) {
+            CustomPolygon polygon = (CustomPolygon) getShape();
+
+            getMainContainer().setPrefWidth(polygon.getWidth());
+            getMainContainer().setPrefHeight(polygon.getHeight());
+
+            polygon.widthProperty().bind(getMainContainer().prefWidthProperty());
+            polygon.heightProperty().bind(getMainContainer().prefHeightProperty());
         }
 
         getDescContainer().minWidthProperty().bind(getMainContainer().widthProperty());
@@ -47,8 +61,14 @@ public class ElementSizeBinder {
         getDescContainer().maxWidthProperty().bind(getMainContainer().widthProperty());
         getDescContainer().maxHeightProperty().bind(getMainContainer().heightProperty());
 
-        getDesc().maxWidthProperty().bind(getMainContainer().widthProperty());
-        getDesc().maxHeightProperty().bind(getMainContainer().heightProperty());
+        if(getShape() instanceof CustomPolygon) {
+            CustomPolygon polygon = (CustomPolygon) getShape();
+            getDesc().maxWidthProperty().bind(polygon.innerWidthProperty());
+            getDesc().maxHeightProperty().bind(polygon.innerHeightProperty());
+        } else {
+            getDesc().maxWidthProperty().bind(getMainContainer().widthProperty());
+            getDesc().maxHeightProperty().bind(getMainContainer().heightProperty());
+        }
 
         getDescContainer().setAlignment(Pos.CENTER);
     }

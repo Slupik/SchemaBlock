@@ -27,11 +27,14 @@ public abstract class UiElementBase extends Pane implements UiElement {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        onPreInit();
         init();
         onPostInit();
     }
 
     protected abstract String getResourcePath();
+
+    protected void onPreInit() {}
 
     private void init() {
         size = new ElementSizeBinder(getBinderInput());
