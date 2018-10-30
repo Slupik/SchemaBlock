@@ -53,7 +53,7 @@ public abstract class UiSpecialElement extends UiElementBase implements ElementS
     }
 
     @Override
-    public Shape getVisibleShape() {
+    public Shape getBackgroundElement() {
         return shape;
     }
 

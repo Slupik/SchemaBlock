@@ -1,14 +1,14 @@
 package io.github.slupik.schemablock.javafx.element;
 
-import io.github.slupik.schemablock.javafx.element.custom.CustomPolygon;
+import io.github.slupik.schemablock.javafx.element.custom.CustomShape;
+import io.github.slupik.schemablock.javafx.element.custom.CustomShapeBase;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
@@ -26,24 +26,16 @@ public class ElementSizeBinder {
     }
 
     private void run() {
-        if(getShape() instanceof Ellipse) {
-            Ellipse ellipse = (Ellipse) getShape();
+        if(getBackgroundElement() instanceof Ellipse) {
+            Ellipse ellipse = (Ellipse) getBackgroundElement();
 
             getMainContainer().setPrefWidth(ellipse.getRadiusX()*2);
             getMainContainer().setPrefHeight(ellipse.getRadiusY()*2);
 
             ellipse.radiusXProperty().bind(getMainContainer().widthProperty().divide(2));
             ellipse.radiusYProperty().bind(getMainContainer().heightProperty().divide(2));
-        } else if(getShape() instanceof Rectangle) {
-            Rectangle rect = (Rectangle) getShape();
-
-            getMainContainer().setPrefWidth(rect.getWidth());
-            getMainContainer().setPrefHeight(rect.getHeight());
-
-            rect.widthProperty().bind(getMainContainer().prefWidthProperty());
-            rect.heightProperty().bind(getMainContainer().prefHeightProperty());
-        } else if(getShape() instanceof CustomPolygon) {
-            CustomPolygon polygon = (CustomPolygon) getShape();
+        } else if(getBackgroundElement() instanceof CustomShape) {
+            CustomShape polygon = (CustomShape) getBackgroundElement();
 
             getMainContainer().setPrefWidth(polygon.getOuterWidth());
             getMainContainer().setPrefHeight(polygon.getOuterHeight());
@@ -59,8 +51,8 @@ public class ElementSizeBinder {
         getDescContainer().maxWidthProperty().bind(getMainContainer().widthProperty());
         getDescContainer().maxHeightProperty().bind(getMainContainer().heightProperty());
 
-        if(getShape() instanceof CustomPolygon) {
-            CustomPolygon polygon = (CustomPolygon) getShape();
+        if(getBackgroundElement() instanceof CustomShapeBase) {
+            CustomShapeBase polygon = (CustomShapeBase) getBackgroundElement();
             getDesc().maxWidthProperty().bind(polygon.innerWidthProperty());
             getDesc().maxHeightProperty().bind(polygon.innerHeightProperty());
 
@@ -118,8 +110,8 @@ public class ElementSizeBinder {
 
     private void resetPos() {
         Platform.runLater(()->{
-            if(getShape() instanceof Ellipse) {
-                Ellipse ellipse = (Ellipse) getShape();
+            if(getBackgroundElement() instanceof Ellipse) {
+                Ellipse ellipse = (Ellipse) getBackgroundElement();
 
                 ellipse.setLayoutX(getMainContainer().getWidth()/2);
                 ellipse.setLayoutY(getMainContainer().getHeight()/2);
@@ -131,8 +123,8 @@ public class ElementSizeBinder {
         return input.getMainContainer();
     }
 
-    private Shape getShape() {
-        return input.getVisibleShape();
+    private Node getBackgroundElement() {
+        return input.getBackgroundElement();
     }
 
     private VBox getDescContainer() {
@@ -145,7 +137,7 @@ public class ElementSizeBinder {
 
     public interface Input {
         Pane getMainContainer();
-        Shape getVisibleShape();
+        Node getBackgroundElement();
         VBox getDescContainer();
         Label getDescLabel();
     }

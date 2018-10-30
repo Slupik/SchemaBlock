@@ -7,8 +7,8 @@ public class Rhombus extends CustomPolygon {
 
     @Override
     protected void recreate() {
-        getPoints().clear();
-        getPoints().addAll(
+        shape.getPoints().clear();
+        shape.getPoints().addAll(
                     getOuterWidth()/2, 0d,
                     getOuterWidth(), getOuterHeight()/2,
                     getOuterWidth()/2, getOuterHeight(),
@@ -18,19 +18,11 @@ public class Rhombus extends CustomPolygon {
     }
 
     @Override
-    protected void preInit() {
-        super.preInit();
-        setOuterSize(250, 124);
-        startY.set(0);
-        width.addListener((observable, oldValue, newValue) -> {
-            innerWidth.setValue(newValue.doubleValue()/2);
-            startX.setValue(newValue.doubleValue()/4);
-            recreate();
-        });
-        height.addListener((observable, oldValue, newValue) -> {
-            innerHeight.setValue(newValue.doubleValue()/2);
-            startY.setValue(newValue.doubleValue()/4);
-            recreate();
-        });
+    protected void onDimensionsBinding() {
+        innerWidth.bind(width.divide(2));
+        innerHeight.bind(height.divide(2));
+
+        startX.bind(width.divide(4));
+        startY.bind(height.divide(4));
     }
 }

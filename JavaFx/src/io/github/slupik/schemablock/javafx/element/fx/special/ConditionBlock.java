@@ -8,11 +8,11 @@ import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 
 /**
  * All rights reserved & copyright ©
@@ -64,7 +64,7 @@ public class ConditionBlock extends UiStandardElement {
     }
 
     @Override
-    public Shape getVisibleShape() {
+    public Node getBackgroundElement() {
         return shape;
     }
 
