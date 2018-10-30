@@ -9,7 +9,19 @@ import javafx.scene.shape.Polygon;
 /**
  * All rights reserved & copyright ©
  */
-public abstract class CustomPolygon extends Polygon {
+public abstract class CustomPolygon extends Polygon implements CustomShape {
+
+    public CustomPolygon(){
+        startY.set(0);
+        startX.set(0);
+        preInit();
+        setStroke(Color.BLACK);
+        setStrokeWidth(1);
+    }
+
+    protected void preInit() {}
+
+    protected abstract void recreate();
 
     protected final DoubleProperty innerWidth = new DoublePropertyBase() {
 
@@ -107,67 +119,68 @@ public abstract class CustomPolygon extends Polygon {
         }
     };
 
-    public CustomPolygon(){
-        startY.set(0);
-        startX.set(0);
-        preInit();
-        setStroke(Color.BLACK);
-        setStrokeWidth(1);
-    }
-
-    protected void preInit() {}
-
-    protected abstract void recreate();
-
-    public void setSize(double width, double height){
+    @Override
+    public void setOuterSize(double width, double height){
         this.width.set(width);
         this.height.set(height);
     }
 
-    public void setWidth(double width) {
+    @Override
+    public void setOuterWidth(double width) {
         this.width.set(width);
     }
 
-    public double getWidth() {
+    @Override
+    public double getOuterWidth() {
         return width.get();
     }
 
-    public void setHeight(double height) {
+    @Override
+    public void setOuterHeight(double height) {
         this.height.set(height);
     }
 
-    public double getHeight() {
+    @Override
+    public double getOuterHeight() {
         return height.get();
     }
 
+    @Override
     public double getInnerHeight(){
         return innerHeight.get();
     }
 
+    @Override
     public ReadOnlyDoubleProperty innerHeightProperty(){
         return innerHeight;
     }
 
-    public DoubleProperty heightProperty(){
+    @Override
+    public DoubleProperty outerHeightProperty(){
         return height;
     }
 
+    @Override
     public double getInnerWidth(){
         return innerWidth.get();
     }
 
+    @Override
     public ReadOnlyDoubleProperty innerWidthProperty(){
         return innerWidth;
     }
 
-    public DoubleProperty widthProperty(){
+    @Override
+    public DoubleProperty outerWidthProperty(){
         return width;
     }
 
+    @Override
     public ReadOnlyDoubleProperty innerStartX(){
         return startX;
     }
 
+    @Override
     public ReadOnlyDoubleProperty innerStartY(){
         return startY;
     }

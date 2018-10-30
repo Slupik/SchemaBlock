@@ -45,11 +45,11 @@ public class ElementSizeBinder {
         } else if(getShape() instanceof CustomPolygon) {
             CustomPolygon polygon = (CustomPolygon) getShape();
 
-            getMainContainer().setPrefWidth(polygon.getWidth());
-            getMainContainer().setPrefHeight(polygon.getHeight());
+            getMainContainer().setPrefWidth(polygon.getOuterWidth());
+            getMainContainer().setPrefHeight(polygon.getOuterHeight());
 
-            polygon.widthProperty().bind(getMainContainer().prefWidthProperty());
-            polygon.heightProperty().bind(getMainContainer().prefHeightProperty());
+            polygon.outerWidthProperty().bind(getMainContainer().prefWidthProperty());
+            polygon.outerHeightProperty().bind(getMainContainer().prefHeightProperty());
         }
 
         getDescContainer().minWidthProperty().bind(getMainContainer().widthProperty());

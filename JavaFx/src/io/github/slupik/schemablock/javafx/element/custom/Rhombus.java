@@ -9,18 +9,18 @@ public class Rhombus extends CustomPolygon {
     protected void recreate() {
         getPoints().clear();
         getPoints().addAll(
-                    getWidth()/2, 0d,
-                    getWidth(), getHeight()/2,
-                    getWidth()/2, getHeight(),
-                    0d, getHeight()/2,
-                    getWidth()/2, 0d
+                    getOuterWidth()/2, 0d,
+                    getOuterWidth(), getOuterHeight()/2,
+                    getOuterWidth()/2, getOuterHeight(),
+                    0d, getOuterHeight()/2,
+                    getOuterWidth()/2, 0d
                 );
     }
 
     @Override
     protected void preInit() {
         super.preInit();
-        setSize(250, 124);
+        setOuterSize(250, 124);
         startY.set(0);
         width.addListener((observable, oldValue, newValue) -> {
             innerWidth.setValue(newValue.doubleValue()/2);

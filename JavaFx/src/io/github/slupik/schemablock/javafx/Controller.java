@@ -26,13 +26,13 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         spawnAvailableBlocks();
 //        UiSpecialElement element = new StartElement();
-//        element.setElementSize(100, 200);
+//        element.setOuterSize(100, 200);
 //        vbtest.getChildren().add(element);
 
 //        UiStandardElement element = new OperatingBlock();
 //        vbtest.getChildren().add(element);
-//        element.setWidth(100);
-//        element.setHeight(100);
+//        element.setOuterWidth(100);
+//        element.setOuterHeight(100);
 
 //        UiStandardElement element = new ConditionBlock();
 //        vbtest.getChildren().add(element);
