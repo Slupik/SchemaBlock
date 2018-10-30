@@ -2,10 +2,7 @@ package io.github.slupik.schemablock.javafx;
 
 import io.github.slupik.schemablock.javafx.element.UiSpecialElement;
 import io.github.slupik.schemablock.javafx.element.UiStandardElement;
-import io.github.slupik.schemablock.javafx.element.fx.special.ConditionBlock;
-import io.github.slupik.schemablock.javafx.element.fx.special.IOBlock;
-import io.github.slupik.schemablock.javafx.element.fx.special.OperatingBlock;
-import io.github.slupik.schemablock.javafx.element.fx.special.StartElement;
+import io.github.slupik.schemablock.javafx.element.fx.special.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
@@ -45,7 +42,7 @@ public class Controller implements Initializable {
         UiSpecialElement start = new StartElement();
         start.setElementSize(width, height);
 
-        UiSpecialElement stop = new StartElement();
+        UiSpecialElement stop = new StopElement();
         stop.setElementSize(width, height);
 
         UiStandardElement operating = new OperatingBlock();

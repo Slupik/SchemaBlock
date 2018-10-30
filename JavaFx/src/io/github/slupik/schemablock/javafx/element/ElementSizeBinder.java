@@ -26,15 +26,17 @@ public class ElementSizeBinder {
     }
 
     private void run() {
-        if(getBackgroundElement() instanceof Ellipse) {
-            Ellipse ellipse = (Ellipse) getBackgroundElement();
-
-            getMainContainer().setPrefWidth(ellipse.getRadiusX()*2);
-            getMainContainer().setPrefHeight(ellipse.getRadiusY()*2);
-
-            ellipse.radiusXProperty().bind(getMainContainer().widthProperty().divide(2));
-            ellipse.radiusYProperty().bind(getMainContainer().heightProperty().divide(2));
-        } else if(getBackgroundElement() instanceof CustomShape) {
+//        if(getBackgroundElement() instanceof Ellipse) {
+//            System.out.println("Ellipse");
+//            Ellipse ellipse = (Ellipse) getBackgroundElement();
+//
+//            getMainContainer().setPrefWidth(ellipse.getRadiusX()*2);
+//            getMainContainer().setPrefHeight(ellipse.getRadiusY()*2);
+//
+//            ellipse.radiusXProperty().bind(getMainContainer().widthProperty().divide(2));
+//            ellipse.radiusYProperty().bind(getMainContainer().heightProperty().divide(2));
+//        } else
+        if(getBackgroundElement() instanceof CustomShape) {
             CustomShape polygon = (CustomShape) getBackgroundElement();
 
             getMainContainer().setPrefWidth(polygon.getOuterWidth());
@@ -42,6 +44,8 @@ public class ElementSizeBinder {
 
             polygon.outerWidthProperty().bind(getMainContainer().prefWidthProperty());
             polygon.outerHeightProperty().bind(getMainContainer().prefHeightProperty());
+        } else {
+            System.out.println("ERROR!!!!!!!");
         }
 
         getDescContainer().minWidthProperty().bind(getMainContainer().widthProperty());
