@@ -1,13 +1,14 @@
-package io.github.slupik.schemablock.javafx.element;
+package io.github.slupik.schemablock.javafx.element.fx.special;
 
-import io.github.slupik.schemablock.javafx.element.custom.MyEllipse;
+import io.github.slupik.schemablock.javafx.element.ElementSizeBinder;
+import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
+import io.github.slupik.schemablock.javafx.element.background.MyEllipse;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Ellipse;
 
 /**
  * All rights reserved & copyright ©
@@ -18,11 +19,6 @@ public abstract class UiSpecialElement extends UiElementBase implements ElementS
     private Pane elementContainer;
 
     @FXML
-    private Ellipse shape;
-
-    private MyEllipse shape2;
-
-    @FXML
     private VBox descContainer;
 
     @FXML
@@ -30,16 +26,12 @@ public abstract class UiSpecialElement extends UiElementBase implements ElementS
 
     private ElementSizeBinder size;
 
+    private MyEllipse shape;
+
     @Override
-    protected void onPreInit() {
-        super.onPreInit();
-
-        getMainContainer().getChildren().remove(shape);
-
-        shape2 = new MyEllipse();
-        shape2.setFill(Color.web("#00e860"));
-        getMainContainer().getChildren().add(shape2);
-        shape2.toBack();
+    protected CustomShapeBase createBackgroundElement() {
+        shape = new MyEllipse();
+        return shape;
     }
 
     @Override
@@ -64,7 +56,7 @@ public abstract class UiSpecialElement extends UiElementBase implements ElementS
 
     @Override
     public Node getBackgroundElement() {
-        return shape2;
+        return shape;
     }
 
     @Override

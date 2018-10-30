@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.custom;
+package io.github.slupik.schemablock.javafx.element.background;
 
 /**
  * All rights reserved & copyright ©

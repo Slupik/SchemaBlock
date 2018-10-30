@@ -3,12 +3,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Ellipse?>
 <?import javafx.scene.text.Font?>
 
 <fx:root fx:id="elementContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: transparent;" type="Pane" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Ellipse fx:id="shape" fill="#00e860" layoutX="100.0" layoutY="62.0" radiusX="100.0" radiusY="62.0" stroke="BLACK" strokeType="INSIDE" />
       <VBox fx:id="descContainer" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="124.0" prefWidth="200.0" style="-fx-background-color: transparent;">
          <children>
             <Label fx:id="desc" alignment="CENTER" text="START" textAlignment="CENTER">

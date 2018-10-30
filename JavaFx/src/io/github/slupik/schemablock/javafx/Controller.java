@@ -1,8 +1,12 @@
 package io.github.slupik.schemablock.javafx;
 
-import io.github.slupik.schemablock.javafx.element.UiSpecialElement;
-import io.github.slupik.schemablock.javafx.element.UiStandardElement;
-import io.github.slupik.schemablock.javafx.element.fx.special.*;
+import io.github.slupik.schemablock.javafx.element.fx.standard.UiStandardElement;
+import io.github.slupik.schemablock.javafx.element.fx.special.StartElement;
+import io.github.slupik.schemablock.javafx.element.fx.special.StopElement;
+import io.github.slupik.schemablock.javafx.element.fx.special.UiSpecialElement;
+import io.github.slupik.schemablock.javafx.element.fx.standard.ConditionBlock;
+import io.github.slupik.schemablock.javafx.element.fx.standard.IOBlock;
+import io.github.slupik.schemablock.javafx.element.fx.standard.OperatingBlock;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
@@ -22,17 +26,6 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         spawnAvailableBlocks();
-//        UiSpecialElement element = new StartElement();
-//        element.setOuterSize(100, 200);
-//        vbtest.getChildren().add(element);
-
-//        UiStandardElement element = new OperatingBlock();
-//        vbtest.getChildren().add(element);
-//        element.setOuterWidth(100);
-//        element.setOuterHeight(100);
-
-//        UiStandardElement element = new ConditionBlock();
-//        vbtest.getChildren().add(element);
     }
 
     private void spawnAvailableBlocks() {

@@ -1,7 +1,7 @@
 package io.github.slupik.schemablock.javafx.element;
 
-import io.github.slupik.schemablock.javafx.element.custom.CustomShape;
-import io.github.slupik.schemablock.javafx.element.custom.CustomShapeBase;
+import io.github.slupik.schemablock.javafx.element.background.CustomShape;
+import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -22,20 +22,14 @@ public class ElementSizeBinder {
 
     public ElementSizeBinder(Input input){
         this.input = input;
-        run();
+        try {
+            run();
+        } catch (UnsupportedBackgroundTypeException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void run() {
-//        if(getBackgroundElement() instanceof Ellipse) {
-//            System.out.println("Ellipse");
-//            Ellipse ellipse = (Ellipse) getBackgroundElement();
-//
-//            getMainContainer().setPrefWidth(ellipse.getRadiusX()*2);
-//            getMainContainer().setPrefHeight(ellipse.getRadiusY()*2);
-//
-//            ellipse.radiusXProperty().bind(getMainContainer().widthProperty().divide(2));
-//            ellipse.radiusYProperty().bind(getMainContainer().heightProperty().divide(2));
-//        } else
+    private void run() throws UnsupportedBackgroundTypeException {
         if(getBackgroundElement() instanceof CustomShape) {
             CustomShape polygon = (CustomShape) getBackgroundElement();
 
@@ -45,7 +39,7 @@ public class ElementSizeBinder {
             polygon.outerWidthProperty().bind(getMainContainer().prefWidthProperty());
             polygon.outerHeightProperty().bind(getMainContainer().prefHeightProperty());
         } else {
-            System.out.println("ERROR!!!!!!!");
+            throw new UnsupportedBackgroundTypeException();
         }
 
         getDescContainer().minWidthProperty().bind(getMainContainer().widthProperty());

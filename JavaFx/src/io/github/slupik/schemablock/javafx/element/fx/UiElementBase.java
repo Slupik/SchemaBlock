@@ -1,11 +1,17 @@
-package io.github.slupik.schemablock.javafx.element;
+package io.github.slupik.schemablock.javafx.element.fx;
 
 import com.google.gson.Gson;
+import io.github.slupik.schemablock.javafx.element.ElementSizeBinder;
+import io.github.slupik.schemablock.javafx.element.UiElement;
+import io.github.slupik.schemablock.javafx.element.UiElementType;
+import io.github.slupik.schemablock.javafx.element.WrongTypeOfElement;
+import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.implementation.container.ElementInContainerNotFound;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 
@@ -27,10 +33,20 @@ public abstract class UiElementBase extends Pane implements UiElement {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        initBackground();
         onPreInit();
         init();
         onPostInit();
     }
+
+    private void initBackground() {
+        CustomShapeBase base = createBackgroundElement();
+        base.setFill(Color.web("#00e860"));
+        getBinderInput().getMainContainer().getChildren().add(base);
+        base.toBack();
+    }
+
+    protected abstract CustomShapeBase createBackgroundElement();
 
     protected abstract String getResourcePath();
 

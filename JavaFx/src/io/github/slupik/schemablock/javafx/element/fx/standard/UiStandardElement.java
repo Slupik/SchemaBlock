@@ -1,5 +1,7 @@
-package io.github.slupik.schemablock.javafx.element;
+package io.github.slupik.schemablock.javafx.element.fx.standard;
 
+import io.github.slupik.schemablock.javafx.element.ElementSizeBinder;
+import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 import io.github.slupik.schemablock.model.ui.abstraction.element.OperationElement;
 
 /**

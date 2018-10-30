@@ -1,9 +1,9 @@
-package io.github.slupik.schemablock.javafx.element.fx.special;
+package io.github.slupik.schemablock.javafx.element.fx.standard;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
-import io.github.slupik.schemablock.javafx.element.UiStandardElement;
 import io.github.slupik.schemablock.javafx.element.WrongTypeOfElement;
-import io.github.slupik.schemablock.javafx.element.custom.MyRectangle;
+import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
+import io.github.slupik.schemablock.javafx.element.background.MyRectangle;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.element.OperationElement;
@@ -12,8 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 /**
  * All rights reserved & copyright ©
@@ -24,30 +22,22 @@ public class OperatingBlock extends UiStandardElement {
     private Pane elementContainer;
 
     @FXML
-    private Rectangle shape;
-
-    private MyRectangle shape2;
-
-    @FXML
     private VBox descContainer;
 
     @FXML
     private Label desc;
 
+    private MyRectangle shape;
+
     @Override
-    protected String getResourcePath() {
-        return "/element/operatingElement.fxml";
+    protected CustomShapeBase createBackgroundElement() {
+        shape = new MyRectangle();
+        return shape;
     }
 
     @Override
-    protected void onPreInit() {
-        super.onPreInit();
-        getMainContainer().getChildren().remove(shape);
-
-        shape2 = new MyRectangle();
-        shape2.setFill(Color.web("#00e860"));
-        getMainContainer().getChildren().add(shape2);
-        shape2.toBack();
+    protected String getResourcePath() {
+        return "/element/operatingElement.fxml";
     }
 
     @Override
@@ -71,7 +61,7 @@ public class OperatingBlock extends UiStandardElement {
 
     @Override
     public Node getBackgroundElement() {
-        return shape2;
+        return shape;
     }
 
     @Override
