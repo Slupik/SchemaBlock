@@ -1,7 +1,7 @@
 package io.github.slupik.schemablock.javafx;
 
 import io.github.slupik.schemablock.javafx.element.UiStandardElement;
-import io.github.slupik.schemablock.javafx.element.fx.special.IOBlock;
+import io.github.slupik.schemablock.javafx.element.fx.special.ConditionBlock;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
@@ -25,7 +25,7 @@ public class Controller implements Initializable {
 //        element.setWidth(100);
 //        element.setHeight(100);
 
-        UiStandardElement element = new IOBlock();
+        UiStandardElement element = new ConditionBlock();
         vbtest.getChildren().add(element);
     }
 }
