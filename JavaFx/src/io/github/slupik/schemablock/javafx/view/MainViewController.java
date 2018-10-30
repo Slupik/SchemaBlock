@@ -1,27 +1,56 @@
-package io.github.slupik.schemablock.javafx;
+package io.github.slupik.schemablock.javafx.view;
 
-import io.github.slupik.schemablock.javafx.element.fx.standard.UiStandardElement;
 import io.github.slupik.schemablock.javafx.element.fx.special.StartElement;
 import io.github.slupik.schemablock.javafx.element.fx.special.StopElement;
 import io.github.slupik.schemablock.javafx.element.fx.special.UiSpecialElement;
 import io.github.slupik.schemablock.javafx.element.fx.standard.ConditionBlock;
 import io.github.slupik.schemablock.javafx.element.fx.standard.IOBlock;
 import io.github.slupik.schemablock.javafx.element.fx.standard.OperatingBlock;
+import io.github.slupik.schemablock.javafx.element.fx.standard.UiStandardElement;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.web.WebView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class MainViewController implements Initializable {
+
+    @FXML
+    private Button btnRun;
+
+    @FXML
+    private Button btnDebug;
 
     @FXML
     private HBox availableBlocks;
 
     @FXML
-    private VBox vbtest;
+    private SplitPane centerContainer;
+
+    @FXML
+    private ScrollPane sheetScroller;
+
+    @FXML
+    private Pane sheet;
+
+    @FXML
+    private WebView outputView;
+
+    @FXML
+    private TableView<?> tvVariables;
+
+    @FXML
+    private TableColumn<?, ?> tcVarType;
+
+    @FXML
+    private TableColumn<?, ?> tcVarName;
+
+    @FXML
+    private TableColumn<?, ?> tcVarValue;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

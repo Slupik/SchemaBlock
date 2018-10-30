@@ -5,12 +5,19 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.WebView?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.javafx.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.javafx.view.MainViewController">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -33,7 +40,8 @@
             </MenuBar>
             <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>
-                <Button mnemonicParsing="false" text="Run" />
+                <Button fx:id="btnRun" mnemonicParsing="false" text="Run" />
+                  <Button fx:id="btnDebug" mnemonicParsing="false" text="Debug" />
                   <HBox fx:id="availableBlocks" spacing="16.0">
                      <padding>
                         <Insets left="16.0" />
@@ -45,9 +53,30 @@
       </VBox>
    </top>
    <center>
-      <VBox fx:id="vbtest" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin></VBox>
+      <SplitPane fx:id="centerContainer" dividerPositions="0.7" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+         <items>
+            <ScrollPane fx:id="sheetScroller" prefHeight="415.0" prefWidth="898.0" style="-fx-background: lightgray; -fx-padding: 4;">
+               <content>
+                  <Pane fx:id="sheet" prefHeight="430.0" prefWidth="938.0" style="-fx-background-color: white;">
+                     <effect>
+                        <DropShadow height="32.86" radius="13.7075" spread="0.15" width="23.97" />
+                     </effect>
+                  </Pane>
+               </content>
+            </ScrollPane>
+            <SplitPane dividerPositions="0.75" prefHeight="160.0" prefWidth="200.0">
+               <items>
+                  <WebView fx:id="outputView" prefHeight="200.0" prefWidth="594.0" />
+                  <TableView fx:id="tvVariables" prefHeight="200.0" prefWidth="200.0">
+                    <columns>
+                      <TableColumn fx:id="tcVarType" minWidth="50.0" prefWidth="75.0" text="Typ" />
+                      <TableColumn fx:id="tcVarName" minWidth="50.0" prefWidth="75.0" text="Nazwa" />
+                        <TableColumn fx:id="tcVarValue" minWidth="50.0" prefWidth="75.0" text="Wartość" />
+                    </columns>
+                  </TableView>
+               </items>
+            </SplitPane>
+         </items>
+      </SplitPane>
    </center>
 </BorderPane>
