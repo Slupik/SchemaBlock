@@ -34,7 +34,7 @@
             <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>
                 <Button mnemonicParsing="false" text="Run" />
-                  <HBox>
+                  <HBox fx:id="availableBlocks" spacing="16.0">
                      <padding>
                         <Insets left="16.0" />
                      </padding>

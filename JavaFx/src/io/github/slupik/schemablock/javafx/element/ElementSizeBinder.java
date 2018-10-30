@@ -9,6 +9,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
 
 /**
  * All rights reserved & copyright ©
@@ -17,17 +20,12 @@ public class ElementSizeBinder {
 
     private final Input input;
 
-    private double defaultWidth;
-    private double defaultHeight;
-
     public ElementSizeBinder(Input input){
         this.input = input;
         run();
     }
 
     private void run() {
-        defaultWidth = getMainContainer().getPrefWidth();
-        defaultHeight = getMainContainer().getPrefHeight();
         if(getShape() instanceof Ellipse) {
             Ellipse ellipse = (Ellipse) getShape();
 
@@ -65,12 +63,41 @@ public class ElementSizeBinder {
             CustomPolygon polygon = (CustomPolygon) getShape();
             getDesc().maxWidthProperty().bind(polygon.innerWidthProperty());
             getDesc().maxHeightProperty().bind(polygon.innerHeightProperty());
+
+            polygon.innerWidthProperty().addListener((observable, oldValue, newValue) ->
+                    resetFontSize(newValue.doubleValue(), polygon.getInnerHeight()));
+            polygon.innerHeightProperty().addListener((observable, oldValue, newValue) ->
+                    resetFontSize(polygon.getInnerWidth(), newValue.doubleValue()));
         } else {
             getDesc().maxWidthProperty().bind(getMainContainer().widthProperty());
             getDesc().maxHeightProperty().bind(getMainContainer().heightProperty());
+
+            getDesc().widthProperty().addListener((observable, oldValue, newValue) ->
+                    resetFontSize(newValue.doubleValue(), getMainContainer().heightProperty().get()));
+            getDesc().heightProperty().addListener((observable, oldValue, newValue) ->
+                    resetFontSize(getMainContainer().widthProperty().get(), newValue.doubleValue()));
         }
 
         getDescContainer().setAlignment(Pos.CENTER);
+    }
+
+    private void resetFontSize(double width, double height) {
+        Font unitFont = Font.font(getDesc().getFont().getFamily(), FontPosture.findByName(getDesc().getFont().getStyle()), 1);
+
+        String text = getDesc().getText();
+        Text textArea = new Text(text);
+        textArea.setFont(unitFont);
+        double unitWidth = textArea.getBoundsInLocal().getWidth();
+
+        Font newFont = Font.font(getDesc().getFont().getFamily(), FontPosture.findByName(getDesc().getFont().getStyle()), width/unitWidth);
+        textArea.setFont(newFont);
+
+        if(textArea.getBoundsInLocal().getHeight()>height) {
+            double unitHeight = textArea.getBoundsInLocal().getHeight();
+            newFont = Font.font(getDesc().getFont().getFamily(), FontPosture.findByName(getDesc().getFont().getStyle()), height/unitHeight);
+        }
+
+        getDesc().setFont(newFont);
     }
 
     public void setSize(double width, double height){
