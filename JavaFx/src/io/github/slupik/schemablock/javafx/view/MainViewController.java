@@ -10,7 +10,6 @@ import io.github.slupik.schemablock.javafx.element.fx.standard.UiStandardElement
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
@@ -81,5 +80,26 @@ public class MainViewController implements Initializable {
         condition.setElementSize(width, height);
 
         availableBlocks.getChildren().addAll(start, stop, operating, io, condition);
+
+
+        UiSpecialElement test = new StartElement();
+        test.setElementSize(width, height);
+        sheet.getChildren().add(test);
+//        new DragAndDropElement(sheet,  test);
+        DraggingController nature = new DraggingController(new Draggable(start, true));
+        nature.addListener((draggingController, dragEvent) -> {
+            if(dragEvent== DraggingController.Event.DragEnd) {
+                System.out.println(draggingController.getEventNode().getTranslateX());
+                if(sheet.contains(draggingController.getEventNode().getLayoutX(), draggingController.getEventNode().getLayoutY())
+                && !sheet.getChildren().contains(draggingController.getEventNode())){
+                    sheet.getChildren().add(draggingController.getEventNode());
+//                    draggingController.getEventNode().setLayoutX(100);
+//                    draggingController.getEventNode().setLayoutY(100);
+                    System.out.println(draggingController.getEventNode().getTranslateX());
+                }
+            }
+        });
+//        new DraggingController(test);
+//        new DraggingController(sheet);
     }
 }

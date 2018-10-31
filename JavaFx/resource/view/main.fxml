@@ -17,8 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="900.0"
-            xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.javafx.view.MainViewController">
+<BorderPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.javafx.view.MainViewController">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -56,7 +55,7 @@
    <center>
       <SplitPane fx:id="centerContainer" dividerPositions="0.7" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
          <items>
-            <ScrollPane fx:id="sheetScroller" prefHeight="415.0" prefWidth="898.0" style="-fx-background: lightgray; -fx-padding: 4;">
+            <ScrollPane fx:id="sheetScroller" prefHeight="415.0" prefWidth="898.0" style="-fx-background: lightgray;">
                <content>
                   <Pane fx:id="sheet" prefHeight="430.0" prefWidth="938.0" style="-fx-background-color: white;">
                      <effect>
@@ -64,6 +63,9 @@
                      </effect>
                   </Pane>
                </content>
+               <padding>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </padding>
             </ScrollPane>
             <SplitPane dividerPositions="0.75" prefHeight="160.0" prefWidth="200.0">
                <items>
