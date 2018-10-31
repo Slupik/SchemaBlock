@@ -10,6 +10,7 @@ import io.github.slupik.schemablock.javafx.element.fx.standard.UiStandardElement
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
@@ -18,6 +19,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
+
+    @FXML
+    private Pane mainContainer;
 
     @FXML
     private Button btnRun;
