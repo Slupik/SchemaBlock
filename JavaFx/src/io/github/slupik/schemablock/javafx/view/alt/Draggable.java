@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.view;
+package io.github.slupik.schemablock.javafx.view.alt;
 
 import javafx.scene.Node;
 

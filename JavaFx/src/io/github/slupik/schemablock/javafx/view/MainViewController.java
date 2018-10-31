@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.javafx.view;
 
+import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.special.StartElement;
 import io.github.slupik.schemablock.javafx.element.fx.special.StopElement;
 import io.github.slupik.schemablock.javafx.element.fx.special.UiSpecialElement;
@@ -7,9 +8,14 @@ import io.github.slupik.schemablock.javafx.element.fx.standard.ConditionBlock;
 import io.github.slupik.schemablock.javafx.element.fx.standard.IOBlock;
 import io.github.slupik.schemablock.javafx.element.fx.standard.OperatingBlock;
 import io.github.slupik.schemablock.javafx.element.fx.standard.UiStandardElement;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point2D;
 import javafx.scene.control.*;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
@@ -57,7 +63,8 @@ public class MainViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        spawnAvailableBlocks();
+//        spawnAvailableBlocks();
+        testDragging();
     }
 
     private void spawnAvailableBlocks() {
@@ -80,26 +87,146 @@ public class MainViewController implements Initializable {
         condition.setElementSize(width, height);
 
         availableBlocks.getChildren().addAll(start, stop, operating, io, condition);
+    }
+
+    private void testDragging() {
+//        double height = 31;
+//        double width = 50;
+//        UiSpecialElement test = new StartElement();
+//        test.setElementSize(width, height);
+//        sheet.getChildren().add(test);
+
+        mDragOverIcon = new DragIcon();
+
+        mDragOverIcon.setVisible(false);
+        mDragOverIcon.setOpacity(0.65);
+        mainContainer.getChildren().add(mDragOverIcon);
+
+        addDragDetection(new DragIcon().setType(UiElementType.START));
+        addDragDetection(new DragIcon().setType(UiElementType.STOP));
+        addDragDetection(new DragIcon().setType(UiElementType.CALCULATION));
+        addDragDetection(new DragIcon().setType(UiElementType.IF));
+        addDragDetection(new DragIcon().setType(UiElementType.IO));
+
+        buildDragHandlers();
+    }
 
 
-        UiSpecialElement test = new StartElement();
-        test.setElementSize(width, height);
-        sheet.getChildren().add(test);
-//        new DragAndDropElement(sheet,  test);
-        DraggingController nature = new DraggingController(new Draggable(start, true));
-        nature.addListener((draggingController, dragEvent) -> {
-            if(dragEvent== DraggingController.Event.DragEnd) {
-                System.out.println(draggingController.getEventNode().getTranslateX());
-                if(sheet.contains(draggingController.getEventNode().getLayoutX(), draggingController.getEventNode().getLayoutY())
-                && !sheet.getChildren().contains(draggingController.getEventNode())){
-                    sheet.getChildren().add(draggingController.getEventNode());
-//                    draggingController.getEventNode().setLayoutX(100);
-//                    draggingController.getEventNode().setLayoutY(100);
-                    System.out.println(draggingController.getEventNode().getTranslateX());
+
+    private DragIcon mDragOverIcon = null;
+
+    private EventHandler<DragEvent> mIconDragOverRoot = null;
+    private EventHandler<DragEvent> mIconDragDropped = null;
+    private EventHandler<DragEvent> mIconDragOverRightPane = null;
+
+    private void addDragDetection(DragIcon dragIcon) {
+        availableBlocks.getChildren().add(dragIcon);
+
+        dragIcon.setOnDragDetected (event -> {
+
+            // set drag event handlers on their respective objects
+            mainContainer.setOnDragOver(mIconDragOverRoot);
+            sheet.setOnDragOver(mIconDragOverRightPane);
+            sheet.setOnDragDropped(mIconDragDropped);
+
+            // get a reference to the clicked DragIcon object
+            DragIcon icn = (DragIcon) event.getSource();
+
+            //begin drag ops
+            mDragOverIcon.setType(icn.getType());
+            mDragOverIcon.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
+
+            ClipboardContent content = new ClipboardContent();
+            DragContainer container = new DragContainer();
+
+            container.addData ("type", mDragOverIcon.getType().toString());
+            content.put(DragContainer.AddNode, container);
+
+            mDragOverIcon.startDragAndDrop (TransferMode.ANY).setContent(content);
+            mDragOverIcon.setVisible(true);
+            mDragOverIcon.setMouseTransparent(true);
+            event.consume();
+        });
+    }
+
+    private void buildDragHandlers() {
+
+        //drag over transition to move widget form left pane to right pane
+        mIconDragOverRoot = event -> {
+
+            Point2D p = sheet.sceneToLocal(event.getSceneX(), event.getSceneY());
+
+            //turn on transfer mode and track in the right-pane's context
+            //if (and only if) the mouse cursor falls within the right pane's bounds.
+            if (!sheet.boundsInLocalProperty().get().contains(p)) {
+
+                event.acceptTransferModes(TransferMode.ANY);
+                mDragOverIcon.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
+                return;
+            }
+
+            event.consume();
+        };
+
+        mIconDragOverRightPane = event -> {
+
+            event.acceptTransferModes(TransferMode.ANY);
+
+            //convert the mouse coordinates to scene coordinates,
+            //then convert back to coordinates that are relative to
+            //the parent of mDragIcon.  Since mDragIcon is a child of the root
+            //pane, coodinates must be in the root pane's coordinate system to work
+            //properly.
+            mDragOverIcon.relocateToPoint(
+                    new Point2D(event.getSceneX(), event.getSceneY())
+            );
+            event.consume();
+        };
+
+        mIconDragDropped = event -> {
+
+            DragContainer container =
+                    (DragContainer) event.getDragboard().getContent(DragContainer.AddNode);
+
+            container.addData("scene_coords",
+                    new Point2D(event.getSceneX(), event.getSceneY()));
+
+            ClipboardContent content = new ClipboardContent();
+            content.put(DragContainer.AddNode, container);
+
+            event.getDragboard().setContent(content);
+            event.setDropCompleted(true);
+        };
+
+        mainContainer.setOnDragDone (event -> {
+
+            sheet.removeEventHandler(DragEvent.DRAG_OVER, mIconDragOverRightPane);
+            sheet.removeEventHandler(DragEvent.DRAG_DROPPED, mIconDragDropped);
+            mainContainer.removeEventHandler(DragEvent.DRAG_OVER, mIconDragOverRoot);
+
+            mDragOverIcon.setVisible(false);
+
+            DragContainer container =
+                    (DragContainer) event.getDragboard().getContent(DragContainer.AddNode);
+
+            if (container != null) {
+                if (container.getValue("scene_coords") != null) {
+
+                    //TODO make this as "placed element" not the dropped icon
+                    DragIcon droppedIcon = new DragIcon();
+
+                    droppedIcon.setType(UiElementType.valueOf(container.getValue("type")));
+                    sheet.getChildren().add(droppedIcon);
+
+                    Point2D cursorPoint = container.getValue("scene_coords");
+
+                    droppedIcon.relocateToPoint(
+                            new Point2D(cursorPoint.getX(), cursorPoint.getY())
+                    );
                 }
             }
+
+            event.consume();
         });
-//        new DraggingController(test);
-//        new DraggingController(sheet);
     }
 }
