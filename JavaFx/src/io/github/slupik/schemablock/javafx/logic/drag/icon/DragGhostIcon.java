@@ -1,8 +1,5 @@
 package io.github.slupik.schemablock.javafx.logic.drag.icon;
 
-import io.github.slupik.schemablock.javafx.element.UiElementType;
-import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
-import io.github.slupik.schemablock.javafx.view.UiElementFactory;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.layout.AnchorPane;
@@ -10,14 +7,14 @@ import javafx.scene.layout.AnchorPane;
 /**
  * All rights reserved & copyright ©
  */
-public class DragGhostIcon extends AnchorPane {
+public abstract class DragGhostIcon<TypeOfData> extends AnchorPane {
 
-    private UiElementType mType = null;
+    private TypeOfData mData = null;
 
     @FXML
     private void initialize() {}
 
-    public void relocateToPoint (Point2D p) {
+    void relocateToPoint(Point2D p) {
 
         //relocates the object to a point that has been converted to
         //scene coordinates
@@ -29,13 +26,13 @@ public class DragGhostIcon extends AnchorPane {
         );
     }
 
-    public UiElementType getType () { return mType; }
+    TypeOfData getData() { return mData; }
 
-    public DragGhostIcon setType (UiElementType type) {
-        mType = type;
-        UiElementBase element = UiElementFactory.createByType(type);
-        getChildren().clear();
-        getChildren().add(element);
+    protected DragGhostIcon setData(TypeOfData data) {
+        mData = data;
+        onSetData(data);
         return this;
     }
+
+    protected abstract void onSetData(TypeOfData data);
 }

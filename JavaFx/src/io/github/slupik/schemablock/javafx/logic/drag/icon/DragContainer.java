@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-class DragContainer implements Serializable {
+public class DragContainer implements Serializable {
 
 	/**
 	 * 
@@ -22,8 +22,8 @@ class DragContainer implements Serializable {
 	void addData (String key, Object value) {
 		mDataPairs.add(new Pair<>(key, value));
 	}
-	
-	<T> T getValue (String key) {
+
+	public <T> T getValue (String key) {
 		
 		for (Pair<String, Object> data: mDataPairs) {
 			

@@ -57,16 +57,16 @@ public class MainViewController implements Initializable {
     }
 
     private void setupDragging() {
-        ghost = new GhostDragController(mainContainer, sheet);
+        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl());
         addIconsToMenu();
     }
 
     private void addIconsToMenu() {
-        addDragDetection(new DragGhostIcon().setType(UiElementType.START));
-        addDragDetection(new DragGhostIcon().setType(UiElementType.STOP));
-        addDragDetection(new DragGhostIcon().setType(UiElementType.CALCULATION));
-        addDragDetection(new DragGhostIcon().setType(UiElementType.IF));
-        addDragDetection(new DragGhostIcon().setType(UiElementType.IO));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.START));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.STOP));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.CALCULATION));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.IF));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.IO));
     }
 
     private GhostDragController ghost;

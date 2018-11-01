@@ -17,11 +17,13 @@ public abstract class DragControllerBase<DraggingElement> {
         return this.dragListeners.add(listener);
     }
 
-    protected void onStateChanged(DragEventState newState) {
+    protected void onStateChanged(DragEventState newState, DraggingElement eventTarget) {
         for(DragListener<DraggingElement> listener:dragListeners) {
-            listener.onDragNewState(newState, getDraggingElement());
+            listener.onDragNewState(newState, eventTarget);
         }
     }
 
-    protected abstract DraggingElement getDraggingElement();
+    protected void onStateChanged(DragEventState newState) {
+        onStateChanged(newState, null);
+    }
 }

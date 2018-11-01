@@ -63,7 +63,7 @@ public class NodeDragController extends DragControllerBase<DraggableNode> implem
         } else if (MouseEvent.MOUSE_DRAGGED == event.getEventType()) {
             if (!this.dragging) {
                 this.dragging = true;
-                onStateChanged(DragEventState.DRAG_START);
+                onStateChanged(DragEventState.DRAG_START, eventNode);
             }
             if (this.dragging) {
                 final double deltaX = event.getSceneX() - this.lastMouseX;
@@ -87,13 +87,13 @@ public class NodeDragController extends DragControllerBase<DraggableNode> implem
                 this.lastMouseY = event.getSceneY();
 
                 event.consume();
-                onStateChanged(DragEventState.DRAG);
+                onStateChanged(DragEventState.DRAG, eventNode);
             }
         } else if (MouseEvent.MOUSE_RELEASED == event.getEventType()) {
             if (this.dragging) {
                 event.consume();
                 this.dragging = false;
-                onStateChanged(DragEventState.DRAG_END);
+                onStateChanged(DragEventState.DRAG_END, eventNode);
             }
         }
 
@@ -111,19 +111,5 @@ public class NodeDragController extends DragControllerBase<DraggableNode> implem
     public final void setLastMouse(final double lastMouseX, final double lastMouseY) {
         this.lastMouseX = lastMouseX;
         this.lastMouseY = lastMouseY;
-    }
-
-    @Override
-    protected DraggableNode getDraggingElement() {
-        return eventNode;
-    }
-
-    public interface Interface {
-        public abstract NodeDragController getDraggingController();
-    }
-
-    @FunctionalInterface
-    public interface Listener {
-        public void handle(NodeDragController draggingController, DragEventState dragEventState);
     }
 }

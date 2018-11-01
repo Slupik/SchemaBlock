@@ -1,14 +1,10 @@
 package io.github.slupik.schemablock.javafx.logic.drag.icon;
 
-import io.github.slupik.schemablock.javafx.element.UiElementType;
-import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 import io.github.slupik.schemablock.javafx.logic.drag.DragControllerBase;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
-import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableNode;
-import io.github.slupik.schemablock.javafx.logic.drag.node.NodeDragController;
-import io.github.slupik.schemablock.javafx.view.UiElementFactory;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
@@ -17,9 +13,10 @@ import javafx.scene.layout.Pane;
 /**
  * All rights reserved & copyright ©
  */
-public class GhostDragController {
+public class GhostDragController extends DragControllerBase<DragGhostIcon> {
     private final Pane draggableArea;
     private final Pane placeForElement;
+    private final GhostDragElementFactory factory;
 
     private DragGhostIcon mDragOverIcon;
 
@@ -27,11 +24,12 @@ public class GhostDragController {
     private EventHandler<DragEvent> mIconDragDropped = null;
     private EventHandler<DragEvent> mIconDragOverRightPane = null;
 
-    public GhostDragController(Pane draggableArea, Pane placeForElement) {
+    public GhostDragController(Pane draggableArea, Pane placeForElement, GhostDragElementFactory factory) {
         this.draggableArea = draggableArea;
         this.placeForElement = placeForElement;
+        this.factory = factory;
 
-        mDragOverIcon = new DragGhostIcon();
+        mDragOverIcon = factory.getDragIcon();
 
         mDragOverIcon.setVisible(false);
         mDragOverIcon.setOpacity(0.65);
@@ -41,8 +39,6 @@ public class GhostDragController {
     }
 
     public void addDragDetection(DragGhostIcon dragIcon) {
-//        availableBlocks.getChildren().add(dragIcon);
-
         dragIcon.setOnDragDetected (event -> {
 
             // set drag event handlers on their respective objects
@@ -54,19 +50,20 @@ public class GhostDragController {
             DragGhostIcon icn = (DragGhostIcon) event.getSource();
 
             //begin drag ops
-            mDragOverIcon.setType(icn.getType());
+            mDragOverIcon.setData(icn.getData());
             mDragOverIcon.relocateToPoint(new Point2D(event.getSceneX(), event.getSceneY()));
 
             ClipboardContent content = new ClipboardContent();
             DragContainer container = new DragContainer();
 
-            container.addData ("type", mDragOverIcon.getType().toString());
+            container.addData ("type", mDragOverIcon.getData().toString());
             content.put(DragContainer.AddNode, container);
 
             mDragOverIcon.startDragAndDrop (TransferMode.ANY).setContent(content);
             mDragOverIcon.setVisible(true);
             mDragOverIcon.setMouseTransparent(true);
             event.consume();
+            onStateChanged(DragEventState.DRAG_START, dragIcon);
         });
     }
 
@@ -87,6 +84,7 @@ public class GhostDragController {
             }
 
             event.consume();
+            onStateChanged(DragEventState.DRAG);
         };
 
         mIconDragOverRightPane = event -> {
@@ -102,6 +100,7 @@ public class GhostDragController {
                     new Point2D(event.getSceneX(), event.getSceneY())
             );
             event.consume();
+            onStateChanged(DragEventState.DRAG);
         };
 
         mIconDragDropped = event -> {
@@ -133,8 +132,7 @@ public class GhostDragController {
             if (container != null) {
                 if (container.getValue("scene_coords") != null) {
 
-                    UiElementType type = UiElementType.valueOf(container.getValue("type"));
-                    UiElementBase droppedElement = UiElementFactory.createByType(type);
+                    Node droppedElement = factory.getNode(container);
                     placeForElement.getChildren().add(droppedElement);
 
                     Point2D cursorPoint = container.getValue("scene_coords");
@@ -143,12 +141,9 @@ public class GhostDragController {
                             droppedElement,
                             new Point2D(cursorPoint.getX(), cursorPoint.getY())
                     );
-                    NodeDragController draggingController = new NodeDragController(new DraggableNode(droppedElement, false));
-                    draggingController.addListener((dragEvent, draggableNode) -> {
-                        if(dragEvent == DragEventState.DRAG_START) {
-                            draggingController.getEventNode().toFront();
-                        }
-                    });
+                    event.consume();
+                    onStateChanged(DragEventState.DRAG_END);
+                    return;
                 }
             }
 
