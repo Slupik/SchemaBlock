@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.javafx.view;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
 import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableNode;
@@ -76,7 +77,12 @@ public class MainViewController implements Initializable {
                 start.setLayoutX(100);
             }
             start.setLayoutY(0);
-            new NodeDragController(new DraggableNode(start, false));
+            new NodeDragController(new DraggableNode(start, false)).
+                    addListener((newState, draggableNode) -> {
+                        if(newState == DragEventState.DRAG_START) {
+                            start.toFront();
+                        }
+                    });
         });
     }
 
