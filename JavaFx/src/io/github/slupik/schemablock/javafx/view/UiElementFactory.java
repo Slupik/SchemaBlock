@@ -11,11 +11,11 @@ import io.github.slupik.schemablock.javafx.element.fx.standard.OperatingBlock;
 /**
  * All rights reserved & copyright ©
  */
-public class UiElementFactory {
+class UiElementFactory {
 
     private UiElementFactory(){}
 
-    public static UiElementBase createByType(UiElementType type) {
+    static UiElementBase createByType(UiElementType type) {
         UiElementBase element = new ConditionBlock();
         switch (type) {
             case CALCULATION:

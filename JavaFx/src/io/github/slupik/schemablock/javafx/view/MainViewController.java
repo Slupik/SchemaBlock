@@ -1,6 +1,8 @@
 package io.github.slupik.schemablock.javafx.view;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
+import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
+import io.github.slupik.schemablock.javafx.element.fx.arrow.Line;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
 import javafx.fxml.FXML;
@@ -59,6 +61,14 @@ public class MainViewController implements Initializable {
     private void setupDragging() {
         ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl());
         addIconsToMenu();
+        testAddArrow();
+    }
+
+    private void testAddArrow() {
+        Arrow line = new Arrow();
+        sheet.getChildren().addAll(line);
+        line.setStart(50, 100);
+        line.setEnd(100, 100);
     }
 
     private void addIconsToMenu() {
