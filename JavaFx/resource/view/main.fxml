@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.javafx.view.MainViewController">
+<BorderPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.javafx.view.MainViewController">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -57,7 +57,7 @@
          <items>
             <ScrollPane fx:id="sheetScroller" prefHeight="415.0" prefWidth="898.0" style="-fx-background: lightgray;">
                <content>
-                  <Pane fx:id="sheet" prefHeight="430.0" prefWidth="938.0" style="-fx-background-color: white;">
+                  <Pane fx:id="sheet" maxHeight="430.0" maxWidth="938.0" prefHeight="430.0" prefWidth="938.0" style="-fx-background-color: white;">
                      <effect>
                         <DropShadow height="32.86" radius="13.7075" spread="0.15" width="23.97" />
                      </effect>

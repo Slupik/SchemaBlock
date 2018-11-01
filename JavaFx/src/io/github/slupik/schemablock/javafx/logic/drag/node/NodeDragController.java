@@ -6,6 +6,7 @@ import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,8 +79,33 @@ public class NodeDragController extends DragControllerBase<DraggableNode> implem
                     } else {
                         final double initialTranslateX = dragNode.node.getLayoutX();
                         final double initialTranslateY = dragNode.node.getLayoutY();
-                        dragNode.node.setLayoutX(initialTranslateX + deltaX);
-                        dragNode.node.setLayoutY(initialTranslateY + deltaY);
+                        final double newX = initialTranslateX + deltaX;
+                        final double newY = initialTranslateY + deltaY;
+
+                        //Set new position and prevent before place element out of bounds
+                        Pane parent = ((Pane) dragNode.node.getParent());
+                        if(newX<0) {
+                            dragNode.node.setLayoutX(0);
+                        } else {
+                            if((newX+dragNode.node.getBoundsInLocal().getWidth())>parent.getWidth()){
+                                dragNode.node.setLayoutX((
+                                        parent.getWidth()-dragNode.node.getBoundsInLocal().getWidth()
+                                        ));
+                            } else {
+                                dragNode.node.setLayoutX(newX);
+                            }
+                        }
+                        if(newY<0){
+                            dragNode.node.setLayoutY(0);
+                        } else {
+                            if((newY+dragNode.node.getBoundsInLocal().getHeight())>parent.getHeight()) {
+                                dragNode.node.setLayoutY((
+                                        parent.getHeight()-dragNode.node.getBoundsInLocal().getHeight()
+                                ));
+                            } else {
+                                dragNode.node.setLayoutY(newY);
+                            }
+                        }
                     }
                 }
 
