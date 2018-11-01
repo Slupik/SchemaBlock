@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.javafx.view;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
+import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.special.StartElement;
 import io.github.slupik.schemablock.javafx.element.fx.special.StopElement;
 import io.github.slupik.schemablock.javafx.element.fx.special.UiSpecialElement;
@@ -8,6 +9,11 @@ import io.github.slupik.schemablock.javafx.element.fx.standard.ConditionBlock;
 import io.github.slupik.schemablock.javafx.element.fx.standard.IOBlock;
 import io.github.slupik.schemablock.javafx.element.fx.standard.OperatingBlock;
 import io.github.slupik.schemablock.javafx.element.fx.standard.UiStandardElement;
+import io.github.slupik.schemablock.javafx.logic.drag.icon.DragContainer;
+import io.github.slupik.schemablock.javafx.logic.drag.icon.DragIcon;
+import io.github.slupik.schemablock.javafx.logic.drag.icon.ElementRelocator;
+import io.github.slupik.schemablock.javafx.logic.drag.node.Draggable;
+import io.github.slupik.schemablock.javafx.logic.drag.node.DraggingController;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -212,17 +218,22 @@ public class MainViewController implements Initializable {
             if (container != null) {
                 if (container.getValue("scene_coords") != null) {
 
-                    //TODO make this as "placed element" not the dropped icon
-                    DragIcon droppedIcon = new DragIcon();
-
-                    droppedIcon.setType(UiElementType.valueOf(container.getValue("type")));
-                    sheet.getChildren().add(droppedIcon);
+                    UiElementType type = UiElementType.valueOf(container.getValue("type"));
+                    UiElementBase droppedElement = UiElementFactory.createByType(type);
+                    sheet.getChildren().add(droppedElement);
 
                     Point2D cursorPoint = container.getValue("scene_coords");
 
-                    droppedIcon.relocateToPoint(
+                    ElementRelocator.relocateToPoint(
+                            droppedElement,
                             new Point2D(cursorPoint.getX(), cursorPoint.getY())
                     );
+                    DraggingController draggingController = new DraggingController(new Draggable(droppedElement, false));
+                    draggingController.addListener((draggingController1, dragEvent) -> {
+                        if(dragEvent == DraggingController.Event.DragStart) {
+                            draggingController.getEventNode().toFront();
+                        }
+                    });
                 }
             }
 

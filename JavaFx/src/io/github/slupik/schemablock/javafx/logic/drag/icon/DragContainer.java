@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.view;
+package io.github.slupik.schemablock.javafx.logic.drag.icon;
 
 import javafx.scene.input.DataFormat;
 import javafx.util.Pair;
