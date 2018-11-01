@@ -7,23 +7,23 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DragContainer implements Serializable {
+class DragContainer implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1890998765646621338L;
 
-	public static final DataFormat AddNode = 
-			new DataFormat("application.DragIcon.add");
+	static final DataFormat AddNode =
+			new DataFormat("application.DragGhostIcon.add");
 	
 	private final List <Pair<String, Object> > mDataPairs = new ArrayList <Pair<String, Object> > ();
 	
-	public void addData (String key, Object value) {
+	void addData (String key, Object value) {
 		mDataPairs.add(new Pair<>(key, value));
 	}
 	
-	public <T> T getValue (String key) {
+	<T> T getValue (String key) {
 		
 		for (Pair<String, Object> data: mDataPairs) {
 			
@@ -35,5 +35,5 @@ public class DragContainer implements Serializable {
 		return null;
 	}
 	
-	public List <Pair<String, Object> > getData () { return mDataPairs; }	
+	List <Pair<String, Object> > getData () { return mDataPairs; }
 }

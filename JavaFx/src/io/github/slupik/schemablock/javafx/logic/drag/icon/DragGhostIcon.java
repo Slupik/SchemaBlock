@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 /**
  * All rights reserved & copyright ©
  */
-public class DragIcon extends AnchorPane {
+public class DragGhostIcon extends AnchorPane {
 
     private UiElementType mType = null;
 
@@ -31,7 +31,7 @@ public class DragIcon extends AnchorPane {
 
     public UiElementType getType () { return mType; }
 
-    public DragIcon setType (UiElementType type) {
+    public DragGhostIcon setType (UiElementType type) {
         mType = type;
         UiElementBase element = UiElementFactory.createByType(type);
         getChildren().clear();

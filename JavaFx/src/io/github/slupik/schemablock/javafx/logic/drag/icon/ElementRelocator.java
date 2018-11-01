@@ -6,11 +6,11 @@ import javafx.scene.Node;
 /**
  * All rights reserved & copyright ©
  */
-public class ElementRelocator {
+class ElementRelocator {
 
     private ElementRelocator(){}
 
-    public static void relocateToPoint(Node element, Point2D p) {
+    static void relocateToPoint(Node element, Point2D p) {
 
         //relocates the object to a point that has been converted to
         //scene coordinates

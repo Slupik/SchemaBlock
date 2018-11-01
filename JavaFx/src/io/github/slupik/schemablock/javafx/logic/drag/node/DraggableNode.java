@@ -5,18 +5,16 @@ import javafx.scene.Node;
 /**
  * All rights reserved & copyright ©
  */
-
-
-public class Draggable {
+public class DraggableNode {
 
     final Node node;
     final boolean useRelativePos;
 
-    public Draggable(Node node){
+    public DraggableNode(Node node){
         this(node, false);
     }
 
-    public Draggable(Node node, boolean useRelativePos){
+    public DraggableNode(Node node, boolean useRelativePos){
         this.node = node;
         this.useRelativePos = useRelativePos;
     }
