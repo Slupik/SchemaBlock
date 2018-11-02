@@ -16,6 +16,7 @@ public interface UiElement {
     void setLogicElement(Element element) throws WrongTypeOfElement;
     Element getLogicElement();
 
+    UiElementType getType();
     String getElementId();
 
     String stringify();

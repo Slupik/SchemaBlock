@@ -50,7 +50,7 @@ public class OperatingBlock extends UiStandardElement {
     }
 
     @Override
-    protected UiElementType getType() {
+    public UiElementType getType() {
         return UiElementType.CALCULATION;
     }
 

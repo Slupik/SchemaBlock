@@ -14,7 +14,7 @@ public class StartElement extends UiSpecialElement {
     }
 
     @Override
-    protected UiElementType getType() {
+    public UiElementType getType() {
         return UiElementType.START;
     }
 }

@@ -14,7 +14,7 @@ public class StopElement extends UiSpecialElement {
     }
 
     @Override
-    protected UiElementType getType() {
+    public UiElementType getType() {
         return UiElementType.STOP;
     }
 }

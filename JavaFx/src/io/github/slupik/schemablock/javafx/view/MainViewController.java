@@ -2,20 +2,29 @@ package io.github.slupik.schemablock.javafx.view;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
+import io.github.slupik.schemablock.javafx.element.fx.port.PortElement;
+import io.github.slupik.schemablock.javafx.element.fx.port.PortConnector;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
 import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableNode;
 import io.github.slupik.schemablock.javafx.logic.drag.node.NodeDragController;
+import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -83,6 +92,39 @@ public class MainViewController implements Initializable {
                             start.toFront();
                         }
                     });
+            testPort(start);
+        });
+    }
+
+    private void testPort(UiElementBase element) {
+
+        //TODO spawn port inside UI element
+        PortConnector connector = new PortConnectorOnSheet(sheet);
+        PortElement port = new PortElement(element, connector, false, true);
+        sheet.getChildren().add(port);
+        port.setRelativePos(25, 20);
+        connector.addPort(port);
+
+        Platform.runLater(()->{
+            UiElementBase end = UiElementFactory.createByType(UiElementType.STOP);
+            sheet.getChildren().add(end);
+            if(sheet.getWidth()<150){
+                end.setLayoutX(100);
+            } else {
+                end.setLayoutX(400);
+            }
+            end.setLayoutY(0);
+            new NodeDragController(new DraggableNode(end, false)).
+                    addListener((newState, draggableNode) -> {
+                        if(newState == DragEventState.DRAG_START) {
+                            end.toFront();
+                        }
+                    });
+
+            PortElement portEnd = new PortElement(end, connector, true, false);
+            sheet.getChildren().add(portEnd);
+            portEnd.setRelativePos(25, 20);
+            connector.addPort(portEnd);
         });
     }
 
