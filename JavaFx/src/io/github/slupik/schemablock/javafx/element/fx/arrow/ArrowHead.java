@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.javafx.element.fx.arrow;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 
 /**
@@ -40,5 +41,9 @@ public class ArrowHead extends Pane {
                 setLayoutY(y-WIDTH/2);
             }
         }
+    }
+
+    public void setFill(Paint paint) {
+        triangle.setFill(paint);
     }
 }

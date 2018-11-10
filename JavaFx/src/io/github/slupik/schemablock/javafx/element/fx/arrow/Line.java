@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.javafx.element.fx.arrow;
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polyline;
 
 /**
@@ -13,6 +14,8 @@ public class Line extends Polyline {
 
     private double ratio = 0.5;
     private final boolean isNested;
+
+    private Paint shapeColor = Color.BLACK;
 
     public Line() {
         this(false);
@@ -41,7 +44,7 @@ public class Line extends Polyline {
             setLayoutY(startPoint.y);
         }
 
-        setStroke(Color.BLACK);
+        setStroke(shapeColor);
         setStrokeWidth(3);
 
         Point localEnd = getLocalEnd();
@@ -66,5 +69,10 @@ public class Line extends Polyline {
                     endPoint.y-getLayoutY()
             );
         }
+    }
+
+    public void setLineFill(Paint fill) {
+        shapeColor = fill;
+        setStroke(shapeColor);
     }
 }
