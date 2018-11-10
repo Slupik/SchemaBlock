@@ -5,11 +5,13 @@ import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactory;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
-import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnectorOnSheet;
+import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner;
 import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawnerOnSheet;
 import io.github.slupik.schemablock.javafx.element.fx.special.StartUiElement;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
+import io.github.slupik.schemablock.javafx.logic.drag.icon.DestContainerAfterDrop;
+import io.github.slupik.schemablock.javafx.logic.drag.icon.DestContainerAfterDropImpl;
 import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableNode;
 import io.github.slupik.schemablock.javafx.logic.drag.node.NodeDragController;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
@@ -38,6 +40,7 @@ public class DefaultSheetWithElements implements SheetWithElements {
 
     private PortConnector connector;
     private PortSpawner spawner;
+    private DestContainerAfterDrop childHandler;
 
     public DefaultSheetWithElements(Pane sheet) {
         this.sheet = sheet;
@@ -50,6 +53,27 @@ public class DefaultSheetWithElements implements SheetWithElements {
     private void init() {
         connector = new PortConnectorOnSheet(sheet);
         spawner = new PortSpawnerOnSheet(connector);
+        childHandler = new DestContainerAfterDropImpl(sheet) {
+            @Override
+            public void addNode(Node node) {
+                super.addNode(node);
+                if(node instanceof UiElement) {
+                    UiElement element = ((UiElement) node);
+                    container.addElement(element.getLogicElement());
+                }
+                if(node instanceof UiElementBase) {
+                    spawner.spawnForElement(((UiElementBase) node));
+                }
+            }
+            @Override
+            public void removeNode(Node node) {
+                super.addNode(node);
+                if(node instanceof UiElement) {
+                    UiElement element = ((UiElement) node);
+                    container.removeElement(element.getElementId());
+                }
+            }
+        };
     }
 
     private void setup() {
@@ -60,7 +84,7 @@ public class DefaultSheetWithElements implements SheetWithElements {
 
     private void spawnStartElement() {
         Platform.runLater(()->{
-            sheet.getChildren().add(startElement);
+            childHandler.addNode(startElement);
             if(sheet.getWidth()<150){
                 startElement.setLayoutX(10);
             } else if (sheet.getWidth()<600){
@@ -77,7 +101,6 @@ public class DefaultSheetWithElements implements SheetWithElements {
                         }
                     });
             spawner.spawnForElement(startElement);
-            container.addElement(startElement.getLogicElement());
         });
     }
 
@@ -85,7 +108,7 @@ public class DefaultSheetWithElements implements SheetWithElements {
     private void spawnStop() {
         Platform.runLater(()->{
             UiElementBase end = UiElementFactory.createByType(UiElementType.STOP);
-            sheet.getChildren().add(end);
+            childHandler.addNode(end);
             if(sheet.getWidth()<150){
                 end.setLayoutX(100);
             } else {
@@ -135,5 +158,10 @@ public class DefaultSheetWithElements implements SheetWithElements {
     @Override
     public PortSpawner getPortSpawner() {
         return spawner;
+    }
+
+    @Override
+    public DestContainerAfterDrop getChildrenHandler() {
+        return childHandler;
     }
 }

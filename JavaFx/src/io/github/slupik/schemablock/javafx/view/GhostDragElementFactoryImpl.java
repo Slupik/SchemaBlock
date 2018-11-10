@@ -35,8 +35,6 @@ class GhostDragElementFactoryImpl implements GhostDragElementFactory {
             }
         });
 
-        spawner.spawnForElement(droppedElement);
-
         return droppedElement;
     }
 

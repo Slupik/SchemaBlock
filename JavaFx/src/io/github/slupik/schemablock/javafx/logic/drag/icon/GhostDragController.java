@@ -19,15 +19,21 @@ public class GhostDragController extends DragControllerBase<DragGhostIcon> {
     private final GhostDragElementFactory factory;
 
     private DragGhostIcon mDragOverIcon;
+    private final DestContainerAfterDrop container;
 
     private EventHandler<DragEvent> mIconDragOverRoot = null;
     private EventHandler<DragEvent> mIconDragDropped = null;
     private EventHandler<DragEvent> mIconDragOverRightPane = null;
 
     public GhostDragController(Pane draggableArea, Pane placeForElement, GhostDragElementFactory factory) {
+        this(draggableArea, placeForElement, factory, new DestContainerAfterDropImpl(placeForElement));
+    }
+
+    public GhostDragController(Pane draggableArea, Pane placeForElement, GhostDragElementFactory factory, DestContainerAfterDrop container) {
         this.draggableArea = draggableArea;
         this.placeForElement = placeForElement;
         this.factory = factory;
+        this.container = container;
 
         mDragOverIcon = factory.getDragIcon();
 
@@ -133,7 +139,7 @@ public class GhostDragController extends DragControllerBase<DragGhostIcon> {
                 if (container.getValue("scene_coords") != null) {
 
                     Node droppedElement = factory.getNode(container);
-                    placeForElement.getChildren().add(droppedElement);
+                    this.container.addNode(droppedElement);
 
                     Point2D cursorPoint = container.getValue("scene_coords");
 
