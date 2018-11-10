@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * All rights reserved & copyright ©
  */
-public class IOBlock extends UiStandardElement {
+public class IOUiElement extends UiStandardElement {
 
     @FXML
     private Pane elementContainer;

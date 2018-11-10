@@ -2,11 +2,11 @@ package io.github.slupik.schemablock.javafx.element.fx.factory;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
-import io.github.slupik.schemablock.javafx.element.fx.special.StartElement;
-import io.github.slupik.schemablock.javafx.element.fx.special.StopElement;
-import io.github.slupik.schemablock.javafx.element.fx.standard.ConditionBlock;
-import io.github.slupik.schemablock.javafx.element.fx.standard.IOBlock;
-import io.github.slupik.schemablock.javafx.element.fx.standard.OperatingBlock;
+import io.github.slupik.schemablock.javafx.element.fx.special.StartUiElement;
+import io.github.slupik.schemablock.javafx.element.fx.special.StopUiElement;
+import io.github.slupik.schemablock.javafx.element.fx.standard.ConditionUiElement;
+import io.github.slupik.schemablock.javafx.element.fx.standard.IOUiElement;
+import io.github.slupik.schemablock.javafx.element.fx.standard.OperatingUiElement;
 
 /**
  * All rights reserved & copyright ©
@@ -16,22 +16,22 @@ public class UiElementFactory {
     private UiElementFactory(){}
 
     public static UiElementBase createByType(UiElementType type) {
-        UiElementBase element = new ConditionBlock();
+        UiElementBase element = new ConditionUiElement();
         switch (type) {
             case CALCULATION:
-                element = new OperatingBlock();
+                element = new OperatingUiElement();
                 break;
             case IF:
-                element = new ConditionBlock();
+                element = new ConditionUiElement();
                 break;
             case START:
-                element = new StartElement();
+                element = new StartUiElement();
                 break;
             case STOP:
-                element = new StopElement();
+                element = new StopUiElement();
                 break;
             case IO:
-                element = new IOBlock();
+                element = new IOUiElement();
                 break;
         }
         element.setElementSize(50,31);

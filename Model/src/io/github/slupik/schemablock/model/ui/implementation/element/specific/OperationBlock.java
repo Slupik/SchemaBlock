@@ -17,7 +17,7 @@ import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeE
 /**
  * All rights reserved & copyright ©
  */
-public class CalculationBlock extends StandardElementBase implements OperationElement {
+public class OperationBlock extends StandardElementBase implements OperationElement {
 
     private String nextElement = "";
 

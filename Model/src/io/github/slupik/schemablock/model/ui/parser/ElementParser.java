@@ -21,7 +21,7 @@ public class ElementParser {
                 break;
             }
             case CALCULATION: {
-                element = new CalculationBlock();
+                element = new OperationBlock();
                 break;
             }
             case CONDITION: {

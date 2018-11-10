@@ -6,12 +6,23 @@ import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactory;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortConnector;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortSpawner;
-import io.github.slupik.schemablock.javafx.element.fx.special.StartElement;
+import io.github.slupik.schemablock.javafx.element.fx.special.StartUiElement;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
 import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableNode;
 import io.github.slupik.schemablock.javafx.logic.drag.node.NodeDragController;
 import io.github.slupik.schemablock.javafx.view.PortConnectorOnSheet;
 import io.github.slupik.schemablock.javafx.view.PortSpawnerOnSheet;
+import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
+import io.github.slupik.schemablock.model.ui.implementation.container.DefaultElementContainer;
+import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
+import io.github.slupik.schemablock.model.ui.implementation.container.StartBlockNotFound;
+import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
+import io.github.slupik.schemablock.parser.code.VariableNotFound;
+import io.github.slupik.schemablock.parser.code.WrongArgumentException;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
+import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
+import io.github.slupik.schemablock.parser.math.rpn.variable.VariableIsAlreadyDefinedException;
+import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -21,15 +32,17 @@ import javafx.scene.layout.Pane;
  */
 public class DefaultSheetWithElements implements SheetWithElements {
 
+    private final ElementContainer container;
     private final Pane sheet;
-    private final StartElement startElement;
+    private final StartUiElement startElement;
 
     private PortConnector connector;
     private PortSpawner spawner;
 
     public DefaultSheetWithElements(Pane sheet) {
         this.sheet = sheet;
-        startElement = ((StartElement) UiElementFactory.createByType(UiElementType.START));
+        startElement = ((StartUiElement) UiElementFactory.createByType(UiElementType.START));
+        container = new DefaultElementContainer();
         init();
         setup();
     }
@@ -64,6 +77,7 @@ public class DefaultSheetWithElements implements SheetWithElements {
                         }
                     });
             spawner.spawnForElement(startElement);
+            container.addElement(startElement.getLogicElement());
         });
     }
 
@@ -89,6 +103,17 @@ public class DefaultSheetWithElements implements SheetWithElements {
     }
 
     @Override
+    public void run() {
+        try {
+            container.run();
+        } catch (NotFoundTypeException | IncompatibleTypeException | UnsupportedValueException |
+                VariableIsAlreadyDefinedException | NextElementNotFound | WrongArgumentException |
+                InvalidArgumentsException | VariableNotFound | StartBlockNotFound e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void addElement(UiElement element) throws InvalidTypeException {
         if(element instanceof Node) {
             sheet.getChildren().add(((Node) element));
@@ -100,11 +125,6 @@ public class DefaultSheetWithElements implements SheetWithElements {
     @Override
     public void clear() {
         sheet.getChildren().clear();
-    }
-
-    @Override
-    public StartElement getStartElement() {
-        return startElement;
     }
 
     @Override

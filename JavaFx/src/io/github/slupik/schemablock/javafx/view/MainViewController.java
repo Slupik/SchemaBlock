@@ -65,6 +65,7 @@ public class MainViewController implements Initializable {
         container = new DefaultSheetWithElements(sheet);
         ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()));
         addIconsToMenu();
+        btnRun.setOnAction((event)-> container.run());
     }
 
     private void addIconsToMenu() {

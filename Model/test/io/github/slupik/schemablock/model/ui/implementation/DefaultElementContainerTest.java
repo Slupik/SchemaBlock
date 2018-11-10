@@ -6,7 +6,7 @@ import io.github.slupik.schemablock.model.ui.abstraction.element.OperationElemen
 import io.github.slupik.schemablock.model.ui.abstraction.element.StartElement;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.container.DefaultElementContainer;
-import io.github.slupik.schemablock.model.ui.implementation.element.specific.CalculationBlock;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.OperationBlock;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.ConditionBlock;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.StartBlock;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.StopBlock;
@@ -37,7 +37,7 @@ class DefaultElementContainerTest {
         DefaultElementContainer container = new DefaultElementContainer();
 
         StartElement start = new StartBlock();
-        OperationElement calc = new CalculationBlock();
+        OperationElement calc = new OperationBlock();
         calc.setContent("double a = " + a + ";" +
                 "int b = " + b + ";");
         Element stop = new StopBlock();
@@ -63,7 +63,7 @@ class DefaultElementContainerTest {
 
         StartElement start = new StartBlock();
 
-        OperationElement init = new CalculationBlock();
+        OperationElement init = new OperationBlock();
         init.setContent("long    value =     1;" +
                 "int     source     ="+source+";" +
                 "int i =    0;");
@@ -71,13 +71,13 @@ class DefaultElementContainerTest {
         ConditionalElement zeroCheck = new ConditionBlock();
         zeroCheck.setContent("source!=0");
 
-        OperationElement calculateIfZero = new CalculationBlock();
+        OperationElement calculateIfZero = new OperationBlock();
         calculateIfZero.setContent("value = 1;");
 
         ConditionalElement loopCondition = new ConditionBlock();
         loopCondition.setContent("i<   source");
 
-        OperationElement calculateInLoop = new CalculationBlock();
+        OperationElement calculateInLoop = new OperationBlock();
         calculateInLoop.setContent("i     = i + 1;"+
                         "value = value * i;");
 
@@ -119,7 +119,7 @@ class DefaultElementContainerTest {
 
         StartElement start = new StartBlock();
 
-        OperationElement init = new CalculationBlock();
+        OperationElement init = new OperationBlock();
         init.setContent("int a, b, nww, nwd, pom, ab;" +
                 "a="+a+";" +
                 "b="+b+";" +
@@ -128,13 +128,13 @@ class DefaultElementContainerTest {
         ConditionalElement loopCondition = new ConditionBlock();
         loopCondition.setContent("b!=0");
 
-        OperationElement calculateInLoop = new CalculationBlock();
+        OperationElement calculateInLoop = new OperationBlock();
         calculateInLoop.setContent(
                 "pom=b;" +
                 "b=a%b;" +
                 "a=pom;");
 
-        OperationElement calculateNWW = new CalculationBlock();
+        OperationElement calculateNWW = new OperationBlock();
         calculateNWW.setContent(
                 "nwd=a;" +
                 "nww=ab/nwd;"
@@ -183,13 +183,13 @@ class DefaultElementContainerTest {
 
         StartElement start = new StartBlock();
 
-        OperationElement init = new CalculationBlock();
+        OperationElement init = new OperationBlock();
         init.setContent("double a="+a+";");
 
         ConditionalElement validation = new ConditionBlock();
         validation.setContent("a>0");
 
-        OperationElement mainCalc = new CalculationBlock();
+        OperationElement mainCalc = new OperationBlock();
         mainCalc.setContent(
                 "double pp = a*a*a*sqrt(3)/4;"+
                         "double pc = 4*pp;"+
@@ -231,13 +231,13 @@ class DefaultElementContainerTest {
 
         StartElement start = new StartBlock();
 
-        OperationElement init = new CalculationBlock();
+        OperationElement init = new OperationBlock();
         init.setContent("double a="+a+";");
 
         ConditionalElement validation = new ConditionBlock();
         validation.setContent("a>0");
 
-        OperationElement mainCalc = new CalculationBlock();
+        OperationElement mainCalc = new OperationBlock();
         mainCalc.setContent(
                 "double pp = a*a*a*sqrt(3)/4;"+
                         "double pc = 4*pp;"+

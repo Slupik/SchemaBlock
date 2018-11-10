@@ -2,28 +2,30 @@ package io.github.slupik.schemablock.javafx.element.fx.special;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.StopBlock;
 
 /**
  * All rights reserved & copyright ©
  */
-public class StartElement extends UiSpecialElement {
+public class StopUiElement extends UiSpecialElement {
 
     @Override
     protected void onPostInit() {
         super.onPostInit();
-        setDesc("START");
+        setDesc("STOP");
+        element = new StopBlock();
     }
 
     @Override
     public UiElementType getType() {
-        return UiElementType.START;
+        return UiElementType.STOP;
     }
 
     @Override
     protected PortInfo getBasicPortInfo(){
         PortInfo base = new PortInfo();
-        base.allowForInput = false;
-        base.allowForOutput = true;
+        base.allowForInput = true;
+        base.allowForOutput = false;
         base.parentElementId = getElementId();
         return base;
     }

@@ -119,6 +119,6 @@ public class PortElement extends AnchorPane {
 
     public void setNextElement(UiElementBase element) {
         //TODO implement this
-        //What if port is part of ConditionBlock?
+        //What if port is part of ConditionUiElement?
     }
 }

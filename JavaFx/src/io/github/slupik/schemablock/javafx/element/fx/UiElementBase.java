@@ -21,7 +21,7 @@ import java.io.IOException;
 public abstract class UiElementBase extends Pane implements UiElement {
 
     private ElementSizeBinder size;
-    private Element element;
+    protected Element element;
 
     public UiElementBase(){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(getResourcePath()));
