@@ -60,6 +60,7 @@ public class MainViewController implements Initializable {
 
     private PortConnector connector;
     private PortSpawner spawner;
+    private GhostDragController ghost;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -127,11 +128,8 @@ public class MainViewController implements Initializable {
         addDragDetection(new DragGhostIconUiElement(UiElementType.IO));
     }
 
-    private GhostDragController ghost;
-
     private void addDragDetection(DragGhostIcon dragIcon) {
         availableBlocks.getChildren().add(dragIcon);
         ghost.addDragDetection(dragIcon);
     }
-
 }

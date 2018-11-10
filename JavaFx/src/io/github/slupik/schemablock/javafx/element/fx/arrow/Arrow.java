@@ -1,9 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.arrow;
 
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 /**
  * All rights reserved & copyright ©
@@ -15,33 +12,8 @@ public class Arrow extends AnchorPane {
     private final Line line = new Line(true);
     private final ArrowHead head = new ArrowHead();
 
-    private boolean changeColorOnMouseOver;
-    private Paint markedColor = Color.DARKGRAY;
-    private Paint normalColor = Color.BLACK;
-
     public Arrow(){
-        this(false);
-    }
-
-    public Arrow(boolean changeColorOnMouseOver){
-        this.changeColorOnMouseOver = changeColorOnMouseOver;
         getChildren().addAll(line, head);
-        fillWithNormalColor();
-
-        line.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> fillWithMarkedColor());
-        line.addEventHandler(MouseEvent.MOUSE_EXITED, event -> fillWithNormalColor());
-        head.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> fillWithMarkedColor());
-        head.addEventHandler(MouseEvent.MOUSE_EXITED, event -> fillWithNormalColor());
-    }
-
-    private void fillWithMarkedColor() {
-        line.setLineFill(markedColor);
-        head.setFill(markedColor);
-    }
-
-    private void fillWithNormalColor() {
-        line.setLineFill(normalColor);
-        head.setFill(normalColor);
     }
 
     public void setEnd(double x, double y) {
@@ -106,13 +78,5 @@ public class Arrow extends AnchorPane {
                 endPoint.x-getLayoutX(),
                 endPoint.y-getLayoutY()
         );
-    }
-
-    public void setChangeColorOnMouseOver(boolean changeColorOnMouseOver) {
-        this.changeColorOnMouseOver = changeColorOnMouseOver;
-    }
-
-    public boolean isChangeColorOnMouseOver() {
-        return changeColorOnMouseOver;
     }
 }
