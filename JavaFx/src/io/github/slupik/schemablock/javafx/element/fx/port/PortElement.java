@@ -3,6 +3,10 @@ package io.github.slupik.schemablock.javafx.element.fx.port;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
+import io.github.slupik.schemablock.model.ui.abstraction.element.ConditionalElement;
+import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
+import io.github.slupik.schemablock.model.ui.abstraction.element.OperationElement;
+import io.github.slupik.schemablock.model.ui.abstraction.element.StartElement;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -118,8 +122,30 @@ public class PortElement extends AnchorPane {
         return base;
     }
 
-    public void setNextElement(UiElementBase element) {
-        //TODO implement this
-        //What if port is part of ConditionUiElement?
+    public void setNextElement(UiElementBase next) {
+        Element element = base.getLogicElement();
+        switch (element.getType()) {
+            case CALCULATION: {
+                ((OperationElement) element).setNextElement(next.getElementId());
+                break;
+            }
+            case COMMUNICATION: {
+                ((OperationElement) element).setNextElement(next.getElementId());
+                break;
+            }
+            case START: {
+                ((StartElement) element).setNextElement(next.getElementId());
+                break;
+            }
+            case CONDITION: {
+                //TODO implement true/false option
+                /*
+                    POSSIBLE BUG: If port is marked as output for "true" and later will be used
+                    as output for "false" old connection to "true" will stay
+                 */
+                ((ConditionalElement) element).setOnTrue(next.getElementId());
+                break;
+            }
+        }
     }
 }
