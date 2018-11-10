@@ -79,11 +79,14 @@ public class MainViewController implements Initializable {
             UiElementBase start = UiElementFactory.createByType(UiElementType.START);
             sheet.getChildren().add(start);
             if(sheet.getWidth()<150){
-                start.setLayoutX(0);
+                start.setLayoutX(10);
+            } else if (sheet.getWidth()<600){
+                double elementWidth = start.boundsInLocalProperty().get().getWidth();
+                start.setLayoutX(sheet.getWidth()/2-elementWidth/2);
             } else {
-                start.setLayoutX(100);
+                start.setLayoutX(300);
             }
-            start.setLayoutY(0);
+            start.setLayoutY(10);
             new NodeDragController(new DraggableNode(start, false)).
                     addListener((newState, draggableNode) -> {
                         if(newState == DragEventState.DRAG_START) {
