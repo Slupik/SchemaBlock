@@ -99,5 +99,6 @@ public class PortConnectorOnSheet implements PortConnector {
     @Override
     public void addPort(PortElement port) {
         portList.add(port);
+        sheet.getChildren().add(port);
     }
 }

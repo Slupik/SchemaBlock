@@ -2,29 +2,22 @@ package io.github.slupik.schemablock.javafx.view;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
-import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
-import io.github.slupik.schemablock.javafx.element.fx.port.PortElement;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortConnector;
+import io.github.slupik.schemablock.javafx.element.fx.port.PortSpawner;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
 import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableNode;
 import io.github.slupik.schemablock.javafx.logic.drag.node.NodeDragController;
-import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -65,13 +58,18 @@ public class MainViewController implements Initializable {
     @FXML
     private TableColumn<?, ?> tcVarValue;
 
+    private PortConnector connector;
+    private PortSpawner spawner;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupDragging();
     }
 
     private void setupDragging() {
-        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl());
+        connector = new PortConnectorOnSheet(sheet);
+        spawner = new PortSpawnerOnSheet(connector);
+        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(spawner));
         addIconsToMenu();
         spawnStartElement();
     }
@@ -92,19 +90,14 @@ public class MainViewController implements Initializable {
                             start.toFront();
                         }
                     });
-            testPort(start);
+            spawner.spawnForElement(start);
+
+            testPort();
         });
     }
 
-    private void testPort(UiElementBase element) {
-
-        //TODO spawn port inside UI element
-        PortConnector connector = new PortConnectorOnSheet(sheet);
-        PortElement port = new PortElement(element, connector, false, true);
-        sheet.getChildren().add(port);
-        port.setRelativePos(25, 20);
-        connector.addPort(port);
-
+    //TODO delete testPort()
+    private void testPort() {
         Platform.runLater(()->{
             UiElementBase end = UiElementFactory.createByType(UiElementType.STOP);
             sheet.getChildren().add(end);
@@ -120,11 +113,7 @@ public class MainViewController implements Initializable {
                             end.toFront();
                         }
                     });
-
-            PortElement portEnd = new PortElement(end, connector, true, false);
-            sheet.getChildren().add(portEnd);
-            portEnd.setRelativePos(25, 20);
-            connector.addPort(portEnd);
+            spawner.spawnForElement(end);
         });
     }
 

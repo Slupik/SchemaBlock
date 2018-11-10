@@ -4,6 +4,7 @@ import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.WrongTypeOfElement;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import io.github.slupik.schemablock.javafx.element.background.Parallelogram;
+import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
@@ -12,6 +13,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * All rights reserved & copyright ©
@@ -77,5 +81,32 @@ public class IOBlock extends UiStandardElement {
     @Override
     protected String getDefaultDesc() {
         return "Input/Output";
+    }
+
+    @Override
+    public List<PortInfo> getPortsInfo() {
+        List<PortInfo> list = new ArrayList<>();
+
+        PortInfo up = getBasicPortInfo();
+        up.percentOfHeight = 0;
+        up.percentOfWidth = 0.5;
+        list.add(up);
+
+        PortInfo right = getBasicPortInfo();
+        right.percentOfHeight = 0.5;
+        right.percentOfWidth = 0.9;
+        list.add(right);
+
+        PortInfo down = getBasicPortInfo();
+        down.percentOfHeight = 1;
+        down.percentOfWidth = 0.5;
+        list.add(down);
+
+        PortInfo left = getBasicPortInfo();
+        left.percentOfHeight = 0.5;
+        left.percentOfWidth = 0.1;
+        list.add(left);
+
+        return list;
     }
 }

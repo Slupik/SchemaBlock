@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.javafx.view;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.port.PortSpawner;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragContainer;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
@@ -14,6 +15,13 @@ import javafx.scene.Node;
  * All rights reserved & copyright ©
  */
 class GhostDragElementFactoryImpl implements GhostDragElementFactory {
+
+    private final PortSpawner spawner;
+
+    public GhostDragElementFactoryImpl(PortSpawner spawner) {
+        this.spawner = spawner;
+    }
+
     @Override
     public Node getNode(DragContainer container) {
         UiElementType type = UiElementType.valueOf(container.getValue("type"));
@@ -25,6 +33,8 @@ class GhostDragElementFactoryImpl implements GhostDragElementFactory {
                 draggingController.getEventNode().toFront();
             }
         });
+
+        spawner.spawnForElement(droppedElement);
 
         return droppedElement;
     }

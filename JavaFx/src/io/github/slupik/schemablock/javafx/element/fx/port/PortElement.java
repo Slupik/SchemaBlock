@@ -35,9 +35,9 @@ public class PortElement extends AnchorPane {
         circle.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> onMousePressed());
     }
 
-    public void setRelativePos(double x, double y){
-        layoutXProperty().bind(base.layoutXProperty().add(x-getWidth()/2));
-        layoutYProperty().bind(base.layoutYProperty().add(y-getHeight()/2));
+    public void setRelativePos(double percentOfWidth, double percentOfHeight){
+        layoutXProperty().bind(base.layoutXProperty().add(base.widthProperty().multiply(percentOfWidth)));
+        layoutYProperty().bind(base.layoutYProperty().add(base.heightProperty().multiply(percentOfHeight)));
         layoutXProperty().addListener(observable -> toFront());
         layoutYProperty().addListener(observable -> toFront());
     }

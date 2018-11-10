@@ -1,14 +1,18 @@
 package io.github.slupik.schemablock.javafx.element.fx.special;
 
 import io.github.slupik.schemablock.javafx.element.ElementSizeBinder;
-import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import io.github.slupik.schemablock.javafx.element.background.MyEllipse;
+import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * All rights reserved & copyright ©
@@ -73,4 +77,33 @@ public abstract class UiSpecialElement extends UiElementBase implements ElementS
     public void setDesc(String desc) {
         getDescLabel().setText(desc);
     }
+
+    @Override
+    public List<PortInfo> getPortsInfo() {
+        List<PortInfo> list = new ArrayList<>();
+
+        PortInfo up = getBasicPortInfo();
+        up.percentOfHeight = 0;
+        up.percentOfWidth = 0.5;
+        list.add(up);
+
+        PortInfo left = getBasicPortInfo();
+        left.percentOfHeight = 0.5;
+        left.percentOfWidth = 1;
+        list.add(left);
+
+        PortInfo down = getBasicPortInfo();
+        down.percentOfHeight = 1;
+        down.percentOfWidth = 0.5;
+        list.add(down);
+
+        PortInfo right = getBasicPortInfo();
+        right.percentOfHeight = 0.5;
+        right.percentOfWidth = 0;
+        list.add(right);
+
+        return list;
+    }
+
+    protected abstract PortInfo getBasicPortInfo();
 }
