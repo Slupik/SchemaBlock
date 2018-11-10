@@ -8,6 +8,7 @@ import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.CommunicationBlock;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -34,6 +35,12 @@ public class IOUiElement extends UiStandardElement {
     private Parallelogram shape;
 
     @Override
+    protected void onPostInit() {
+        super.onPostInit();
+        element = new CommunicationBlock();
+    }
+
+    @Override
     protected CustomShapeBase createBackgroundElement() {
         shape = new Parallelogram();
         return shape;
@@ -55,7 +62,7 @@ public class IOUiElement extends UiStandardElement {
 
     @Override
     public UiElementType getType() {
-        return UiElementType.IF;
+        return UiElementType.IO;
     }
 
     @Override

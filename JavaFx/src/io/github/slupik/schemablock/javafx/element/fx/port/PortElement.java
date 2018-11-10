@@ -1,27 +1,38 @@
 package io.github.slupik.schemablock.javafx.element.fx.port;
 
+import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
+import io.github.slupik.schemablock.javafx.element.fx.port.group.PortListener;
 import io.github.slupik.schemablock.model.ui.abstraction.element.ConditionalElement;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.element.OperationElement;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StartElement;
+import io.github.slupik.schemablock.model.utils.RandomString;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * All rights reserved & copyright ©
  */
 public class PortElement extends AnchorPane {
 
-    private UiElementBase base;
-    private PortConnector connector;
+    private String id = RandomString.generate(32);
+
     private final boolean allowForInput;
     private final boolean allowForOutput;
+    private final List<PortListener> listeners = new ArrayList<>();
+
+    private UiElementBase base;
+    private PortConnector connector;
+    private boolean isPortForTrue = true;
 
     private Circle circle = new Circle();
     private Arrow arrowToNextElement;
@@ -60,7 +71,7 @@ public class PortElement extends AnchorPane {
         toFront();
     }
 
-    private void deleteActiveArrow() {
+    public void deleteActiveArrow() {
         if(arrowToNextElement !=null) {
             ((Pane) arrowToNextElement.getParent()).getChildren().remove(arrowToNextElement);
             arrowToNextElement = null;
@@ -123,29 +134,57 @@ public class PortElement extends AnchorPane {
     }
 
     public void setNextElement(UiElementBase next) {
+        setNextElementInLogic("", isPortForTrue); //just in case
+        setNextElementInLogic(next.getElementId(), false);
+        if(base.getType() == UiElementType.IF) {
+            for(PortListener listener:listeners) {
+                listener.onSetNextElement(next.getElementId(), false);
+            }
+        } else {
+            for(PortListener listener:listeners) {
+                listener.onSetNextElement(next.getElementId(), getPortId());
+            }
+        }
+    }
+
+    private void setNextElementInLogic(String elementId, boolean isForTrue) {
         Element element = base.getLogicElement();
         switch (element.getType()) {
             case CALCULATION: {
-                ((OperationElement) element).setNextElement(next.getElementId());
+                ((OperationElement) element).setNextElement(elementId);
                 break;
             }
             case COMMUNICATION: {
-                ((OperationElement) element).setNextElement(next.getElementId());
+                ((OperationElement) element).setNextElement(elementId);
                 break;
             }
             case START: {
-                ((StartElement) element).setNextElement(next.getElementId());
+                ((StartElement) element).setNextElement(elementId);
                 break;
             }
             case CONDITION: {
-                //TODO implement true/false option
-                /*
-                    POSSIBLE BUG: If port is marked as output for "true" and later will be used
-                    as output for "false" old connection to "true" will stay
-                 */
-                ((ConditionalElement) element).setOnTrue(next.getElementId());
+                if(isForTrue) {
+                    ((ConditionalElement) element).setOnTrue(elementId);
+                } else {
+                    ((ConditionalElement) element).setOnFalse(elementId);
+                }
                 break;
             }
+            default: {
+                System.out.println("Error unsupported type "+element.getType());
+            }
         }
+    }
+
+    public String getPortId(){
+        return id;
+    }
+
+    public boolean isPortForTrue() {
+        return isPortForTrue;
+    }
+
+    public void addListener(PortListener listener) {
+        listeners.add(listener);
     }
 }

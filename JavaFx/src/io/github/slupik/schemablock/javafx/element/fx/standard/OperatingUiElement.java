@@ -31,6 +31,12 @@ public class OperatingUiElement extends UiStandardElement {
     private MyRectangle shape;
 
     @Override
+    protected void onPostInit() {
+        super.onPostInit();
+        element = new OperationBlock();
+    }
+
+    @Override
     protected CustomShapeBase createBackgroundElement() {
         shape = new MyRectangle();
         element = new OperationBlock();

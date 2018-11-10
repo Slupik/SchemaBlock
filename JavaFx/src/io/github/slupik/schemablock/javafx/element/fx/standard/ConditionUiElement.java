@@ -30,7 +30,9 @@ public class ConditionUiElement extends UiStandardElement {
 
     private Rhombus shape;
 
-    public ConditionUiElement(){
+    @Override
+    protected void onPostInit() {
+        super.onPostInit();
         element = new ConditionBlock();
     }
 
