@@ -1,15 +1,10 @@
 package io.github.slupik.schemablock.javafx.view;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
-import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
-import io.github.slupik.schemablock.javafx.element.fx.port.PortConnector;
-import io.github.slupik.schemablock.javafx.element.fx.port.PortSpawner;
-import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
+import io.github.slupik.schemablock.javafx.element.fx.sheet.DefaultSheetWithElements;
+import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetWithElements;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
-import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableNode;
-import io.github.slupik.schemablock.javafx.logic.drag.node.NodeDragController;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -58,8 +53,7 @@ public class MainViewController implements Initializable {
     @FXML
     private TableColumn<?, ?> tcVarValue;
 
-    private PortConnector connector;
-    private PortSpawner spawner;
+    private SheetWithElements container;
     private GhostDragController ghost;
 
     @Override
@@ -68,57 +62,9 @@ public class MainViewController implements Initializable {
     }
 
     private void setupDragging() {
-        connector = new PortConnectorOnSheet(sheet);
-        spawner = new PortSpawnerOnSheet(connector);
-        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(spawner));
+        container = new DefaultSheetWithElements(sheet);
+        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()));
         addIconsToMenu();
-        spawnStartElement();
-    }
-
-    private void spawnStartElement() {
-        Platform.runLater(()->{
-            UiElementBase start = UiElementFactory.createByType(UiElementType.START);
-            sheet.getChildren().add(start);
-            if(sheet.getWidth()<150){
-                start.setLayoutX(10);
-            } else if (sheet.getWidth()<600){
-                double elementWidth = start.boundsInLocalProperty().get().getWidth();
-                start.setLayoutX(sheet.getWidth()/2-elementWidth/2);
-            } else {
-                start.setLayoutX(300);
-            }
-            start.setLayoutY(10);
-            new NodeDragController(new DraggableNode(start, false)).
-                    addListener((newState, draggableNode) -> {
-                        if(newState == DragEventState.DRAG_START) {
-                            start.toFront();
-                        }
-                    });
-            spawner.spawnForElement(start);
-
-            testPort();
-        });
-    }
-
-    //TODO delete testPort()
-    private void testPort() {
-        Platform.runLater(()->{
-            UiElementBase end = UiElementFactory.createByType(UiElementType.STOP);
-            sheet.getChildren().add(end);
-            if(sheet.getWidth()<150){
-                end.setLayoutX(100);
-            } else {
-                end.setLayoutX(400);
-            }
-            end.setLayoutY(0);
-            new NodeDragController(new DraggableNode(end, false)).
-                    addListener((newState, draggableNode) -> {
-                        if(newState == DragEventState.DRAG_START) {
-                            end.toFront();
-                        }
-                    });
-            spawner.spawnForElement(end);
-        });
     }
 
     private void addIconsToMenu() {

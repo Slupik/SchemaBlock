@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.javafx.view;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactory;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 
 /**

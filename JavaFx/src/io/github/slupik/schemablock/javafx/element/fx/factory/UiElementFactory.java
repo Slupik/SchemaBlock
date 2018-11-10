@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.view;
+package io.github.slupik.schemablock.javafx.element.fx.factory;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
@@ -11,11 +11,11 @@ import io.github.slupik.schemablock.javafx.element.fx.standard.OperatingBlock;
 /**
  * All rights reserved & copyright ©
  */
-class UiElementFactory {
+public class UiElementFactory {
 
     private UiElementFactory(){}
 
-    static UiElementBase createByType(UiElementType type) {
+    public static UiElementBase createByType(UiElementType type) {
         UiElementBase element = new ConditionBlock();
         switch (type) {
             case CALCULATION:
