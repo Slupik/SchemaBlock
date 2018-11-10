@@ -1,8 +1,8 @@
 package io.github.slupik.schemablock.javafx.element.fx.sheet;
 
 import io.github.slupik.schemablock.javafx.element.UiElement;
-import io.github.slupik.schemablock.javafx.element.fx.port.PortConnector;
-import io.github.slupik.schemablock.javafx.element.fx.port.PortSpawner;
+import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
+import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner;
 
 /**
  * All rights reserved & copyright ©

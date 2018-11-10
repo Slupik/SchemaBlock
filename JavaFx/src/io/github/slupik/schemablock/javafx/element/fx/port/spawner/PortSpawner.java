@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.fx.port;
+package io.github.slupik.schemablock.javafx.element.fx.port.spawner;
 
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 

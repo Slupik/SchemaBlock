@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.javafx.element.fx.port;
 
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
+import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;

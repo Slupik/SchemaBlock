@@ -3,7 +3,7 @@ package io.github.slupik.schemablock.javafx.view;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactory;
-import io.github.slupik.schemablock.javafx.element.fx.port.PortSpawner;
+import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragContainer;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;

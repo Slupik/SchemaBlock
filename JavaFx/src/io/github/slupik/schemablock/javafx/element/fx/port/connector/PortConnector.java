@@ -1,5 +1,6 @@
-package io.github.slupik.schemablock.javafx.element.fx.port;
+package io.github.slupik.schemablock.javafx.element.fx.port.connector;
 
+import io.github.slupik.schemablock.javafx.element.fx.port.PortElement;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 
 /**

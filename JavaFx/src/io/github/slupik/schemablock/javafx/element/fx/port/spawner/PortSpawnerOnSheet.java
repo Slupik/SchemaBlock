@@ -1,10 +1,9 @@
-package io.github.slupik.schemablock.javafx.view;
+package io.github.slupik.schemablock.javafx.element.fx.port.spawner;
 
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
-import io.github.slupik.schemablock.javafx.element.fx.port.PortConnector;
+import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortElement;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
-import io.github.slupik.schemablock.javafx.element.fx.port.PortSpawner;
 
 import java.util.List;
 
@@ -35,6 +34,6 @@ public class PortSpawnerOnSheet implements PortSpawner {
 
     @Override
     public void restorePorts() {
-
+        //TODO implement
     }
 }
