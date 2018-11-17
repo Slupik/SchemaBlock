@@ -4,17 +4,21 @@ import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.WrongTypeOfElement;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import io.github.slupik.schemablock.javafx.element.background.Rhombus;
-import io.github.slupik.schemablock.javafx.element.fx.dialog.DialogOfElement;
-import io.github.slupik.schemablock.javafx.element.fx.dialog.DialogWithDescAndContent;
+import io.github.slupik.schemablock.javafx.element.fx.dialog.DialogData;
+import io.github.slupik.schemablock.javafx.element.fx.dialog.DialogFactory;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.ConditionBlock;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
+import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * All rights reserved & copyright ©
@@ -88,7 +92,22 @@ public class ConditionUiElement extends UiStandardElement {
         return "Input/Output";
     }
 
-    protected DialogOfElement getDialogWindow() {
-        return new DialogWithDescAndContent(this);
+    @Override
+    protected void showDialog() {
+        Dialog<HashMap<DialogData, String>> dialog =
+                DialogFactory.buildWithDescAndContent(getDesc(), ((StandardElement) getLogicElement()).getContent());
+        Optional<HashMap<DialogData, String>> optionalResult = dialog.showAndWait();
+
+        if(optionalResult.isPresent()) {
+            HashMap<DialogData, String> result = optionalResult.get();
+            String desc = result.get(DialogData.DESC);
+            String code = result.get(DialogData.CODE);
+
+            setDesc(desc);
+            Element logicElement = getLogicElement();
+            if(logicElement instanceof StandardElement) {
+                ((StandardElement) logicElement).setContent(code);
+            }
+        }
     }
 }

@@ -16,7 +16,7 @@ import java.util.HashMap;
 /**
  * All rights reserved & copyright ©
  */
-//TODO add ability to read data from element, ex desc and code
+//TODO cleanup mess and unused classes but only after make all dialogs for all blocks
 public class DialogWithDescAndContent extends BaseOfDialogForElements {
 
     public DialogWithDescAndContent(UiElement element) {
@@ -24,7 +24,7 @@ public class DialogWithDescAndContent extends BaseOfDialogForElements {
     }
 
     @Override
-    protected Dialog<HashMap<DialogData, String>> createDialog() {// Create the custom dialog.
+    protected Dialog<HashMap<DialogData, String>> createDialog() {
         Dialog<HashMap<DialogData, String>> dialog = new Dialog<>();
         dialog.setTitle("Edycja bloku");
 

@@ -6,7 +6,6 @@ import io.github.slupik.schemablock.javafx.element.UiElement;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.WrongTypeOfElement;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
-import io.github.slupik.schemablock.javafx.element.fx.dialog.DialogOfElement;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.implementation.container.ElementInContainerNotFound;
@@ -25,7 +24,6 @@ public abstract class UiElementBase extends Pane implements UiElement {
 
     private ElementSizeBinder size;
     private CustomShapeBase background;
-    private DialogOfElement dialog;
     protected Element element;
 
     public UiElementBase(){
@@ -47,19 +45,18 @@ public abstract class UiElementBase extends Pane implements UiElement {
     }
 
     private void initDialog() {
-        dialog = getDialogWindow();
         addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if(background.contains(event.getX(), event.getY())) {
                 if(event.getButton().equals(MouseButton.PRIMARY)){
                     if(event.getClickCount() == 2){
-                        dialog.show();
+                        showDialog();
                     }
                 }
             }
         });
     }
 
-    protected abstract DialogOfElement getDialogWindow();
+    protected abstract void showDialog();
 
     private void initBackground() {
         background = createBackgroundElement();

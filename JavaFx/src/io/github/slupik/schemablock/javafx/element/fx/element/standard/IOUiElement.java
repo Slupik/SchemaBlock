@@ -4,8 +4,8 @@ import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.WrongTypeOfElement;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import io.github.slupik.schemablock.javafx.element.background.Parallelogram;
-import io.github.slupik.schemablock.javafx.element.fx.dialog.DialogOfElement;
-import io.github.slupik.schemablock.javafx.element.fx.dialog.EmptyDialog;
+import io.github.slupik.schemablock.javafx.element.fx.dialog.DialogFactory;
+import io.github.slupik.schemablock.javafx.element.fx.dialog.IODialogInput;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
@@ -13,12 +13,14 @@ import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.CommunicationBlock;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * All rights reserved & copyright ©
@@ -119,8 +121,17 @@ public class IOUiElement extends UiStandardElement {
         return list;
     }
 
-    //TODO create dialog for IO
-    protected DialogOfElement getDialogWindow() {
-        return new EmptyDialog();
+    @Override
+    protected void showDialog() {
+        Dialog<IODialogInput> dialog =
+                DialogFactory.buildIO(new IODialogInput());
+        Optional<IODialogInput> optionalResult = dialog.showAndWait();
+
+        if(optionalResult.isPresent()) {
+            IODialogInput result = optionalResult.get();
+
+            setDesc(result.desc);
+            //TODO implement new type of logic element - IO block with UI
+        }
     }
 }
