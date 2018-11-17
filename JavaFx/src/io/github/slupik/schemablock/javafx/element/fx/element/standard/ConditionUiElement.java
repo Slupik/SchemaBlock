@@ -1,9 +1,11 @@
-package io.github.slupik.schemablock.javafx.element.fx.standard;
+package io.github.slupik.schemablock.javafx.element.fx.element.standard;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.WrongTypeOfElement;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import io.github.slupik.schemablock.javafx.element.background.Rhombus;
+import io.github.slupik.schemablock.javafx.element.fx.dialog.DialogOfElement;
+import io.github.slupik.schemablock.javafx.element.fx.dialog.DialogWithDescAndContent;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
@@ -84,5 +86,9 @@ public class ConditionUiElement extends UiStandardElement {
     @Override
     protected String getDefaultDesc() {
         return "Input/Output";
+    }
+
+    protected DialogOfElement getDialogWindow() {
+        return new DialogWithDescAndContent(this);
     }
 }

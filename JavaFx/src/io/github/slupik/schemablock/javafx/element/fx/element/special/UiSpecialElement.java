@@ -1,9 +1,11 @@
-package io.github.slupik.schemablock.javafx.element.fx.special;
+package io.github.slupik.schemablock.javafx.element.fx.element.special;
 
 import io.github.slupik.schemablock.javafx.element.ElementSizeBinder;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import io.github.slupik.schemablock.javafx.element.background.MyEllipse;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.dialog.DialogOfElement;
+import io.github.slupik.schemablock.javafx.element.fx.dialog.EmptyDialog;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -106,4 +108,8 @@ public abstract class UiSpecialElement extends UiElementBase implements ElementS
     }
 
     protected abstract PortInfo getBasicPortInfo();
+
+    protected DialogOfElement getDialogWindow() {
+        return new EmptyDialog();
+    }
 }

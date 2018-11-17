@@ -12,11 +12,13 @@ import javafx.scene.shape.Shape;
  */
 public abstract class CustomShapeBase extends Pane implements CustomShape {
 
+    private Shape shape;
+
     public CustomShapeBase(){
         startY.set(0);
         startX.set(0);
 
-        Shape shape = createShape();
+        shape = createShape();
         onInit();
 
         width.addListener((observable, oldValue, newValue) -> recreate());
@@ -200,4 +202,9 @@ public abstract class CustomShapeBase extends Pane implements CustomShape {
 
     @Override
     public abstract void setFill(Color web);
+
+    @Override
+    public boolean isContainsCoords(double x, double y) {
+        return shape.contains(x, y);
+    }
 }

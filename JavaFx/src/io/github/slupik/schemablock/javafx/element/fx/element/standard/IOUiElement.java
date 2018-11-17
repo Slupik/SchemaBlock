@@ -1,9 +1,11 @@
-package io.github.slupik.schemablock.javafx.element.fx.standard;
+package io.github.slupik.schemablock.javafx.element.fx.element.standard;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.WrongTypeOfElement;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import io.github.slupik.schemablock.javafx.element.background.Parallelogram;
+import io.github.slupik.schemablock.javafx.element.fx.dialog.DialogOfElement;
+import io.github.slupik.schemablock.javafx.element.fx.dialog.EmptyDialog;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
@@ -115,5 +117,10 @@ public class IOUiElement extends UiStandardElement {
         list.add(left);
 
         return list;
+    }
+
+    //TODO create dialog for IO
+    protected DialogOfElement getDialogWindow() {
+        return new EmptyDialog();
     }
 }

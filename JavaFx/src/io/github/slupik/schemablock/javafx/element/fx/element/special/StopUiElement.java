@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.fx.special;
+package io.github.slupik.schemablock.javafx.element.fx.element.special;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;

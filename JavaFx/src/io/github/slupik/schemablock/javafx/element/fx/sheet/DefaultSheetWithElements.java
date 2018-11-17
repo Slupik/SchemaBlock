@@ -8,7 +8,7 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnect
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnectorOnSheet;
 import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner;
 import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawnerOnSheet;
-import io.github.slupik.schemablock.javafx.element.fx.special.StartUiElement;
+import io.github.slupik.schemablock.javafx.element.fx.element.special.StartUiElement;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DestContainerAfterDrop;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DestContainerAfterDropImpl;
