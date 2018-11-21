@@ -10,8 +10,8 @@ public class IODialogInput {
     public String desc = "";
     public final List<Value> data = new ArrayList<>();
 
-    public class Value {
-        public boolean isInput;
-        public String value;
+    public static class Value {
+        public IOType ioType = IOType.INPUT;
+        public String value = "";
     }
 }

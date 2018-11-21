@@ -1,14 +1,18 @@
 package io.github.slupik.schemablock.javafx.element.fx.dialog;
 
 import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * All rights reserved & copyright ©
@@ -129,7 +133,7 @@ public class DialogFactory {
         dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
         VBox verContainer = new VBox();
-        verContainer.setPadding(new Insets(20, 150, 10, 10));
+        verContainer.setPadding(new Insets(20, 50, 10, 10));
 
         HBox horContainer = new HBox();
 
@@ -144,10 +148,32 @@ public class DialogFactory {
         horContainer.setAlignment(Pos.CENTER_LEFT);
         verContainer.getChildren().add(horContainer);
 
+        Separator sepBetweenTitleAndContent = new Separator();
+        sepBetweenTitleAndContent.setOrientation(Orientation.HORIZONTAL);
+        sepBetweenTitleAndContent.setPadding(new Insets(8, 0, 8, 0));
+        verContainer.getChildren().add(sepBetweenTitleAndContent);
+
+        List<IODialogPart> options = new ArrayList<>();
+
         Label contentLabel = new Label("Zawartość:");
         verContainer.getChildren().add(contentLabel);
+
+        ScrollPane scrollingContent = new ScrollPane();
+        scrollingContent.setPrefHeight(200);
+        scrollingContent.setPrefWidth(324);
+        verContainer.getChildren().add(scrollingContent);
+        VBox optionsContainer = new VBox();
+        scrollingContent.setContent(optionsContainer);
+
         for(IODialogInput.Value value:input.data) {
-            verContainer.getChildren().add(getIOOption(value));
+            IODialogPart option = new IODialogPart();
+            option.load(value);
+            option.setRemover(() -> {
+                optionsContainer.getChildren().remove(option);
+                options.remove(option);
+            });
+            options.add(option);
+            optionsContainer.getChildren().add(option);
         }
 
         Node loginButton = dialog.getDialogPane().lookupButton(saveButtonType);
@@ -155,6 +181,20 @@ public class DialogFactory {
 
         title.textProperty().addListener((observable, oldValue, newValue) ->
                 loginButton.setDisable(newValue.trim().isEmpty()));
+
+        Button btnAddOption = new Button("Dodaj");
+        btnAddOption.setOnAction(event -> {
+            IODialogPart option = new IODialogPart();
+            option.load(new IODialogInput.Value());
+            option.setRemover(() -> {
+                optionsContainer.getChildren().remove(option);
+                options.remove(option);
+            });
+            options.add(option);
+            optionsContainer.getChildren().add(option);
+        });
+        verContainer.getChildren().add(btnAddOption);
+        VBox.setMargin(btnAddOption, new Insets(16, 0, 16, 0));
 
         dialog.getDialogPane().setContent(verContainer);
 
@@ -165,29 +205,33 @@ public class DialogFactory {
                 IODialogInput output = new IODialogInput();
                 output.desc = title.getText();
 
+                for(IODialogPart part:options) {
+                    output.data.add(part.getAsValue());
+                }
+
                 return output;
             }
             return null;
         });
 
+        optionsContainer.getChildren().addListener(new ListChangeListener<Node>() {
+
+            private boolean ignore = false;
+
+            @Override
+            public void onChanged(Change<? extends Node> c) {
+                if(ignore) {
+                    return;
+                }
+                ignore = true;
+                Platform.runLater(()->{
+                    double newHeight = 50 * optionsContainer.getChildren().size();
+                    optionsContainer.setMinHeight(newHeight);
+                    ignore = false;
+                });
+            }
+        });
+
         return dialog;
-    }
-
-    private static Node getIOOption(IODialogInput.Value value) {
-        VBox element = new VBox();
-
-        Label info = new Label();
-        info.setPadding(new Insets(4, 0, 4, 0));
-        if(value.isInput) {
-            info.setText("Wczytaj wartość do zmiennej:");
-        } else {
-            info.setText("Wyświetl:");
-        }
-        element.getChildren().add(info);
-
-        TextField content = new TextField();
-        element.getChildren().add(content);
-
-        return element;
     }
 }

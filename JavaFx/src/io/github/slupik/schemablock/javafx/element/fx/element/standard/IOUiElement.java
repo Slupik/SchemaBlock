@@ -6,6 +6,7 @@ import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import io.github.slupik.schemablock.javafx.element.background.Parallelogram;
 import io.github.slupik.schemablock.javafx.element.fx.dialog.DialogFactory;
 import io.github.slupik.schemablock.javafx.element.fx.dialog.IODialogInput;
+import io.github.slupik.schemablock.javafx.element.fx.dialog.IOType;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
@@ -123,8 +124,21 @@ public class IOUiElement extends UiStandardElement {
 
     @Override
     protected void showDialog() {
+        IODialogInput dialogInput = new IODialogInput();
+        dialogInput.desc = getDesc();
+
+        IODialogInput.Value v1 = new IODialogInput.Value();
+        v1.ioType = IOType.INPUT;
+        v1.value = "a";
+        dialogInput.data.add(v1);
+
+        IODialogInput.Value v2 = new IODialogInput.Value();
+        v2.ioType = IOType.OUTPUT;
+        v2.value = "\"a: \"+a";
+        dialogInput.data.add(v2);
+
         Dialog<IODialogInput> dialog =
-                DialogFactory.buildIO(new IODialogInput());
+                DialogFactory.buildIO(dialogInput);
         Optional<IODialogInput> optionalResult = dialog.showAndWait();
 
         if(optionalResult.isPresent()) {
