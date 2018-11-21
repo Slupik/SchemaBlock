@@ -48,7 +48,7 @@ public class DialogFactory {
         verContainer.getChildren().add(content);
 
         Node loginButton = dialog.getDialogPane().lookupButton(saveButtonType);
-        loginButton.setDisable(true);
+        loginButton.setDisable(descText.length()==0);
 
         title.textProperty().addListener((observable, oldValue, newValue) ->
                 loginButton.setDisable(newValue.trim().isEmpty()));
@@ -99,7 +99,7 @@ public class DialogFactory {
         verContainer.getChildren().add(content);
 
         Node loginButton = dialog.getDialogPane().lookupButton(saveButtonType);
-        loginButton.setDisable(true);
+        loginButton.setDisable(descText.length()==0);
 
         title.textProperty().addListener((observable, oldValue, newValue) ->
                 loginButton.setDisable(newValue.trim().isEmpty()));
@@ -151,7 +151,7 @@ public class DialogFactory {
         }
 
         Node loginButton = dialog.getDialogPane().lookupButton(saveButtonType);
-        loginButton.setDisable(true);
+        loginButton.setDisable(input.desc.length()==0);
 
         title.textProperty().addListener((observable, oldValue, newValue) ->
                 loginButton.setDisable(newValue.trim().isEmpty()));

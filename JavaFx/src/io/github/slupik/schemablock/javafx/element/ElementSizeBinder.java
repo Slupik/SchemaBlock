@@ -3,6 +3,8 @@ package io.github.slupik.schemablock.javafx.element;
 import io.github.slupik.schemablock.javafx.element.background.CustomShape;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -58,6 +60,10 @@ public class ElementSizeBinder {
                     resetFontSize(newValue.doubleValue(), polygon.getInnerHeight()));
             polygon.innerHeightProperty().addListener((observable, oldValue, newValue) ->
                     resetFontSize(polygon.getInnerWidth(), newValue.doubleValue()));
+
+            getDesc().textProperty().addListener((observable, oldValue, newValue) ->
+                    resetFontSize(polygon.getInnerWidth(),
+                    polygon.getInnerHeight()));
         } else {
             getDesc().maxWidthProperty().bind(getMainContainer().widthProperty());
             getDesc().maxHeightProperty().bind(getMainContainer().heightProperty());
@@ -66,6 +72,10 @@ public class ElementSizeBinder {
                     resetFontSize(newValue.doubleValue(), getMainContainer().heightProperty().get()));
             getDesc().heightProperty().addListener((observable, oldValue, newValue) ->
                     resetFontSize(getMainContainer().widthProperty().get(), newValue.doubleValue()));
+
+            getDesc().textProperty().addListener((observable, oldValue, newValue) ->
+                    resetFontSize(getMainContainer().widthProperty().get(),
+                            getMainContainer().heightProperty().get()));
         }
 
         getDescContainer().setAlignment(Pos.CENTER);
