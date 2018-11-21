@@ -13,6 +13,7 @@ import java.util.HashMap;
 /**
  * All rights reserved & copyright ©
  */
+//TODO cleanup code
 public class DialogFactory {
 
     private DialogFactory(){}
@@ -44,6 +45,57 @@ public class DialogFactory {
         content.setPromptText("Kod");
         content.setPrefWidth(400);
         content.setPrefHeight(400);
+        verContainer.getChildren().add(content);
+
+        Node loginButton = dialog.getDialogPane().lookupButton(saveButtonType);
+        loginButton.setDisable(true);
+
+        title.textProperty().addListener((observable, oldValue, newValue) ->
+                loginButton.setDisable(newValue.trim().isEmpty()));
+
+        dialog.getDialogPane().setContent(verContainer);
+
+        Platform.runLater(title::requestFocus);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == saveButtonType) {
+                HashMap<DialogData, String> data = new HashMap<>();
+                data.put(DialogData.DESC, title.getText());
+                data.put(DialogData.CODE, content.getText());
+                return data;
+            }
+            return null;
+        });
+
+        return dialog;
+    }
+
+    public static Dialog<HashMap<DialogData, String>> buildWithDescAndShortContent(String descText, String singleLine) {
+        Dialog<HashMap<DialogData, String>> dialog = new Dialog<>();
+        dialog.setTitle("Edycja bloku");
+
+        ButtonType saveButtonType = new ButtonType("Zapisz", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+
+        VBox verContainer = new VBox();
+        verContainer.setPadding(new Insets(20, 150, 10, 10));
+
+        HBox horContainer = new HBox();
+
+        TextField title = new TextField(descText);
+        title.setPromptText("Krótki tytuł");
+
+        horContainer.getChildren().add(new Label("Tytuł:  "));
+        horContainer.getChildren().add(title);
+        horContainer.setAlignment(Pos.CENTER_LEFT);
+        verContainer.getChildren().add(horContainer);
+
+        Label contentLabel = new Label("Zdanie logiczne:");
+        verContainer.getChildren().add(contentLabel);
+        contentLabel.setPadding(new Insets(8, 0, 8, 0));
+        TextField content = new TextField(singleLine);
+        content.setPromptText("Wyrażenie jeżeli...");
+        content.setPrefWidth(400);
         verContainer.getChildren().add(content);
 
         Node loginButton = dialog.getDialogPane().lookupButton(saveButtonType);

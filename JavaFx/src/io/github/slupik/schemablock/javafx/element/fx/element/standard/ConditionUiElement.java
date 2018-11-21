@@ -95,7 +95,7 @@ public class ConditionUiElement extends UiStandardElement {
     @Override
     protected void showDialog() {
         Dialog<HashMap<DialogData, String>> dialog =
-                DialogFactory.buildWithDescAndContent(getDesc(), ((StandardElement) getLogicElement()).getContent());
+                DialogFactory.buildWithDescAndShortContent(getDesc(), ((StandardElement) getLogicElement()).getContent());
         Optional<HashMap<DialogData, String>> optionalResult = dialog.showAndWait();
 
         if(optionalResult.isPresent()) {
