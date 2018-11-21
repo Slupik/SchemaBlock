@@ -93,6 +93,7 @@ public class ElementSizeBinder {
         textArea.setFont(newFont);
 
         if(textArea.getBoundsInLocal().getHeight()>height) {
+            textArea.setFont(unitFont);
             double unitHeight = textArea.getBoundsInLocal().getHeight();
             newFont = Font.font(getDesc().getFont().getFamily(), FontPosture.findByName(getDesc().getFont().getStyle()), height/unitHeight);
         }
