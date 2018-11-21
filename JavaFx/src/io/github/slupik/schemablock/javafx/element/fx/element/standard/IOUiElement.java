@@ -10,8 +10,10 @@ import io.github.slupik.schemablock.javafx.element.fx.dialog.IOType;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
+import io.github.slupik.schemablock.model.ui.abstraction.element.IOData;
+import io.github.slupik.schemablock.model.ui.abstraction.element.IOElement;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
-import io.github.slupik.schemablock.model.ui.implementation.element.specific.CommunicationBlock;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOBlock;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Dialog;
@@ -42,7 +44,7 @@ public class IOUiElement extends UiStandardElement {
     @Override
     protected void onPostInit() {
         super.onPostInit();
-        element = new CommunicationBlock();
+        element = new IOBlock();
     }
 
     @Override
@@ -124,18 +126,24 @@ public class IOUiElement extends UiStandardElement {
 
     @Override
     protected void showDialog() {
+        //TODO move this code to mapper
+        List<IOElement.Data> content = ((IOElement) getLogicElement()).getContentAsList();
+        List<IODialogInput.Value> data = new ArrayList<>();
+        for(IOElement.Data source:content) {
+            IODialogInput.Value value = new IODialogInput.Value();
+            if(source.isInput()) {
+                value.ioType = IOType.INPUT;
+            } else {
+                value.ioType = IOType.OUTPUT;
+            }
+            value.value = source.getValue();
+            data.add(value);
+        }
+
+
         IODialogInput dialogInput = new IODialogInput();
         dialogInput.desc = getDesc();
-
-        IODialogInput.Value v1 = new IODialogInput.Value();
-        v1.ioType = IOType.INPUT;
-        v1.value = "a";
-        dialogInput.data.add(v1);
-
-        IODialogInput.Value v2 = new IODialogInput.Value();
-        v2.ioType = IOType.OUTPUT;
-        v2.value = "\"a: \"+a";
-        dialogInput.data.add(v2);
+        dialogInput.data.addAll(data);
 
         Dialog<IODialogInput> dialog =
                 DialogFactory.buildIO(dialogInput);
@@ -145,7 +153,21 @@ public class IOUiElement extends UiStandardElement {
             IODialogInput result = optionalResult.get();
 
             setDesc(result.desc);
-            //TODO implement new type of logic element - IO block with UI
+            //TODO use generics
+            if(getLogicElement() instanceof IOElement) {
+                List<IOElement.Data> instructions = getConvertedData(result.data);
+                IOElement element = ((IOElement) getLogicElement());
+                element.setContent(instructions);
+            }
         }
+    }
+
+    //TODO move this code to mapper
+    private List<IOElement.Data> getConvertedData(List<IODialogInput.Value> data) {
+        List<IOElement.Data> converted = new ArrayList<>();
+        for(IODialogInput.Value value:data) {
+            converted.add(new IOData(value.ioType==IOType.INPUT, value.value));
+        }
+        return converted;
     }
 }

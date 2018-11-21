@@ -29,7 +29,7 @@ public class ElementParser {
                 break;
             }
             case COMMUNICATION: {
-                element = new CommunicationBlock();
+                element = new IOBlock();
                 break;
             }
             default: {

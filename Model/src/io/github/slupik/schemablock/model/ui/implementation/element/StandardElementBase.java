@@ -51,7 +51,6 @@ public abstract class StandardElementBase extends ElementBase implements Standar
         pojo.elementType = getType();
         pojo.content = codeToRun;
         return pojo;
-
     }
 
     @Override
