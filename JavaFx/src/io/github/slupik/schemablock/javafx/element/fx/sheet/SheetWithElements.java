@@ -13,6 +13,7 @@ public interface SheetWithElements {
     void run();
 
     void addElement(UiElement element) throws InvalidTypeException;
+    void removeElement(UiElement element);
     void clear();
 
     PortConnector getPortConnector();

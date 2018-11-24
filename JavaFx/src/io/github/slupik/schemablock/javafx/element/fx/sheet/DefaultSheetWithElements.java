@@ -58,25 +58,21 @@ public class DefaultSheetWithElements implements SheetWithElements {
         childHandler = new DestContainerAfterDropImpl(sheet) {
             @Override
             public void addNode(Node node) {
-                super.addNode(node);
-                //TODO integrate with add element
                 if(node instanceof UiElement) {
-                    UiElement element = ((UiElement) node);
-                    container.addElement(element.getLogicElement());
-                    if(element.getType()==UiElementType.IO) {
-                        ((IOUiElement) element).setCommunicator(new DefaultIOCommunicator());
-                    }
-                }
-                if(node instanceof UiElementBase) {
-                    spawner.spawnForElement(((UiElementBase) node));
+                    try {
+                        addElement(((UiElement) node));
+                    } catch (InvalidTypeException ignore) {/*Impossible*/}
+                } else {
+                    super.addNode(node);
                 }
             }
             @Override
             public void removeNode(Node node) {
-                super.addNode(node);
                 if(node instanceof UiElement) {
                     UiElement element = ((UiElement) node);
-                    container.removeElement(element.getElementId());
+                    removeElement(element);
+                } else {
+                    super.addNode(node);
                 }
             }
         };
@@ -84,7 +80,6 @@ public class DefaultSheetWithElements implements SheetWithElements {
 
     private void setup() {
         spawnStartElement();
-
         spawnStop();
     }
 
@@ -145,12 +140,24 @@ public class DefaultSheetWithElements implements SheetWithElements {
     @Override
     public void addElement(UiElement element) throws InvalidTypeException {
         if(element instanceof Node) {
+            container.addElement(element.getLogicElement());
             sheet.getChildren().add(((Node) element));
             if(element.getType()==UiElementType.IO) {
                 ((IOUiElement) element).setCommunicator(new DefaultIOCommunicator());
             }
+            if(element instanceof UiElementBase) {
+                spawner.spawnForElement(((UiElementBase) element));
+            }
         } else {
             throw new InvalidTypeException();
+        }
+    }
+
+    @Override
+    public void removeElement(UiElement element) {
+        container.removeElement(element.getElementId());
+        if(element instanceof Node) {
+            sheet.getChildren().remove(element);
         }
     }
 
