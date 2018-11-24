@@ -14,7 +14,7 @@ public class ProgramPrint extends MathPattern {
     private static IOproxy io = new DefaultIO();
 
     public ProgramPrint() {
-        super("print");
+        super("getValueToPrint");
     }
 
     public static void setIo(IOproxy io) {

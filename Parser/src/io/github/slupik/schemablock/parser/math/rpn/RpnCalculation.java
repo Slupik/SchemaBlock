@@ -75,12 +75,20 @@ class RpnCalculation {
                 } else {
                     Value valueY = stack.pop();
                     Value valueX = stack.pop();
-                    if(token.equals("+") && valueX.getType()==ValueType.STRING && valueY.getType()==ValueType.STRING) {
-                        String x = valueX.getAsString();
-                        String y = valueY.getAsString();
-
-                        Value res = new Value("\"" + x + y + "\"");
-                        stack.add(res);
+                    if(token.equals("+") && (valueX.getType()==ValueType.STRING || valueY.getType()==ValueType.STRING)) {
+                        String x;
+                        String y;
+                        if(valueX.getType()==ValueType.STRING) {
+                            x = valueX.getAsString();
+                        } else {
+                            x = valueX.getValue();
+                        }
+                        if(valueY.getType()==ValueType.STRING) {
+                            y = valueY.getAsString();
+                        } else {
+                            y = valueY.getValue();
+                        }
+                        stack.add(new Value(ValueType.STRING, "\"" + x + y + "\""));
                     } else if(isArithmeticOperator(token)) {
                         if(valueX.getType().isNumber && valueY.getType().isNumber) {
                             double x = valueX.getAsDouble();
@@ -105,8 +113,8 @@ class RpnCalculation {
                                     break;
                             }
                             stack.add(res);
-                        } else {
-                            throw new InvalidArgumentsException();
+                        }  else {
+                            throw new InvalidArgumentsException(token);
                         }
                     } else if(isByteOperator(token)) {
                         if(valueX.getType().isByteCompatible && valueY.getType().isByteCompatible) {

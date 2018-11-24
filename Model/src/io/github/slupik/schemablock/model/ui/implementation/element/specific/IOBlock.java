@@ -29,6 +29,7 @@ public class IOBlock extends StandardElementBase implements IOElement {
 
     private String nextElement = "";
     private final List<Data> instructions = new ArrayList<>();
+    private IOCommunicable communicator;
 
     @Override
     public void setNextElement(String elementId) {
@@ -45,6 +46,11 @@ public class IOBlock extends StandardElementBase implements IOElement {
         if(nextElement.equals(elementId)) {
             nextElement = "";
         }
+    }
+
+    @Override
+    public void setCommunicator(IOCommunicable communicator) {
+        this.communicator = communicator;
     }
 
     @Override
@@ -87,6 +93,17 @@ public class IOBlock extends StandardElementBase implements IOElement {
     protected void justRunCode() throws IncompatibleTypeException, InvalidArgumentsException, UnsupportedValueException, VariableIsAlreadyDefinedException, VariableNotFound, WrongArgumentException, NotFoundTypeException {
         //TODO implement this special element with new parser
         CodeParser.execute("");
+        if(communicator!=null) {
+            for(Data instruction:instructions) {
+                if(instruction.isInput()) {
+                    String value = communicator.getInput();
+                    CodeParser.updateVariable(instruction.getValue(), value);
+                } else {
+                    String value = CodeParser.getValueToPrint(instruction.getValue());
+                    communicator.print(value);
+                }
+            }
+        }
     }
 
     @Override

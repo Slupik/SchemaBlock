@@ -1,5 +1,7 @@
 package io.github.slupik.schemablock.model.ui.abstraction.element;
 
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
+
 import java.util.List;
 
 /**
@@ -9,6 +11,8 @@ public interface IOElement extends StandardElement {
     void setNextElement(String elementId);
     String getNextElement();
     void removeNextElement(String elementId);
+
+    void setCommunicator(IOCommunicable communicator);
 
     //TODO cleanup this mess
     void setContent(List<Data> content);

@@ -217,13 +217,29 @@ class CodeParserTest {
         assertEquals(val1, CodeParser.getHeap().getVariable("number").getValue());
         assertEquals(val2.substring(1, val2.length()-1), CodeParser.getHeap().getVariable("value").getValue());
         CodeParser.execute(
-                "print(number);"+
-                        "print(value);");
+                "getValueToPrint(number);"+
+                        "getValueToPrint(value);");
     }
 
     private static void keepImports(){
         assertEquals(true, true);
         assertNull(null);
         assertThrows(Exception.class, () -> {});
+    }
+
+    @Test
+    void getValueToPrint() throws IncompatibleTypeException, InvalidArgumentsException, UnsupportedValueException, VariableIsAlreadyDefinedException, VariableNotFound, WrongArgumentException, NotFoundTypeException {
+        double val1 = 4231423;
+        String val2 = "fewfwefw";
+
+        CodeParser.clearHeap();
+        CodeParser.execute("double number = " + val1 + ";" +
+                "String value = \"" + val2 + "\";"
+        );
+        assertEquals(ValueType.DOUBLE, CodeParser.getHeap().getVariable("number").getType());
+        assertEquals(ValueType.STRING, CodeParser.getHeap().getVariable("value").getType());
+
+        assertEquals("This is a number: 4231423.0 and \\\"(test)\\\" this is a string: fewfwefw",
+                CodeParser.getValueToPrint("\"This is a number: \"+number+\" and \\\"(test)\\\" this is a string: \"+value"));
     }
 }
