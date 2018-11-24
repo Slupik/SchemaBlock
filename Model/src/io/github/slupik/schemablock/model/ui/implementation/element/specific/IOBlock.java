@@ -72,7 +72,7 @@ public class IOBlock extends StandardElementBase implements IOElement {
 
     @Override
     public ElementType getType() {
-        return ElementType.CALCULATION;
+        return ElementType.COMMUNICATION;
     }
 
     @Override

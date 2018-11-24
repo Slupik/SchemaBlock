@@ -5,10 +5,7 @@ import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
 import io.github.slupik.schemablock.javafx.element.fx.port.group.PortListener;
-import io.github.slupik.schemablock.model.ui.abstraction.element.ConditionalElement;
-import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
-import io.github.slupik.schemablock.model.ui.abstraction.element.OperationElement;
-import io.github.slupik.schemablock.model.ui.abstraction.element.StartElement;
+import io.github.slupik.schemablock.model.ui.abstraction.element.*;
 import io.github.slupik.schemablock.model.utils.RandomString;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -155,7 +152,7 @@ public class PortElement extends AnchorPane {
                 break;
             }
             case COMMUNICATION: {
-                ((OperationElement) element).setNextElement(elementId);
+                ((IOElement) element).setNextElement(elementId);
                 break;
             }
             case START: {
