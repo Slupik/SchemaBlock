@@ -54,6 +54,11 @@ public class IOBlock extends StandardElementBase implements IOElement {
     }
 
     @Override
+    public IOCommunicable getCommunicator() {
+        return communicator;
+    }
+
+    @Override
     public void setContent(String content) {
         Type listType = new TypeToken<ArrayList<Data>>(){}.getType();
         List<Data> contentAsList = new Gson().fromJson(content, listType);
@@ -91,8 +96,6 @@ public class IOBlock extends StandardElementBase implements IOElement {
 
     @Override
     protected void justRunCode() throws IncompatibleTypeException, InvalidArgumentsException, UnsupportedValueException, VariableIsAlreadyDefinedException, VariableNotFound, WrongArgumentException, NotFoundTypeException {
-        //TODO implement this special element with new parser
-        CodeParser.execute("");
         if(communicator!=null) {
             for(Data instruction:instructions) {
                 if(instruction.isInput()) {

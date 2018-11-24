@@ -13,6 +13,7 @@ public interface IOElement extends StandardElement {
     void removeNextElement(String elementId);
 
     void setCommunicator(IOCommunicable communicator);
+    IOCommunicable getCommunicator();
 
     //TODO cleanup this mess
     void setContent(List<Data> content);

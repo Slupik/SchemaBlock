@@ -3,12 +3,14 @@ package io.github.slupik.schemablock.javafx.element.fx.sheet;
 import io.github.slupik.schemablock.javafx.element.UiElement;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.communication.DefaultIOCommunicator;
+import io.github.slupik.schemablock.javafx.element.fx.element.special.StartUiElement;
+import io.github.slupik.schemablock.javafx.element.fx.element.standard.IOUiElement;
 import io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactory;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnectorOnSheet;
 import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner;
 import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawnerOnSheet;
-import io.github.slupik.schemablock.javafx.element.fx.element.special.StartUiElement;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DestContainerAfterDrop;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DestContainerAfterDropImpl;
@@ -57,9 +59,13 @@ public class DefaultSheetWithElements implements SheetWithElements {
             @Override
             public void addNode(Node node) {
                 super.addNode(node);
+                //TODO integrate with add element
                 if(node instanceof UiElement) {
                     UiElement element = ((UiElement) node);
                     container.addElement(element.getLogicElement());
+                    if(element.getType()==UiElementType.IO) {
+                        ((IOUiElement) element).setCommunicator(new DefaultIOCommunicator());
+                    }
                 }
                 if(node instanceof UiElementBase) {
                     spawner.spawnForElement(((UiElementBase) node));
@@ -140,6 +146,9 @@ public class DefaultSheetWithElements implements SheetWithElements {
     public void addElement(UiElement element) throws InvalidTypeException {
         if(element instanceof Node) {
             sheet.getChildren().add(((Node) element));
+            if(element.getType()==UiElementType.IO) {
+                ((IOUiElement) element).setCommunicator(new DefaultIOCommunicator());
+            }
         } else {
             throw new InvalidTypeException();
         }

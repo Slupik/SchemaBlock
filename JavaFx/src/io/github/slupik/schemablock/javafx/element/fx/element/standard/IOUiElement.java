@@ -14,6 +14,7 @@ import io.github.slupik.schemablock.model.ui.abstraction.element.IOData;
 import io.github.slupik.schemablock.model.ui.abstraction.element.IOElement;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOBlock;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Dialog;
@@ -61,6 +62,9 @@ public class IOUiElement extends UiStandardElement {
     @Override
     public void setLogicElement(Element element) throws WrongTypeOfElement {
         if(element.getType()== ElementType.COMMUNICATION && element instanceof StandardElement) {
+            if(getLogicElement()!=null) {
+                ((IOElement) getLogicElement()).setCommunicator(((IOElement) getLogicElement()).getCommunicator());
+            }
             super.setLogicElement(element);
         } else {
             throw new WrongTypeOfElement(element.getType(), ElementType.COMMUNICATION);
@@ -169,5 +173,9 @@ public class IOUiElement extends UiStandardElement {
             converted.add(new IOData(value.ioType==IOType.INPUT, value.value));
         }
         return converted;
+    }
+
+    public void setCommunicator(IOCommunicable communicator) {
+        ((IOElement) getLogicElement()).setCommunicator(communicator);
     }
 }
