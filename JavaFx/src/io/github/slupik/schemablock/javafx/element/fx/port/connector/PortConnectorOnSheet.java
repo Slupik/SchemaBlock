@@ -99,6 +99,7 @@ public class PortConnectorOnSheet implements PortConnector {
         activeArrow.setEnd(x, y);
         this.startPort.bindArrowStart(activeArrow);
         port.bindArrowEnd(activeArrow);
+        startPort.configureArrowOut(activeArrow);
 
         clearArrow();
     }

@@ -200,6 +200,16 @@ public class PortElement extends AnchorPane {
         }
     }
 
+    public void configureArrowOut(Arrow arrow) {
+        if(base.getType()==IF) {
+            if(isPortForTrue()) {
+                arrow.setDesc("P");
+            } else {
+                arrow.setDesc("F");
+            }
+        }
+    }
+
     public String getPortId(){
         return id;
     }

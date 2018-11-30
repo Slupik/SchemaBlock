@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.arrow;
 
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -11,9 +12,10 @@ public class Arrow extends AnchorPane {
 
     private final Line line = new Line(true);
     private final ArrowHead head = new ArrowHead();
+    private final Label desc = new Label("");
 
     public Arrow(){
-        getChildren().addAll(line, head);
+        getChildren().addAll(line, head, desc);
     }
 
     public void setEnd(double x, double y) {
@@ -37,6 +39,17 @@ public class Arrow extends AnchorPane {
         double angel = getArrowAngel();
         head.setRotate(angel);
         head.setArrowEnd(localEnd.x, localEnd.y, line.getStrokeWidth());
+
+        if(startPoint.x<endPoint.x) {
+            desc.setLayoutX(5);
+        } else {
+            desc.setLayoutX(-5-line.getStrokeWidth()*2);
+        }
+        if(startPoint.y<endPoint.y) {
+            desc.setLayoutY((endPoint.y-startPoint.y)/2-2-line.getStrokeWidth()-desc.getHeight());
+        } else {
+            desc.setLayoutY((endPoint.y-startPoint.y)/2-2-desc.getHeight());
+        }
     }
 
     private Point getFixedForLineLocalEnd(Point localEnd) {
@@ -78,5 +91,9 @@ public class Arrow extends AnchorPane {
                 endPoint.x-getLayoutX(),
                 endPoint.y-getLayoutY()
         );
+    }
+
+    public void setDesc(String desc) {
+        this.desc.setText(desc);
     }
 }
