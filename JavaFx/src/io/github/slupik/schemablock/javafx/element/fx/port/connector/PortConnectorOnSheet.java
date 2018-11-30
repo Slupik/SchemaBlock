@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.connector;
 
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
+import io.github.slupik.schemablock.javafx.element.fx.port.CannotSetupPort;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortElement;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import javafx.scene.input.MouseEvent;
@@ -47,15 +48,14 @@ public class PortConnectorOnSheet implements PortConnector {
                         to all those elements (which contains specific point) then
                         it means that port is visible for the user
                     */
-                    if(portLoop.isContainsPoint(event.getX(), event.getY())){
+                    if(portLoop.isContainsPoint(event.getX(), event.getY()) && portLoop.isAllowForInput()){
                         pointBelongsToPort = true;
                         portLoop.onMouseReleased();
                         break;
                     }
                 }
                 if(!pointBelongsToPort) {
-                    sheet.getChildren().remove(activeArrow);
-                    clearArrow();
+                    deleteArrow();
                 }
             }
         });
@@ -82,16 +82,29 @@ public class PortConnectorOnSheet implements PortConnector {
 
     @Override
     public void setLineEnd(PortElement port, double x, double y) {
-        try {
-            this.startPort.setNextElement(port.getElement());
-        } catch (Exception e) {
-            clearArrow();
+        //Delete when start and end is the same port or element
+        if(port.getPortId().equals(startPort.getPortId()) ||
+                port.getElement().getElementId().equals(startPort.getElement().getElementId())) {
+            deleteArrow();
             return;
         }
+
+        try {
+            this.startPort.setNextElement(port.getElement());
+        } catch (CannotSetupPort e) {
+            deleteArrow();
+            return;
+        }
+
         activeArrow.setEnd(x, y);
         this.startPort.bindArrowStart(activeArrow);
         port.bindArrowEnd(activeArrow);
 
+        clearArrow();
+    }
+
+    private void deleteArrow() {
+        sheet.getChildren().remove(activeArrow);
         clearArrow();
     }
 

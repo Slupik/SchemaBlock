@@ -27,7 +27,6 @@ import static io.github.slupik.schemablock.javafx.element.UiElementType.IF;
 public class PortElement extends AnchorPane {
 
     private String id = RandomString.generate(32);
-
     private final boolean allowForInput;
     private final boolean allowForOutput;
     private final List<PortListener> listeners = new ArrayList<>();
@@ -135,7 +134,7 @@ public class PortElement extends AnchorPane {
         return base;
     }
 
-    public void setNextElement(UiElementBase next) throws Exception {
+    public void setNextElement(UiElementBase next) throws CannotSetupPort {
         boolean checkedForTrue = true;
         if(base.getType() == IF) {
             checkedForTrue = getPortBoolType();
@@ -154,7 +153,7 @@ public class PortElement extends AnchorPane {
         }
     }
 
-    private boolean getPortBoolType() throws Exception {
+    private boolean getPortBoolType() throws CannotSetupPort {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Wybierz typ połączenia");
         alert.setHeaderText("Jest to wyjście dla:");
@@ -211,5 +210,13 @@ public class PortElement extends AnchorPane {
 
     public void addListener(PortListener listener) {
         listeners.add(listener);
+    }
+
+    public boolean isAllowForInput() {
+        return allowForInput;
+    }
+
+    public boolean isAllowForOutput() {
+        return allowForOutput;
     }
 }
