@@ -1,12 +1,14 @@
 package io.github.slupik.schemablock.javafx.element.fx.port;
 
-import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
 import io.github.slupik.schemablock.javafx.element.fx.port.group.PortListener;
 import io.github.slupik.schemablock.model.ui.abstraction.element.*;
 import io.github.slupik.schemablock.model.utils.RandomString;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -15,6 +17,9 @@ import javafx.scene.shape.Circle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static io.github.slupik.schemablock.javafx.element.UiElementType.IF;
 
 /**
  * All rights reserved & copyright ©
@@ -130,17 +135,40 @@ public class PortElement extends AnchorPane {
         return base;
     }
 
-    public void setNextElement(UiElementBase next) {
-        setNextElementInLogic("", isPortForTrue); //just in case
-        setNextElementInLogic(next.getElementId(), false);
-        if(base.getType() == UiElementType.IF) {
+    public void setNextElement(UiElementBase next) throws Exception {
+        boolean checkedForTrue = true;
+        if(base.getType() == IF) {
+            checkedForTrue = getPortBoolType();
+        }
+        setNextElementInLogic("", checkedForTrue); //just in case
+        setNextElementInLogic(next.getElementId(), checkedForTrue);
+        isPortForTrue = checkedForTrue;
+        if(base.getType() == IF) {
             for(PortListener listener:listeners) {
-                listener.onSetNextElement(next.getElementId(), false);
+                listener.onSetNextElement(next.getElementId(), checkedForTrue);
             }
         } else {
             for(PortListener listener:listeners) {
                 listener.onSetNextElement(next.getElementId(), getPortId());
             }
+        }
+    }
+
+    private boolean getPortBoolType() throws Exception {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Wybierz typ połączenia");
+        alert.setHeaderText("Jest to wyjście dla:");
+
+        ButtonType btnTrue = new ButtonType("Prawdy", ButtonBar.ButtonData.YES);
+        ButtonType btnFalse = new ButtonType("Fałszu", ButtonBar.ButtonData.NO);
+
+        alert.getButtonTypes().setAll(btnTrue, btnFalse);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent()) {
+            return result.get() == btnTrue;
+        } else {
+            throw new CannotSetupPort("Port type is not set.");
         }
     }
 

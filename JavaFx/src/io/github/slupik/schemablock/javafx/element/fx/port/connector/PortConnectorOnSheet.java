@@ -82,10 +82,15 @@ public class PortConnectorOnSheet implements PortConnector {
 
     @Override
     public void setLineEnd(PortElement port, double x, double y) {
+        try {
+            this.startPort.setNextElement(port.getElement());
+        } catch (Exception e) {
+            clearArrow();
+            return;
+        }
         activeArrow.setEnd(x, y);
         this.startPort.bindArrowStart(activeArrow);
         port.bindArrowEnd(activeArrow);
-        this.startPort.setNextElement(port.getElement());
 
         clearArrow();
     }
