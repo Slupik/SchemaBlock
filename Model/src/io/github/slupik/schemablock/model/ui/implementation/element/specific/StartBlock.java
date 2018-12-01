@@ -57,11 +57,13 @@ public class StartBlock extends ElementBase implements StartElement {
         pojo.elementType = getType();
         pojo.nextBlocks = new String[1];
         pojo.nextBlocks[0] = nextElement;
+        pojo.id = getId();
         return new Gson().toJson(pojo);
     }
 
     @Override
     protected void load(ElementPOJO pojo) throws BlockParserException {
         nextElement = pojo.nextBlocks[0];
+        id = pojo.id;
     }
 }

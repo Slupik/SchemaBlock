@@ -9,4 +9,5 @@ public class ElementPOJO {
     public ElementType elementType;
     public String content;
     public String[] nextBlocks;
+    public String id;
 }

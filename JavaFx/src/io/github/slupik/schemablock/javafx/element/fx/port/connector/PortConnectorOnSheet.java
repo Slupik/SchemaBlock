@@ -1,5 +1,8 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.connector;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
 import io.github.slupik.schemablock.javafx.element.fx.port.CannotSetupPort;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortElement;
@@ -81,16 +84,16 @@ public class PortConnectorOnSheet implements PortConnector {
     }
 
     @Override
-    public void setLineEnd(PortElement port, double x, double y) {
+    public void setLineEnd(PortElement endPort, double x, double y) {
         //Delete when start and end is the same port or element
-        if(port.getPortId().equals(startPort.getPortId()) ||
-                port.getElement().getElementId().equals(startPort.getElement().getElementId())) {
+        if(endPort.getPortId().equals(startPort.getPortId()) ||
+                endPort.getElement().getElementId().equals(startPort.getElement().getElementId())) {
             deleteArrow();
             return;
         }
 
         try {
-            this.startPort.setNextElement(port.getElement());
+            this.startPort.setNextElement(endPort.getElement());
         } catch (CannotSetupPort e) {
             deleteArrow();
             return;
@@ -98,8 +101,9 @@ public class PortConnectorOnSheet implements PortConnector {
 
         activeArrow.setEnd(x, y);
         this.startPort.bindArrowStart(activeArrow);
-        port.bindArrowEnd(activeArrow);
+        endPort.bindArrowEnd(activeArrow);
         startPort.configureArrowOut(activeArrow);
+        startPort.configurePortOut(endPort);
 
         clearArrow();
     }
@@ -118,5 +122,16 @@ public class PortConnectorOnSheet implements PortConnector {
     public void addPort(PortElement port) {
         portList.add(port);
         sheet.getChildren().add(port);
+    }
+
+    @Override
+    public String stringify() {
+        JsonArray array = new JsonArray();
+        for(PortElement port:portList) {
+            JsonParser parser = new JsonParser();
+            JsonObject o = parser.parse(port.stringify()).getAsJsonObject();
+            array.add(o);
+        }
+        return array.toString();
     }
 }

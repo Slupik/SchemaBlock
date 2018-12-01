@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -22,7 +23,25 @@ import java.util.ResourceBundle;
 public class MainViewController implements Initializable {
 
     @FXML
-    private Pane mainContainer;
+    private BorderPane mainContainer;
+
+    @FXML
+    private MenuItem miSave;
+
+    @FXML
+    private MenuItem miLoad;
+
+    @FXML
+    private MenuItem miClose;
+
+    @FXML
+    private MenuItem miNew;
+
+    @FXML
+    private MenuItem miDelete;
+
+    @FXML
+    private MenuItem miAbout;
 
     @FXML
     private Button btnRun;
@@ -43,7 +62,19 @@ public class MainViewController implements Initializable {
     private Pane sheet;
 
     @FXML
+    private VBox vbIOContainer;
+
+    @FXML
     private WebView outputView;
+
+    @FXML
+    private HBox hbInputContainer;
+
+    @FXML
+    private TextField tfInput;
+
+    @FXML
+    private Button btnEnter;
 
     @FXML
     private TableView<?> tvVariables;
@@ -56,18 +87,6 @@ public class MainViewController implements Initializable {
 
     @FXML
     private TableColumn<?, ?> tcVarValue;
-
-    @FXML
-    private VBox vbIOContainer;
-
-    @FXML
-    private HBox hbInputContainer;
-
-    @FXML
-    private TextField tfInput;
-
-    @FXML
-    private Button btnEnter;
 
     private SheetWithElements container;
     private GhostDragController ghost;
@@ -87,6 +106,14 @@ public class MainViewController implements Initializable {
             container.run();
         });
         bindIOView();
+        setupMenu();
+    }
+
+    private void setupMenu() {
+        miSave.setOnAction(event -> {
+            //TODO make system to save data to a file
+            System.out.println(container.stringify());
+        });
     }
 
     private void bindIOView() {

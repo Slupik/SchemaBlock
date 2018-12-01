@@ -19,4 +19,6 @@ public interface SheetWithElements {
     PortConnector getPortConnector();
     PortSpawner getPortSpawner();
     DestContainerAfterDrop getChildrenHandler();
+
+    String stringify();
 }

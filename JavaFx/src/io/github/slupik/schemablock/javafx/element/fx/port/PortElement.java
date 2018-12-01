@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.port;
 
+import com.google.gson.Gson;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
@@ -27,6 +28,11 @@ import static io.github.slupik.schemablock.javafx.element.UiElementType.IF;
 public class PortElement extends AnchorPane {
 
     private String id = RandomString.generate(32);
+    private final String name;
+    private final String ownerElementId;
+    private final String positionName;
+    private final PortInfo actualInfo;
+
     private final boolean allowForInput;
     private final boolean allowForOutput;
     private final List<PortListener> listeners = new ArrayList<>();
@@ -38,11 +44,16 @@ public class PortElement extends AnchorPane {
     private Circle circle = new Circle();
     private Arrow arrowToNextElement;
 
-    public PortElement(UiElementBase base, PortConnector connector, boolean allowForInput, boolean allowForOutput){
+    public PortElement(UiElementBase base, PortConnector connector, PortInfo info){
         this.base = base;
         this.connector = connector;
-        this.allowForInput = allowForInput;
-        this.allowForOutput = allowForOutput;
+        this.allowForInput = info.allowForInput;
+        this.allowForOutput = info.allowForOutput;
+        this.ownerElementId = info.parentElementId;
+        this.positionName = info.positionName;
+        name = ownerElementId+";"+positionName;
+        info.id = id;
+        this.actualInfo = info;
 
         getChildren().add(circle);
         circle.setRadius(3);
@@ -172,6 +183,7 @@ public class PortElement extends AnchorPane {
     }
 
     private void setNextElementInLogic(String elementId, boolean isForTrue) {
+        actualInfo.isNextElementForTrue = isForTrue;
         Element element = base.getLogicElement();
         switch (element.getType()) {
             case CALCULATION: {
@@ -210,6 +222,11 @@ public class PortElement extends AnchorPane {
         }
     }
 
+    public void configurePortOut(PortElement endPort) {
+        actualInfo.endPortName = endPort.name;
+        actualInfo.endPortId = endPort.id;
+    }
+
     public String getPortId(){
         return id;
     }
@@ -228,5 +245,13 @@ public class PortElement extends AnchorPane {
 
     public boolean isAllowForOutput() {
         return allowForOutput;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String stringify() {
+        return new Gson().toJson(actualInfo);
     }
 }

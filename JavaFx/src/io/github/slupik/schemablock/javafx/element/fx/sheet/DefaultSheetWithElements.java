@@ -1,5 +1,8 @@
 package io.github.slupik.schemablock.javafx.element.fx.sheet;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import io.github.slupik.schemablock.javafx.element.UiElement;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
@@ -103,7 +106,6 @@ public class DefaultSheetWithElements implements SheetWithElements {
                             startElement.toFront();
                         }
                     });
-            spawner.spawnForElement(startElement);
         });
     }
 
@@ -124,7 +126,6 @@ public class DefaultSheetWithElements implements SheetWithElements {
                             end.toFront();
                         }
                     });
-            spawner.spawnForElement(end);
         });
     }
 
@@ -183,5 +184,22 @@ public class DefaultSheetWithElements implements SheetWithElements {
     @Override
     public DestContainerAfterDrop getChildrenHandler() {
         return childHandler;
+    }
+
+    @Override
+    public String stringify() {
+        JsonParser parser = new JsonParser();
+
+        JsonArray blocks = new JsonArray();
+        for(Node node:sheet.getChildren()) {
+            if(node instanceof UiElementBase) {
+                blocks.add(parser.parse(((UiElementBase) node).stringify()).getAsJsonObject());
+            }
+        }
+
+        JsonObject data = new JsonObject();
+        data.add("blocks", blocks);
+        data.add("ports", parser.parse(connector.stringify()).getAsJsonArray());
+        return data.toString();
     }
 }

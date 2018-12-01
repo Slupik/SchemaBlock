@@ -9,4 +9,11 @@ public class PortInfo {
     public boolean allowForInput = false;
     public boolean allowForOutput = false;
     public String parentElementId = "";
+    public String positionName = "unset";
+
+    //Only for backup
+    public String endPortName = "";
+    public boolean isNextElementForTrue = true;
+    public String id = "";
+    public String endPortId = "";
 }

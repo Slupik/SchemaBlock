@@ -50,11 +50,13 @@ public abstract class StandardElementBase extends ElementBase implements Standar
         ElementPOJO pojo = new ElementPOJO();
         pojo.elementType = getType();
         pojo.content = codeToRun;
+        pojo.id = getId();
         return pojo;
     }
 
     @Override
     protected void load(ElementPOJO pojo) throws BlockParserException {
         codeToRun = pojo.content;
+        id = pojo.id;
     }
 }

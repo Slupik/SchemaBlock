@@ -27,11 +27,12 @@ public class StopBlock extends ElementBase implements Element {
     public String stringify() {
         ElementPOJO pojo = new ElementPOJO();
         pojo.elementType = getType();
+        pojo.id = getId();
         return new Gson().toJson(pojo);
     }
 
     @Override
     protected void load(ElementPOJO pojo) throws BlockParserException {
-
+        id = pojo.id;
     }
 }

@@ -24,7 +24,7 @@ import java.util.List;
 public abstract class ElementBase implements Element {
 
     protected final List<ElementCallback> callbacks = new ArrayList<>();
-    private String id = RandomString.generate(32);
+    protected String id = RandomString.generate(32);
 
     @Override
     public String getId() {

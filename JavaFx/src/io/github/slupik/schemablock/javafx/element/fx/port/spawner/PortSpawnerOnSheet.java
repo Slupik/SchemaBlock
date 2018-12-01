@@ -31,7 +31,7 @@ public class PortSpawnerOnSheet implements PortSpawner {
     }
 
     private PortElement spawnPort(UiElementBase element, PortInfo info) {
-        PortElement port = new PortElement(element, connector, info.allowForInput, info.allowForOutput);
+        PortElement port = new PortElement(element, connector, info);
         port.setRelativePos(info.percentOfWidth, info.percentOfHeight);
         connector.addPort(port);
         return port;

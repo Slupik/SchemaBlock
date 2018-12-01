@@ -16,4 +16,6 @@ public interface PortConnector {
     void setLineEnd(PortElement port, double x, double y);
 
     void addPort(PortElement port);
+
+    String stringify();
 }
