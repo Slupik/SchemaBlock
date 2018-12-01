@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.javafx.element.fx.arrow;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 
 /**
  * All rights reserved & copyright ©
@@ -16,6 +17,18 @@ public class Arrow extends AnchorPane {
 
     public Arrow(){
         getChildren().addAll(line, head, desc);
+        setupLineHighlight();
+    }
+
+    private void setupLineHighlight() {
+        line.setOnMouseEntered(event -> {
+            line.setLineFill(Color.BLUE);
+            head.setFill(Color.BLUE);
+        });
+        line.setOnMouseExited(event -> {
+            line.setLineFill(Color.BLACK);
+            head.setFill(Color.BLACK);
+        });
     }
 
     public void setEnd(double x, double y) {
