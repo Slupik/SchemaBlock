@@ -9,6 +9,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.BorderPane?>
@@ -17,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.javafx.view.MainViewController">
+<BorderPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.javafx.view.MainViewController">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -69,7 +70,21 @@
             </ScrollPane>
             <SplitPane dividerPositions="0.75" prefHeight="160.0" prefWidth="200.0">
                <items>
-                  <WebView fx:id="outputView" prefHeight="200.0" prefWidth="594.0" />
+                  <VBox fx:id="vbIOContainer">
+                     <children>
+                        <WebView fx:id="outputView" prefHeight="200.0" prefWidth="594.0" />
+                        <HBox fx:id="hbInputContainer">
+                           <children>
+                              <TextField fx:id="tfInput" promptText="Wprowadź tekst lub liczbę" />
+                              <Button fx:id="btnEnter" mnemonicParsing="false" text="Wprowadź">
+                                 <HBox.margin>
+                                    <Insets left="16.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                   <TableView fx:id="tvVariables" prefHeight="200.0" prefWidth="200.0">
                      <columns>
                         <TableColumn fx:id="tcVarType" minWidth="50.0" prefWidth="75.0" text="Typ" />
@@ -78,6 +93,9 @@
                      </columns>
                   </TableView>
                </items>
+               <padding>
+                  <Insets bottom="8.0" left="8.0" right="8.0" />
+               </padding>
             </SplitPane>
          </items>
       </SplitPane>
