@@ -21,4 +21,11 @@ public class DefaultIOCommunicator implements IOCommunicable {
     public void print(String value) {
         System.out.print(value);
     }
+
+    @Override
+    public void clearOutput() {
+        System.out.println();
+        System.out.println("======= CLEAR =======");
+        System.out.println();
+    }
 }

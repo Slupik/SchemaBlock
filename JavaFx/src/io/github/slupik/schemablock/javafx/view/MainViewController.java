@@ -1,10 +1,12 @@
 package io.github.slupik.schemablock.javafx.view;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
+import io.github.slupik.schemablock.javafx.element.fx.communication.UIIOCommunicator;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.DefaultSheetWithElements;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetWithElements;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -76,10 +78,14 @@ public class MainViewController implements Initializable {
     }
 
     private void setupDragging() {
-        container = new DefaultSheetWithElements(sheet);
+        IOCommunicable communicable = new UIIOCommunicator(tfInput, outputView, btnEnter);
+        container = new DefaultSheetWithElements(sheet, communicable);
         ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()), container.getChildrenHandler());
         addIconsToMenu();
-        btnRun.setOnAction((event)-> container.run());
+        btnRun.setOnAction((event)-> {
+            communicable.clearOutput();
+            container.run();
+        });
         bindIOView();
     }
 

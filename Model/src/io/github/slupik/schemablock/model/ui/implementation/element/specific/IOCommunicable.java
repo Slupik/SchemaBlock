@@ -8,4 +8,6 @@ public interface IOCommunicable {
     String getInput();
 
     void print(String value);
+
+    void clearOutput();
 }

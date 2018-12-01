@@ -3,7 +3,6 @@ package io.github.slupik.schemablock.javafx.element.fx.sheet;
 import io.github.slupik.schemablock.javafx.element.UiElement;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
-import io.github.slupik.schemablock.javafx.element.fx.communication.DefaultIOCommunicator;
 import io.github.slupik.schemablock.javafx.element.fx.element.special.StartUiElement;
 import io.github.slupik.schemablock.javafx.element.fx.element.standard.IOUiElement;
 import io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactory;
@@ -20,6 +19,7 @@ import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContai
 import io.github.slupik.schemablock.model.ui.implementation.container.DefaultElementContainer;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.container.StartBlockNotFound;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
 import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
 import io.github.slupik.schemablock.parser.code.VariableNotFound;
 import io.github.slupik.schemablock.parser.code.WrongArgumentException;
@@ -38,14 +38,16 @@ public class DefaultSheetWithElements implements SheetWithElements {
 
     private final ElementContainer container;
     private final Pane sheet;
+    private final IOCommunicable communicable;
     private final StartUiElement startElement;
 
     private PortConnector connector;
     private PortSpawner spawner;
     private DestContainerAfterDrop childHandler;
 
-    public DefaultSheetWithElements(Pane sheet) {
+    public DefaultSheetWithElements(Pane sheet, IOCommunicable communicable) {
         this.sheet = sheet;
+        this.communicable = communicable;
         startElement = ((StartUiElement) UiElementFactory.createByType(UiElementType.START));
         container = new DefaultElementContainer();
         init();
@@ -128,13 +130,15 @@ public class DefaultSheetWithElements implements SheetWithElements {
 
     @Override
     public void run() {
-        try {
-            container.run();
-        } catch (NotFoundTypeException | IncompatibleTypeException | UnsupportedValueException |
-                VariableIsAlreadyDefinedException | NextElementNotFound | WrongArgumentException |
-                InvalidArgumentsException | VariableNotFound | StartBlockNotFound e) {
-            e.printStackTrace();
-        }
+        new Thread(()->{
+            try {
+                container.run();
+            } catch (NotFoundTypeException | IncompatibleTypeException | UnsupportedValueException |
+                    VariableIsAlreadyDefinedException | NextElementNotFound | WrongArgumentException |
+                    InvalidArgumentsException | VariableNotFound | StartBlockNotFound e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     @Override
@@ -143,7 +147,7 @@ public class DefaultSheetWithElements implements SheetWithElements {
             container.addElement(element.getLogicElement());
             sheet.getChildren().add(((Node) element));
             if(element.getType()==UiElementType.IO) {
-                ((IOUiElement) element).setCommunicator(new DefaultIOCommunicator());
+                ((IOUiElement) element).setCommunicator(communicable);
             }
             if(element instanceof UiElementBase) {
                 spawner.spawnForElement(((UiElementBase) element));
