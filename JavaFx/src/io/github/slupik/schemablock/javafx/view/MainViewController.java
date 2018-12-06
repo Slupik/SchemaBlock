@@ -6,11 +6,15 @@ import io.github.slupik.schemablock.javafx.element.fx.sheet.DefaultSheetWithElem
 import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetWithElements;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
+import io.github.slupik.schemablock.javafx.logic.heap.DefaultHeapSpy;
+import io.github.slupik.schemablock.javafx.logic.heap.HeapValueFx;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -77,16 +81,16 @@ public class MainViewController implements Initializable {
     private Button btnEnter;
 
     @FXML
-    private TableView<?> tvVariables;
+    private TableView<HeapValueFx> tvVariables;
 
     @FXML
-    private TableColumn<?, ?> tcVarType;
+    private TableColumn<HeapValueFx, String> tcVarType;
 
     @FXML
-    private TableColumn<?, ?> tcVarName;
+    private TableColumn<HeapValueFx, String> tcVarName;
 
     @FXML
-    private TableColumn<?, ?> tcVarValue;
+    private TableColumn<HeapValueFx, String> tcVarValue;
 
     private SheetWithElements container;
     private GhostDragController ghost;
@@ -107,6 +111,21 @@ public class MainViewController implements Initializable {
         });
         bindIOView();
         setupMenu();
+        bindTable();
+    }
+
+    private void bindTable() {
+        ObservableList<HeapValueFx> valueList = new DefaultHeapSpy().getList();
+        tvVariables.setItems(valueList);
+        tcVarType.setCellValueFactory(
+                new PropertyValueFactory<>("type")
+        );
+        tcVarName.setCellValueFactory(
+                new PropertyValueFactory<>("name")
+        );
+        tcVarValue.setCellValueFactory(
+                new PropertyValueFactory<>("value")
+        );
     }
 
     private void setupMenu() {

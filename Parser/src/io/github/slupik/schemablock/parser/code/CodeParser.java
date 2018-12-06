@@ -3,12 +3,14 @@ package io.github.slupik.schemablock.parser.code;
 import io.github.slupik.schemablock.parser.math.rpn.MathCalculation;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
+import io.github.slupik.schemablock.parser.math.rpn.variable.HeapSpy;
 import io.github.slupik.schemablock.parser.math.rpn.variable.Variable;
 import io.github.slupik.schemablock.parser.math.rpn.variable.VariableHeap;
 import io.github.slupik.schemablock.parser.math.rpn.variable.VariableIsAlreadyDefinedException;
 import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
 import io.github.slupik.schemablock.parser.math.rpn.variable.value.ValueType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,12 +20,16 @@ public class CodeParser {
 
     private static final boolean TEST_MODE = false;
     private static final VariableHeap heap = new VariableHeap();
+    private static final List<HeapSpy> spies = new ArrayList<>();
 
     public static void execute(String codeBlock) throws WrongArgumentException, NotFoundTypeException, InvalidArgumentsException, VariableNotFound, UnsupportedValueException, VariableIsAlreadyDefinedException, IncompatibleTypeException {
         List<String> lines = BlockTokenizer.tokenize(codeBlock);
         for(String line:lines) {
             List<String> tokens = LineTokenizer.tokenize(line);
             CodeExecutor.execute(heap, tokens);
+            for(HeapSpy spy:spies) {
+                spy.setHeap(heap);
+            }
         }
 
         if(TEST_MODE) {
@@ -59,5 +65,9 @@ public class CodeParser {
 
     public static VariableHeap getHeap() {
         return heap;
+    }
+
+    public static void registerHeapSpy(HeapSpy heapSpy){
+        spies.add(heapSpy);
     }
 }
