@@ -8,6 +8,7 @@ import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
 import io.github.slupik.schemablock.javafx.logic.heap.DefaultHeapSpy;
 import io.github.slupik.schemablock.javafx.logic.heap.HeapValueFx;
+import io.github.slupik.schemablock.javafx.logic.persistence.SchemaSaver;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -20,8 +21,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -94,6 +97,7 @@ public class MainViewController implements Initializable {
 
     private SheetWithElements container;
     private GhostDragController ghost;
+    private SchemaSaver saver;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -129,9 +133,12 @@ public class MainViewController implements Initializable {
     }
 
     private void setupMenu() {
-        miSave.setOnAction(event -> {
-            //TODO make system to save data to a file
-            System.out.println(container.stringify());
+        Platform.runLater(()->{
+            saver = new SchemaSaver(((Stage) mainContainer.getScene().getWindow()));
+            miSave.setOnAction(event -> {
+                String content = container.stringify();
+                saver.save(content);
+            });
         });
     }
 
@@ -155,5 +162,25 @@ public class MainViewController implements Initializable {
     private void addDragDetection(DragGhostIcon dragIcon) {
         availableBlocks.getChildren().add(dragIcon);
         ghost.addDragDetection(dragIcon);
+    }
+
+    public void onCloseSheet() {
+        String data = container.stringify();
+        if(!saver.isSavedNewestVersion(data)){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+            ButtonType btnOk = new ButtonType("Tak");
+            ButtonType btnNo = new ButtonType("Nie");
+            alert.getButtonTypes().setAll(btnOk, btnNo);
+
+            alert.setTitle("");
+            alert.setHeaderText("Czy zapisać zmiany?");
+            alert.setContentText("Wprowadzono zmiany, które mogą wymagać zapisania. Czy chcesz to zrobić?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == btnOk){
+                saver.save(data);
+            }
+        }
     }
 }
