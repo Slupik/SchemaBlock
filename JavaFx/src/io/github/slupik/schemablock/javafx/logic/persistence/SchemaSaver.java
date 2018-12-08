@@ -45,6 +45,6 @@ public class SchemaSaver {
     }
 
     public void setDestFile(File file) {
-
+        destFile = file;
     }
 }
