@@ -1,7 +1,7 @@
 package io.github.slupik.schemablock.javafx.element.fx.element.standard;
 
 import io.github.slupik.schemablock.javafx.element.ElementSizeBinder;
-import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import io.github.slupik.schemablock.model.ui.abstraction.element.OperationElement;
 
@@ -86,5 +86,10 @@ public abstract class UiStandardElement extends UiElementBase implements Element
         base.allowForOutput = true;
         base.parentElementId = getElementId();
         return base;
+    }
+
+    @Override
+    protected boolean canBeDeleted() {
+        return true;
     }
 }

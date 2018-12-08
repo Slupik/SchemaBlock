@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.connection;
 
-import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
 
 /**
  * All rights reserved & copyright ©

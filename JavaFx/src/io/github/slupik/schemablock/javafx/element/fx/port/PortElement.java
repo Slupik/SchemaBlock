@@ -1,7 +1,7 @@
 package io.github.slupik.schemablock.javafx.element.fx.port;
 
 import com.google.gson.Gson;
-import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
 import io.github.slupik.schemablock.javafx.element.fx.port.group.PortListener;
@@ -169,6 +169,11 @@ public class PortElement extends AnchorPane {
         }
     }
 
+    public void removeNextElement(){
+        setNextElementInLogic("", true);
+        setNextElementInLogic("", false);
+    }
+
     private boolean getPortBoolType() throws CannotSetupPort {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Wybierz typ połączenia");
@@ -254,6 +259,14 @@ public class PortElement extends AnchorPane {
 
     public boolean isAllowForOutput() {
         return allowForOutput;
+    }
+
+    public String getEndPortName(){
+        return actualInfo.endPortName;
+    }
+
+    public String getEndPortId() {
+        return actualInfo.endPortId;
     }
 
     public String stringify() {

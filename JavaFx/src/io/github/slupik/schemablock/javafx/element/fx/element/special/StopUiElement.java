@@ -29,4 +29,9 @@ public class StopUiElement extends UiSpecialElement {
         base.parentElementId = getElementId();
         return base;
     }
+
+    @Override
+    protected boolean canBeDeleted() {
+        return true;
+    }
 }

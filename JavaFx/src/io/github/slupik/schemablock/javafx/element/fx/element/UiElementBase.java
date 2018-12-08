@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.fx;
+package io.github.slupik.schemablock.javafx.element.fx.element;
 
 import com.google.gson.Gson;
 import io.github.slupik.schemablock.javafx.element.ElementSizeBinder;
@@ -10,10 +10,11 @@ import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContai
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.implementation.container.ElementInContainerNotFound;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 import java.io.IOException;
 
@@ -22,6 +23,7 @@ import java.io.IOException;
  */
 public abstract class UiElementBase extends Pane implements UiElement {
 
+    private DeletionHandler deletionHandler;
     private ElementSizeBinder size;
     private CustomShapeBase background;
     protected Element element;
@@ -60,7 +62,7 @@ public abstract class UiElementBase extends Pane implements UiElement {
 
     private void initBackground() {
         background = createBackgroundElement();
-        background.setFill(Color.web("#00e860"));
+        background.resetColor();
         getBinderInput().getMainContainer().getChildren().add(background);
         background.toBack();
     }
@@ -73,7 +75,45 @@ public abstract class UiElementBase extends Pane implements UiElement {
 
     private void init() {
         size = new ElementSizeBinder(getBinderInput());
+
+        initContextMenu();
     }
+
+    protected void initContextMenu() {
+        ContextMenu contextMenu = new ContextMenu();
+
+        if(canBeDeleted()) {
+            MenuItem item1 = new MenuItem("Usuń");
+            item1.setOnAction(event -> {
+                if(deletionHandler!=null) {
+                    deletionHandler.deleteElement(this);
+                }
+            });
+            contextMenu.getItems().add(item1);
+        }
+        MenuItem item2 = new MenuItem("Usuń wychodzące");
+        item2.setOnAction(event -> {
+            if(deletionHandler!=null){
+                deletionHandler.deleteOutgoing(getElementId());
+            }
+        });
+        MenuItem item3 = new MenuItem("Usuń przychodzące");
+        item3.setOnAction(event -> {
+            if(deletionHandler!=null) {
+                deletionHandler.deleteIngoing(getElementId());
+            }
+        });
+
+        contextMenu.getItems().addAll(item2, item3);
+
+        setOnContextMenuRequested(event -> {
+            background.highlight();
+            contextMenu.show(this, event.getScreenX(), event.getScreenY());
+        });
+        contextMenu.setOnHiding(event -> background.resetColor());
+    }
+
+    protected abstract boolean canBeDeleted();
 
     protected abstract ElementSizeBinder.Input getBinderInput();
 
@@ -141,5 +181,9 @@ public abstract class UiElementBase extends Pane implements UiElement {
         } else {
             return "";
         }
+    }
+
+    public void setDeletionHandler(DeletionHandler deletionHandler) {
+        this.deletionHandler = deletionHandler;
     }
 }

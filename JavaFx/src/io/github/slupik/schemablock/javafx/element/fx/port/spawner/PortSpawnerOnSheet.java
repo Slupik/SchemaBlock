@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortElement;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;

@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.fx;
+package io.github.slupik.schemablock.javafx.element.fx.element;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 

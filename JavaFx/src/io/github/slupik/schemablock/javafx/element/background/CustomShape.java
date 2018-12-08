@@ -28,6 +28,8 @@ public interface CustomShape {
     ReadOnlyDoubleProperty innerStartY();
 
     void setFill(Color web);
+    void highlight();
+    void resetColor();
 
     boolean isContainsCoords(double x, double y);
 }

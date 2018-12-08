@@ -1,7 +1,7 @@
 package io.github.slupik.schemablock.javafx.element.fx.factory;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
-import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.element.special.StartUiElement;
 import io.github.slupik.schemablock.javafx.element.fx.element.special.StopUiElement;
 import io.github.slupik.schemablock.javafx.element.fx.element.standard.ConditionUiElement;

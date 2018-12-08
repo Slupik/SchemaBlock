@@ -3,7 +3,7 @@ package io.github.slupik.schemablock.javafx.element.fx.element.special;
 import io.github.slupik.schemablock.javafx.element.ElementSizeBinder;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import io.github.slupik.schemablock.javafx.element.background.MyEllipse;
-import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import javafx.fxml.FXML;
 import javafx.scene.Node;

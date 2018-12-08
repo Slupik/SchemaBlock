@@ -3,11 +3,13 @@ package io.github.slupik.schemablock.javafx.element.fx.sheet;
 import com.google.gson.*;
 import io.github.slupik.schemablock.javafx.element.UiElement;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
-import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
-import io.github.slupik.schemablock.javafx.element.fx.UiElementPOJO;
+import io.github.slupik.schemablock.javafx.element.fx.element.DeletionHandler;
+import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.element.UiElementPOJO;
 import io.github.slupik.schemablock.javafx.element.fx.element.special.StartUiElement;
 import io.github.slupik.schemablock.javafx.element.fx.element.standard.IOUiElement;
 import io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactory;
+import io.github.slupik.schemablock.javafx.element.fx.port.PortElement;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnectorOnSheet;
 import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner;
@@ -46,6 +48,7 @@ public class DefaultSheetWithElements implements SheetWithElements {
     private final IOCommunicable communicable;
     private final StartUiElement startElement;
     private final VisibleUIContainer uiContainer;
+    private final DeletionHandler deletionHandler;
 
     private PortConnector connector;
     private PortSpawner spawner;
@@ -54,10 +57,11 @@ public class DefaultSheetWithElements implements SheetWithElements {
     public DefaultSheetWithElements(Pane sheet, IOCommunicable communicable) {
         this.sheet = sheet;
         this.communicable = communicable;
-        startElement = ((StartUiElement) UiElementFactory.createByType(UiElementType.START));
         container = new DefaultElementContainer();
         uiContainer = new VisibleUIContainerImpl();
+        startElement = ((StartUiElement) UiElementFactory.createByType(UiElementType.START));
         init();
+        deletionHandler = new DeletionHandlerImpl(this, connector);
         setup();
     }
 
@@ -169,6 +173,9 @@ public class DefaultSheetWithElements implements SheetWithElements {
             if(element.getType()==UiElementType.IO) {
                 ((IOUiElement) element).setCommunicator(communicable);
             }
+            if(element instanceof UiElementBase) {
+                ((UiElementBase) element).setDeletionHandler(deletionHandler);
+            }
         } else {
             throw new InvalidTypeException();
         }
@@ -180,6 +187,17 @@ public class DefaultSheetWithElements implements SheetWithElements {
         if(element instanceof Node) {
             sheet.getChildren().remove(element);
             uiContainer.remove(element.getElementId());
+        }
+        if(element instanceof UiElementBase) {
+            deletionHandler.deleteIngoing(element.getElementId());
+            deletionHandler.deleteOutgoing(element.getElementId());
+            List<PortElement> ports = new ArrayList<>(connector.getPorts());
+            for(PortElement port:ports) {
+                if(port.getElement().getElementId().equals(element.getElementId())) {
+                    connector.deletePort(port);
+                    sheet.getChildren().remove(port);
+                }
+            }
         }
     }
 

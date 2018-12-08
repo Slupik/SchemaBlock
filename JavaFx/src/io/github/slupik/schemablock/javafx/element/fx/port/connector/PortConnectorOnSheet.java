@@ -168,6 +168,22 @@ public class PortConnectorOnSheet implements PortConnector {
         portList.clear();
     }
 
+    @Override
+    public List<PortElement> getPorts() {
+        return portList;
+    }
+
+    @Override
+    public void deleteOutgoing(PortElement port) {
+        port.deleteActiveArrow();
+        port.removeNextElement();
+    }
+
+    @Override
+    public void deletePort(PortElement port) {
+        portList.remove(port);
+    }
+
     private PortElement getPort(String name) {
         for(PortElement element:portList) {
             if(element.getPortName().equals(name)) {

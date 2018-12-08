@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.sheet;
 
-import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
 
 import java.util.ArrayList;
 import java.util.List;
