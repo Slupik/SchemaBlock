@@ -1,11 +1,10 @@
 package io.github.slupik.schemablock.javafx.element.fx.sheet;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import io.github.slupik.schemablock.javafx.element.UiElement;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.fx.UiElementPOJO;
 import io.github.slupik.schemablock.javafx.element.fx.element.special.StartUiElement;
 import io.github.slupik.schemablock.javafx.element.fx.element.standard.IOUiElement;
 import io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactory;
@@ -34,6 +33,9 @@ import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * All rights reserved & copyright ©
  */
@@ -43,6 +45,7 @@ public class DefaultSheetWithElements implements SheetWithElements {
     private final Pane sheet;
     private final IOCommunicable communicable;
     private final StartUiElement startElement;
+    private final VisibleUIContainer uiContainer;
 
     private PortConnector connector;
     private PortSpawner spawner;
@@ -53,13 +56,14 @@ public class DefaultSheetWithElements implements SheetWithElements {
         this.communicable = communicable;
         startElement = ((StartUiElement) UiElementFactory.createByType(UiElementType.START));
         container = new DefaultElementContainer();
+        uiContainer = new VisibleUIContainerImpl();
         init();
         setup();
     }
 
     private void init() {
         connector = new PortConnectorOnSheet(sheet);
-        spawner = new PortSpawnerOnSheet(connector);
+        spawner = new PortSpawnerOnSheet(uiContainer, connector);
         childHandler = new DestContainerAfterDropImpl(sheet) {
             @Override
             public void addNode(Node node) {
@@ -146,12 +150,24 @@ public class DefaultSheetWithElements implements SheetWithElements {
     public void addElement(UiElement element) throws InvalidTypeException {
         if(element instanceof Node) {
             container.addElement(element.getLogicElement());
-            sheet.getChildren().add(((Node) element));
-            if(element.getType()==UiElementType.IO) {
-                ((IOUiElement) element).setCommunicator(communicable);
-            }
+            addElementWithoutPorts(element);
             if(element instanceof UiElementBase) {
                 spawner.spawnForElement(((UiElementBase) element));
+            }
+        } else {
+            throw new InvalidTypeException();
+        }
+    }
+
+    private void addElementWithoutPorts(UiElement element) throws InvalidTypeException {
+        if(element instanceof Node) {
+            sheet.getChildren().add(((Node) element));
+            if(element instanceof UiElementBase) {
+                uiContainer.add((UiElementBase) element);
+            }
+
+            if(element.getType()==UiElementType.IO) {
+                ((IOUiElement) element).setCommunicator(communicable);
             }
         } else {
             throw new InvalidTypeException();
@@ -163,12 +179,25 @@ public class DefaultSheetWithElements implements SheetWithElements {
         container.removeElement(element.getElementId());
         if(element instanceof Node) {
             sheet.getChildren().remove(element);
+            uiContainer.remove(element.getElementId());
         }
     }
 
     @Override
     public void clear() {
+        List<UiElement> toDelete = new ArrayList<>();
+        for(Node child:sheet.getChildren()) {
+            if(child instanceof  UiElement) {
+                toDelete.add(((UiElement) child));
+            }
+        }
+        for(UiElement element:toDelete) {
+            removeElement(element);
+        }
         sheet.getChildren().clear();
+
+        getPortConnector().deleteAllPorts();
+        container.deleteAll();
     }
 
     @Override
@@ -198,8 +227,47 @@ public class DefaultSheetWithElements implements SheetWithElements {
         }
 
         JsonObject data = new JsonObject();
+        data.add("logicElements", parser.parse(container.stringify()));
         data.add("blocks", blocks);
         data.add("ports", parser.parse(connector.stringify()).getAsJsonArray());
         return data.toString();
+    }
+
+    @Override
+    public void restore(String data) {
+        clear();
+
+        JsonParser parser = new JsonParser();
+        JsonObject json = parser.parse(data).getAsJsonObject();
+
+        JsonObject logicElements = json.get("logicElements").getAsJsonObject();
+        container.restore(logicElements.toString());
+
+        JsonArray blocks = json.get("blocks").getAsJsonArray();
+        for(JsonElement element:blocks) {
+            UiElementPOJO blockInfo = new Gson().fromJson(element, UiElementPOJO.class);
+
+            UiElementBase uiElement = UiElementFactory.createByType(blockInfo.type);
+            try {
+                uiElement.restore(element.toString(), container);
+                addElementWithoutPorts(uiElement);
+
+                //Make element draggable
+                NodeDragController draggingController = new NodeDragController(new DraggableNode(uiElement, false));
+                draggingController.addListener((dragEvent, draggableNode) -> {
+                    if(dragEvent == DragEventState.DRAG_START) {
+                        draggingController.getEventNode().toFront();
+                    }
+                });
+
+            } catch (InvalidTypeException e) {
+                e.printStackTrace();
+            }
+        }
+
+        JsonArray ports = json.get("ports").getAsJsonArray();
+        spawner.restorePorts(ports.toString());
+
+        connector.restore(ports.toString());
     }
 }

@@ -18,4 +18,8 @@ public interface PortConnector {
     void addPort(PortElement port);
 
     String stringify();
+
+    void restore(String portsArray);
+
+    void deleteAllPorts();
 }

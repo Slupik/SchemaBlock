@@ -267,7 +267,7 @@ class DefaultElementContainerTest {
 
         String saved = container.stringify();
         DefaultElementContainer containerCopy = new DefaultElementContainer();
-        containerCopy.load(saved);
+        containerCopy.restore(saved);
 
         container.run();
 

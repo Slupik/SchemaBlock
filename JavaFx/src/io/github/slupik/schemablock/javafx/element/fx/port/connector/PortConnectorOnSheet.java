@@ -1,11 +1,10 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.connector;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
 import io.github.slupik.schemablock.javafx.element.fx.port.CannotSetupPort;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortElement;
+import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -93,14 +92,14 @@ public class PortConnectorOnSheet implements PortConnector {
         }
 
         try {
-            this.startPort.setNextElement(endPort.getElement());
+            startPort.setNextElement(endPort.getElement());
         } catch (CannotSetupPort e) {
             deleteArrow();
             return;
         }
 
         activeArrow.setEnd(x, y);
-        this.startPort.bindArrowStart(activeArrow);
+        startPort.bindArrowStart(activeArrow);
         endPort.bindArrowEnd(activeArrow);
         startPort.configureArrowOut(activeArrow);
         startPort.configurePortOut(endPort);
@@ -133,5 +132,59 @@ public class PortConnectorOnSheet implements PortConnector {
             array.add(o);
         }
         return array.toString();
+    }
+
+    @Override
+    public void restore(String portsArray) {
+        List<PortInfo> ports = getParsedInfo(portsArray);
+
+        for(PortInfo start:ports) {
+            if(start.endPortName!=null) {
+                PortElement startElement = getPort(start.getName());
+                if(startElement!=null) {
+                    PortElement endElement = getPort(start.endPortName);
+                    if(endElement!=null) {
+                        connectPorts(startElement, endElement, start.isNextElementForTrue);
+                    }
+                }
+            }
+        }
+    }
+
+    private void connectPorts(PortElement start, PortElement end, boolean isNextElementForTrue) {
+        start.setNextElement(end.getElement(), isNextElementForTrue);
+
+        Arrow arrow = new Arrow();
+        sheet.getChildren().add(arrow);
+
+        start.bindArrowStart(arrow);
+        end.bindArrowEnd(arrow);
+        start.configureArrowOut(arrow);
+        start.configurePortOut(end);
+    }
+
+    @Override
+    public void deleteAllPorts() {
+        portList.clear();
+    }
+
+    private PortElement getPort(String name) {
+        for(PortElement element:portList) {
+            if(element.getPortName().equals(name)) {
+                return element;
+            }
+        }
+        return null;
+    }
+
+    private List<PortInfo> getParsedInfo(String portsArray) {
+        JsonParser parser = new JsonParser();
+        JsonArray array = parser.parse(portsArray).getAsJsonArray();
+
+        List<PortInfo> ports = new ArrayList<>();
+        for(JsonElement elem:array) {
+            ports.add(new Gson().fromJson(elem, PortInfo.class));
+        }
+        return ports;
     }
 }

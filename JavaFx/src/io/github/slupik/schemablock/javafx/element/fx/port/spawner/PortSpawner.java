@@ -7,5 +7,5 @@ import io.github.slupik.schemablock.javafx.element.fx.UiElementBase;
  */
 public interface PortSpawner {
     void spawnForElement(UiElementBase element);
-    void restorePorts();
+    void restorePorts(String portsArray);
 }

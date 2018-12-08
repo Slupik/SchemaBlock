@@ -152,6 +152,11 @@ public class PortElement extends AnchorPane {
         }
         setNextElementInLogic("", checkedForTrue); //just in case
         setNextElementInLogic(next.getElementId(), checkedForTrue);
+
+        setNextElement(next, checkedForTrue);
+    }
+
+    public void setNextElement(UiElementBase next, boolean checkedForTrue) {
         isPortForTrue = checkedForTrue;
         if(base.getType() == IF) {
             for(PortListener listener:listeners) {
@@ -207,7 +212,7 @@ public class PortElement extends AnchorPane {
                 break;
             }
             default: {
-                System.out.println("Error unsupported type "+element.getType());
+                System.err.println("Error unsupported type "+element.getType());
             }
         }
     }
@@ -231,6 +236,10 @@ public class PortElement extends AnchorPane {
         return id;
     }
 
+    public String getPortName() {
+        return name;
+    }
+
     public boolean isPortForTrue() {
         return isPortForTrue;
     }
@@ -245,10 +254,6 @@ public class PortElement extends AnchorPane {
 
     public boolean isAllowForOutput() {
         return allowForOutput;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String stringify() {

@@ -24,7 +24,7 @@ public class SchemaSaver {
         if(destFile==null) {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setInitialFileName("schemat."+FILE_EXTENSION);
-            fileChooser.getExtensionFilters().addAll(
+            fileChooser.getExtensionFilters().add(
                     new FileChooser.ExtensionFilter("Pliki programu", "*."+FILE_EXTENSION)
             );
             fileChooser.setTitle("Zapisz schemat");
@@ -42,5 +42,9 @@ public class SchemaSaver {
 
     public boolean isSavedNewestVersion(String currentVersion){
         return lastSavedContent.equals(currentVersion);
+    }
+
+    public void setDestFile(File file) {
+
     }
 }

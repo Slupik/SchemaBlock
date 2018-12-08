@@ -108,21 +108,25 @@ public class IOUiElement extends UiStandardElement {
         PortInfo up = getBasicPortInfo();
         up.percentOfHeight = 0;
         up.percentOfWidth = 0.5;
+        up.positionName = "top-middle";
         list.add(up);
 
         PortInfo right = getBasicPortInfo();
         right.percentOfHeight = 0.5;
         right.percentOfWidth = 0.9;
+        right.positionName = "middle-right";
         list.add(right);
 
         PortInfo down = getBasicPortInfo();
         down.percentOfHeight = 1;
         down.percentOfWidth = 0.5;
+        down.positionName = "down-middle";
         list.add(down);
 
         PortInfo left = getBasicPortInfo();
         left.percentOfHeight = 0.5;
         left.percentOfWidth = 0.1;
+        left.positionName = "middle-left";
         list.add(left);
 
         return list;

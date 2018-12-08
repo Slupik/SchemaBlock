@@ -111,7 +111,7 @@ public abstract class UiElementBase extends Pane implements UiElement {
         pojo.layoutX = getLayoutX();
         pojo.layoutY = getLayoutY();
         pojo.desc = getDesc();
-        pojo.elementId = getId();
+        pojo.elementId = element.getId();
         pojo.type = getType();
         return new Gson().toJson(pojo);
     }

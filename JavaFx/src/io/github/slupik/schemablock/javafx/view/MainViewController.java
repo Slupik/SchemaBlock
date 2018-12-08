@@ -23,6 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -98,6 +99,7 @@ public class MainViewController implements Initializable {
     private SheetWithElements container;
     private GhostDragController ghost;
     private SchemaSaver saver;
+    private SchemaLoader loader;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -135,9 +137,17 @@ public class MainViewController implements Initializable {
     private void setupMenu() {
         Platform.runLater(()->{
             saver = new SchemaSaver(((Stage) mainContainer.getScene().getWindow()));
+            loader = new SchemaLoader(((Stage) mainContainer.getScene().getWindow()));
             miSave.setOnAction(event -> {
                 String content = container.stringify();
                 saver.save(content);
+            });
+            miLoad.setOnAction(event -> {
+                File file = loader.getFileToLoad();
+                if(file!=null) {
+                    loader.loadFile(container, file);
+                    saver.setDestFile(file);
+                }
             });
         });
     }

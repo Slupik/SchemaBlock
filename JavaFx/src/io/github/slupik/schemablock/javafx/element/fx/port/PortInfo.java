@@ -16,4 +16,8 @@ public class PortInfo {
     public boolean isNextElementForTrue = true;
     public String id = "";
     public String endPortId = "";
+
+    public String getName(){
+        return parentElementId+";"+positionName;
+    }
 }

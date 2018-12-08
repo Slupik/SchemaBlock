@@ -56,8 +56,12 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
     @Override
     public Element getElement(String id) throws ElementInContainerNotFound {
         for(Element element:elements) {
-            if(element!=null && element.getId().equalsIgnoreCase(id)) {
-                return element;
+            if(element!=null) {
+                if(element.getId()!=null) {
+                    if(element.getId().equalsIgnoreCase(id)) {
+                        return element;
+                    }
+                }
             }
         }
         throw new ElementInContainerNotFound("Wrong id: "+id);
@@ -81,6 +85,11 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
     }
 
     @Override
+    public void deleteAll() {
+        elements.clear();
+    }
+
+    @Override
     public String stringify() {
         ElementContainerPOJO pojo = new ElementContainerPOJO();
         pojo.startElement = start;
@@ -91,7 +100,7 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
     }
 
     @Override
-    public void load(String data) {
+    public void restore(String data) {
         ElementContainerPOJO pojo = new Gson().fromJson(data, ElementContainerPOJO.class);
         start = pojo.startElement;
         for(String elementString:pojo.elements) {
@@ -124,7 +133,7 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
         try {
             getElement(elementId).run();
         } catch (ElementInContainerNotFound elementInContainerNotFound) {
-            throw new NextElementNotFound();
+            throw new NextElementNotFound(elementId);
         }
     }
 }

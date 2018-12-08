@@ -63,6 +63,7 @@ public class OperationBlock extends StandardElementBase implements OperationElem
 
     @Override
     protected void load(ElementPOJO pojo) throws BlockParserException {
+        super.load(pojo);
         nextElement = pojo.nextBlocks[0];
     }
 }

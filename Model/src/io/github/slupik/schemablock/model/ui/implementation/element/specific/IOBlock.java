@@ -3,6 +3,7 @@ package io.github.slupik.schemablock.model.ui.implementation.element.specific;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
+import io.github.slupik.schemablock.model.ui.abstraction.element.IOData;
 import io.github.slupik.schemablock.model.ui.abstraction.element.IOElement;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.element.StandardElementBase;
@@ -19,6 +20,7 @@ import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeE
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -123,11 +125,17 @@ public class IOBlock extends StandardElementBase implements IOElement {
         ElementPOJO pojo = new ElementPOJO();
         pojo.elementType = getType();
         pojo.content = getContent();
+        pojo.id = id;
         return pojo;
     }
 
     @Override
     protected void load(ElementPOJO pojo) throws BlockParserException {
+        super.load(pojo);
         nextElement = pojo.nextBlocks[0];
+
+        List<Data> input = Arrays.asList(new Gson().fromJson(pojo.content, IOData[].class));
+        instructions.clear();
+        instructions.addAll(input);
     }
 }

@@ -21,4 +21,5 @@ public interface SheetWithElements {
     DestContainerAfterDrop getChildrenHandler();
 
     String stringify();
+    void restore(String data);
 }

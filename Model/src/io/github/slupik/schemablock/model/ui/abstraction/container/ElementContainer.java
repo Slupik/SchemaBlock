@@ -23,6 +23,8 @@ public interface ElementContainer {
     Element getElement(String id) throws ElementInContainerNotFound;
     void removeElement(String id);
 
+    void deleteAll();
+
     String stringify();
-    void load(String data);
+    void restore(String data);
 }
