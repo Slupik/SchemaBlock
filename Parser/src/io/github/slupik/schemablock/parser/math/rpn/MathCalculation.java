@@ -71,9 +71,44 @@ public class MathCalculation {
                 }
                 continue;
             }
+            if(raw.charAt(0)=='\"' && raw.charAt(raw.length()-1)=='\"') {
+                String body = raw.substring(1, raw.length()-1);
+                raw = "\""+getParsedString(body)+"\"";
+            }
             parsedTokens.add(raw);
         }
         return parsedTokens;
+    }
+
+    private static String getParsedString(String body) {
+        StringBuilder result = new StringBuilder();
+        for(int i=0;i<body.length();i++) {
+            char ch = body.charAt(i);
+            if(ch=='\\' && (i+1)<body.length()) {
+                char next = body.charAt(i+1);
+                i++;
+                if(next == '\"' || next=='\'') {
+                    result.append(next);
+                } else if (next=='n') {
+                    result.append("\n");
+                } else if (next=='t') {
+                    result.append("\t");
+                } else if (next=='r') {
+                    result.append("\r");
+                } else if (next=='\\') {
+                    result.append("\\");
+                } else if (next=='b') {
+                    result.append("\b");
+                } else if (next=='f') {
+                    result.append("\f");
+                } else {
+                    i--;
+                }
+            } else {
+                result.append(ch);
+            }
+        }
+        return result.toString();
     }
 
     private static boolean isBrackets(String toCheck) {
