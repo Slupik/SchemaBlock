@@ -107,6 +107,7 @@ public class IOBlock extends StandardElementBase implements IOElement {
                     String value = CodeParser.getValueToPrint(instruction.getValue());
                     communicator.print(value);
                 }
+                CodeParser.callHeapSpies();
             }
         }
     }

@@ -27,9 +27,7 @@ public class CodeParser {
         for(String line:lines) {
             List<String> tokens = LineTokenizer.tokenize(line);
             CodeExecutor.execute(heap, tokens);
-            for(HeapSpy spy:spies) {
-                spy.setHeap(heap);
-            }
+            callHeapSpies();
         }
 
         if(TEST_MODE) {
@@ -69,5 +67,11 @@ public class CodeParser {
 
     public static void registerHeapSpy(HeapSpy heapSpy){
         spies.add(heapSpy);
+    }
+
+    public static void callHeapSpies(){
+        for(HeapSpy spy:spies) {
+            spy.setHeap(heap);
+        }
     }
 }
