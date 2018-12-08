@@ -66,9 +66,10 @@ public class UIIOCommunicator implements IOCommunicable {
     }
 
     @Override
-    public void clearOutput() {
+    public void clear() {
         outputData = "";
         printOnUiThread("");
+        text = null;
     }
 
     private void printOnUiThread(String value) {

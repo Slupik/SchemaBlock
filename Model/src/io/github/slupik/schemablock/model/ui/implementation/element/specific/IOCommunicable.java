@@ -9,5 +9,5 @@ public interface IOCommunicable {
 
     void print(String value);
 
-    void clearOutput();
+    void clear();
 }

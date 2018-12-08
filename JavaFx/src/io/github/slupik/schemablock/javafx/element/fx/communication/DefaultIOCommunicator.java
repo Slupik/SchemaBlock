@@ -23,7 +23,7 @@ public class DefaultIOCommunicator implements IOCommunicable {
     }
 
     @Override
-    public void clearOutput() {
+    public void clear() {
         System.out.println();
         System.out.println("======= CLEAR =======");
         System.out.println();

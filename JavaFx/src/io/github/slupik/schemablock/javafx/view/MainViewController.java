@@ -112,7 +112,7 @@ public class MainViewController implements Initializable {
         ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()), container.getChildrenHandler());
         addIconsToMenu();
         btnRun.setOnAction((event)-> {
-            communicable.clearOutput();
+            communicable.clear();
             container.run();
         });
         bindIOView();
