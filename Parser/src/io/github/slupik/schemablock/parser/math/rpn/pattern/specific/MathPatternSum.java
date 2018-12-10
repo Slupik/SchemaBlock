@@ -31,7 +31,7 @@ public class MathPatternSum extends MathPattern {
                 if(type.isNumber) {
                     result += val;
                 } else {
-                    throw new UnsupportedValueException();
+                    throw new UnsupportedValueException(args[i]);
                 }
             }
             return result;

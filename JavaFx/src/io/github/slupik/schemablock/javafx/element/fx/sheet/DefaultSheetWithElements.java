@@ -20,17 +20,7 @@ import io.github.slupik.schemablock.javafx.logic.drag.icon.DestContainerAfterDro
 import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableNode;
 import io.github.slupik.schemablock.javafx.logic.drag.node.NodeDragController;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
-import io.github.slupik.schemablock.model.ui.implementation.container.DefaultElementContainer;
-import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
-import io.github.slupik.schemablock.model.ui.implementation.container.StartBlockNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
-import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
-import io.github.slupik.schemablock.parser.code.VariableNotFound;
-import io.github.slupik.schemablock.parser.code.WrongArgumentException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.VariableIsAlreadyDefinedException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -54,10 +44,10 @@ public class DefaultSheetWithElements implements SheetWithElements {
     private PortSpawner spawner;
     private DestContainerAfterDrop childHandler;
 
-    public DefaultSheetWithElements(Pane sheet, IOCommunicable communicable) {
+    public DefaultSheetWithElements(Pane sheet, IOCommunicable communicable, ElementContainer elementContainer) {
         this.sheet = sheet;
         this.communicable = communicable;
-        container = new DefaultElementContainer();
+        container = elementContainer;
         uiContainer = new VisibleUIContainerImpl();
         startElement = ((StartUiElement) UiElementFactory.createByType(UiElementType.START));
         init();
@@ -135,19 +125,6 @@ public class DefaultSheetWithElements implements SheetWithElements {
                         }
                     });
         });
-    }
-
-    @Override
-    public void run() {
-        new Thread(()->{
-            try {
-                container.run();
-            } catch (NotFoundTypeException | IncompatibleTypeException | UnsupportedValueException |
-                    VariableIsAlreadyDefinedException | NextElementNotFound | WrongArgumentException |
-                    InvalidArgumentsException | VariableNotFound | StartBlockNotFound e) {
-                e.printStackTrace();
-            }
-        }).start();
     }
 
     @Override

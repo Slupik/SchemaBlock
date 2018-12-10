@@ -10,4 +10,8 @@ public interface IOCommunicable {
     void print(String value);
 
     void clear();
+
+    void printAlgorithmError(String text);
+
+    void printProgramError(String text);
 }

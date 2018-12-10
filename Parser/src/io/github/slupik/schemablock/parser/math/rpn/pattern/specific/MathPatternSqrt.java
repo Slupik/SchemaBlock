@@ -21,7 +21,7 @@ public class MathPatternSqrt extends MathPattern {
             if(value.getType().isNumber) {
                 return Math.sqrt(value.getAsDouble());
             }
-            throw new UnsupportedValueException();
+            throw new UnsupportedValueException(value.getValue());
         } else {
             throw new InvalidArgumentsException();
         }

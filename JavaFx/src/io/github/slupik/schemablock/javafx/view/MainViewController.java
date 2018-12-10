@@ -6,9 +6,11 @@ import io.github.slupik.schemablock.javafx.element.fx.sheet.DefaultSheetWithElem
 import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetWithElements;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
+import io.github.slupik.schemablock.javafx.logic.execution.ExecutionController;
 import io.github.slupik.schemablock.javafx.logic.heap.DefaultHeapSpy;
 import io.github.slupik.schemablock.javafx.logic.heap.HeapValueFx;
 import io.github.slupik.schemablock.javafx.logic.persistence.SchemaSaver;
+import io.github.slupik.schemablock.model.ui.implementation.container.DefaultElementContainer;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -85,6 +87,9 @@ public class MainViewController implements Initializable {
     private Button btnEnter;
 
     @FXML
+    private Button btnContinue;
+
+    @FXML
     private TableView<HeapValueFx> tvVariables;
 
     @FXML
@@ -108,16 +113,20 @@ public class MainViewController implements Initializable {
 
     private void setupDragging() {
         IOCommunicable communicable = new UIIOCommunicator(tfInput, outputView, btnEnter);
-        container = new DefaultSheetWithElements(sheet, communicable);
+
+        DefaultElementContainer elementContainer = new DefaultElementContainer();
+        ExecutionController executionController = new ExecutionController(communicable, elementContainer, btnContinue);
+        elementContainer.setExecutionFlowController(executionController);
+        container = new DefaultSheetWithElements(sheet, communicable, elementContainer);
+
         ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()), container.getChildrenHandler());
+
         addIconsToMenu();
-        btnRun.setOnAction((event)-> {
-            communicable.clear();
-            container.run();
-        });
         bindIOView();
         setupMenu();
         bindTable();
+        btnRun.setOnAction((event)-> executionController.execute(false));
+        btnDebug.setOnAction((event)-> executionController.execute(true));
     }
 
     private void bindTable() {

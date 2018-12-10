@@ -72,6 +72,16 @@ public class UIIOCommunicator implements IOCommunicable {
         text = null;
     }
 
+    @Override
+    public void printAlgorithmError(String text) {
+        printOnUiThread("<font color=\"#FF0000\">[ERROR] "+text+"</font>"+'\n');
+    }
+
+    @Override
+    public void printProgramError(String text) {
+        printOnUiThread("<font color=\"#FF0000\"><b>[INTERNAL ERROR] "+text+"</b></font>"+'\n');
+    }
+
     private void printOnUiThread(String value) {
         printOnUiThread(value, ()->{});
     }

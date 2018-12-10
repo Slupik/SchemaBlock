@@ -28,4 +28,14 @@ public class DefaultIOCommunicator implements IOCommunicable {
         System.out.println("======= CLEAR =======");
         System.out.println();
     }
+
+    @Override
+    public void printAlgorithmError(String text) {
+        System.err.println(text);
+    }
+
+    @Override
+    public void printProgramError(String text) {
+        System.err.println(text);
+    }
 }

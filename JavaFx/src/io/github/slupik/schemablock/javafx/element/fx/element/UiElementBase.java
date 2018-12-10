@@ -8,7 +8,7 @@ import io.github.slupik.schemablock.javafx.element.WrongTypeOfElement;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
-import io.github.slupik.schemablock.model.ui.implementation.container.ElementInContainerNotFound;
+import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -169,7 +169,7 @@ public abstract class UiElementBase extends Pane implements UiElement {
         setDesc(pojo.desc);
         try {
             setLogicElement(container.getElement(pojo.elementId));
-        } catch (ElementInContainerNotFound | WrongTypeOfElement e) {
+        } catch (NextElementNotFound | WrongTypeOfElement e) {
             e.printStackTrace();
         }
     }

@@ -10,8 +10,6 @@ import io.github.slupik.schemablock.javafx.logic.drag.icon.DestContainerAfterDro
  */
 public interface SheetWithElements {
 
-    void run();
-
     void addElement(UiElement element) throws InvalidTypeException;
     void removeElement(UiElement element);
     void clear();

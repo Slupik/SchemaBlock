@@ -44,6 +44,7 @@
                <items>
                   <Button fx:id="btnRun" mnemonicParsing="false" text="Run" />
                   <Button fx:id="btnDebug" mnemonicParsing="false" text="Debug" />
+                  <Button fx:id="btnContinue" mnemonicParsing="false" text="Continue" />
                   <HBox fx:id="availableBlocks" spacing="16.0">
                      <padding>
                         <Insets left="16.0" />

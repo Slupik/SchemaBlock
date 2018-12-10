@@ -19,10 +19,15 @@ public class MathPatternPow extends MathPattern {
         if(isValidArgs(args)) {
             Value base = args[0];
             Value exponent = args[1];
-            if(base.getType().isNumber && exponent.getType().isNumber) {
-                return Math.pow(base.getAsDouble(), exponent.getAsDouble());
+            if(base.getType().isNumber) {
+                if(exponent.getType().isNumber) {
+                    return Math.pow(base.getAsDouble(), exponent.getAsDouble());
+                } else {
+                    throw new UnsupportedValueException(exponent.getValue());
+                }
+            } else {
+                throw new UnsupportedValueException(base.getValue());
             }
-            throw new UnsupportedValueException();
         } else {
             throw new InvalidArgumentsException();
         }

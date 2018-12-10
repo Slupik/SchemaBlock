@@ -11,6 +11,8 @@ import io.github.slupik.schemablock.parser.code.CodeParser;
 import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
 import io.github.slupik.schemablock.parser.code.VariableNotFound;
 import io.github.slupik.schemablock.parser.code.WrongArgumentException;
+import io.github.slupik.schemablock.parser.execution.DefaultExecutionFlowController;
+import io.github.slupik.schemablock.parser.execution.ExecutionFlowController;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
 import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
 import io.github.slupik.schemablock.parser.math.rpn.variable.VariableIsAlreadyDefinedException;
@@ -18,6 +20,7 @@ import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeE
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * All rights reserved & copyright ©
@@ -25,18 +28,25 @@ import java.util.List;
 public class DefaultElementContainer implements ElementContainer, ElementCallback {
 
     private final List<Element> elements = new ArrayList<>();
+    private ExecutionFlowController controller = new DefaultExecutionFlowController();
     private String start;
 
     @Override
-    public void run() throws NotFoundTypeException, IncompatibleTypeException, UnsupportedValueException, VariableIsAlreadyDefinedException, NextElementNotFound, WrongArgumentException, InvalidArgumentsException, VariableNotFound, StartBlockNotFound {
-
+    public void run() {
         CodeParser.clearHeap();
+
+        controller.onStart();
 
         try {
             getElement(start).run();
-        } catch (ElementInContainerNotFound elementInContainerNotFound) {
-            throw new StartBlockNotFound();
+        } catch (NotFoundTypeException | IncompatibleTypeException| UnsupportedValueException| VariableIsAlreadyDefinedException| NextElementNotFound| WrongArgumentException| InvalidArgumentsException| VariableNotFound e) {
+            controller.onException(e);
         }
+    }
+
+    @Override
+    public void setExecutionFlowController(ExecutionFlowController controller) {
+        this.controller = controller;
     }
 
     @Override
@@ -54,7 +64,7 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
     }
 
     @Override
-    public Element getElement(String id) throws ElementInContainerNotFound {
+    public Element getElement(String id) throws NextElementNotFound {
         for(Element element:elements) {
             if(element!=null) {
                 if(element.getId()!=null) {
@@ -64,7 +74,7 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
                 }
             }
         }
-        throw new ElementInContainerNotFound("Wrong id: "+id);
+        throw new NextElementNotFound(id);
     }
 
     @Override
@@ -129,11 +139,18 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
     }
 
     @Override
-    public void onTryRun(String elementId) throws NotFoundTypeException, IncompatibleTypeException, UnsupportedValueException, VariableIsAlreadyDefinedException, NextElementNotFound, WrongArgumentException, InvalidArgumentsException, VariableNotFound {
+    public void onTryRun(String elementId) {
+        CountDownLatch latch = new CountDownLatch(1);
+        controller.run(latch::countDown);
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         try {
             getElement(elementId).run();
-        } catch (ElementInContainerNotFound elementInContainerNotFound) {
-            throw new NextElementNotFound(elementId);
+        } catch (NotFoundTypeException | IncompatibleTypeException| UnsupportedValueException| VariableIsAlreadyDefinedException| NextElementNotFound| WrongArgumentException| InvalidArgumentsException| VariableNotFound e) {
+            controller.onException(e);
         }
     }
 }
