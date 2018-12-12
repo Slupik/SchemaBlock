@@ -9,7 +9,7 @@ import java.util.Scanner;
  */
 public class DefaultIOCommunicator implements IOCommunicable {
 
-    //TODO change to program's console
+    //TODO change to execution's console
 
     @Override
     public String getInput() {
