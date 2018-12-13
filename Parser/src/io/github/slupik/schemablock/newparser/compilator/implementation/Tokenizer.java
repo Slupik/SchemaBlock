@@ -139,6 +139,7 @@ class Tokenizer {
 
             word.append(token);
         }
+        addNewToken(word);//Add last word
         return tokens;
     }
 

@@ -16,8 +16,10 @@ public class DefaultCompilator implements Compilator {
         LinkedList<ByteCommand> commands = new LinkedList<>();
 
         List<Token> tokenized = new Tokenizer(code).getTokenized();
+        List<Token> cleared = new BracketsRemover().getCleared(tokenized);
+
         List<Token> buffer = new ArrayList<>();
-        for(Token token:tokenized) {
+        for(Token token:cleared) {
             if(token.getData().equals(";")) {
                 commands.addAll(getCompiled(buffer));
                 buffer.clear();
