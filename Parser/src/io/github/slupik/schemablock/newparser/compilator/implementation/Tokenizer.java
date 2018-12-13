@@ -48,7 +48,7 @@ class Tokenizer {
             }
 
             //Comments
-            if(commentMode || permanentCommentMode) {
+            if((commentMode || permanentCommentMode) && (i+1)<code.length()) {
                 if(!textMode && token == '*' && code.charAt(i+1)=='/') {
                     permanentCommentMode = false;
                     i++;
@@ -63,7 +63,7 @@ class Tokenizer {
                     textMode = false;
                     continue;
                 }
-                if(token=='\\') {
+                if(token=='\\' && (i+1)<code.length()) {
                     char nextToken = code.charAt(++i);
                     switch (nextToken) {
                         case 't': {
@@ -119,12 +119,12 @@ class Tokenizer {
             }
 
             //Comments
-            if(token == '/' && code.charAt(i+1)=='/') {
+            if(token == '/' && (i+1)<code.length() && code.charAt(i+1)=='/') {
                 addNewToken(word);
                 commentMode = true;
                 continue;
             }
-            if(token == '/' && code.charAt(i+1)=='*') {
+            if(token == '/' && (i+1)<code.length() && code.charAt(i+1)=='*') {
                 addNewToken(word);
                 permanentCommentMode = true;
                 continue;
