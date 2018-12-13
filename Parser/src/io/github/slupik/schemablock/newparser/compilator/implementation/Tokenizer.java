@@ -1,9 +1,8 @@
 package io.github.slupik.schemablock.newparser.compilator.implementation;
 
-import io.github.slupik.schemablock.newparser.bytecode.ByteCommandImpl;
-import io.github.slupik.schemablock.newparser.bytecode.ByteCommandType;
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
-import org.apache.commons.lang3.StringUtils;
+import io.github.slupik.schemablock.newparser.utils.CodeUtils;
+import io.github.slupik.schemablock.newparser.utils.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +42,7 @@ class Tokenizer {
                 linePos++;
             }
 
-            if(!textMode && StringUtils.isWhitespace(token+"")) {
+            if(!textMode && TextUtils.isWhitespace(token)) {
                 addNewToken(word);
                 continue;
             }
@@ -131,12 +130,14 @@ class Tokenizer {
                 continue;
             }
 
-            if(token==';') {
+            if(CodeUtils.isFunctionalSignn(token)) {
                 addNewToken(word);//Flush last word
-                word.append(";");
+                word.append(token);
                 addNewToken(word);
                 continue;
             }
+
+            word.append(token);
         }
         return tokens;
     }

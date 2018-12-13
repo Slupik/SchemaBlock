@@ -1,0 +1,28 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="SchemaBlock">
+    <output-path>$PROJECT_DIR$/out/artifacts/SchemaBlock</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="io.github.slupik.schemablock.Main" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="SchemaBlock" />
+        <option name="vendor" value="Sebastian Witasik" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="SchemaBlock.jar">
+        <element id="module-output" name="SchemaBlock" />
+        <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/junit/jupiter/junit-jupiter-api/5.3.1/junit-jupiter-api-5.3.1.jar" path-in-jar="/" />
+        <element id="module-output" name="3 JavaFx" />
+        <element id="module-output" name="2 Logic" />
+        <element id="module-output" name="1 Parser" />
+        <element id="module-output" name="0 Entity" />
+        <element id="module-output" name="1 Model" />
+        <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar" path-in-jar="/" />
+        <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/commons/commons-lang3/3.8.1/commons-lang3-3.8.1.jar" path-in-jar="/" />
+      </element>
+    </root>
+  </artifact>
+</component>
