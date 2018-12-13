@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.newparser.compilator;
 
 import io.github.slupik.schemablock.newparser.bytecode.ByteCommand;
+import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
 
 import java.util.Queue;
 
@@ -8,7 +9,7 @@ import java.util.Queue;
  * All rights reserved & copyright ©
  */
 public interface Compilator {
-    Queue<ByteCommand> getCompiled(String code);
+    Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar;
 
     /* ByteCode ideas
     type name = value;
