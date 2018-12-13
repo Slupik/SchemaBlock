@@ -28,6 +28,7 @@ class TokenizerTest {
 //        for(Token token:tokens) {
 //            System.out.println(token.getData());
 //        }
+        Assertions.assertEquals(excepted.length, tokens.size());
         for(int i=0;i<tokens.size();i++) {
             Assertions.assertEquals(excepted[i], tokens.get(i).getData());
         }
