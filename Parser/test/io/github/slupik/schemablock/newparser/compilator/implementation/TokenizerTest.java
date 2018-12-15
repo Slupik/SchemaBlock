@@ -15,12 +15,20 @@ class TokenizerTest {
     void getTokenized() throws ComExIllegalEscapeChar {
         checkTokenization("double abc = 2343.2;", "double", "abc", "=", "2343.2", ";");
         checkTokenization("double abc = 2343.2d;", "double", "abc", "=", "2343.2d", ";");
+        checkTokenization("double abc=2343.2d;", "double", "abc", "=", "2343.2d", ";");
+        checkTokenization("double abc=1==2;", "double", "abc", "=", "1", "==", "2", ";");
+        checkTokenization("double abc=1!=2;", "double", "abc", "=", "1", "!=", "2", ";");
+        checkTokenization("double abc=1&&2;", "double", "abc", "=", "1", "&&", "2", ";");
         checkTokenization("double[][] abc = 2343.2;", "double", "[", "]", "[", "]", "abc", "=", "2343.2", ";");
         checkTokenization("double    []    []  \t   abc       =       2343.2;", "double", "[", "]", "[", "]", "abc", "=", "2343.2", ";");
         checkTokenization("String abc = \"test \\n fefw 4234.543 \\\" gerhr\";", "String", "abc", "=", "test \n fefw 4234.543 \" gerhr", ";");
         checkTokenization("double abc = Math.pow(2343.2, 3);", "double", "abc", "=", "Math.pow", "(", "2343.2", ",", "3", ")", ";");
 
         Assertions.assertThrows(ComExIllegalEscapeChar.class, () -> checkTokenization("String abc = \"aa\\a\"", ""));
+    }
+
+    @Test
+    void toRepair() throws ComExIllegalEscapeChar {
     }
 
     private void checkTokenization(String data, String... excepted) throws ComExIllegalEscapeChar {

@@ -55,7 +55,7 @@ class BracketsRemover {
             Token token = optimized.get(i);
 
             if(!token.getData().equals("(") && !token.getData().equals(")") && nestLvl>=0 && (i+1)<optimized.size()
-                    && optimized.get(i+1).getData().equals("(") && !CodeUtils.isFunctionalSignn(token.getData().charAt(0))) {
+                    && optimized.get(i+1).getData().equals("(") && !CodeUtils.isFunctionalSign(token.getData().charAt(0))) {
                 nestLvl--;
             }
 

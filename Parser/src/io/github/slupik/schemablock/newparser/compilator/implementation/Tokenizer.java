@@ -120,19 +120,28 @@ class Tokenizer {
 
             //Comments
             if(token == '/' && (i+1)<code.length() && code.charAt(i+1)=='/') {
+                i++;
                 addNewToken(word);
                 commentMode = true;
                 continue;
             }
             if(token == '/' && (i+1)<code.length() && code.charAt(i+1)=='*') {
+                i++;
                 addNewToken(word);
                 permanentCommentMode = true;
                 continue;
             }
 
-            if(CodeUtils.isFunctionalSignn(token)) {
+            if(CodeUtils.isFunctionalSign(token)) {
                 addNewToken(word);//Flush last word
                 word.append(token);
+                if(CodeUtils.isSignOfAction(token)) {
+                    i++;
+                    for(;i<code.length() && CodeUtils.isSignOfAction(code.charAt(i));i++) {
+                        word.append(code.charAt(i));
+                    }
+                    i--;
+                }
                 addNewToken(word);
                 continue;
             }
