@@ -19,32 +19,41 @@ class ConvertInfixToRPNTest {
         check("(2+3)*a", "2", "3", "+", "a", "*");
         check("  ( 2  + \t 3) *  a  ", "2", "3", "+", "a", "*");
         check("(2+3)%5", "2", "3", "+", "5", "%");
+
         check("b=(2+3)*5", "b", "2", "3", "+", "5", "*", "=");
         check("b=(2+3)*5", "b", "2", "3", "+", "5", "*", "=");
+
         check("double b=(2+3)*5", "double", "b", "2", "3", "+", "5", "*", "=");
+
         check("double[][] b=(2+3)*5", "double", "[]", "[]", "b", "2", "3", "+", "5", "*", "=");
         check("double[][] b=(c=4)*5", "double", "[]", "[]", "b", "c", "4", "=", "5", "*", "=");
+
+        check("sqrt(3)", "3", "sqrt");
+        check("sqrt(3, 2)", "3", "2", "sqrt");
+        check("(2+sqrt(3, 2))*5", "2", "3", "2", "sqrt", "+", "5", "*");
+        check("(2+sqrt(3, 2))*5", "2", "3", "2", "sqrt", "+", "5", "*");
+        check("(2+sqrt(7+8, 2))*5", "2", "7", "8", "+", "2", "sqrt", "+", "5", "*");
+        check("(2+sqrt((7+8)*9, 2))*5", "2", "7", "8", "+", "9", "*", "2", "sqrt", "+", "5", "*");
     }
 
     @Test
     void toRepair() throws ComExIllegalEscapeChar {
-
+        check("double[32] b=6", "double", "32", "[]", "b", "6", "=");
     }
 
     private void check(String equation, String... excepted) throws ComExIllegalEscapeChar {
         List<Token> tokens = new Tokenizer(equation).getTokenized();
         List<Token> cleared = new BracketsRemover().getCleared(tokens);
-        String[] splited = new String[cleared.size()];
-        for(int i=0;i<cleared.size();i++) {
-            splited[i] = cleared.get(i).getData();
-//            System.out.println("cleared = "+cleared.get(i).getData());
-        }
 
-        Queue<String> queue = ConvertInfixToRPN.convertInfixToRPN(splited);
-        Assertions.assertEquals(excepted.length, queue.size());
-        for(int i=0;i<queue.size();i++) {
-//            System.out.println("peek = "+queue.peek());
-            Assertions.assertEquals(excepted[i], queue.poll());
+//        for(Token token:cleared) {
+//            System.out.println("cleared = " + token.getData());
+//        }
+
+        Queue<Token> queue = ConvertInfixToRPN.convertInfixToRPN(cleared);
+        for(int i=0;queue.size()>0;i++) {
+//            System.out.println("peek = "+queue.peek().getData());
+            Assertions.assertEquals(excepted[i], queue.poll().getData());
         }
+        Assertions.assertEquals(0, queue.size());
     }
 }

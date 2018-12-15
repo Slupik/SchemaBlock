@@ -12,7 +12,8 @@ class BracketsRemover {
 
     List<Token> getCleared(List<Token> tokenized) {
         List<Token> optimized = getMerged(tokenized);
-        return removeUnnecessaryParentheses(optimized);
+//        return removeUnnecessaryParentheses(optimized);
+        return optimized;
     }
 
     private List<Token> getMerged(List<Token> tokenized) {

@@ -1,5 +1,7 @@
 package io.github.slupik.schemablock.newparser.compilator.implementation;
 
+import io.github.slupik.schemablock.newparser.utils.TextUtils;
+
 import java.util.*;
 
 /**
@@ -59,53 +61,110 @@ class ConvertInfixToRPN {
         OPERATION.put("(", 0);
     }
 
-    /*
-        OPERATION.put("/", 5);
-        OPERATION.put("*", 5);
-        OPERATION.put("+", 4);
-        OPERATION.put("-", 4);
-        OPERATION.put("(", 0);
-     */
+    static Queue<Token> convertInfixToRPN(List<Token> infixNotation) {
 
-    static Queue<String> convertInfixToRPN(String[] infixNotation) {
+        Queue<Token> rpn = new LinkedList<>();
+        Stack<Token> operatorsStack = new Stack<>();
 
-        Queue<String> rpn = new LinkedList<>();
-        Stack<String> operatorsStack = new Stack<>();
-
-        for (String token : infixNotation) {
-            if ("(".equals(token)) {
+        for (int i=0;i<infixNotation.size();i++) {
+            Token token = infixNotation.get(i);
+            if ("(".equals(token.getData())) {
                 operatorsStack.push(token);
                 continue;
             }
 
-            if (")".equals(token)) {
-                while (!"(".equals(operatorsStack.peek())) {
+            if (")".equals(token.getData())) {
+                while (!"(".equals(operatorsStack.peek().getData())) {
                     rpn.add(operatorsStack.pop());
                 }
                 operatorsStack.pop();
                 continue;
             }
             // an operator
-            if (OPERATION.containsKey(token)) {
-                while (!operatorsStack.empty() && OPERATION.get(token) <= OPERATION.get(operatorsStack.peek())) {
+            if (OPERATION.containsKey(token.getData())) {
+                while (!operatorsStack.empty() && OPERATION.get(token.getData()) <= OPERATION.get(operatorsStack.peek().getData())) {
                     rpn.add(operatorsStack.pop());
                 }
                 operatorsStack.push(token);
                 continue;
             }
 
-//            if (TextUtils.isNumber(token)) {
-//                rpn.add(token);
-//                continue;
-//            }
-//            throw new IllegalArgumentException("Invalid input");
+            if (TextUtils.isNumber(token.getData())) {
+                rpn.add(token);
+                continue;
+            }
+
+            //If it's a function
+            if(i+1<infixNotation.size() && "(".equals(infixNotation.get(i+1).getData())) {
+                i+=2;
+                int nestLvl = 0;
+                int argsCount = 0;
+                List<Token> buffer = new ArrayList<>();
+                for(;i<infixNotation.size() && nestLvl>=0;i++) {
+                    Token temp = infixNotation.get(i);
+
+                    //Manipulate of nest level
+                    if("(".equals(temp.getData())) {
+                        nestLvl++;
+                    }
+                    if(")".equals(temp.getData())) {
+                        nestLvl--;
+                        if(nestLvl<0) {
+                            break;
+                        }
+                    }
+
+                    //How many arguments?
+                    if(",".equals(temp.getData()) && nestLvl==0) {
+                        rpn.addAll(getArgumentsAsRPN(buffer));
+                        buffer.clear();
+                        argsCount++;
+                    }
+
+                    buffer.add(temp);
+                }
+                rpn.addAll(getArgumentsAsRPN(buffer));
+
+                token.setFunctionArguments(argsCount);
+            }
 
             rpn.add(token);
         }
+
         // at the end, pop all the elements in operatorsStack to rpn
         while (!operatorsStack.isEmpty()) {
             rpn.add(operatorsStack.pop());
         }
+
+        return rpn;
+    }
+
+    private static List<Token> getArgumentsAsRPN(List<Token> raw) {
+        List<Token> rpn = new ArrayList<>();
+
+        int nestLvl = 0;
+        List<Token> buffer = new ArrayList<>();
+        for (Token token : raw) {
+            //Manipulate of nest level
+            if ("(".equals(token.getData())) {
+                nestLvl++;
+            }
+            if (")".equals(token.getData())) {
+                nestLvl--;
+                if (nestLvl < 0) {
+                    break;
+                }
+            }
+
+            //How many arguments?
+            if (",".equals(token.getData()) && nestLvl == 0) {
+                rpn.addAll(convertInfixToRPN(buffer));
+                continue;
+            }
+
+            buffer.add(token);
+        }
+        rpn.addAll(convertInfixToRPN(buffer));
 
         return rpn;
     }
