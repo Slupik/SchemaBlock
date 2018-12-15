@@ -16,7 +16,8 @@ public enum VariableType {
 
     STRING(false, false),
 
-    VOID(false, false);
+    VOID(false, false),
+    UNKNOWN(false, false);
 
     private final boolean IS_NUMBER;
     private final boolean IS_BYTE;
@@ -36,5 +37,36 @@ public enum VariableType {
             return true;
         }
         return type1 == STRING;
+    }
+
+    public static VariableType getType(String token){
+        if(token.equals("short")) {
+            return SHORT;
+        }
+        if(token.equals("int")) {
+            return INTEGER;
+        }
+        if(token.equals("long")) {
+            return LONG;
+        }
+        if(token.equals("float")) {
+            return FLOAT;
+        }
+        if(token.equals("double")) {
+            return DOUBLE;
+        }
+        if(token.equals("string")) {
+            return STRING;
+        }
+        if(token.equals("byte")) {
+            return BYTE;
+        }
+        if(token.equals("boolean") || token.equals("bool")) {
+            return BOOLEAN;
+        }
+        if(token.equals("void")) {
+            return VOID;
+        }
+        return UNKNOWN;
     }
 }

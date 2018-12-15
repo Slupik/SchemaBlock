@@ -4,7 +4,10 @@ import io.github.slupik.schemablock.newparser.bytecode.ByteCommand;
 import io.github.slupik.schemablock.newparser.compilator.Compilator;
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 /**
  * All rights reserved & copyright ©
@@ -21,7 +24,7 @@ public class DefaultCompilator implements Compilator {
         List<Token> buffer = new ArrayList<>();
         for(Token token:cleared) {
             if(token.getData().equals(";")) {
-                commands.addAll(getCompiled(buffer));
+                commands.addAll(getCompiledLine(buffer));
                 buffer.clear();
             } else {
                 buffer.add(token);
@@ -31,8 +34,10 @@ public class DefaultCompilator implements Compilator {
         return commands;
     }
 
-    private List<ByteCommand> getCompiled(List<Token> parts) {
+    private List<ByteCommand> getCompiledLine(List<Token> parts) {
         List<ByteCommand> compiled = new ArrayList<>();
+
+
 
         return compiled;
 //                    sorted.add(new ByteCommandImpl(
