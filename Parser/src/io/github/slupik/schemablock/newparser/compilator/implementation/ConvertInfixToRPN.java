@@ -80,6 +80,57 @@ class ConvertInfixToRPN {
                 operatorsStack.pop();
                 continue;
             }
+
+            // ... = {v1, v2, v3}
+            if("=".equals(token.getData()) && i+1<infixNotation.size()) {
+                Token left = infixNotation.get(i+1);
+
+                if("{".equals(left.getData())) {
+                    List<Token> arrayBuffer = new ArrayList<>();
+                    arrayBuffer.add(left);
+                    i+=2;
+
+                    int nestLvl = 0;
+                    int argsCount = 0;
+                    List<Token> buffer = new ArrayList<>();
+                    for(;i<infixNotation.size() && nestLvl>=0;i++) {
+                        Token temp = infixNotation.get(i);
+
+                        //Manipulate of nest level
+                        if("{".equals(temp.getData())) {
+                            nestLvl++;
+                        }
+                        if("}".equals(temp.getData())) {
+                            nestLvl--;
+                            if(nestLvl<0) {
+                                if(buffer.size()>0) {
+                                    argsCount++;
+                                }
+                                arrayBuffer.addAll(getArgumentsAsRPN(buffer));
+                                arrayBuffer.add(temp);
+                                break;
+                            }
+                        }
+
+                        if(nestLvl==0) {
+                            if(",".equals(temp.getData())) {
+                                argsCount++;
+                                arrayBuffer.addAll(getArgumentsAsRPN(buffer));
+                                arrayBuffer.add(temp);
+                                buffer.clear();
+                                continue;
+                            }
+                        }
+
+                        buffer.add(temp);
+                    }
+
+                    Token size = new Token(String.valueOf(argsCount), left.getLine(), left.getPos());
+                    rpn.add(size);
+                    rpn.addAll(arrayBuffer);
+                }
+            }
+
             // an operator
             if (OPERATION.containsKey(token.getData())) {
                 while (!operatorsStack.empty() && OPERATION.get(token.getData()) <= OPERATION.get(operatorsStack.peek().getData())) {
@@ -126,6 +177,35 @@ class ConvertInfixToRPN {
                 rpn.addAll(getArgumentsAsRPN(buffer));
 
                 token.setFunctionArguments(argsCount);
+                rpn.add(token);
+                continue;
+            }
+
+            //If it's brackets of array
+            if("[".equals(token.getData())) {
+                i++;
+                int nestLvl = 0;
+                List<Token> buffer = new ArrayList<>();
+                for(;i<infixNotation.size() && nestLvl>=0;i++) {
+                    Token temp = infixNotation.get(i);
+
+                    //Manipulate of nest level
+                    if("[".equals(temp.getData())) {
+                        nestLvl++;
+                    }
+                    if("]".equals(temp.getData())) {
+                        nestLvl--;
+                        if(nestLvl<0) {
+                            break;
+                        }
+                    }
+
+                    buffer.add(temp);
+                }
+                rpn.addAll(getArgumentsAsRPN(buffer));
+
+                rpn.add(new Token("[]", token.getLine(), token.getPos()));
+                continue;
             }
 
             rpn.add(token);

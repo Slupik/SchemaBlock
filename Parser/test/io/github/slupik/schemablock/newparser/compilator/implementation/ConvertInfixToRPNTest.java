@@ -34,11 +34,17 @@ class ConvertInfixToRPNTest {
         check("(2+sqrt(3, 2))*5", "2", "3", "2", "sqrt", "+", "5", "*");
         check("(2+sqrt(7+8, 2))*5", "2", "7", "8", "+", "2", "sqrt", "+", "5", "*");
         check("(2+sqrt((7+8)*9, 2))*5", "2", "7", "8", "+", "9", "*", "2", "sqrt", "+", "5", "*");
+        check("double[32] b=6", "double", "32", "[]", "b", "6", "=");
+        check("double[8+11] b=6", "double", "8", "11", "+", "[]", "b", "6", "=");
+        check("double[32][47] b=6", "double", "32", "[]", "47", "[]", "b", "6", "=");
+        check("double[8+11][98+34] b=6", "double", "8", "11", "+", "[]", "98", "34", "+", "[]", "b", "6", "=");
+        check("double[][] b=new double[5][3]", "double", "[]", "[]", "b", "new", "double", "5", "[]", "3", "[]", "=");
+        check("double[] b = {1.3}", "double", "[]", "b", "1", "{", "1.3", "}", "=");
+        check("double[] b = {1.3, 23.4, 54.2}", "double", "[]", "b", "3", "{", "1.3", ",", "23.4", ",", "54.2", "}", "=");
     }
 
     @Test
     void toRepair() throws ComExIllegalEscapeChar {
-        check("double[32] b=6", "double", "32", "[]", "b", "6", "=");
     }
 
     private void check(String equation, String... excepted) throws ComExIllegalEscapeChar {

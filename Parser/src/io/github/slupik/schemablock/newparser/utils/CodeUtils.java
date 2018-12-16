@@ -6,7 +6,7 @@ package io.github.slupik.schemablock.newparser.utils;
 public class CodeUtils {
 
     public static boolean isFunctionalSign(char token) {
-        return isSignOfAction(token) || token=='(' || token==')' || token=='[' || token==']' || token==',' || token==';';
+        return isSignOfAction(token) || token=='(' || token==')' || token=='[' || token==']' || token==',' || token=='{' || token=='}' || token==';';
     }
 
     public static boolean isSignOfAction(char token) {
