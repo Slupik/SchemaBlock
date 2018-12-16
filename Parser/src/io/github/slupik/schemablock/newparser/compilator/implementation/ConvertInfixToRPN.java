@@ -81,54 +81,51 @@ class ConvertInfixToRPN {
                 continue;
             }
 
-            // ... = {v1, v2, v3}
-            if("=".equals(token.getData()) && i+1<infixNotation.size()) {
-                Token left = infixNotation.get(i+1);
+            // {v1, v2, v3}
+            if("{".equals(token.getData())) {
+                List<Token> arrayBuffer = new ArrayList<>();
+                arrayBuffer.add(token);
+                i+=1;
 
-                if("{".equals(left.getData())) {
-                    List<Token> arrayBuffer = new ArrayList<>();
-                    arrayBuffer.add(left);
-                    i+=2;
+                int nestLvl = 0;
+                int argsCount = 0;
+                List<Token> buffer = new ArrayList<>();
+                for(;i<infixNotation.size() && nestLvl>=0;i++) {
+                    Token temp = infixNotation.get(i);
 
-                    int nestLvl = 0;
-                    int argsCount = 0;
-                    List<Token> buffer = new ArrayList<>();
-                    for(;i<infixNotation.size() && nestLvl>=0;i++) {
-                        Token temp = infixNotation.get(i);
-
-                        //Manipulate of nest level
-                        if("{".equals(temp.getData())) {
-                            nestLvl++;
-                        }
-                        if("}".equals(temp.getData())) {
-                            nestLvl--;
-                            if(nestLvl<0) {
-                                if(buffer.size()>0) {
-                                    argsCount++;
-                                }
-                                arrayBuffer.addAll(getArgumentsAsRPN(buffer));
-                                arrayBuffer.add(temp);
-                                break;
-                            }
-                        }
-
-                        if(nestLvl==0) {
-                            if(",".equals(temp.getData())) {
+                    //Manipulate of nest level
+                    if("{".equals(temp.getData())) {
+                        nestLvl++;
+                    }
+                    if("}".equals(temp.getData())) {
+                        nestLvl--;
+                        if(nestLvl<0) {
+                            if(buffer.size()>0) {
                                 argsCount++;
-                                arrayBuffer.addAll(getArgumentsAsRPN(buffer));
-                                arrayBuffer.add(temp);
-                                buffer.clear();
-                                continue;
                             }
+                            arrayBuffer.addAll(getArgumentsAsRPN(buffer));
+                            arrayBuffer.add(temp);
+                            break;
                         }
-
-                        buffer.add(temp);
                     }
 
-                    Token size = new Token(String.valueOf(argsCount), left.getLine(), left.getPos());
-                    rpn.add(size);
-                    rpn.addAll(arrayBuffer);
+                    if(nestLvl==0) {
+                        if(",".equals(temp.getData())) {
+                            argsCount++;
+                            arrayBuffer.addAll(getArgumentsAsRPN(buffer));
+                            arrayBuffer.add(temp);
+                            buffer.clear();
+                            continue;
+                        }
+                    }
+
+                    buffer.add(temp);
                 }
+
+                Token size = new Token(String.valueOf(argsCount), token.getLine(), token.getPos());
+                rpn.add(size);
+                rpn.addAll(arrayBuffer);
+                continue;
             }
 
             // an operator
