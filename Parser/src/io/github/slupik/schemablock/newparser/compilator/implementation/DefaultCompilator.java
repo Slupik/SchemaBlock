@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.newparser.compilator.implementation;
 
-import io.github.slupik.schemablock.newparser.bytecode.ByteCommand;
+import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommand;
 import io.github.slupik.schemablock.newparser.compilator.Compilator;
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
 
@@ -24,13 +24,13 @@ public class DefaultCompilator implements Compilator {
         List<Token> buffer = new ArrayList<>();
         for(Token token:cleared) {
             if(token.getData().equals(";")) {
-                commands.addAll(getCompiledLine(buffer));
+                List<Token> rpn = ConvertInfixToRPN.convertInfixToRPN(buffer);
+                commands.addAll(getCompiledLine(rpn));
                 buffer.clear();
             } else {
                 buffer.add(token);
             }
         }
-
         return commands;
     }
 
@@ -39,12 +39,13 @@ public class DefaultCompilator implements Compilator {
 
 
 
+
         return compiled;
-//                    sorted.add(new ByteCommandImpl(
+//                    sorted.add(new ByteCommandBase(
 //                            line,
 //                            linePos,
-//                            ByteCommandType.HEAP,
-//                            VariableType.STRING,
+//                            ByteCommandType.HEAP_VALUE,
+//                            ValueType.STRING,
 //                            word.toString()
 //                    ));
     }

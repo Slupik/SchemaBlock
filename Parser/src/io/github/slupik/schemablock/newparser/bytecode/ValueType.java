@@ -3,7 +3,7 @@ package io.github.slupik.schemablock.newparser.bytecode;
 /**
  * All rights reserved & copyright ©
  */
-public enum VariableType {
+public enum ValueType {
     SHORT(true, true),
     INTEGER(true, true),
     LONG(true, true),
@@ -22,24 +22,24 @@ public enum VariableType {
     private final boolean IS_NUMBER;
     private final boolean IS_BYTE;
 
-    VariableType(boolean isNumber, boolean isByte){
+    ValueType(boolean isNumber, boolean isByte){
         this.IS_NUMBER = isNumber;
         this.IS_BYTE = isByte;
     }
 
-    public static boolean isCastable(VariableType type1, VariableType type2){
+    public static boolean isCastable(ValueType type1, ValueType type2){
         return ((type1.IS_NUMBER && type2.IS_NUMBER) ||
                 (type1.IS_BYTE && type2.IS_BYTE));
     }
 
-    public static boolean isCompatible(VariableType type1, VariableType type2){
+    public static boolean isCompatible(ValueType type1, ValueType type2){
         if(isCastable(type1, type2)) {
             return true;
         }
         return type1 == STRING;
     }
 
-    public static VariableType getType(String token){
+    public static ValueType getType(String token){
         if(token.equals("short")) {
             return SHORT;
         }

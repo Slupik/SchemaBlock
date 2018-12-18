@@ -4,6 +4,7 @@ import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalE
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
@@ -27,6 +28,7 @@ class ConvertInfixToRPNTest {
 
         check("double[][] b=(2+3)*5", "double", "[]", "[]", "b", "2", "3", "+", "5", "*", "=");
         check("double[][] b=(c=4)*5", "double", "[]", "[]", "b", "c", "4", "=", "5", "*", "=");
+        check("double b=(c=4+7)*5", "double", "b", "c", "4", "7", "+", "=", "5", "*", "=");
 
         check("sqrt(3)", "3", "sqrt");
         check("sqrt(3, 2)", "3", "2", "sqrt");
@@ -43,10 +45,12 @@ class ConvertInfixToRPNTest {
         check("{1.3}", "1", "{", "1.3", "}");
         check("double[] b = {1.3, 23.4, 54.2}", "double", "[]", "b", "3", "{", "1.3", ",", "23.4", ",", "54.2", "}", "=");
         check("double[] b = {{1.3}, 23.4}", "double", "[]", "b", "2", "{", "1", "{", "1.3", "}", ",", "23.4", "}", "=");
+        check("double b, c", "double", "b", ",", "c");
     }
 
     @Test
     void toRepair() throws ComExIllegalEscapeChar {
+
     }
 
     private void check(String equation, String... excepted) throws ComExIllegalEscapeChar {
@@ -57,7 +61,7 @@ class ConvertInfixToRPNTest {
 //            System.out.println("cleared = " + token.getData());
 //        }
 
-        Queue<Token> queue = ConvertInfixToRPN.convertInfixToRPN(cleared);
+        Queue<Token> queue = new LinkedList<>(ConvertInfixToRPN.convertInfixToRPN(cleared));
         for(int i=0;queue.size()>0;i++) {
 //            System.out.println("peek = "+queue.peek().getData());
             Assertions.assertEquals(excepted[i], queue.poll().getData());

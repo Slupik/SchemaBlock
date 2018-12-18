@@ -61,9 +61,9 @@ class ConvertInfixToRPN {
         OPERATION.put("(", 0);
     }
 
-    static Queue<Token> convertInfixToRPN(List<Token> infixNotation) {
+    static List<Token> convertInfixToRPN(List<Token> infixNotation) {
 
-        Queue<Token> rpn = new LinkedList<>();
+        List<Token> rpn = new LinkedList<>();
         Stack<Token> operatorsStack = new Stack<>();
 
         for (int i=0;i<infixNotation.size();i++) {
