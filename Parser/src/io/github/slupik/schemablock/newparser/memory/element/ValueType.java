@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.newparser.bytecode;
+package io.github.slupik.schemablock.newparser.memory.element;
 
 /**
  * All rights reserved & copyright ©

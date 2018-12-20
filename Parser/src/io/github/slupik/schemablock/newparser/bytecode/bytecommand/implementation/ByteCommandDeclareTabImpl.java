@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation;
 
-import io.github.slupik.schemablock.newparser.bytecode.ValueType;
+import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.ByteCommandType;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommandDeclareTab;
 

@@ -80,10 +80,13 @@ public interface Compilator {
         1) HEAP_VALUE int 5
         2) HEAP_VALUE int 4
         3) DECLARE_TAB int name 2
-        2) HEAP_VALUE int 10
-        2) HEAP_VALUE int 2
-        2) HEAP_VALUE int 1
-        4) SET_TAB name 2
+        4) CLEAR_EXEC_HEAP
+
+        5) HEAP_VALUE int 2
+        6) HEAP_VALUE int 1
+        7) HEAP_VARIABLE
+        4) HEAP_VALUE int 10
+        7) OPERATION =
 
     type[][] name = {{v11, v12}, {v21, v22}, {v31, v32}};
         1) HEAP_VALUE int 2
@@ -95,24 +98,53 @@ public interface Compilator {
         7) HEAP_VALUE (typeof v21) v21
         8) HEAP_VALUE (typeof v12) v12
         9) HEAP_VALUE (typeof v11) v11
-        10) HEAP_VALUE int 0
-        11) HEAP_VALUE int 0
-        12) SET_TAB name 2
-        13) HEAP_VALUE int 1
-        14) HEAP_VALUE int 0
-        15) SET_TAB name 2
-        16) HEAP_VALUE int 0
-        17) HEAP_VALUE int 1
-        18) SET_TAB name 2
-        19) HEAP_VALUE int 1
-        20) HEAP_VALUE int 1
-        21) SET_TAB name 2
-        22) HEAP_VALUE int 0
-        23) HEAP_VALUE int 2
-        24) SET_TAB name 2
-        25) HEAP_VALUE int 1
-        26) HEAP_VALUE int 2
-        27) SET_TAB name 2
+        10) HEAP_VALUE int 2
+        11) HEAP_VALUE int 3
+        12) CREATE_VIRTUAL_ARRAY type 2
+        13) OPERATION =
 
+    int[][] a = new int[2][3];
+    variable: {
+        name: a
+        dim: 2
+        value at 0: {
+            dim: 1
+            arrayLength: 3
+            value at 0: {
+                dim: 0
+                arrayLength: 0
+                value: default ex 0
+            }
+            value at 1: {
+                dim: 0
+                arrayLength: 0
+                value: default ex 0
+            }
+            value at 2: {
+                dim: 0
+                arrayLength: 0
+                value: default ex 0
+            }
+        }
+        value at 1: {
+            dim: 1
+            arrayLength: 3
+            value at 0: {
+                dim: 0
+                arrayLength: 0
+                value: default ex 0
+            }
+            value at 1: {
+                dim: 0
+                arrayLength: 0
+                value: default ex 0
+            }
+            value at 2: {
+                dim: 0
+                arrayLength: 0
+                value: default ex 0
+            }
+        }
+    }
      */
 }
