@@ -1,9 +1,9 @@
 package io.github.slupik.schemablock.newparser.memory.element;
 
-import io.github.slupik.schemablock.newparser.executor.exception.ExceptedArrayButNotReceivedException;
-import io.github.slupik.schemablock.newparser.executor.exception.IncompatibleArrayException;
-import io.github.slupik.schemablock.newparser.executor.exception.IncompatibleTypeException;
-import io.github.slupik.schemablock.newparser.executor.exception.IndexOutOfBoundsException;
+import io.github.slupik.schemablock.newparser.compilator.exception.ExceptedArrayButNotReceivedException;
+import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleArrayException;
+import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleTypeException;
+import io.github.slupik.schemablock.newparser.compilator.exception.IndexOutOfBoundsException;
 
 /**
  * All rights reserved & copyright ©

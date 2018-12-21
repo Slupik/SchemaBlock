@@ -1,9 +1,9 @@
 package io.github.slupik.schemablock.newparser.memory.element;
 
-import io.github.slupik.schemablock.newparser.executor.exception.ExceptedMoreDimensionsThanExists;
-import io.github.slupik.schemablock.newparser.executor.exception.IncompatibleArrayException;
-import io.github.slupik.schemablock.newparser.executor.exception.IncompatibleTypeException;
-import io.github.slupik.schemablock.newparser.executor.exception.IndexOutOfBoundsException;
+import io.github.slupik.schemablock.newparser.compilator.exception.ExceptedMoreDimensionsThanExists;
+import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleArrayException;
+import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleTypeException;
+import io.github.slupik.schemablock.newparser.compilator.exception.IndexOutOfBoundsException;
 
 /**
  * All rights reserved & copyright ©

@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.newparser.executor.exception;
+package io.github.slupik.schemablock.newparser.compilator.exception;
 
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 
