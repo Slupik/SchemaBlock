@@ -8,4 +8,5 @@ import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 public interface ByteCommandDeclareVar extends ByteCommand {
     ValueType getType();
     String getName();
+    int getDimensionsCount();
 }

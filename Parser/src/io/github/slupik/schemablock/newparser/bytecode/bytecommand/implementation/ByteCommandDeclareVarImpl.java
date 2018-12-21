@@ -11,11 +11,17 @@ public class ByteCommandDeclareVarImpl extends ByteCommandBase implements ByteCo
 
     private final ValueType type;
     private final String name;
+    private final int dimensionsCount;
 
     public ByteCommandDeclareVarImpl(int line, int pos, ValueType type, String name) {
+        this(line, pos, type, name, 0);
+    }
+
+    public ByteCommandDeclareVarImpl(int line, int pos, ValueType type, String name, int dimensionsCount) {
         super(line, pos, ByteCommandType.DECLARE_VAR);
         this.type = type;
         this.name = name;
+        this.dimensionsCount = dimensionsCount;
     }
 
     @Override
@@ -26,5 +32,10 @@ public class ByteCommandDeclareVarImpl extends ByteCommandBase implements ByteCo
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int getDimensionsCount() {
+        return dimensionsCount;
     }
 }
