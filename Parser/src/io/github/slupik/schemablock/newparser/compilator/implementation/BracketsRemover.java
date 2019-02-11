@@ -16,7 +16,6 @@ class BracketsRemover {
         return optimized;
     }
 
-    //      ((v1+v2))
     private List<Token> getMerged(List<Token> tokenized) {
         List<Token> optimized = new ArrayList<>();
 

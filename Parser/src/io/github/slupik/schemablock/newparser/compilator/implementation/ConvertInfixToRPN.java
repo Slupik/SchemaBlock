@@ -147,6 +147,7 @@ class ConvertInfixToRPN {
                 i+=2;
                 int nestLvl = 0;
                 int argsCount = 0;
+                boolean existsAnyArguments = false;
                 List<Token> buffer = new ArrayList<>();
                 for(;i<infixNotation.size() && nestLvl>=0;i++) {
                     Token temp = infixNotation.get(i);
@@ -169,11 +170,19 @@ class ConvertInfixToRPN {
                         argsCount++;
                     }
 
+                    if(!existsAnyArguments && !("(".equals(temp.getData()) || ")".equals(temp.getData()))) {
+                        existsAnyArguments = true;
+                    }
+
                     buffer.add(temp);
                 }
                 rpn.addAll(getArgumentsAsRPN(buffer));
 
+                if(existsAnyArguments) argsCount++;
                 token.setFunctionArguments(argsCount);
+                Token argumentsCount = new Token(Integer.toString(argsCount), token.getLine(), token.getPos());
+                rpn.add(argumentsCount);
+
                 rpn.add(token);
                 continue;
             }
