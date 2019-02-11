@@ -2,7 +2,6 @@ package io.github.slupik.schemablock.newparser.compilator.implementation;
 
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -11,8 +10,9 @@ import java.util.List;
  */
 class BracketsRemoverTest {
 
-    @Test
+//    @Test
     void getCleared() throws ComExIllegalEscapeChar {
+        //TODO check is this need
         checkOptimization("()", "()");
         checkOptimization("[]", "[]");
 

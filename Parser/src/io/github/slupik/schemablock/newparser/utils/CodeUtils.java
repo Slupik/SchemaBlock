@@ -5,6 +5,15 @@ package io.github.slupik.schemablock.newparser.utils;
  */
 public class CodeUtils {
 
+    public static boolean isOperation(String token) {
+        for(int i=0;i<token.length();i++) {
+            if(!isFunctionalSign(token.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static boolean isFunctionalSign(char token) {
         return isSignOfAction(token) || token=='(' || token==')' || token=='[' || token==']' || token==',' || token=='{' || token=='}' || token==';';
     }

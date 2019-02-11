@@ -30,6 +30,7 @@ class ConvertInfixToRPNTest {
         check("double[][] b=(c=4)*5", "double", "[]", "[]", "b", "c", "4", "=", "5", "*", "=");
         check("double b=(c=4+7)*5", "double", "b", "c", "4", "7", "+", "=", "5", "*", "=");
 
+        //TODO add info about received amount of arguments by function
         check("sqrt(3)", "3", "sqrt");
         check("sqrt(3, 2)", "3", "2", "sqrt");
         check("(2+sqrt(3, 2))*5", "2", "3", "2", "sqrt", "+", "5", "*");
@@ -50,7 +51,8 @@ class ConvertInfixToRPNTest {
 
     @Test
     void toRepair() throws ComExIllegalEscapeChar {
-
+        //FIXME brackets of array should contain info about nest level
+        check("double[a[5]+3] b=6", "double", "a", "5", "[]", "3", "+", "[]", "b", "6", "=");
     }
 
     private void check(String equation, String... excepted) throws ComExIllegalEscapeChar {

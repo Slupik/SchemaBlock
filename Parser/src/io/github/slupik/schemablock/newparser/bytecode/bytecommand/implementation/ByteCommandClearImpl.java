@@ -8,15 +8,15 @@ import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.B
  */
 public class ByteCommandClearImpl extends ByteCommandBase implements ByteCommandClear {
 
-    private final boolean clearLast;
+    private final boolean clearOnlyLast;
 
-    public ByteCommandClearImpl(int line, int pos, boolean clearLast) {
+    public ByteCommandClearImpl(int line, int pos, boolean clearOnlyLast) {
         super(line, pos, ByteCommandType.CLEAR_EXEC_HEAP);
-        this.clearLast = clearLast;
+        this.clearOnlyLast = clearOnlyLast;
     }
 
     @Override
-    public boolean clearLast() {
-        return clearLast;
+    public boolean clearOnlyLast() {
+        return clearOnlyLast;
     }
 }

@@ -12,16 +12,14 @@ public class ByteCommandHeapVirArrImpl extends ByteCommandBase implements ByteCo
     private final ValueType type;
     private final String name;
     private final int dimensionsCount;
+    private final boolean empty;
 
-    public ByteCommandHeapVirArrImpl(int line, int pos, ValueType type, String name) {
-        this(line, pos, type, name, 0);
-    }
-
-    public ByteCommandHeapVirArrImpl(int line, int pos, ValueType type, String name, int dimensionsCount) {
+    public ByteCommandHeapVirArrImpl(int line, int pos, ValueType type, String name, int dimensionsCount, boolean empty) {
         super(line, pos, ByteCommandType.DECLARE_VAR);
         this.type = type;
         this.name = name;
         this.dimensionsCount = dimensionsCount;
+        this.empty = empty;
     }
 
     @Override
@@ -37,5 +35,10 @@ public class ByteCommandHeapVirArrImpl extends ByteCommandBase implements ByteCo
     @Override
     public int getDimensionsCount() {
         return dimensionsCount;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return empty;
     }
 }

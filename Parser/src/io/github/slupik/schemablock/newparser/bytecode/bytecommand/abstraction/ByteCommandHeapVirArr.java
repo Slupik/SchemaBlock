@@ -9,4 +9,5 @@ public interface ByteCommandHeapVirArr extends ByteCommand {
     ValueType getType();
     String getName();
     int getDimensionsCount();
+    boolean isEmpty();
 }

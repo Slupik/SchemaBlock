@@ -1,8 +1,13 @@
 package io.github.slupik.schemablock.newparser.compilator.implementation;
 
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommand;
+import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandClearImpl;
+import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandDeclareVarImpl;
 import io.github.slupik.schemablock.newparser.compilator.Compilator;
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
+import io.github.slupik.schemablock.newparser.memory.element.ValueType;
+import io.github.slupik.schemablock.newparser.utils.CodeUtils;
+import io.github.slupik.schemablock.newparser.utils.TextUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,7 +30,7 @@ public class DefaultCompilator implements Compilator {
         for(Token token:cleared) {
             if(token.getData().equals(";")) {
                 List<Token> rpn = ConvertInfixToRPN.convertInfixToRPN(buffer);
-                commands.addAll(getCompiledLine(rpn));
+                commands.addAll(getCompiledLine(rpn, token));
                 buffer.clear();
             } else {
                 buffer.add(token);
@@ -34,12 +39,12 @@ public class DefaultCompilator implements Compilator {
         return commands;
     }
 
-    private List<ByteCommand> getCompiledLine(List<Token> parts) {
+    private List<ByteCommand> getCompiledLine(List<Token> parts, Token end) {
         List<ByteCommand> compiled = new ArrayList<>();
 
+        compiled.addAll(getCompiledLine(parts));
 
-
-
+        compiled.add(new ByteCommandClearImpl(end.getLine(), end.getPos(), false));
         return compiled;
 //                    sorted.add(new ByteCommandBase(
 //                            line,
@@ -48,5 +53,46 @@ public class DefaultCompilator implements Compilator {
 //                            ValueType.STRING,
 //                            word.toString()
 //                    ));
+    }
+
+    private List<ByteCommand> getCompiledLine(List<Token> parts) {
+        List<ByteCommand> compiled = new ArrayList<>();
+
+        for(int i=0;i<parts.size();i++) {
+            Token token = parts.get(i);
+
+            //Declare variable
+            ValueType type = ValueType.getType(token.getData());
+            if(type != ValueType.UNKNOWN) {
+                List<List<Token>> dimensions = new ArrayList<>();
+                List<Token> actDimension = new ArrayList<>();
+                for(int j=i+1;j<parts.size();j++) {
+                    Token checked = parts.get(j);
+                    if(checked.getData().equals("[]")) {
+                        dimensions.add(actDimension);
+                        actDimension = new ArrayList<>();
+                        continue;
+                    }
+                    if(CodeUtils.isOperation(token.getData()) || TextUtils.isNumber(token.getData())) {
+                        actDimension.add(token);
+                        continue;
+                    }
+                    if(!(j+1<parts.size() && parts.get(j).getData().equals("("))) {
+                        i=j;
+                    }
+                }
+                token = parts.get(i);//var name
+
+                compiled.add(new ByteCommandDeclareVarImpl(
+                        token.getLine(),
+                        token.getPos(),
+                        type,
+                        token.getData(),
+                        dimensions.size()
+                ));
+            }
+        }
+
+        return compiled;
     }
 }

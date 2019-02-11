@@ -30,7 +30,7 @@ public interface Compilator {
         1) HEAP_VALUE (typeof a) a
         2) HEAP_VALUE (typeof b) b
         3) OPERATION +
-        4) DECLARE_VARIABLE type name 1
+        4) DECLARE_VARIABLE type name 1 empty
 
     type[] name = {v1, v2, v3, v4};
         1) HEAP_VALUE int 4
@@ -40,7 +40,7 @@ public interface Compilator {
         5) HEAP_VALUE (typeof v2) v2
         6) HEAP_VALUE (typeof v1) v1
         7) HEAP_VALUE int 4
-        8) HEAP_VIRTUAL_ARRAY type 1
+        8) HEAP_VIRTUAL_ARRAY type 1 notEmpty
         9) OPERATION =
 
     type[4][5] name;
@@ -77,16 +77,18 @@ public interface Compilator {
 
     int[4][5] name;
     name[1][2] = 10;
-        1) HEAP_VALUE int 5
-        2) HEAP_VALUE int 4
-        3) DECLARE_VARIABLE int name 2
-        4) CLEAR_EXEC_HEAP
+        1) DECLARE_VARIABLE int name 2
+        2) HEAP_VALUE int 5
+        3) HEAP_VALUE int 4
+        4) HEAP_VIRTUAL_ARRAY int name 2 empty
+        5) OPERATION =
+        6) CLEAR_EXEC_HEAP
 
-        5) HEAP_VALUE int 2
-        6) HEAP_VALUE int 1
-        7) HEAP_VARIABLE name 2
-        8) HEAP_VALUE int 10
-        9) OPERATION =
+        7) HEAP_VALUE int 2
+        8) HEAP_VALUE int 1
+        9) HEAP_VARIABLE name 2
+        10) HEAP_VALUE int 10
+        11) OPERATION =
 
     type[][] name = {{v11, v12}, {v21, v22}, {v31, v32}};
         1) HEAP_VALUE int 2
@@ -101,7 +103,7 @@ public interface Compilator {
         9) HEAP_VALUE (typeof v11) v11
         10) HEAP_VALUE int 2
         11) HEAP_VALUE int 3
-        12) HEAP_VIRTUAL_ARRAY type 2
+        12) HEAP_VIRTUAL_ARRAY type 2 notEmpty
         13) OPERATION =
 
     int[][] a = new int[2][3];
