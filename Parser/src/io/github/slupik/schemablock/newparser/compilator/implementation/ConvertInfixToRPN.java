@@ -62,6 +62,10 @@ class ConvertInfixToRPN {
     }
 
     static List<Token> convertInfixToRPN(List<Token> infixNotation) {
+        return convertInfixToRPN(infixNotation, 0);
+    }
+
+    static List<Token> convertInfixToRPN(List<Token> infixNotation, int globalNestLvl) {
 
         List<Token> rpn = new LinkedList<>();
         Stack<Token> operatorsStack = new Stack<>();
@@ -208,9 +212,9 @@ class ConvertInfixToRPN {
 
                     buffer.add(temp);
                 }
-                rpn.addAll(getArgumentsAsRPN(buffer));
+                rpn.addAll(convertInfixToRPN(buffer, globalNestLvl+1));
 
-                rpn.add(new Token("[]", token.getLine(), token.getPos()));
+                rpn.add(new Token("["+globalNestLvl+"]", token.getLine(), token.getPos()));
                 continue;
             }
 

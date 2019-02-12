@@ -16,7 +16,6 @@ class DefaultCompilatorTest {
 
     @Test
     void getCompiled() throws ComExIllegalEscapeChar, Exception {
-        //FIXME
         check("double name;",
                 new String[]{
                         "DECLARE_VAR DOUBLE name 0",
