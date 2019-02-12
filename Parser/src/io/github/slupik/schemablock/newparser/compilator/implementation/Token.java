@@ -3,7 +3,7 @@ package io.github.slupik.schemablock.newparser.compilator.implementation;
 /**
  * All rights reserved & copyright ©
  */
-class Token {
+public class Token {
     private final String data;
     private final int line;
     private final int pos;

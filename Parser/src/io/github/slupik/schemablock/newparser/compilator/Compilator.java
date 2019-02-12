@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.newparser.compilator;
 
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommand;
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
+import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
 
 import java.util.Queue;
 
@@ -9,9 +10,20 @@ import java.util.Queue;
  * All rights reserved & copyright ©
  */
 public interface Compilator {
-    Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar;
+    Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound;
 
     /* ByteCode ideas
+    type[size] value;//ok
+    type[] value = new type[size];//ok
+    type[] value = {...};//ok
+
+    type value[size];//ok
+    type value[] = new type[size];//ok
+    type value[] = {...};//ok
+
+    type[size] value = new type[size];//error
+    type[size] value = {...};//error
+
     type name = value;
         1) DECLARE_VARIABLE type name 0
         2) HEAP_VARIABLE name
