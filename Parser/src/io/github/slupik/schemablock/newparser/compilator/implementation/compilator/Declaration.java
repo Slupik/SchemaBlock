@@ -25,7 +25,7 @@ class Declaration {
         }
         for(int i=1;i<parts.size();i++) {
             Token current = parts.get(i);
-            if("[]".equals(current.getData())) {
+            if(CodeUtils.isArrayBrackets(current)) {
                 if(parts.size()>i+1) {
                     if(isNameOfVariable(parts.get(i+1).getData())) {
                         tokenWithName = parts.get(i+1);
@@ -50,7 +50,8 @@ class Declaration {
                 break;
             }
 
-            if (checked.getData().equals("[]")) {
+            if (CodeUtils.isArrayBrackets(checked) &&
+                    (CodeUtils.isEmptyArrayBrackets(checked) || CodeUtils.getArrayNestLvl(checked)==0)) {
                 dimensions.add(actDimension);
                 actDimension = new ArrayList<>();
             } else if (CodeUtils.isOperation(checked.getData()) || TextUtils.isNumber(checked.getData())) {

@@ -16,14 +16,23 @@ class DefaultCompilatorTest {
 
     @Test
     void getCompiled() throws ComExIllegalEscapeChar, Exception {
+        Assertions.assertEquals("DECLARE_VAR DOUBLE name 0",
+                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double name;")).get(0).toString());
+        Assertions.assertEquals("DECLARE_VAR DOUBLE name 2",
+                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double[][] name = b[c[4]+3]=3;")).get(0).toString());
+        Assertions.assertEquals("DECLARE_VAR DOUBLE name 2",
+                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double[b[5+3]+4][3+5] name;")).get(0).toString());
+        Assertions.assertEquals("DECLARE_VAR DOUBLE name 2",
+                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double[b[5+a[3*sqrt(25)]]+4][3+5] name;")).get(0).toString());
+        Assertions.assertEquals("DECLARE_VAR DOUBLE name 3",
+                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double[b[5+a[3*sqrt(25)]]+4][][3+5] name;")).get(0).toString());
+
         check("double name;",
                 new String[]{
                         "DECLARE_VAR DOUBLE name 0",
                         "HEAP_VAR name",
                         "CLEAR_EXEC_HEAP"
-        });
-        Assertions.assertEquals("DECLARE_VAR DOUBLE name 2",
-                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double[][] name = b[c[4]+3]=3;")).get(0).toString());
+                });
 //        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("\"test a\\\"b\\tc\"");//"test a\"b\tc"
 //        System.out.println("=======");
 //        new DefaultCompilator().getCompiled("\"test//\"\"awdwa\"");
@@ -33,8 +42,10 @@ class DefaultCompilatorTest {
 
     @Test
     void checkError() throws ComExIllegalEscapeChar, Exception {
-        //FIXME should return DECLARE_VAR DOUBLE name 2
-        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("double[b[5+3]+4][3+5] name;");
+        //FIXME
+        //returns: DECLARE_VAR DOUBLE b 1
+        //but should: DECLARE_VAR DOUBLE name 0
+        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("double[] name = a[8]+b;");
         for(ByteCommand bc:queue) {
             System.out.println("bc.getCommandType().toString() = " + bc.toString());
         }

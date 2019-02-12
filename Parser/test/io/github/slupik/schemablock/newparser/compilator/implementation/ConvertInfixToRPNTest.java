@@ -40,6 +40,7 @@ class ConvertInfixToRPNTest {
         check("double[8+11] b=6", "double", "8", "11", "+", "[0]", "b", "6", "=");
         check("double[32][47] b=6", "double", "32", "[0]", "47", "[0]", "b", "6", "=");
         check("double[8+11][98+34] b=6", "double", "8", "11", "+", "[0]", "98", "34", "+", "[0]", "b", "6", "=");
+        check("double[a[5]+3] b=6", "double", "a", "5", "[1]", "3", "+", "[0]", "b", "6", "=");
         check("double[][] b=new double[5][3]", "double", "[]", "[]", "b", "new", "double", "5", "[0]", "3", "[0]", "=");
         check("double[] b = {1.3}", "double", "[]", "b", "1", "{", "1.3", "}", "=");
         check("{1.3}", "1", "{", "1.3", "}");
@@ -50,8 +51,7 @@ class ConvertInfixToRPNTest {
 
     @Test
     void toRepair() throws ComExIllegalEscapeChar {
-        //FIXME brackets of array should contain info about nest level - is this really needed?
-        check("double[a[5]+3] b=6", "double", "a", "5", "[1]", "3", "+", "[0]", "b", "6", "=");
+
     }
 
     private void check(String equation, String... excepted) throws ComExIllegalEscapeChar {
