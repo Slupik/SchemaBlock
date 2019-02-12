@@ -53,4 +53,8 @@ public class Token {
     public boolean isFunction() {
         return getFunctionArguments()>=0;
     }
+
+    public boolean isSpecialToken() {
+        return false;
+    }
 }

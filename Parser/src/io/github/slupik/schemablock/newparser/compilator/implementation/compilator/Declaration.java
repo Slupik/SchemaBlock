@@ -23,7 +23,7 @@ class Declaration {
         if(isNameOfVariable(parts.get(0).getData())) {
             tokenWithName = parts.get(0);
         }
-        for(int i=1;i<parts.size();i++) {
+        for(int i=0;i<parts.size();i++) {
             Token current = parts.get(i);
             if(CodeUtils.isArrayBrackets(current)) {
                 if(parts.size()>i+1) {
@@ -47,7 +47,7 @@ class Declaration {
         List<Token> actDimension = new ArrayList<>();
         for (Token checked : parts) {
             if(checked.equals(tokenWithName)) {
-                break;
+                continue;
             }
 
             if (CodeUtils.isArrayBrackets(checked) &&

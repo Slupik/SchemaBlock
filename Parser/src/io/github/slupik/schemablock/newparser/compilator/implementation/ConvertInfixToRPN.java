@@ -134,6 +134,9 @@ class ConvertInfixToRPN {
 
             // an operator
             if (OPERATION.containsKey(token.getData())) {
+                if("=".equals(token.getData())) {
+                    rpn.add(new SpecialToken(token));
+                }
                 while (!operatorsStack.empty() && OPERATION.get(token.getData()) <= OPERATION.get(operatorsStack.peek().getData())) {
                     rpn.add(operatorsStack.pop());
                 }

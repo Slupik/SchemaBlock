@@ -47,6 +47,7 @@ class ConvertInfixToRPNTest {
         check("double[] b = {1.3, 23.4, 54.2}", "double", "[]", "b", "3", "{", "1.3", ",", "23.4", ",", "54.2", "}", "=");
         check("double[] b = {{1.3}, 23.4}", "double", "[]", "b", "2", "{", "1", "{", "1.3", "}", ",", "23.4", "}", "=");
         check("double b, c", "double", "b", ",", "c");
+        check("double name[] = a[8]+b", "double", "name", "[]", "a", "8", "[0]", "b", "+", "=");
     }
 
     @Test
@@ -64,7 +65,12 @@ class ConvertInfixToRPNTest {
 
         Queue<Token> queue = new LinkedList<>(ConvertInfixToRPN.convertInfixToRPN(cleared));
         for(int i=0;queue.size()>0;i++) {
-            Assertions.assertEquals(excepted[i], queue.poll().getData());
+            if(!queue.peek().isSpecialToken()) {
+                Assertions.assertEquals(excepted[i], queue.poll().getData());
+            } else {
+                i--;
+                queue.poll();
+            }
         }
         Assertions.assertEquals(0, queue.size());
     }
