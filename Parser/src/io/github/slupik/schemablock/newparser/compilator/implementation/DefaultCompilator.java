@@ -40,9 +40,8 @@ public class DefaultCompilator implements Compilator {
     }
 
     private List<ByteCommand> getCompiledLine(List<Token> parts, Token end) {
-        List<ByteCommand> compiled = new ArrayList<>();
 
-        compiled.addAll(getCompiledLine(parts));
+        List<ByteCommand> compiled = new ArrayList<>(getCompiledLine(parts));
 
         compiled.add(new ByteCommandClearImpl(end.getLine(), end.getPos(), false));
         return compiled;

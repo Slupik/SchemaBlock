@@ -19,4 +19,9 @@ public class ByteCommandClearImpl extends ByteCommandBase implements ByteCommand
     public boolean clearOnlyLast() {
         return clearOnlyLast;
     }
+
+    @Override
+    public String toString(){
+        return getCommandType().toString();
+    }
 }

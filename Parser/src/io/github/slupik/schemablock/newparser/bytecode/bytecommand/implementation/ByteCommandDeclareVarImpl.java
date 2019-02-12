@@ -38,4 +38,9 @@ public class ByteCommandDeclareVarImpl extends ByteCommandBase implements ByteCo
     public int getDimensionsCount() {
         return dimensionsCount;
     }
+
+    @Override
+    public String toString(){
+        return getCommandType().toString()+" "+type.toString()+" "+name+" "+dimensionsCount;
+    }
 }

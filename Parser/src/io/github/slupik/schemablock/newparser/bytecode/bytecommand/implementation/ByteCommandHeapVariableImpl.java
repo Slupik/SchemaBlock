@@ -19,4 +19,9 @@ public class ByteCommandHeapVariableImpl extends ByteCommandBase implements Byte
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString(){
+        return getCommandType().toString()+" "+name;
+    }
 }

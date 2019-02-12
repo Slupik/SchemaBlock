@@ -41,4 +41,9 @@ public class ByteCommandHeapVirArrImpl extends ByteCommandBase implements ByteCo
     public boolean isEmpty() {
         return empty;
     }
+
+    @Override
+    public String toString(){
+        return getCommandType().toString()+" "+type.toString()+" "+name+" "+dimensionsCount;
+    }
 }

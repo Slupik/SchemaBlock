@@ -27,4 +27,9 @@ public class ByteCommandHeapValueImpl extends ByteCommandBase implements ByteCom
     public String getRawValue() {
         return name;
     }
+
+    @Override
+    public String toString(){
+        return getCommandType().toString()+" "+type.toString()+" "+name;
+    }
 }

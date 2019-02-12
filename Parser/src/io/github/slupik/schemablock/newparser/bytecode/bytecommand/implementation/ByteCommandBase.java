@@ -6,7 +6,7 @@ import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.B
 /**
  * All rights reserved & copyright ©
  */
-public class ByteCommandBase implements ByteCommand {
+public abstract class ByteCommandBase implements ByteCommand {
 
     private final int line;
     private final int pos;
