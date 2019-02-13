@@ -32,7 +32,13 @@ public class CodeUtils {
         return getArrayNestLvl(token.getData());
     }
     public static int getArrayNestLvl(String data) {
-        return Integer.parseInt(data.substring(1, data.length()-1));
+        if(data.startsWith("[") && data.endsWith("]")) {
+            return Integer.parseInt(data.substring(1, data.length()-1));
+        } else if(data.startsWith("[")) {
+            return Integer.parseInt(data.substring(1));
+        } else {
+            return Integer.parseInt(data.substring(0, data.length()-1));
+        }
     }
 
     public static boolean isArrayBrackets(Token token) {
@@ -56,7 +62,33 @@ public class CodeUtils {
     public static boolean isEmptyArrayBrackets(Token token) {
         return isEmptyArrayBrackets(token.getData());
     }
-    private static boolean isEmptyArrayBrackets(String data) {
+    public static boolean isEmptyArrayBrackets(String data) {
         return "[]".equals(data);
+    }
+
+    public static boolean isArrayStart(Token token) {
+        return isArrayStart(token.getData());
+    }
+    public static boolean isArrayStart(String data) {
+        if(data.startsWith("[")) {
+            try {
+                getArrayNestLvl(data);
+                return true;
+            } catch (Throwable ignore) {}
+        }
+        return false;
+    }
+
+    public static boolean isArrayEnd(Token token) {
+        return isArrayEnd(token.getData());
+    }
+    public static boolean isArrayEnd(String data) {
+        if(data.endsWith("]")) {
+            try {
+                getArrayNestLvl(data);
+                return true;
+            } catch (Throwable ignore) {}
+        }
+        return false;
     }
 }

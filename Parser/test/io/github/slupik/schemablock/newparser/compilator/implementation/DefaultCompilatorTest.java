@@ -18,16 +18,6 @@ class DefaultCompilatorTest {
     void getCompiled() throws ComExIllegalEscapeChar, Exception {
         Assertions.assertEquals("DECLARE_VAR DOUBLE name 0",
                 ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double name;")).get(0).toString());
-        Assertions.assertEquals("DECLARE_VAR DOUBLE name 0",
-                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double name = a[8]+b;")).get(0).toString());
-        Assertions.assertEquals("DECLARE_VAR DOUBLE name 1",
-                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double name[] = {a[8]+b};")).get(0).toString());
-        Assertions.assertEquals("DECLARE_VAR DOUBLE name 1",
-                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double[] name = {a[8]+b};")).get(0).toString());
-        Assertions.assertEquals("DECLARE_VAR DOUBLE name 2",
-                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double name[][] = b[c[4]+3]=3;")).get(0).toString());
-        Assertions.assertEquals("DECLARE_VAR DOUBLE name 2",
-                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double[][] name = b[c[4]+3]=3;")).get(0).toString());
         Assertions.assertEquals("DECLARE_VAR DOUBLE name 2",
                 ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double name[b[5+3]+4][3+5];")).get(0).toString());
         Assertions.assertEquals("DECLARE_VAR DOUBLE name 2",
@@ -40,11 +30,21 @@ class DefaultCompilatorTest {
                 ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double name[b[5+a[3*sqrt(25)]]+4][][3+5];")).get(0).toString());
         Assertions.assertEquals("DECLARE_VAR DOUBLE name 3",
                 ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double[b[5+a[3*sqrt(25)]]+4][][3+5] name;")).get(0).toString());
+        Assertions.assertEquals("DECLARE_VAR DOUBLE name 1",
+                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double[a=5] name;")).get(0).toString());
 
-//        Assertions.assertEquals("DECLARE_VAR DOUBLE name 2",
-//                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double name[][] = b[c[4]+3]=3;")).get(0).toString());
+        Assertions.assertEquals("DECLARE_VAR DOUBLE name 0",
+                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double name = a[8]+b;")).get(0).toString());
+        Assertions.assertEquals("DECLARE_VAR DOUBLE name 1",
+                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double name[] = {a[8]+b};")).get(0).toString());
+        Assertions.assertEquals("DECLARE_VAR DOUBLE name 1",
+                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double[] name = {a[8]+b};")).get(0).toString());
+        Assertions.assertEquals("DECLARE_VAR DOUBLE name 2",
+                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double name[][] = b[c[4]+3]=3;")).get(0).toString());
+        Assertions.assertEquals("DECLARE_VAR DOUBLE name 2",
+                ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double[][] name = b[c[4]+3]=3;")).get(0).toString());
 
-
+        //TODO make code above to work the same as below
         check("double name;",
                 new String[]{
                         "DECLARE_VAR DOUBLE name 0",
@@ -61,9 +61,9 @@ class DefaultCompilatorTest {
     @Test
     void checkError() throws ComExIllegalEscapeChar, Exception {
         //FIXME
-        //returns: DECLARE_VAR DOUBLE a 0
-        //should return: DECLARE_VAR DOUBLE name 1
-        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("double[a=5] name;");
+        //returns:
+        //should return:
+        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("");
 
         for(ByteCommand bc:queue) {
             System.out.println("bc.getCommandType().toString() = " + bc.toString());
@@ -80,7 +80,8 @@ class DefaultCompilatorTest {
 
     @Test
     void toRpn() throws ComExIllegalEscapeChar {
-        String equation = "type[size] value;";
+        String equation = "double[a=5] name;";
+//        String equation = "double name[a=5];";
         List<Token> tokens = new Tokenizer(equation).getTokenized();
         List<Token> cleared = new BracketsRemover().getCleared(tokens);
         LinkedList<Token> rpn = new LinkedList<>(ConvertInfixToRPN.convertInfixToRPN(cleared));

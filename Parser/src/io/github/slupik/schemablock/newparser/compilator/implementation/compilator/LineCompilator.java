@@ -3,6 +3,7 @@ package io.github.slupik.schemablock.newparser.compilator.implementation.compila
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommand;
 import io.github.slupik.schemablock.newparser.compilator.implementation.Token;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
+import io.github.slupik.schemablock.newparser.utils.CodeUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,17 @@ public class LineCompilator {
             if(type != ValueType.UNKNOWN) {
                 ArrayList<Token> declarationArray = new ArrayList<>();
 
+                int actualNestLvl = -1;
                 for(int j=i+1;j<parts.size();j++) {
                     Token part = parts.get(j);
-                    if("=".equals(part.getData())) {
+
+                    if(CodeUtils.isArrayStart(part)) {
+                        actualNestLvl = CodeUtils.getArrayNestLvl(part);
+                    } else if(CodeUtils.isArrayEnd(part)) {
+                        actualNestLvl = CodeUtils.getArrayNestLvl(part)-1;
+                    }
+
+                    if("=".equals(part.getData()) && actualNestLvl == -1) {
                         i=j;
                         break;
                     } else {

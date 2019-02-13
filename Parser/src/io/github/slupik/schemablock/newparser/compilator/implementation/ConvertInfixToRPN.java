@@ -215,9 +215,12 @@ class ConvertInfixToRPN {
 
                     buffer.add(temp);
                 }
+                rpn.add(new SpecialToken("["+globalNestLvl, token.getLine(), token.getPos()));
                 rpn.addAll(convertInfixToRPN(buffer, globalNestLvl+1));
+                rpn.add(new SpecialToken(globalNestLvl+"]", infixNotation.get(i).getLine(), infixNotation.get(i).getPos()));
 
-                rpn.add(new Token("["+globalNestLvl+"]", token.getLine(), token.getPos()));
+                //TODO is this necessary?
+//                rpn.add(new Token("["+globalNestLvl+"]", token.getLine(), token.getPos()));
                 continue;
             }
 

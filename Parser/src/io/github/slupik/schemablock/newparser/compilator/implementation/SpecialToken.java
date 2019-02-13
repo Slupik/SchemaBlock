@@ -9,6 +9,10 @@ public class SpecialToken extends Token {
         super(token.getData(), token.getLine(), token.getPos());
     }
 
+    SpecialToken(String message, int line, int pos) {
+        super(message, line, pos);
+    }
+
     @Override
     public boolean isSpecialToken() {
         return true;
