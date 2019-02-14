@@ -35,7 +35,7 @@ public class LineCompilator {
                     }
 
                     if("=".equals(part.getData()) && actualNestLvl == -1) {
-                        i=j;
+                        i=j-1;
                         break;
                     } else {
                         //TODO remove debugging
@@ -44,6 +44,10 @@ public class LineCompilator {
                     }
                 }
                 compiled.addAll(Declaration.compile(type, declarationArray));
+            }
+
+            if(!token.isSpecialToken() && "=".equals(token.getData())) {
+                compiled.addAll(Assignment.compile(parts.subList(i-1, parts.size())));
             }
         }
 

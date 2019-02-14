@@ -7,9 +7,18 @@ import io.github.slupik.schemablock.newparser.compilator.implementation.Token;
  */
 public class CodeUtils {
 
-    public static boolean isOperation(String token) {
+    public static boolean isSpecialText(String token) {
         for(int i=0;i<token.length();i++) {
             if(!isFunctionalSign(token.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isOperation(String token) {
+        for(int i=0;i<token.length();i++) {
+            if(!isSignOfAction(token.charAt(i))) {
                 return false;
             }
         }

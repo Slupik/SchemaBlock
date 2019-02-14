@@ -63,7 +63,7 @@ class Declaration {
                 continue;
             }
 
-            if(nestLevel>-1) {//CodeUtils.isOperation(checked.getData()) || TextUtils.isNumber(checked.getData())
+            if(nestLevel>-1) {//CodeUtils.isSpecialText(checked.getData()) || TextUtils.isNumber(checked.getData())
                 actDimension.add(checked);
                 continue;
             }
@@ -91,7 +91,7 @@ class Declaration {
     }
 
     private static boolean isNameOfVariable(String data) {
-        return !CodeUtils.isOperation(data) && !TextUtils.isNumber(data) && !CodeUtils.isEmptyArrayBrackets(data)
+        return !CodeUtils.isSpecialText(data) && !TextUtils.isNumber(data) && !CodeUtils.isEmptyArrayBrackets(data)
                 && !CodeUtils.isArrayStart(data) && !CodeUtils.isArrayEnd(data);
     }
 }

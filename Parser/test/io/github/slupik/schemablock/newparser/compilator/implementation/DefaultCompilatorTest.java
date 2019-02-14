@@ -44,13 +44,55 @@ class DefaultCompilatorTest {
         Assertions.assertEquals("DECLARE_VAR DOUBLE name 2",
                 ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double[][] name = b[c[4]+3]=3;")).get(0).toString());
 
-        //TODO make code above to work the same as below
         check("double name;",
                 new String[]{
                         "DECLARE_VAR DOUBLE name 0",
                         "HEAP_VAR name",
                         "CLEAR_EXEC_HEAP"
                 });
+        check("double name = 2;",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 0",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 2",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+        check("double name = 2d;",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 0",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE DOUBLE 2",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+
+        //TODO make code below to work the same as above
+        /*
+        double name = a[8];
+        double name = a[b[8]];
+        double name = sqrt(7);
+
+        double[8] name;
+        double[a=8] name;
+
+        double[] name = new double[8];
+        double[] name = new double[b[8]];
+        double[][] name = new double[8][8];
+        double[][] name = new double[b[8]][c[9]];
+
+        double name[] = new double[8];
+        double name[] = new double[b[8]];
+        double name[][] = new double[8][8];
+        double name[][] = new double[b[8]][c[9]];
+
+        double[] name = {1, 2.0, 3};
+        double[][] name = {{1}, {2.0}, {3}};
+
+        double name[] = {1, 2.0, 3};
+        double name[][] = {{1}, {2.0}, {3}};
+         */
+
 //        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("\"test a\\\"b\\tc\"");//"test a\"b\tc"
 //        System.out.println("=======");
 //        new DefaultCompilator().getCompiled("\"test//\"\"awdwa\"");
@@ -72,6 +114,10 @@ class DefaultCompilatorTest {
 
     private void check(String input, String[] answer) throws ComExIllegalEscapeChar, Exception {
         LinkedList<ByteCommand> output = (LinkedList<ByteCommand>) new DefaultCompilator().getCompiled(input);
+        for(int i=0;i<output.size();i++) {
+            System.out.println(output.get(i).toString());
+        }
+
         Assertions.assertEquals(answer.length, output.size());
         for(int i=0;i<output.size();i++) {
             Assertions.assertEquals(answer[i], output.get(i).toString());
