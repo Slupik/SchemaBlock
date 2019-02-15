@@ -54,10 +54,13 @@ public interface Compilator {
         5) OPERATION =
 
     type[a+b] name;
-        1) HEAP_VALUE (typeof a) a
-        2) HEAP_VALUE (typeof b) b
-        3) OPERATION +
-        4) DECLARE_VARIABLE type name 1 empty
+        1) DECLARE_VARIABLE type name 1
+        2) HEAP_VARIABLE name
+        3) HEAP_VALUE (typeof a) a
+        4) HEAP_VALUE (typeof b) b
+        5) OPERATION +
+        6) HEAP_VIRTUAL_ARRAY type 1 empty
+        7) OPERATION =
 
     type[] name = {v1, v2, v3, v4};
         1) HEAP_VALUE int 4
@@ -71,9 +74,20 @@ public interface Compilator {
         9) OPERATION =
 
     type[4][5] name;
-        1) HEAP_VALUE int 5
-        2) HEAP_VALUE int 4
-        3) DECLARE_VARIABLE type name 2
+        1) DECLARE_VARIABLE type name 2
+        2) HEAP_VARIABLE name
+        3) HEAP_VALUE int 5
+        4) HEAP_VALUE int 4
+        5) HEAP_VIRTUAL_ARRAY type 2 empty
+        6) OPERATION =
+
+    type[][] name = new type[4][5];
+        1) DECLARE_VARIABLE type name 2
+        2) HEAP_VARIABLE name
+        3) HEAP_VALUE int 5
+        4) HEAP_VALUE int 4
+        5) HEAP_VIRTUAL_ARRAY type 2 empty
+        6) OPERATION =
 
     sqrt(a);
         1) HEAP_VALUE (typeof a) a

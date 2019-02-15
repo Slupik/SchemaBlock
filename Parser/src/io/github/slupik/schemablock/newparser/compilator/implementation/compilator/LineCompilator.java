@@ -87,49 +87,19 @@ public class LineCompilator {
                     MULTIPLE ARRAY BRACKETS ex. name[...][...]
              */
             if(token.isSpecialToken() && CodeUtils.isArrayStart(token)) {
-                List<List<ByteCommand>> cmdsForIndexes = new ArrayList<>();
-                List<Token> toCompile = new ArrayList<>();
-
-                final int nestLvl = CodeUtils.getArrayNestLvl(token);
-                for(i++;i<parts.size();i++) {
-                    token = parts.get(i);
-
-                    if(token.isSpecialToken() && CodeUtils.isArrayEnd(token) && CodeUtils.getArrayNestLvl(token)==nestLvl) {
-                        if(toCompile==null) {
-                            toCompile = new ArrayList<>();
-                        }
-
-                        List<ByteCommand> cmdLine = new ArrayList<>(LineCompilator.getCompiledLine(toCompile));
-                        cmdsForIndexes.add(cmdLine);
-                        toCompile=null;
-                        continue;
-                    }
-
-                    if(token.isSpecialToken() && CodeUtils.isArrayStart(token) && CodeUtils.getArrayNestLvl(token)==nestLvl) {
-                        toCompile = new ArrayList<>();
-                        continue;
-                    }
-
-                    if(toCompile==null) {
-                        i--;
-                        break;
-                    } else {
-                        toCompile.add(token);
-                    }
-                }
+                BracketsData data = BracketsCompiler.compile(parts.subList(i, parts.size()));
 
                 //Remove command HEAP_VAR arrayName
                 compiled.remove(compiled.size()-1);
 
-                for(int j=cmdsForIndexes.size()-1;j>=0;j--) {
-                    compiled.addAll(cmdsForIndexes.get(j));
-                }
+                compiled.addAll(data.cmds);
 
                 compiled.add(new ByteCommandHeapVariableImpl(
                         token.getLine(),
                         token.getPos(),
                         lastVariableName,
-                        cmdsForIndexes.size()));
+                        data.dimensions));
+                i+=data.elementsCount;
 
                 continue;
             }

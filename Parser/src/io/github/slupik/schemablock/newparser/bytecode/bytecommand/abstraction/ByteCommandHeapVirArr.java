@@ -7,7 +7,6 @@ import io.github.slupik.schemablock.newparser.memory.element.ValueType;
  */
 public interface ByteCommandHeapVirArr extends ByteCommand {
     ValueType getType();
-    String getName();
     int getDimensionsCount();
     boolean isEmpty();
 }

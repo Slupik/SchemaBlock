@@ -10,14 +10,12 @@ import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 public class ByteCommandHeapVirArrImpl extends ByteCommandBase implements ByteCommandHeapVirArr {
 
     private final ValueType type;
-    private final String name;
     private final int dimensionsCount;
     private final boolean empty;
 
-    public ByteCommandHeapVirArrImpl(int line, int pos, ValueType type, String name, int dimensionsCount, boolean empty) {
-        super(line, pos, ByteCommandType.DECLARE_VAR);
+    public ByteCommandHeapVirArrImpl(int line, int pos, ValueType type, int dimensionsCount, boolean empty) {
+        super(line, pos, ByteCommandType.HEAP_VIRTUAL_ARRAY);
         this.type = type;
-        this.name = name;
         this.dimensionsCount = dimensionsCount;
         this.empty = empty;
     }
@@ -25,11 +23,6 @@ public class ByteCommandHeapVirArrImpl extends ByteCommandBase implements ByteCo
     @Override
     public ValueType getType() {
         return type;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     @Override
@@ -44,6 +37,6 @@ public class ByteCommandHeapVirArrImpl extends ByteCommandBase implements ByteCo
 
     @Override
     public String toString(){
-        return getCommandType().toString()+" "+type.toString()+" "+name+" "+dimensionsCount;
+        return getCommandType().toString()+" "+type.toString()+" "+dimensionsCount;
     }
 }

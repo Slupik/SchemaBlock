@@ -127,11 +127,29 @@ class DefaultCompilatorTest {
                         "CLEAR_EXEC_HEAP"
                 });
 
+        check("double[8] name;",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 1",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 8",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 1",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+        check("double[a=8] name;",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 1",
+                        "HEAP_VAR name",
+                        "HEAP_VAR a",
+                        "HEAP_VALUE INTEGER 8",
+                        "OPERATION =",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 1",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+
         //TODO make code below to work the same as above
         /*
-        double[8] name;
-        double[a=8] name;
-
         double[] name = new double[8];
         double[] name = new double[b[8]];
         double[][] name = new double[8][9];
@@ -161,7 +179,7 @@ class DefaultCompilatorTest {
         //FIXME
         //returns:
         //should return:
-        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("double[8] name;");
+        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("double[a=8] name;");
 
         for(ByteCommand bc:queue) {
             System.out.println("bc.getCommandType().toString() = " + bc.toString());

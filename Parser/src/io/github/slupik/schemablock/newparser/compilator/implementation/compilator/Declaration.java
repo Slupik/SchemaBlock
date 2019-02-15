@@ -3,6 +3,8 @@ package io.github.slupik.schemablock.newparser.compilator.implementation.compila
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommand;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandDeclareVarImpl;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandHeapVariableImpl;
+import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandHeapVirArrImpl;
+import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandOperationImpl;
 import io.github.slupik.schemablock.newparser.compilator.implementation.Token;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 import io.github.slupik.schemablock.newparser.utils.CodeUtils;
@@ -86,6 +88,26 @@ class Declaration {
                 tokenWithName.getPos(),
                 tokenWithName.getData()
         ));
+
+        int lastSize = compiled.size();
+        for(int i=dimensions.size()-1;i>=0;i--) {
+            compiled.addAll(LineCompilator.getCompiledLine(dimensions.get(i)));
+        }
+
+        if(lastSize!=compiled.size()) {
+            compiled.add(new ByteCommandHeapVirArrImpl(
+                    tokenWithName.getLine(),
+                    tokenWithName.getPos(),
+                    type,
+                    dimensions.size(),
+                    false
+            ));
+            compiled.add(new ByteCommandOperationImpl(
+                    tokenWithName.getLine(),
+                    tokenWithName.getPos(),
+                    "="
+            ));
+        }
 
         return compiled;
     }
