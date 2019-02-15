@@ -85,10 +85,31 @@ class DefaultCompilatorTest {
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
+        check("double name = a[b[8]];",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 0",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 8",
+                        "HEAP_VAR b 1",
+                        "HEAP_VAR a 1",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+        check("double name = a[b[8]+3];",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 0",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 8",
+                        "HEAP_VAR b 1",
+                        "HEAP_VALUE INTEGER 3",
+                        "OPERATION +",
+                        "HEAP_VAR a 1",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
 
         //TODO make code below to work the same as above
         /*
-        double name = a[b[8]];
         double name = sqrt(7);
 
         double[8] name;
