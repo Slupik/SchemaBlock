@@ -107,11 +107,28 @@ class DefaultCompilatorTest {
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
+        check("double name = sqrt(7);",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 0",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 7",
+                        "EXECUTE sqrt 1",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+        check("double name = root(7, 2);",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 0",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 2",
+                        "HEAP_VALUE INTEGER 7",
+                        "EXECUTE root 2",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
 
         //TODO make code below to work the same as above
         /*
-        double name = sqrt(7);
-
         double[8] name;
         double[a=8] name;
 
@@ -144,7 +161,7 @@ class DefaultCompilatorTest {
         //FIXME
         //returns:
         //should return:
-        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("double name = a[b[8]];");
+        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("double[8] name;");
 
         for(ByteCommand bc:queue) {
             System.out.println("bc.getCommandType().toString() = " + bc.toString());

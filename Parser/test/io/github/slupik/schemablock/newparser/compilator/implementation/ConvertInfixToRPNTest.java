@@ -31,11 +31,11 @@ class ConvertInfixToRPNTest {
         check("double b=(c=4+7)*5", "double", "b", "=", "c", "=", "4", "7", "+", "=", "5", "*", "=");
 
         check("sqrt(3)", "3", "1", "sqrt");
-        check("sqrt(3, 2)", "3", "2", "2", "sqrt");
-        check("(2+sqrt(3, 2))*5", "2", "3", "2", "2", "sqrt", "+", "5", "*");
-        check("(2+sqrt(3, 2))*5", "2", "3", "2", "2", "sqrt", "+", "5", "*");
-        check("(2+sqrt(7+8, 2))*5", "2", "7", "8", "+", "2", "2", "sqrt", "+", "5", "*");
-        check("(2+sqrt((7+8)*9, 2))*5", "2", "7", "8", "+", "9", "*", "2", "2", "sqrt", "+", "5", "*");
+        check("sqrt(3, 2)", "2", "3", "2", "sqrt");
+        check("(2+sqrt(3, 2))*5", "2", "2", "3", "2", "sqrt", "+", "5", "*");
+        check("(2+sqrt(3, 2))*5", "2", "2", "3", "2", "sqrt", "+", "5", "*");
+        check("(2+sqrt(7+8, 2))*5", "2", "2", "7", "8", "+", "2", "sqrt", "+", "5", "*");
+        check("(2+sqrt((7+8)*9, 2))*5", "2", "2", "7", "8", "+", "9", "*", "2", "sqrt", "+", "5", "*");
         check("double[32] b=6", "double", "[0", "32", "0]", "b", "=", "6", "=");
         check("double[8+11] b=6", "double", "[0", "8", "11", "+", "0]", "b", "=", "6", "=");
         check("double[32][47] b=6", "double", "[0", "32", "0]", "[0", "47", "0]", "b", "=", "6", "=");
@@ -65,6 +65,7 @@ class ConvertInfixToRPNTest {
 
         Queue<Token> queue = new LinkedList<>(ConvertInfixToRPN.convertInfixToRPN(cleared));
         for(int i=0;queue.size()>0;i++) {
+//            System.out.println("parsed = " + queue.poll().getData());
             Assertions.assertEquals(excepted[i], queue.poll().getData());
         }
         Assertions.assertEquals(0, queue.size());

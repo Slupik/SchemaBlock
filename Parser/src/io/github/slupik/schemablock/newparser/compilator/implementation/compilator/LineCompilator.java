@@ -1,6 +1,8 @@
 package io.github.slupik.schemablock.newparser.compilator.implementation.compilator;
 
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommand;
+import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommandHeapValue;
+import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandExecuteImpl;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandHeapValueImpl;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandHeapVariableImpl;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandOperationImpl;
@@ -129,6 +131,22 @@ public class LineCompilator {
                         lastVariableName,
                         cmdsForIndexes.size()));
 
+                continue;
+            }
+
+            /*
+                    FUNCTION
+             */
+            if(token.isFunction()) {
+                ByteCommand argumentsCount = compiled.get(compiled.size()-1);
+                compiled.remove(compiled.size()-1);
+
+                compiled.add(new ByteCommandExecuteImpl(
+                        token.getLine(),
+                        token.getPos(),
+                        token.getData(),
+                        Integer.parseInt(((ByteCommandHeapValue) argumentsCount).getRawValue())) {
+                });
                 continue;
             }
 
