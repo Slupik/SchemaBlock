@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.newparser.compilator.implementation;
 
+import io.github.slupik.schemablock.newparser.utils.CodeOperations;
 import io.github.slupik.schemablock.newparser.utils.TextUtils;
 
 import java.util.*;
@@ -8,58 +9,7 @@ import java.util.*;
  * All rights reserved & copyright ©
  */
 class ConvertInfixToRPN {
-    private static final Map<String, Integer> OPERATION = new HashMap<>();
-
-    static {
-        //unary logical NOT
-        OPERATION.put("!", 44);
-
-        //unary bitwise NOT
-        OPERATION.put("~", 44);
-
-        //multiplicative
-        OPERATION.put("/", 42);
-        OPERATION.put("*", 42);
-        OPERATION.put("%", 42);
-
-        //additive
-        OPERATION.put("+", 41);
-        OPERATION.put("-", 41);
-
-        //shift
-        OPERATION.put("<<", 40);
-        OPERATION.put(">>", 40);
-
-        //relational
-        OPERATION.put("<", 39);
-        OPERATION.put(">", 39);
-        OPERATION.put(">=", 39);
-        OPERATION.put("<=", 39);
-
-        //equality
-        OPERATION.put("==", 38);
-        OPERATION.put("!=", 38);
-
-        //bitwise AND
-        OPERATION.put("&", 34);
-
-        //bitwise XOR
-        OPERATION.put("^", 36);
-
-        //bitwise OR
-        OPERATION.put("|", 35);
-
-        //logical AND
-        OPERATION.put("&&", 34);
-
-        //logical OR
-        OPERATION.put("||", 33);
-
-        //assigning a value
-        OPERATION.put("=", 1);
-
-        OPERATION.put("(", 0);
-    }
+    static final Map<String, Integer> OPERATION = new CodeOperations();
 
     static List<Token> convertInfixToRPN(List<Token> infixNotation) {
         return convertInfixToRPN(infixNotation, 0);

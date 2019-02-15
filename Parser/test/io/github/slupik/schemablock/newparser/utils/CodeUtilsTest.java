@@ -3,7 +3,7 @@ package io.github.slupik.schemablock.newparser.utils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Map;
 
 /**
  * All rights reserved & copyright ©
@@ -22,5 +22,12 @@ class CodeUtilsTest {
         Assertions.assertTrue(CodeUtils.isArrayBrackets("[]"));
         Assertions.assertTrue(CodeUtils.isArrayBrackets("[5423]"));
         Assertions.assertFalse(CodeUtils.isArrayBrackets("5423"));
+    }
+
+    @Test
+    void isSpecialText() {
+        for(Map.Entry<String, Integer> entry: new CodeOperations().entrySet()) {
+            Assertions.assertTrue(CodeUtils.isSpecialText(entry.getKey()));
+        }
     }
 }

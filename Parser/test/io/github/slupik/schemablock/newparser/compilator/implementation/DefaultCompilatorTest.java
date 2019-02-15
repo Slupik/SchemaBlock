@@ -367,6 +367,21 @@ class DefaultCompilatorTest {
                         "HEAP_VALUE STRING \"test\"",
                         "CLEAR_EXEC_HEAP"
                 });
+
+
+        check("4==5 && 3-1>0;",
+                new String[]{
+                        "HEAP_VALUE INTEGER 4",
+                        "HEAP_VALUE INTEGER 5",
+                        "OPERATION ==",
+                        "HEAP_VALUE INTEGER 3",
+                        "HEAP_VALUE INTEGER 1",
+                        "OPERATION -",
+                        "HEAP_VALUE INTEGER 0",
+                        "OPERATION >",
+                        "OPERATION &&",
+                        "CLEAR_EXEC_HEAP"
+                });
     }
 
     @Test

@@ -21,7 +21,7 @@ class TokenizerTest {
         checkTokenization("double abc=1&&2;", "double", "abc", "=", "1", "&&", "2", ";");
         checkTokenization("double[][] abc = 2343.2;", "double", "[", "]", "[", "]", "abc", "=", "2343.2", ";");
         checkTokenization("double    []    []  \t   abc       =       2343.2;", "double", "[", "]", "[", "]", "abc", "=", "2343.2", ";");
-        checkTokenization("String abc = \"test \\n fefw 4234.543 \\\" gerhr\";", "String", "abc", "=", "test \n fefw 4234.543 \" gerhr", ";");
+        checkTokenization("String abc = \"test \\n fefw 4234.543 \\\" gerhr\";", "String", "abc", "=", "\"test \n fefw 4234.543 \" gerhr\"", ";");
         checkTokenization("double abc = Math.pow(2343.2, 3);", "double", "abc", "=", "Math.pow", "(", "2343.2", ",", "3", ")", ";");
 
         Assertions.assertThrows(ComExIllegalEscapeChar.class, () -> checkTokenization("String abc = \"aa\\a\"", ""));
