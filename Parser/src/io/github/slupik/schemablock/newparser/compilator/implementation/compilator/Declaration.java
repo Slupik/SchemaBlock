@@ -18,7 +18,7 @@ import java.util.List;
  */
 class Declaration {
 
-    static List<ByteCommand> compile(ValueType type, List<Token> parts) throws NameForDeclarationCannotBeFound {
+    static List<ByteCommand> compile(ValueType type, List<Token> parts) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
         List<ByteCommand> compiled = new ArrayList<>();
 
         Token tokenWithName = null;

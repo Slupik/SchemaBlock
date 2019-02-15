@@ -4,6 +4,7 @@ import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.B
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandClearImpl;
 import io.github.slupik.schemablock.newparser.compilator.Compilator;
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
+import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.ExceptedTypeOfArray;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.LineCompilator;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
 
@@ -18,7 +19,7 @@ import java.util.Queue;
 public class DefaultCompilator implements Compilator {
 
     @Override
-    public Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound {
+    public Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
         LinkedList<ByteCommand> commands = new LinkedList<>();
 
         List<Token> tokenized = new Tokenizer(code).getTokenized();
@@ -41,7 +42,7 @@ public class DefaultCompilator implements Compilator {
         return commands;
     }
 
-    private List<ByteCommand> getCompiledLine(List<Token> parts, Token end) throws NameForDeclarationCannotBeFound {
+    private List<ByteCommand> getCompiledLine(List<Token> parts, Token end) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
 
         List<ByteCommand> compiled = new ArrayList<>(LineCompilator.getCompiledLine(parts));
 

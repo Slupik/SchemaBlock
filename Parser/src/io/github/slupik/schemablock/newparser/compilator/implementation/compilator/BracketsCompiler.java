@@ -12,7 +12,7 @@ import java.util.List;
  */
 class BracketsCompiler {
 
-    static BracketsData compile(List<Token> parts) throws NameForDeclarationCannotBeFound {
+    static BracketsData compile(List<Token> parts) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
         List<ByteCommand> compiled = new ArrayList<>();
         List<List<ByteCommand>> cmdsForIndexes = new ArrayList<>();
         List<Token> toCompile = new ArrayList<>();

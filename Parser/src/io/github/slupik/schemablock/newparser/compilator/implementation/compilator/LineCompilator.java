@@ -2,10 +2,7 @@ package io.github.slupik.schemablock.newparser.compilator.implementation.compila
 
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommand;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommandHeapValue;
-import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandExecuteImpl;
-import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandHeapValueImpl;
-import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandHeapVariableImpl;
-import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandOperationImpl;
+import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.*;
 import io.github.slupik.schemablock.newparser.compilator.implementation.Token;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 import io.github.slupik.schemablock.newparser.utils.CodeUtils;
@@ -19,7 +16,7 @@ import java.util.List;
  */
 public class LineCompilator {
 
-    public static List<ByteCommand> getCompiledLine(List<Token> parts) throws NameForDeclarationCannotBeFound {
+    public static List<ByteCommand> getCompiledLine(List<Token> parts) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
         System.out.println("AGAIN");
         List<ByteCommand> compiled = new ArrayList<>();
 
@@ -56,6 +53,29 @@ public class LineCompilator {
 
             if(token.isSpecialToken() && "=".equals(token.getData())) {
                 continue;
+            }
+
+            if("new".equals(token.getData())) {
+                type = ValueType.getType(parts.get(i+1).getData());
+
+                if(type != ValueType.UNKNOWN) {
+                    i+=2;
+
+                    BracketsData data = BracketsCompiler.compile(parts.subList(i, parts.size()));
+                    compiled.addAll(data.cmds);
+                    compiled.add(new ByteCommandHeapVirArrImpl(
+                            token.getLine(),
+                            token.getPos(),
+                            type,
+                            data.dimensions,
+                            false
+                    ));
+                    i+=data.elementsCount;
+
+                    continue;
+                } else {
+                    throw new ExceptedTypeOfArray(token);
+                }
             }
 
             /*

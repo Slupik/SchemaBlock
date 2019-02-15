@@ -148,18 +148,92 @@ class DefaultCompilatorTest {
                         "CLEAR_EXEC_HEAP"
                 });
 
+        check("double[] name = new double[8];",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 1",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 8",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 1",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+        check("double[] name = new double[b[8]];",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 1",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 8",
+                        "HEAP_VAR b 1",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 1",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+        check("double[][] name = new double[8][9];",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 2",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 9",
+                        "HEAP_VALUE INTEGER 8",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 2",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+        check("double[][] name = new double[b[8]][c[9]];",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 2",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 9",
+                        "HEAP_VAR c 1",
+                        "HEAP_VALUE INTEGER 8",
+                        "HEAP_VAR b 1",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 2",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+
+        check("double name[] = new double[8];",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 1",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 8",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 1",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+        check("double name[] = new double[b[8]];",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 1",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 8",
+                        "HEAP_VAR b 1",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 1",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+        check("double name[][] = new double[8][9];",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 2",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 9",
+                        "HEAP_VALUE INTEGER 8",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 2",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+        check("double name[][] = new double[b[8]][c[9]];",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 2",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 9",
+                        "HEAP_VAR c 1",
+                        "HEAP_VALUE INTEGER 8",
+                        "HEAP_VAR b 1",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 2",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
+
         //TODO make code below to work the same as above
         /*
-        double[] name = new double[8];
-        double[] name = new double[b[8]];
-        double[][] name = new double[8][9];
-        double[][] name = new double[b[8]][c[9]];
-
-        double name[] = new double[8];
-        double name[] = new double[b[8]];
-        double name[][] = new double[8][8];
-        double name[][] = new double[b[8]][c[9]];
-
         double[] name = {1, 2.0, 3};
         double[][] name = {{1}, {2.0}, {3}};
 
@@ -179,7 +253,7 @@ class DefaultCompilatorTest {
         //FIXME
         //returns:
         //should return:
-        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("double[a=8] name;");
+        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("double[] name = {1, 2.0, 3};");
 
         for(ByteCommand bc:queue) {
             System.out.println("bc.getCommandType().toString() = " + bc.toString());

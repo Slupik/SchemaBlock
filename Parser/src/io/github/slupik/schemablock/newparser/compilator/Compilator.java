@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.newparser.compilator;
 
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommand;
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
+import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.ExceptedTypeOfArray;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
 
 import java.util.Queue;
@@ -10,7 +11,7 @@ import java.util.Queue;
  * All rights reserved & copyright ©
  */
 public interface Compilator {
-    Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound;
+    Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray;
 
     /* ByteCode ideas
     type[size] value;//ok
