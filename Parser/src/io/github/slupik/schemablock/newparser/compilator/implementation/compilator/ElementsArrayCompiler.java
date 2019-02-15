@@ -52,19 +52,6 @@ class ElementsArrayCompiler {
             compiled.addAll(cmdsForIndexes.get(j));
         }
 
-//        int elementsCount = 0;
-//        nestLvl = 0;
-//        for(int j=0;j<parts.size();j++) {
-//            Token token = parts.get(j);
-//
-//            if(j+1<parts.size() && "{".equals(parts.get(j+1).getData()) && isInteger(token)) {
-//                nestLvl++;
-//            } else if("}".equals(token.getData())) {
-//                break;
-//            }
-//        }
-
-
         int arraySize = Integer.parseInt(parts.get(0).getData());
         compiled.add(new ByteCommandHeapVirArrImpl(
                 parts.get(1).getLine(),

@@ -127,6 +127,7 @@ class DefaultCompilatorTest {
                         "CLEAR_EXEC_HEAP"
                 });
 
+
         check("double[8] name;",
                 new String[]{
                         "DECLARE_VAR DOUBLE name 1",
@@ -148,6 +149,7 @@ class DefaultCompilatorTest {
                         "CLEAR_EXEC_HEAP"
                 });
 
+
         check("double[] name = new double[8];",
                 new String[]{
                         "DECLARE_VAR DOUBLE name 1",
@@ -167,6 +169,8 @@ class DefaultCompilatorTest {
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
+
+
         check("double[][] name = new double[8][9];",
                 new String[]{
                         "DECLARE_VAR DOUBLE name 2",
@@ -189,6 +193,7 @@ class DefaultCompilatorTest {
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
+
 
         check("double name[] = new double[8];",
                 new String[]{
@@ -232,6 +237,7 @@ class DefaultCompilatorTest {
                         "CLEAR_EXEC_HEAP"
                 });
 
+
         check("double[] name = {1, 2.0, 3};",
                 new String[]{
                         "DECLARE_VAR DOUBLE name 1",
@@ -257,7 +263,19 @@ class DefaultCompilatorTest {
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
-
+        check("double[] name = {{1, 4}, 2.0, 3};",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 1",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 3",
+                        "HEAP_VALUE DOUBLE 2.0",
+                        "HEAP_VALUE INTEGER 4",
+                        "HEAP_VALUE INTEGER 1",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 2",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 3",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
         check("double[][][] name = {{{1}}, {{2.0}}, {{3}}};",
                 new String[]{
                         "DECLARE_VAR DOUBLE name 3",
@@ -275,6 +293,7 @@ class DefaultCompilatorTest {
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
+
 
         check("double name[] = {1, 2.0, 3};",
                 new String[]{
@@ -301,7 +320,19 @@ class DefaultCompilatorTest {
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
-
+        check("double name[] = {{1, 4}, 2.0, 3};",
+                new String[]{
+                        "DECLARE_VAR DOUBLE name 1",
+                        "HEAP_VAR name",
+                        "HEAP_VALUE INTEGER 3",
+                        "HEAP_VALUE DOUBLE 2.0",
+                        "HEAP_VALUE INTEGER 4",
+                        "HEAP_VALUE INTEGER 1",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 2",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 3",
+                        "OPERATION =",
+                        "CLEAR_EXEC_HEAP"
+                });
         check("double name[][][] = {{{1}}, {{2.0}}, {{3}}};",
                 new String[]{
                         "DECLARE_VAR DOUBLE name 3",
@@ -332,7 +363,7 @@ class DefaultCompilatorTest {
         //FIXME
         //returns:
         //should return:
-        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("double[] name = {{1, 4}, 2.0, 3};");
+        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("\"test a\\\"b\\tc\"");
 
         for(ByteCommand bc:queue) {
             System.out.println("bc.getCommandType().toString() = " + bc.toString());

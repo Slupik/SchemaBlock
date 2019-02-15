@@ -107,7 +107,7 @@ class ConvertInfixToRPN {
                             if(buffer.size()>0) {
                                 argsCount++;
                             }
-                            arrayBuffer.addAll(getArgumentsAsRPN(buffer));
+                            arrayBuffer.addAll(convertInfixToRPN(buffer));
                             arrayBuffer.add(temp);
                             break;
                         }
@@ -116,7 +116,7 @@ class ConvertInfixToRPN {
                     if(nestLvl==0) {
                         if(",".equals(temp.getData())) {
                             argsCount++;
-                            arrayBuffer.addAll(getArgumentsAsRPN(buffer));
+                            arrayBuffer.addAll(convertInfixToRPN(buffer));
                             arrayBuffer.add(temp);
                             buffer.clear();
                             continue;

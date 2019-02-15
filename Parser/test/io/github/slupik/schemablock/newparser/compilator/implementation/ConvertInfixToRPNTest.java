@@ -48,6 +48,7 @@ class ConvertInfixToRPNTest {
         check("double[] b = {{1.3}, 23.4}", "double", "[]", "b", "=", "2", "{", "1", "{", "1.3", "}", ",", "23.4", "}", "=");
         check("double b, c", "double", "b", ",", "c");
         check("double name[] = a[8]+b", "double", "name", "[]", "=", "a", "[0", "8", "0]", "b", "+", "=");
+        check("double[] name = {{6, 7}, 8, 9}", "double", "[]", "name", "=", "3", "{", "2", "{", "6", ",", "7", "}", ",", "8", ",", "9", "}", "=");
     }
 
     @Test
@@ -59,9 +60,9 @@ class ConvertInfixToRPNTest {
         List<Token> tokens = new Tokenizer(equation).getTokenized();
         List<Token> cleared = new BracketsRemover().getCleared(tokens);
 
-//        for(Token token:cleared) {
-//            System.out.println("cleared = " + token.getData());
-//        }
+        for(Token token:cleared) {
+            System.out.println("cleared = " + token.getData());
+        }
 
         Queue<Token> queue = new LinkedList<>(ConvertInfixToRPN.convertInfixToRPN(cleared));
         for(int i=0;queue.size()>0;i++) {
