@@ -9,10 +9,16 @@ import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.B
 public class ByteCommandHeapVariableImpl extends ByteCommandBase implements ByteCommandHeapVariable {
 
     private final String name;
+    private final int indexes;
 
     public ByteCommandHeapVariableImpl(int line, int pos, String name) {
+        this(line, pos, name, 0);
+    }
+
+    public ByteCommandHeapVariableImpl(int line, int pos, String name, int indexes) {
         super(line, pos, ByteCommandType.HEAP_VAR);
         this.name = name;
+        this.indexes = indexes;
     }
 
     @Override
@@ -21,7 +27,16 @@ public class ByteCommandHeapVariableImpl extends ByteCommandBase implements Byte
     }
 
     @Override
+    public int getIndexes() {
+        return indexes;
+    }
+
+    @Override
     public String toString(){
-        return getCommandType().toString()+" "+name;
+        if(indexes==0) {
+            return getCommandType().toString()+" "+name;
+        } else {
+            return getCommandType().toString()+" "+name+" "+indexes;
+        }
     }
 }

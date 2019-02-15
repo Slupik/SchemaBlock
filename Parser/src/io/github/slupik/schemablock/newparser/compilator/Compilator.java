@@ -38,6 +38,21 @@ public interface Compilator {
         5) OPERATION +
         6) OPERATION =
 
+    type name = a[8];
+        1) DECLARE_VARIABLE type name 0
+        2) HEAP_VARIABLE name
+        3) HEAP_VALUE INTEGER 8
+        4) HEAP_VARIABLE a 1
+        5) OPERATION =
+
+    type name = a[8][9];
+        1) DECLARE_VARIABLE type name 0
+        2) HEAP_VARIABLE name
+        3) HEAP_VALUE INTEGER 9
+        3) HEAP_VALUE INTEGER 8
+        4) HEAP_VARIABLE a 2
+        5) OPERATION =
+
     type[a+b] name;
         1) HEAP_VALUE (typeof a) a
         2) HEAP_VALUE (typeof b) b

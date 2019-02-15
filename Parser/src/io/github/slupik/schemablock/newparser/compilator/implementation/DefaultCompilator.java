@@ -43,7 +43,7 @@ public class DefaultCompilator implements Compilator {
 
     private List<ByteCommand> getCompiledLine(List<Token> parts, Token end) throws NameForDeclarationCannotBeFound {
 
-        List<ByteCommand> compiled = new ArrayList<>(new LineCompilator().getCompiledLine(parts));
+        List<ByteCommand> compiled = new ArrayList<>(LineCompilator.getCompiledLine(parts));
 
         compiled.add(new ByteCommandClearImpl(end.getLine(), end.getPos(), false));
         return compiled;

@@ -1,19 +1,24 @@
 package io.github.slupik.schemablock.newparser.compilator.implementation.compilator;
 
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommand;
+import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandHeapValueImpl;
 import io.github.slupik.schemablock.newparser.compilator.implementation.Token;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 import io.github.slupik.schemablock.newparser.utils.CodeUtils;
+import io.github.slupik.schemablock.newparser.utils.TypeParser;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.github.slupik.schemablock.newparser.compilator.implementation.compilator.Assignment.getParsedData;
 
 /**
  * All rights reserved & copyright ©
  */
 public class LineCompilator {
 
-    public List<ByteCommand> getCompiledLine(List<Token> parts) throws NameForDeclarationCannotBeFound {
+    public static List<ByteCommand> getCompiledLine(List<Token> parts) throws NameForDeclarationCannotBeFound {
+        System.out.println("AGAIN");
         List<ByteCommand> compiled = new ArrayList<>();
 
         for(int i=0;i<parts.size();i++) {
@@ -35,19 +40,31 @@ public class LineCompilator {
                     }
 
                     if("=".equals(part.getData()) && actualNestLvl == -1) {
-                        i=j-1;
+                        i=j;
+                        token=part;
                         break;
                     } else {
-                        //TODO remove debugging
-                        System.out.println("decl part.getData() = " + part.getData());
                         declarationArray.add(part);
                     }
                 }
                 compiled.addAll(Declaration.compile(type, declarationArray));
             }
 
-            if(!token.isSpecialToken() && "=".equals(token.getData())) {
-                compiled.addAll(Assignment.compile(parts.subList(i-1, parts.size())));
+            if(token.isSpecialToken() && "=".equals(token.getData())) {
+                compiled.addAll(Assignment.compile(parts.subList(i+1, parts.size())));
+                break;
+            }
+
+
+            ValueType valueType = TypeParser.getType(token);
+            if(valueType!= ValueType.UNKNOWN) {
+                String parsedData = getParsedData(token.getData());
+                compiled.add(new ByteCommandHeapValueImpl(
+                        token.getLine(),
+                        token.getPos(),
+                        valueType,
+                        parsedData));
+                continue;
             }
         }
 

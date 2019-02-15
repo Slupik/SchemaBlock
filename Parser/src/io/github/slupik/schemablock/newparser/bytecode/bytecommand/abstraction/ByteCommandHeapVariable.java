@@ -5,4 +5,5 @@ package io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction;
  */
 public interface ByteCommandHeapVariable extends ByteCommand {
     String getName();
+    int getIndexes();
 }
