@@ -17,10 +17,13 @@ import java.util.List;
 public class LineCompilator {
 
     public static List<ByteCommand> getCompiledLine(List<Token> parts) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
-        System.out.println("AGAIN");
+        return getCompiledLine(parts, ValueType.UNKNOWN);
+    }
+    public static List<ByteCommand> getCompiledLine(List<Token> parts, ValueType defaultType) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
         List<ByteCommand> compiled = new ArrayList<>();
 
         String lastVariableName = "";
+        ValueType lastType = defaultType;
         for(int i=0;i<parts.size();i++) {
             Token token = parts.get(i);
 
@@ -29,6 +32,7 @@ public class LineCompilator {
              */
             ValueType type = ValueType.getType(token.getData());
             if(type != ValueType.UNKNOWN) {
+                lastType = type;
                 ArrayList<Token> declarationArray = new ArrayList<>();
 
                 int actualNestLvl = -1;
@@ -76,6 +80,18 @@ public class LineCompilator {
                 } else {
                     throw new ExceptedTypeOfArray(token);
                 }
+            }
+
+            if("{".equals(token.getData())) {
+                //Remove command HEAP_VALUE arraySize
+                compiled.remove(compiled.size()-1);
+
+                ElementsArrayData data = ElementsArrayCompiler.compile(parts.subList(i-1, parts.size()), lastType);
+
+                compiled.addAll(data.cmds);
+                i+=data.elementsToOmitted;
+
+                continue;
             }
 
             /*
