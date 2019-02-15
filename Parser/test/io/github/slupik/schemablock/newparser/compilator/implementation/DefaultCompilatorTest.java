@@ -351,11 +351,22 @@ class DefaultCompilatorTest {
                         "CLEAR_EXEC_HEAP"
                 });
 
-//        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("\"test a\\\"b\\tc\"");//"test a\"b\tc"
-//        System.out.println("=======");
-//        new DefaultCompilator().getCompiled("\"test//\"\"awdwa\"");
-//        System.out.println("=======");
-//        new DefaultCompilator().getCompiled("\"test\"/*\"awdwa\"*/");
+
+        check("\"test a\\\"b\\tc\";",
+                new String[]{
+                        "HEAP_VALUE STRING \"test a\"b\tc\"",
+                        "CLEAR_EXEC_HEAP"
+                });
+        check("\"test\";//\"awdwa\"",
+                new String[]{
+                        "HEAP_VALUE STRING \"test\"",
+                        "CLEAR_EXEC_HEAP"
+                });
+        check("\"test\"/*\"awdwa\"*/;",
+                new String[]{
+                        "HEAP_VALUE STRING \"test\"",
+                        "CLEAR_EXEC_HEAP"
+                });
     }
 
     @Test
@@ -363,7 +374,7 @@ class DefaultCompilatorTest {
         //FIXME
         //returns:
         //should return:
-        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("\"test a\\\"b\\tc\"");
+        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("4==5 && 3-1>0;");
 
         for(ByteCommand bc:queue) {
             System.out.println("bc.getCommandType().toString() = " + bc.toString());
@@ -384,14 +395,19 @@ class DefaultCompilatorTest {
 
     @Test
     void toRpn() throws ComExIllegalEscapeChar {
-        String equation = "double[a=5] name;";
+        String equation = "\"test a\\\"b\\tc\";";
 //        String equation = "double name[a=5];";
+
         List<Token> tokens = new Tokenizer(equation).getTokenized();
+        for(Token token:tokens) {
+            System.out.println("raw token = " + token.getData());
+        }
+
         List<Token> cleared = new BracketsRemover().getCleared(tokens);
         LinkedList<Token> rpn = new LinkedList<>(ConvertInfixToRPN.convertInfixToRPN(cleared));
 
         for(Token token:rpn) {
-            System.out.println("token.getData() = " + token.getData());
+            System.out.println("rpn token = " + token.getData());
         }
     }
 }

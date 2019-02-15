@@ -59,6 +59,7 @@ class Tokenizer {
             //Text
             if(textMode) {
                 if(token=='\"') {
+                    word.append(token);
                     addNewToken(word);
                     textMode = false;
                     continue;
@@ -114,6 +115,7 @@ class Tokenizer {
             }
             if(token=='\"'){
                 addNewToken(word);
+                word.append(token);
                 textMode = true;
                 continue;
             }
