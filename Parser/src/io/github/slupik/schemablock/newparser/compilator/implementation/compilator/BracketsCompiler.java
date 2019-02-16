@@ -3,6 +3,7 @@ package io.github.slupik.schemablock.newparser.compilator.implementation.compila
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommand;
 import io.github.slupik.schemablock.newparser.compilator.implementation.Token;
 import io.github.slupik.schemablock.newparser.utils.CodeUtils;
+import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 class BracketsCompiler {
 
-    static BracketsData compile(List<Token> parts) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
+    static BracketsData compile(List<Token> parts) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
         List<ByteCommand> compiled = new ArrayList<>();
         List<List<ByteCommand>> cmdsForIndexes = new ArrayList<>();
         List<Token> toCompile = new ArrayList<>();

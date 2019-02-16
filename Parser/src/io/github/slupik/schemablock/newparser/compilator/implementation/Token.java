@@ -10,7 +10,7 @@ public class Token {
     private int functionArguments = -1;//When is smaller than 0 then is not a function
     private boolean variable = false;
 
-    Token(String data, int line, int pos) {
+    public Token(String data, int line, int pos) {
         this.data = data;
         this.line = line;
         this.pos = pos;

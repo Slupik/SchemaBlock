@@ -1,7 +1,6 @@
 package io.github.slupik.schemablock.newparser.compilator.implementation;
 
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommand;
-import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +14,7 @@ import java.util.Queue;
 class DefaultCompilatorTest {
 
     @Test
-    void getCompiled() throws ComExIllegalEscapeChar, Exception {
+    void getCompiled() throws Throwable {
         Assertions.assertEquals("DECLARE_VAR DOUBLE name 0",
                 ((LinkedList<ByteCommand>) new DefaultCompilator().getCompiled("double name;")).get(0).toString());
         Assertions.assertEquals("DECLARE_VAR DOUBLE name 2",
@@ -385,7 +384,7 @@ class DefaultCompilatorTest {
     }
 
     @Test
-    void checkError() throws ComExIllegalEscapeChar, Exception {
+    void checkError() throws Throwable {
         //FIXME
         //returns:
         //should return:
@@ -396,7 +395,7 @@ class DefaultCompilatorTest {
         }
     }
 
-    private void check(String input, String[] answer) throws ComExIllegalEscapeChar, Exception {
+    private void check(String input, String[] answer) throws Throwable {
         LinkedList<ByteCommand> output = (LinkedList<ByteCommand>) new DefaultCompilator().getCompiled(input);
         for(int i=0;i<output.size();i++) {
             System.out.println(output.get(i).toString());
@@ -409,7 +408,7 @@ class DefaultCompilatorTest {
     }
 
     @Test
-    void toRpn() throws ComExIllegalEscapeChar {
+    void toRpn() throws Throwable {
         String equation = "\"test a\\\"b\\tc\";";
 //        String equation = "double name[a=5];";
 

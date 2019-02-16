@@ -7,6 +7,7 @@ import io.github.slupik.schemablock.newparser.compilator.implementation.Token;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 import io.github.slupik.schemablock.newparser.utils.CodeUtils;
 import io.github.slupik.schemablock.newparser.utils.TypeParser;
+import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,10 @@ import java.util.List;
  */
 public class LineCompilator {
 
-    public static List<ByteCommand> getCompiledLine(List<Token> parts) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
+    public static List<ByteCommand> getCompiledLine(List<Token> parts) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
         return getCompiledLine(parts, ValueType.UNKNOWN);
     }
-    public static List<ByteCommand> getCompiledLine(List<Token> parts, ValueType defaultType) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
+    public static List<ByteCommand> getCompiledLine(List<Token> parts, ValueType defaultType) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
         List<ByteCommand> compiled = new ArrayList<>();
 
         String lastVariableName = "";

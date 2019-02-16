@@ -7,6 +7,7 @@ import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalE
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.ExceptedTypeOfArray;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.LineCompilator;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
+import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -19,7 +20,7 @@ import java.util.Queue;
 public class DefaultCompilator implements Compilator {
 
     @Override
-    public Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
+    public Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
         LinkedList<ByteCommand> commands = new LinkedList<>();
 
         List<Token> tokenized = new Tokenizer(code).getTokenized();
@@ -42,7 +43,7 @@ public class DefaultCompilator implements Compilator {
         return commands;
     }
 
-    private List<ByteCommand> getCompiledLine(List<Token> parts, Token end) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
+    private List<ByteCommand> getCompiledLine(List<Token> parts, Token end) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
 
         List<ByteCommand> compiled = new ArrayList<>(LineCompilator.getCompiledLine(parts));
 

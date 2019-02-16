@@ -4,6 +4,7 @@ import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.B
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandHeapVirArrImpl;
 import io.github.slupik.schemablock.newparser.compilator.implementation.Token;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
+import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 class ElementsArrayCompiler {
 
-    static ElementsArrayData compile(List<Token> parts, ValueType arrayType) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
+    static ElementsArrayData compile(List<Token> parts, ValueType arrayType) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
         List<ByteCommand> compiled = new ArrayList<>();
         List<List<ByteCommand>> cmdsForIndexes = new ArrayList<>();
         List<Token> toCompile = new ArrayList<>();

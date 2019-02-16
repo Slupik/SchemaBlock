@@ -9,6 +9,7 @@ import io.github.slupik.schemablock.newparser.compilator.implementation.Token;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 import io.github.slupik.schemablock.newparser.utils.CodeUtils;
 import io.github.slupik.schemablock.newparser.utils.TextUtils;
+import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  */
 class Declaration {
 
-    static List<ByteCommand> compile(ValueType type, List<Token> parts) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray {
+    static List<ByteCommand> compile(ValueType type, List<Token> parts) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
         List<ByteCommand> compiled = new ArrayList<>();
 
         Token tokenWithName = null;

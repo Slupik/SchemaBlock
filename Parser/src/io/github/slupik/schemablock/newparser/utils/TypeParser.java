@@ -11,10 +11,10 @@ import static io.github.slupik.schemablock.newparser.memory.element.ValueType.*;
  */
 public class TypeParser {
 
-    public static ValueType getType(Token token) {
+    public static ValueType getType(Token token) throws ValueTooBig {
         return getType(token.getData());
     }
-    public static ValueType getType(String data) {
+    public static ValueType getType(String data) throws ValueTooBig {
         if(TextUtils.isNumber(data)) {
             if(CodeUtils.isLetterForNumber(data.charAt(data.length()-1))) {
                 char lastLetter = data.charAt(data.length()-1);
@@ -35,11 +35,13 @@ public class TypeParser {
                     return LONG;
                 } catch (Exception ignore) {}
                 try {
-                    Double.parseDouble(data);
-                    return DOUBLE;
+                    double parsed = Double.parseDouble(data);
+                    if(Double.toString(parsed).equals(data)) {
+                        return DOUBLE;
+                    } else {
+                        throw new ValueTooBig();
+                    }
                 } catch (Exception ignore) {}
-
-                System.err.println("Unparseable number - this shouldn't happen!!!");
             }
         } else if(data.startsWith("\"") && data.endsWith("\"")) {
             return STRING;
