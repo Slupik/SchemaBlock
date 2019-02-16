@@ -381,6 +381,42 @@ class DefaultCompilatorTest {
                         "OPERATION &&",
                         "CLEAR_EXEC_HEAP"
                 });
+
+
+        check("sqrt(a[8]+6*root(b[2+1], 9), 2);",
+                new String[]{
+                        "HEAP_VALUE INTEGER 2",
+                        "HEAP_VALUE INTEGER 8",
+                        "HEAP_VAR a 1",
+                        "HEAP_VALUE INTEGER 6",
+                        "HEAP_VALUE INTEGER 9",
+                        "HEAP_VALUE INTEGER 2",
+                        "HEAP_VALUE INTEGER 1",
+                        "OPERATION +",
+                        "HEAP_VAR b 1",
+                        "EXECUTE root 2",
+                        "OPERATION *",
+                        "OPERATION +",
+                        "EXECUTE sqrt 2",
+                        "CLEAR_EXEC_HEAP"
+                });
+        check("sqrt(a[8]+6*root(b[2+(1)], ((9))), 2);",
+                new String[]{
+                        "HEAP_VALUE INTEGER 2",
+                        "HEAP_VALUE INTEGER 8",
+                        "HEAP_VAR a 1",
+                        "HEAP_VALUE INTEGER 6",
+                        "HEAP_VALUE INTEGER 9",
+                        "HEAP_VALUE INTEGER 2",
+                        "HEAP_VALUE INTEGER 1",
+                        "OPERATION +",
+                        "HEAP_VAR b 1",
+                        "EXECUTE root 2",
+                        "OPERATION *",
+                        "OPERATION +",
+                        "EXECUTE sqrt 2",
+                        "CLEAR_EXEC_HEAP"
+                });
     }
 
     @Test
