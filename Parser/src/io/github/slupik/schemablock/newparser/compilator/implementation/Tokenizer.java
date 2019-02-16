@@ -42,6 +42,7 @@ class Tokenizer {
                 linePos++;
             }
 
+            //Whitespace
             if(!textMode && TextUtils.isWhitespace(token)) {
                 addNewToken(word);
                 continue;

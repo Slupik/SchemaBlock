@@ -385,10 +385,9 @@ class DefaultCompilatorTest {
 
     @Test
     void checkError() throws Throwable {
-        //FIXME
         //returns:
         //should return:
-        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("4==5 && 3-1>0;");
+        Queue<ByteCommand> queue = new DefaultCompilator().getCompiled("");
 
         for(ByteCommand bc:queue) {
             System.out.println("bc.getCommandType().toString() = " + bc.toString());
@@ -397,9 +396,9 @@ class DefaultCompilatorTest {
 
     private void check(String input, String[] answer) throws Throwable {
         LinkedList<ByteCommand> output = (LinkedList<ByteCommand>) new DefaultCompilator().getCompiled(input);
-        for(int i=0;i<output.size();i++) {
-            System.out.println(output.get(i).toString());
-        }
+//        for(int i=0;i<output.size();i++) {
+//            System.out.println(output.get(i).toString());
+//        }
 
         Assertions.assertEquals(answer.length, output.size());
         for(int i=0;i<output.size();i++) {
@@ -409,7 +408,7 @@ class DefaultCompilatorTest {
 
     @Test
     void toRpn() throws Throwable {
-        String equation = "\"test a\\\"b\\tc\";";
+        String equation = "";
 //        String equation = "double name[a=5];";
 
         List<Token> tokens = new Tokenizer(equation).getTokenized();

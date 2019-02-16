@@ -19,8 +19,6 @@ class ElementsArrayCompiler {
         List<List<ByteCommand>> cmdsForIndexes = new ArrayList<>();
         List<Token> toCompile = new ArrayList<>();
 
-//        System.out.println("COMPILE "+parts.size());
-
         int nestLvl = 0;
         int i=1;
         for(;i<parts.size();i++) {

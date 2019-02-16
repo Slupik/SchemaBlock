@@ -174,8 +174,6 @@ class ConvertInfixToRPN {
                 rpn.addAll(convertInfixToRPN(buffer, globalNestLvl+1));
                 rpn.add(new SpecialToken(globalNestLvl+"]", infixNotation.get(i).getLine(), infixNotation.get(i).getPos()));
 
-                //TODO is this necessary?
-//                rpn.add(new Token("["+globalNestLvl+"]", token.getLine(), token.getPos()));
                 continue;
             }
 

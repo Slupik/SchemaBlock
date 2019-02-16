@@ -28,8 +28,6 @@ public class LineCompilator {
         for(int i=0;i<parts.size();i++) {
             Token token = parts.get(i);
 
-            System.out.println("token.getData() = " + token.getData());
-
             /*
                     DECLARE VARIABLE
              */
@@ -100,10 +98,8 @@ public class LineCompilator {
             /*
                     VALUE ex. 123, 2.4, 45d, "text"...
              */
-            System.out.println("vt = " + token.getData());
             ValueType valueType = TypeParser.getType(token);
             if(valueType!= ValueType.UNKNOWN) {
-                System.out.println("valueType = " + token.getData());
                 String parsedData = getParsedData(token.getData());
                 compiled.add(new ByteCommandHeapValueImpl(
                         token.getLine(),

@@ -60,9 +60,9 @@ class ConvertInfixToRPNTest {
         List<Token> tokens = new Tokenizer(equation).getTokenized();
         List<Token> cleared = new BracketsRemover().getCleared(tokens);
 
-        for(Token token:cleared) {
-            System.out.println("cleared = " + token.getData());
-        }
+//        for(Token token:cleared) {
+//            System.out.println("cleared = " + token.getData());
+//        }
 
         Queue<Token> queue = new LinkedList<>(ConvertInfixToRPN.convertInfixToRPN(cleared));
         for(int i=0;queue.size()>0;i++) {

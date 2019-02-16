@@ -30,10 +30,6 @@ public class DefaultCompilator implements Compilator {
         for(Token token:cleared) {
             if(token.getData().equals(";")) {
                 List<Token> rpn = ConvertInfixToRPN.convertInfixToRPN(buffer);
-                for(Token rToken:rpn) {
-                    //TODO remove debugging
-                    System.out.println("rToken = " + rToken.getData());
-                }
                 commands.addAll(getCompiledLine(rpn, token));
                 buffer.clear();
             } else {
@@ -44,9 +40,7 @@ public class DefaultCompilator implements Compilator {
     }
 
     private List<ByteCommand> getCompiledLine(List<Token> parts, Token end) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
-
         List<ByteCommand> compiled = new ArrayList<>(LineCompilator.getCompiledLine(parts));
-
         compiled.add(new ByteCommandClearImpl(end.getLine(), end.getPos(), false));
         return compiled;
     }
