@@ -24,7 +24,7 @@ class Tokenizer {
     List<Token> getTokenized() throws ComExIllegalEscapeChar {
         tokens = new ArrayList<>();
         line = 1;
-        linePos = 1;
+        linePos = 0;
         StringBuilder word = new StringBuilder();
 
         boolean textMode = false;
@@ -134,13 +134,16 @@ class Tokenizer {
                 continue;
             }
 
+            //Functional signs
             if(CodeUtils.isFunctionalSign(token)) {
                 addNewToken(word);//Flush last word
                 word.append(token);
                 if(CodeUtils.isSignOfAction(token)) {
                     i++;
+                    linePos++;
                     for(;i<code.length() && CodeUtils.isSignOfAction(code.charAt(i));i++) {
                         word.append(code.charAt(i));
+                        linePos++;
                     }
                     i--;
                 }
@@ -156,7 +159,12 @@ class Tokenizer {
 
     private void addNewToken(StringBuilder builder) {
         if(builder.length()>0) {
-            tokens.add(new Token(builder.toString(), line, linePos));
+
+            int posOfToken = linePos;
+            posOfToken--;//escape ending char position
+            posOfToken-=builder.length();//return to start of lexeme
+
+            tokens.add(new Token(builder.toString(), line, posOfToken));
             builder.delete(0, builder.length());
         }
     }

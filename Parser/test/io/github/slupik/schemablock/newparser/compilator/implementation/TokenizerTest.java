@@ -31,6 +31,42 @@ class TokenizerTest {
     }
 
     @Test
+    void checkPosition() throws Throwable {
+        List<Token> tokens = new Tokenizer("\n\ndouble \na = \n2343.2;").getTokenized();
+        Assertions.assertEquals(3, tokens.get(0).getLine());
+        Assertions.assertEquals(4, tokens.get(1).getLine());
+        Assertions.assertEquals(4, tokens.get(2).getLine());
+        Assertions.assertEquals(5, tokens.get(3).getLine());
+
+        Assertions.assertEquals(0, tokens.get(0).getPos());
+        Assertions.assertEquals(0, tokens.get(1).getPos());
+        Assertions.assertEquals(2, tokens.get(2).getPos());
+        Assertions.assertEquals(0, tokens.get(3).getPos());
+
+        tokens = new Tokenizer("\n\ndouble \na != \n2343.2;").getTokenized();
+        Assertions.assertEquals(3, tokens.get(0).getLine());
+        Assertions.assertEquals(4, tokens.get(1).getLine());
+        Assertions.assertEquals(4, tokens.get(2).getLine());
+        Assertions.assertEquals(5, tokens.get(3).getLine());
+
+        Assertions.assertEquals(0, tokens.get(0).getPos());
+        Assertions.assertEquals(0, tokens.get(1).getPos());
+        Assertions.assertEquals(2, tokens.get(2).getPos());
+        Assertions.assertEquals(0, tokens.get(3).getPos());
+
+        tokens = new Tokenizer("\n\ndouble \na abc \n2343.2;").getTokenized();
+        Assertions.assertEquals(3, tokens.get(0).getLine());
+        Assertions.assertEquals(4, tokens.get(1).getLine());
+        Assertions.assertEquals(4, tokens.get(2).getLine());
+        Assertions.assertEquals(5, tokens.get(3).getLine());
+
+        Assertions.assertEquals(0, tokens.get(0).getPos());
+        Assertions.assertEquals(0, tokens.get(1).getPos());
+        Assertions.assertEquals(2, tokens.get(2).getPos());
+        Assertions.assertEquals(0, tokens.get(3).getPos());
+    }
+
+    @Test
     void toRepair() throws ComExIllegalEscapeChar {
     }
 
