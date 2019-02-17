@@ -11,7 +11,7 @@ import static io.github.slupik.schemablock.newparser.memory.element.ValueType.*;
  */
 class MathOperationExecutor {
 
-    static Value add(Value a, Value b) {
+    static Value add(Value a, Value b) throws IllegalOperation {
         ValueType resultType = getResultType(a, b);
 
         if(resultType.IS_NUMBER) {
@@ -29,16 +29,19 @@ class MathOperationExecutor {
                 return new ValueImpl(resultType, parsedA+parsedB);
             }
         }
-        return null;
+        if(resultType == STRING) {
+            return new ValueImpl(resultType, String.valueOf(a.getValue())+String.valueOf(b.getValue()));
+        }
+        throw new IllegalOperation(a.getType(), b.getType(), "+");
     }
 
 //    static Value subtract(Value a, Value b) {
 //
 //    }
 
+    private static final ValueType[] PRIORITY_TYPES = new ValueType[]{DOUBLE, FLOAT, LONG, INTEGER, SHORT, BYTE, STRING};
     private static ValueType getResultType(Value a, Value b) {
-        ValueType[] numberTypes = new ValueType[]{DOUBLE, FLOAT, LONG, INTEGER, SHORT, BYTE};
-        for(ValueType type:numberTypes) {
+        for(ValueType type:PRIORITY_TYPES) {
             if(isTypeOf(type, a, b)) {
                 return type;
             }

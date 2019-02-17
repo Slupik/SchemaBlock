@@ -15,7 +15,7 @@ import java.util.Queue;
  */
 class ByteCodeExe {
 
-    static void execute(Queue<ByteCommand> cmds, Memory memory, Register register) throws IncompatibleArrayException, IncompatibleTypeException {
+    static void execute(Queue<ByteCommand> cmds, Memory memory, Register register) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation {
 
         //TODO remove
         for(ByteCommand cmd:cmds) {

@@ -6,6 +6,7 @@ import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleA
 import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleTypeException;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.ExceptedTypeOfArray;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
+import io.github.slupik.schemablock.newparser.executor.implementation.IllegalOperation;
 import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
 import java.util.Queue;
@@ -15,8 +16,8 @@ import java.util.Queue;
  */
 public interface Executor {
 
-    void execute(String code) throws ValueTooBig, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ComExIllegalEscapeChar, IncompatibleArrayException, IncompatibleTypeException;
-    void execute(Queue<ByteCommand> cmds) throws IncompatibleArrayException, IncompatibleTypeException;
+    void execute(String code) throws ValueTooBig, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ComExIllegalEscapeChar, IncompatibleArrayException, IncompatibleTypeException, IllegalOperation;
+    void execute(Queue<ByteCommand> cmds) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation;
 
     Object getResult(String code) throws ValueTooBig, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ComExIllegalEscapeChar;
     Object getResult(Queue<ByteCommand> cmds);
