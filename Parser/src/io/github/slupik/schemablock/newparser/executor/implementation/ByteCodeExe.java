@@ -96,6 +96,18 @@ class ByteCodeExe {
                             register.add(BitwiseOperationExecutor.rightShift(args[0], args[1]));
                             break;
                         }
+                        case "&": {
+                            register.add(BitwiseOperationExecutor.and(args[0], args[1]));
+                            break;
+                        }
+                        case "^": {
+                            register.add(BitwiseOperationExecutor.xor(args[0], args[1]));
+                            break;
+                        }
+                        case "|": {
+                            register.add(BitwiseOperationExecutor.or(args[0], args[1]));
+                            break;
+                        }
                     }
 
                     break;

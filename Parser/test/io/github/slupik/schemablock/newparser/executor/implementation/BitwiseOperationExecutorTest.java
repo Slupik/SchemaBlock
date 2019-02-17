@@ -96,4 +96,130 @@ class BitwiseOperationExecutorTest {
         assertThrows(IllegalOperation.class,
                 () -> BitwiseOperationExecutor.rightShift(new ValueImpl(STRING, "foo"), new ValueImpl(STRING, "bar")));
     }
+
+    @Test
+    void and() throws Throwable {
+        //Numbers >0
+        Value result = BitwiseOperationExecutor.and(new ValueImpl(SHORT, "5"), new ValueImpl(INTEGER, "2"));
+        assertEquals(INTEGER, result.getType());
+        assertEquals(5&2, result.getValue());
+
+        result = BitwiseOperationExecutor.and(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, 2));
+        assertEquals(BYTE, result.getType());
+        assertEquals(((byte) (5 & 2)), result.getValue());
+
+        result = BitwiseOperationExecutor.and(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, 2));
+        assertEquals(BYTE, result.getType());
+        byte ans = result.getCastedValue();
+        assertEquals(5&2, ans);
+
+        //Numbers <0
+        result = BitwiseOperationExecutor.and(new ValueImpl(SHORT, "-2"), new ValueImpl(INTEGER, "5"));
+        assertEquals(INTEGER, result.getType());
+        assertEquals(-2&5, result.getValue());
+
+        result = BitwiseOperationExecutor.and(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, -5));
+        assertEquals(BYTE, result.getType());
+        assertEquals(((byte) (2 & -5)), result.getValue());
+
+        result = BitwiseOperationExecutor.and(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, -5));
+        assertEquals(BYTE, result.getType());
+        ans = result.getCastedValue();
+        assertEquals(2&-5, ans);
+
+        //Errors
+        assertThrows(IllegalOperation.class,
+                () -> BitwiseOperationExecutor.and(new ValueImpl(BOOLEAN, "true"), new ValueImpl(BOOLEAN, false)));
+
+
+        assertThrows(IllegalOperation.class,
+                () -> BitwiseOperationExecutor.and(new ValueImpl(DOUBLE, "-2.0"), new ValueImpl(INTEGER, 5)));
+
+        assertThrows(IllegalOperation.class,
+                () -> BitwiseOperationExecutor.and(new ValueImpl(STRING, "foo"), new ValueImpl(STRING, "bar")));
+    }
+
+    @Test
+    void xor() throws Throwable {
+        //Numbers >0
+        Value result = BitwiseOperationExecutor.xor(new ValueImpl(SHORT, "5"), new ValueImpl(INTEGER, "2"));
+        assertEquals(INTEGER, result.getType());
+        assertEquals(5^2, result.getValue());
+
+        result = BitwiseOperationExecutor.xor(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, 2));
+        assertEquals(INTEGER, result.getType());
+        assertEquals(5 ^ 2, result.getValue());
+
+        result = BitwiseOperationExecutor.xor(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, 2));
+        assertEquals(INTEGER, result.getType());
+        int ans = result.getCastedValue();
+        assertEquals(5^2, ans);
+
+        //Numbers <0
+        result = BitwiseOperationExecutor.xor(new ValueImpl(SHORT, "-2"), new ValueImpl(INTEGER, "5"));
+        assertEquals(INTEGER, result.getType());
+        assertEquals(-2^5, result.getValue());
+
+        result = BitwiseOperationExecutor.xor(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, -5));
+        assertEquals(INTEGER, result.getType());
+        assertEquals(2 ^ -5, result.getValue());
+
+        result = BitwiseOperationExecutor.xor(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, -5));
+        assertEquals(INTEGER, result.getType());
+        ans = result.getCastedValue();
+        assertEquals(2^-5, ans);
+
+        //Errors
+        assertThrows(IllegalOperation.class,
+                () -> BitwiseOperationExecutor.xor(new ValueImpl(BOOLEAN, "true"), new ValueImpl(BOOLEAN, false)));
+
+
+        assertThrows(IllegalOperation.class,
+                () -> BitwiseOperationExecutor.xor(new ValueImpl(DOUBLE, "-2.0"), new ValueImpl(INTEGER, 5)));
+
+        assertThrows(IllegalOperation.class,
+                () -> BitwiseOperationExecutor.xor(new ValueImpl(STRING, "foo"), new ValueImpl(STRING, "bar")));
+    }
+
+    @Test
+    void or() throws Throwable {
+        //Numbers >0
+        Value result = BitwiseOperationExecutor.or(new ValueImpl(SHORT, "5"), new ValueImpl(INTEGER, "2"));
+        assertEquals(INTEGER, result.getType());
+        assertEquals(5|2, result.getValue());
+
+        result = BitwiseOperationExecutor.or(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, 2));
+        assertEquals(BYTE, result.getType());
+        assertEquals(((byte) (5 | 2)), result.getValue());
+
+        result = BitwiseOperationExecutor.or(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, 2));
+        assertEquals(BYTE, result.getType());
+        byte ans = result.getCastedValue();
+        assertEquals(5|2, ans);
+
+        //Numbers <0
+        result = BitwiseOperationExecutor.or(new ValueImpl(SHORT, "-2"), new ValueImpl(INTEGER, "5"));
+        assertEquals(INTEGER, result.getType());
+        assertEquals(-2|5, result.getValue());
+
+        result = BitwiseOperationExecutor.or(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, -5));
+        assertEquals(BYTE, result.getType());
+        assertEquals(((byte) (2 | -5)), result.getValue());
+
+        result = BitwiseOperationExecutor.or(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, -5));
+        assertEquals(BYTE, result.getType());
+        ans = result.getCastedValue();
+        assertEquals(2|-5, ans);
+
+        //Errors
+        assertThrows(IllegalOperation.class,
+                () -> BitwiseOperationExecutor.or(new ValueImpl(BOOLEAN, "true"), new ValueImpl(BOOLEAN, false)));
+
+
+        assertThrows(IllegalOperation.class,
+                () -> BitwiseOperationExecutor.or(new ValueImpl(DOUBLE, "-2.0"), new ValueImpl(INTEGER, 5)));
+
+        assertThrows(IllegalOperation.class,
+                () -> BitwiseOperationExecutor.or(new ValueImpl(STRING, "foo"), new ValueImpl(STRING, "bar")));
+    }
 }
