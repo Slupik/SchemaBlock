@@ -39,10 +39,24 @@ class ExecutorImplTest {
         //FIXME
 //        check("double a = 5 * (-9);", -45);
         check("double a = 5 * 9+3;", 48);
+
+        check("String a = \"test \"+\"aaa\";",
+                "test aaa");
+
+        check("int b = 5 * 9+3;" +
+                "double c = 5/2;" +
+                "String a = \"text\"+b+c;",
+                "text482");
+    }
+
+    @Test
+    void repair() throws Throwable {
+
     }
 
     private void check(String code, Object result) throws Throwable {
         exe.execute(code);
         Assertions.assertEquals(result, memory.get("a").getValue().getValue());
+        memory.clear();
     }
 }

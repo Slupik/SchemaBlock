@@ -176,6 +176,9 @@ public class LineCompilator {
         if(CodeUtils.isLetterForNumber(data.charAt(data.length()-1))) {
             return data.substring(0, data.length()-1);
         }
+        if(data.startsWith("\"") && data.endsWith("\"")) {
+            return data.substring(1, data.length()-1);
+        }
         return data;
     }
 }

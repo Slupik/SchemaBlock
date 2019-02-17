@@ -9,4 +9,6 @@ public interface Memory {
 
     void register(Variable variable);
     Variable get(String name);
+
+    void clear();
 }

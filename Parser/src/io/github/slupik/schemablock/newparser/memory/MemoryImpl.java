@@ -26,4 +26,9 @@ public class MemoryImpl implements Memory {
         }
         return null;
     }
+
+    @Override
+    public void clear() {
+        data.clear();
+    }
 }

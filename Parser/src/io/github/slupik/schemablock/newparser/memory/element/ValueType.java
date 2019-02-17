@@ -55,7 +55,7 @@ public enum ValueType {
         if(token.equals("double")) {
             return DOUBLE;
         }
-        if(token.equals("string")) {
+        if(token.equals("string") || token.equals("String")) {
             return STRING;
         }
         if(token.equals("byte")) {

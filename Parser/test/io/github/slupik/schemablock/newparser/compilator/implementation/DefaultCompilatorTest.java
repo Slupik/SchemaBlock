@@ -353,17 +353,17 @@ class DefaultCompilatorTest {
 
         check("\"test a\\\"b\\tc\";",
                 new String[]{
-                        "HEAP_VALUE STRING \"test a\"b\tc\"",
+                        "HEAP_VALUE STRING test a\"b\tc",
                         "CLEAR_EXEC_HEAP"
                 });
         check("\"test\";//\"awdwa\"",
                 new String[]{
-                        "HEAP_VALUE STRING \"test\"",
+                        "HEAP_VALUE STRING test",
                         "CLEAR_EXEC_HEAP"
                 });
         check("\"test\"/*\"awdwa\"*/;",
                 new String[]{
-                        "HEAP_VALUE STRING \"test\"",
+                        "HEAP_VALUE STRING test",
                         "CLEAR_EXEC_HEAP"
                 });
 
