@@ -38,6 +38,19 @@ public class CodeUtils {
     public static boolean isLetterForNumber(char token) {
         return token=='l' || token=='s' || token=='i' || token=='d' || token=='f';
     }
+    
+    public static int getArgsCount(String token) {
+        if(token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/") || token.equals("\\") ||
+                token.equals("%") || token.equals("=") || token.equals(">") || token.equals("<") || token.equals("^") ||
+                token.equals("&&") || token.equals("||") || token.equals("!=") || token.equals("<=") ||
+                token.equals(">=") || token.equals("<<") || token.equals(">>") || token.equals("|") ||
+                token.equals("&") || token.equals("==")) {
+            return 2;
+        } else if(token.equals("~") || token.equals("!")) {
+            return 1;
+        }
+        return -1;
+    }
 
     public static int getArrayNestLvl(Token token) {
         return getArrayNestLvl(token.getData());

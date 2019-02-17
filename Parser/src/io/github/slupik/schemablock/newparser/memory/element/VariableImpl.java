@@ -80,4 +80,9 @@ public class VariableImpl implements Variable {
         return dimensions;
     }
 
+    @Override
+    public boolean isValue() {
+        return false;
+    }
+
 }

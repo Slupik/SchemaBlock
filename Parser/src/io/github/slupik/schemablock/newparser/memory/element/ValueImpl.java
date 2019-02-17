@@ -158,6 +158,11 @@ public class ValueImpl implements Value {
     }
 
     @Override
+    public boolean isValue() {
+        return true;
+    }
+
+    @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

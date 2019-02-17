@@ -66,7 +66,7 @@ class ConvertInfixToRPNTest {
 
         Queue<Token> queue = new LinkedList<>(ConvertInfixToRPN.convertInfixToRPN(cleared));
         for(int i=0;queue.size()>0;i++) {
-//            System.out.println("parsed = " + queue.poll().getData());
+//            System.out.println("parsed = " + queue.pop().getData());
             Assertions.assertEquals(excepted[i], queue.poll().getData());
         }
         Assertions.assertEquals(0, queue.size());
