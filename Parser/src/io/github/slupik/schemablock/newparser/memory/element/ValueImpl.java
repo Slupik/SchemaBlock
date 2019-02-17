@@ -34,9 +34,19 @@ public class ValueImpl implements Value {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    public <T> T getCastedValue() {
+        if(single!=null) {
+            return ((T) ValueConverter.castValueToType(getType(), single));
+        } else {
+            return ((T) array);
+        }
+    }
+
+    @Override
     public Object getValue() {
         if(single!=null) {
-            return single;
+            return ValueConverter.castValueToType(getType(), single);
         } else {
             return array;
         }

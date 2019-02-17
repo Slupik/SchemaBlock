@@ -19,8 +19,8 @@ public enum ValueType {
     VOID(false, false),
     UNKNOWN(false, false);
 
-    private final boolean IS_NUMBER;
-    private final boolean IS_BYTE;
+    public final boolean IS_NUMBER;
+    public final boolean IS_BYTE;
 
     ValueType(boolean isNumber, boolean isByte){
         this.IS_NUMBER = isNumber;

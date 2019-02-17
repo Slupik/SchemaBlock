@@ -9,6 +9,7 @@ import io.github.slupik.schemablock.newparser.compilator.exception.IndexOutOfBou
  * All rights reserved & copyright ©
  */
 public interface Value extends Memoryable {
+    <T> T getCastedValue();
     Object getValue();
     Value getValue(int index) throws IndexOutOfBoundsException;
     Value getValue(int[] indexes) throws IndexOutOfBoundsException, ExceptedMoreDimensionsThanExists;

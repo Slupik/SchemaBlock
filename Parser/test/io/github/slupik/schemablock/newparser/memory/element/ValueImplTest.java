@@ -141,4 +141,12 @@ class ValueImplTest {
         Assertions.assertEquals(v21.getValue(), nest2a.getValue(0).getValue());
         Assertions.assertEquals(v21.getValue(), nest2a.getValue(new int[]{0}).getValue());
     }
+
+    @Test
+    void getCastedValue() {
+        assertTrue(new ValueImpl(ValueType.INTEGER, 876).getCastedValue() instanceof Integer);
+        assertTrue(new ValueImpl(ValueType.INTEGER, 876.0).getCastedValue() instanceof Integer);
+        assertTrue(new ValueImpl(ValueType.INTEGER, "876").getCastedValue() instanceof Integer);
+        assertTrue(new ValueImpl(ValueType.INTEGER, "876.0").getCastedValue() instanceof Integer);
+    }
 }
