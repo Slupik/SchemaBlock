@@ -9,7 +9,7 @@ import static io.github.slupik.schemablock.newparser.memory.element.ValueType.*;
 /**
  * All rights reserved & copyright ©
  */
-class MathOperationExecutor {
+class MathOperationExecutor extends OperationExecutor {
 
     static Value add(Value a, Value b) throws IllegalOperation {
         ValueType resultType = getResultType(a, b);
@@ -127,26 +127,5 @@ class MathOperationExecutor {
             }
         }
         throw new IllegalOperation(a.getType(), b.getType(), "%");
-    }
-
-    private static final ValueType[] PRIORITY_TYPES = new ValueType[]{DOUBLE, FLOAT, LONG, INTEGER, SHORT, BYTE, STRING};
-    private static ValueType getResultType(Value a, Value b) {
-        for(ValueType type:PRIORITY_TYPES) {
-            if(isTypeOf(type, a, b)) {
-                return type;
-            }
-        }
-
-        //if is not found
-        for(ValueType type:ValueType.values()) {
-            if(isTypeOf(type, a, b)) {
-                return type;
-            }
-        }
-        return UNKNOWN;
-    }
-
-    private static boolean isTypeOf(ValueType type, Value a, Value b) {
-        return a.getType() == type || b.getType() == type;
     }
 }

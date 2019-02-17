@@ -7,6 +7,7 @@ import io.github.slupik.schemablock.newparser.memory.Memory;
 import io.github.slupik.schemablock.newparser.memory.Register;
 import io.github.slupik.schemablock.newparser.memory.element.*;
 import io.github.slupik.schemablock.newparser.utils.CodeUtils;
+import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
 import java.util.Queue;
 
@@ -15,7 +16,7 @@ import java.util.Queue;
  */
 class ByteCodeExe {
 
-    static void execute(Queue<ByteCommand> cmds, Memory memory, Register register) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation {
+    static void execute(Queue<ByteCommand> cmds, Memory memory, Register register) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig {
 
         //TODO remove
         for(ByteCommand cmd:cmds) {
@@ -61,7 +62,7 @@ class ByteCodeExe {
                     }
 
                     switch (bc.getSymbol()) {
-                        //TODO better type managing
+                        //TODO add all operations
                         case "+": {
                             register.add(MathOperationExecutor.add(args[0], args[1]));
                             break;
@@ -84,6 +85,15 @@ class ByteCodeExe {
                         }
                         case "%": {
                             register.add(MathOperationExecutor.modulo(args[0], args[1]));
+                            break;
+                        }
+
+                        case "<<": {
+                            register.add(BitwiseOperationExecutor.leftShift(args[0], args[1]));
+                            break;
+                        }
+                        case ">>": {
+                            register.add(BitwiseOperationExecutor.rightShift(args[0], args[1]));
                             break;
                         }
                     }

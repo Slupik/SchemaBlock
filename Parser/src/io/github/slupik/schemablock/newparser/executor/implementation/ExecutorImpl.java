@@ -36,7 +36,7 @@ public class ExecutorImpl implements Executor {
     }
 
     @Override
-    public void execute(Queue<ByteCommand> cmds) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation {
+    public void execute(Queue<ByteCommand> cmds) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig {
         ByteCodeExe.execute(cmds, memory, register);
     }
 
