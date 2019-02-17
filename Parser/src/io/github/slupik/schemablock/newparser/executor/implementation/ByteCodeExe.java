@@ -18,11 +18,6 @@ class ByteCodeExe {
 
     static void execute(Queue<ByteCommand> cmds, Memory memory, Register register) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig, UnknownOperation {
 
-        //TODO remove
-        for(ByteCommand cmd:cmds) {
-            System.out.println("cmd.toString() = " + cmd.toString());
-        }
-
         for(ByteCommand cmd:cmds) {
             switch (cmd.getCommandType()) {
                 case HEAP_VAR: {
@@ -58,7 +53,7 @@ class ByteCodeExe {
                     Value[] args = new Value[argsCount];
                     for(int i=0;i<argsCount;i++) {
                         Value val = pollValue(register);
-                        args[i] = val;
+                        args[argsCount-1-i] = val;
                     }
 
                     switch (bc.getSymbol()) {

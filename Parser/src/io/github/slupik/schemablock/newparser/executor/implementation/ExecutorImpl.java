@@ -30,13 +30,13 @@ public class ExecutorImpl implements Executor {
     }
 
     @Override
-    public void execute(String code) throws ValueTooBig, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ComExIllegalEscapeChar, IncompatibleArrayException, IncompatibleTypeException, IllegalOperation {
+    public void execute(String code) throws ValueTooBig, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ComExIllegalEscapeChar, IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, UnknownOperation {
         Queue<ByteCommand> cmds = compilator.getCompiled(code);
         execute(cmds);
     }
 
     @Override
-    public void execute(Queue<ByteCommand> cmds) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig {
+    public void execute(Queue<ByteCommand> cmds) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig, UnknownOperation {
         ByteCodeExe.execute(cmds, memory, register);
     }
 
