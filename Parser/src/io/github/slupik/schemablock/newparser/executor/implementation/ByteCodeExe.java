@@ -117,6 +117,31 @@ class ByteCodeExe {
                             register.add(LogicOperationExecutor.or(args[0], args[1]));
                             break;
                         }
+
+                        case "<=": {
+                            register.add(ComparisonOperationExecutor.smallerOrEqual(args[0], args[1]));
+                            break;
+                        }
+                        case ">=": {
+                            register.add(ComparisonOperationExecutor.greaterOrEqual(args[0], args[1]));
+                            break;
+                        }
+                        case "<": {
+                            register.add(ComparisonOperationExecutor.smaller(args[0], args[1]));
+                            break;
+                        }
+                        case ">": {
+                            register.add(ComparisonOperationExecutor.greater(args[0], args[1]));
+                            break;
+                        }
+                        case "==": {
+                            register.add(ComparisonOperationExecutor.equal(args[0], args[1]));
+                            break;
+                        }
+                        case "!=": {
+                            register.add(ComparisonOperationExecutor.notEqual(args[0], args[1]));
+                            break;
+                        }
                     }
 
                     break;
