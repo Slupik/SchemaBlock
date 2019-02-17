@@ -71,12 +71,7 @@ class ByteCodeExe {
                             break;
                         }
                         case "*": {
-                            register.add(
-                                    new ValueImpl(
-                                            ValueType.DOUBLE,
-                                            ((Integer) args[0].getValue())*((Integer) args[1].getValue())
-                                    )
-                            );
+                            register.add(MathOperationExecutor.multiply(args[0], args[1]));
                             break;
                         }
                         case "": {

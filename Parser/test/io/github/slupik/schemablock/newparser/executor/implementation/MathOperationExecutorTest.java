@@ -101,4 +101,51 @@ class MathOperationExecutorTest {
         assertThrows(IllegalOperation.class,
                 () -> MathOperationExecutor.subtract(new ValueImpl(STRING, "foo"), new ValueImpl(STRING, "bar")));
     }
+
+    @Test
+    void multiply() throws IllegalOperation {
+        //Numbers >0
+        Value result = MathOperationExecutor.multiply(new ValueImpl(SHORT, "5"), new ValueImpl(INTEGER, "2"));
+        assertEquals(INTEGER, result.getType());
+        assertEquals(10, ((int) result.getValue()));
+
+        result = MathOperationExecutor.multiply(new ValueImpl(DOUBLE, "5.0"), new ValueImpl(INTEGER, 2));
+        assertEquals(DOUBLE, result.getType());
+        assertEquals(10, ((double) result.getValue()));
+
+        result = MathOperationExecutor.multiply(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, 2));
+        assertEquals(BYTE, result.getType());
+        assertEquals(10, ((byte) result.getValue()));
+
+        result = MathOperationExecutor.multiply(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, 2));
+        assertEquals(BYTE, result.getType());
+        byte ans = result.getCastedValue();
+        assertEquals(10, ans);
+
+        //Numbers <0
+        result = MathOperationExecutor.multiply(new ValueImpl(SHORT, "-2"), new ValueImpl(INTEGER, "5"));
+        assertEquals(INTEGER, result.getType());
+        assertEquals(-10, ((int) result.getValue()));
+
+        result = MathOperationExecutor.multiply(new ValueImpl(DOUBLE, "-2.0"), new ValueImpl(INTEGER, 5));
+        assertEquals(DOUBLE, result.getType());
+        assertEquals(-10, ((double) result.getValue()));
+
+        result = MathOperationExecutor.multiply(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, -5));
+        assertEquals(BYTE, result.getType());
+        assertEquals(-10, ((byte) result.getValue()));
+
+        result = MathOperationExecutor.multiply(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, -5));
+        assertEquals(BYTE, result.getType());
+        ans = result.getCastedValue();
+        assertEquals(-10, ans);
+
+        //Errors
+        assertThrows(IllegalOperation.class,
+                () -> MathOperationExecutor.multiply(new ValueImpl(BOOLEAN, "true"), new ValueImpl(BOOLEAN, false)));
+
+        //Errors
+        assertThrows(IllegalOperation.class,
+                () -> MathOperationExecutor.multiply(new ValueImpl(STRING, "foo"), new ValueImpl(STRING, "bar")));
+    }
 }
