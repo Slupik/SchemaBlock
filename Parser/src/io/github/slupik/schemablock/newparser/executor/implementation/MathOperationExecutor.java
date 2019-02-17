@@ -19,34 +19,13 @@ class MathOperationExecutor {
             Number nA = a.getCastedValue();
             Number nB = b.getCastedValue();
 
-            if(resultType == DOUBLE) {
+            if(resultType==DOUBLE || resultType==FLOAT) {
                 double parsedA = nA.doubleValue();
                 double parsedB = nB.doubleValue();
                 return new ValueImpl(resultType, parsedA+parsedB);
-            }
-            if(resultType == FLOAT) {
-                float parsedA = nA.floatValue();
-                float parsedB = nB.floatValue();
-                return new ValueImpl(resultType, parsedA+parsedB);
-            }
-            if(resultType == LONG) {
+            } else {
                 long parsedA = nA.longValue();
                 long parsedB = nB.longValue();
-                return new ValueImpl(resultType, parsedA+parsedB);
-            }
-            if(resultType == INTEGER) {
-                int parsedA = nA.intValue();
-                int parsedB = nB.intValue();
-                return new ValueImpl(resultType, parsedA+parsedB);
-            }
-            if(resultType == SHORT) {
-                short parsedA = nA.shortValue();
-                short parsedB = nB.shortValue();
-                return new ValueImpl(resultType, parsedA+parsedB);
-            }
-            if(resultType == BYTE) {
-                byte parsedA = nA.byteValue();
-                byte parsedB = nB.byteValue();
                 return new ValueImpl(resultType, parsedA+parsedB);
             }
         }

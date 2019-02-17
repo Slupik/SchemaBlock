@@ -3,9 +3,9 @@ package io.github.slupik.schemablock.newparser.memory.element;
 /**
  * All rights reserved & copyright ©
  */
-public class ValueConverter {
+class ValueConverter {
 
-    public static Object castValueToType(ValueType type, Object value) {
+    static Object castValueToType(ValueType type, Object value) {
         if(value==null) return null;
 
         value = value.toString();
