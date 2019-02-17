@@ -11,7 +11,7 @@ import static io.github.slupik.schemablock.newparser.memory.element.ValueType.UN
  */
 class OperationExecutor {
 
-    protected static final ValueType[] PRIORITY_TYPES = new ValueType[]{DOUBLE, FLOAT, LONG, INTEGER, SHORT, BYTE, STRING};
+    protected static final ValueType[] PRIORITY_TYPES = new ValueType[]{STRING, DOUBLE, FLOAT, LONG, INTEGER, SHORT, BYTE};
     protected static ValueType getResultType(Value a, Value b) {
         for(ValueType type:PRIORITY_TYPES) {
             if(isTypeOf(type, a, b)) {

@@ -42,11 +42,27 @@ class MathOperationExecutorTest {
         assertEquals(STRING, result.getType());
         assertEquals("25", result.getValue());
 
-        result = MathOperationExecutor.add(new ValueImpl(STRING, 2), new ValueImpl(STRING, "5"));
+        result = MathOperationExecutor.add(new ValueImpl(STRING, "2"), new ValueImpl(INTEGER, "5"));
         assertEquals(STRING, result.getType());
         assertEquals("25", result.getValue());
 
-        result = MathOperationExecutor.add(new ValueImpl(STRING, "2"), new ValueImpl(STRING, 5));
+        result = MathOperationExecutor.add(new ValueImpl(STRING, 2), new ValueImpl(INTEGER, "5"));
+        assertEquals(STRING, result.getType());
+        assertEquals("25", result.getValue());
+
+        result = MathOperationExecutor.add(new ValueImpl(STRING, "2"), new ValueImpl(INTEGER, 5));
+        assertEquals(STRING, result.getType());
+        assertEquals("25", result.getValue());
+
+        result = MathOperationExecutor.add(new ValueImpl(INTEGER, "2"), new ValueImpl(STRING, "5"));
+        assertEquals(STRING, result.getType());
+        assertEquals("25", result.getValue());
+
+        result = MathOperationExecutor.add(new ValueImpl(INTEGER, 2), new ValueImpl(STRING, "5"));
+        assertEquals(STRING, result.getType());
+        assertEquals("25", result.getValue());
+
+        result = MathOperationExecutor.add(new ValueImpl(INTEGER, "2"), new ValueImpl(STRING, 5));
         assertEquals(STRING, result.getType());
         assertEquals("25", result.getValue());
 
