@@ -82,6 +82,10 @@ class ByteCodeExe {
                             register.add(MathOperationExecutor.divide(args[0], args[1], false));
                             break;
                         }
+                        case "%": {
+                            register.add(MathOperationExecutor.modulo(args[0], args[1]));
+                            break;
+                        }
                     }
 
                     break;
