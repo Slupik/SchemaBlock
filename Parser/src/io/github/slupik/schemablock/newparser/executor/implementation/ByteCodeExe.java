@@ -108,6 +108,15 @@ class ByteCodeExe {
                             register.add(BitwiseOperationExecutor.or(args[0], args[1]));
                             break;
                         }
+
+                        case "&&": {
+                            register.add(LogicOperationExecutor.and(args[0], args[1]));
+                            break;
+                        }
+                        case "||": {
+                            register.add(LogicOperationExecutor.or(args[0], args[1]));
+                            break;
+                        }
                     }
 
                     break;
