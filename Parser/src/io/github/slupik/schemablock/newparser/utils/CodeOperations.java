@@ -15,6 +15,7 @@ public class CodeOperations extends HashMap<String, Integer> {
         put("~", 44);
 
         //multiplicative
+        put("\\", 42);
         put("/", 42);
         put("*", 42);
         put("%", 42);

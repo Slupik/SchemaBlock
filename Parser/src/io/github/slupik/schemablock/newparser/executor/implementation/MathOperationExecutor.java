@@ -77,6 +77,37 @@ class MathOperationExecutor {
         throw new IllegalOperation(a.getType(), b.getType(), "*");
     }
 
+    static Value divide(Value a, Value b, boolean rest) throws IllegalOperation {
+        ValueType resultType = getResultType(a, b);
+
+        if(resultType.IS_NUMBER) {
+
+            Number nA = a.getCastedValue();
+            Number nB = b.getCastedValue();
+
+            if(resultType==DOUBLE || resultType==FLOAT) {
+                double parsedA = nA.doubleValue();
+                double parsedB = nB.doubleValue();
+                double result = parsedA/parsedB;
+                if(rest) {
+                    return new ValueImpl(resultType, result);
+                } else {
+                    return new ValueImpl(resultType, ((long) result));
+                }
+            } else {
+                long parsedA = nA.longValue();
+                long parsedB = nB.longValue();
+                long result = parsedA/parsedB;
+                return new ValueImpl(resultType, result);
+            }
+        }
+        if(rest) {
+            throw new IllegalOperation(a.getType(), b.getType(), "/");
+        } else {
+            throw new IllegalOperation(a.getType(), b.getType(), "\\");
+        }
+    }
+
     private static final ValueType[] PRIORITY_TYPES = new ValueType[]{DOUBLE, FLOAT, LONG, INTEGER, SHORT, BYTE, STRING};
     private static ValueType getResultType(Value a, Value b) {
         for(ValueType type:PRIORITY_TYPES) {

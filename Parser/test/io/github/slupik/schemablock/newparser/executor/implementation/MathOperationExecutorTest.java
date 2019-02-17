@@ -148,4 +148,96 @@ class MathOperationExecutorTest {
         assertThrows(IllegalOperation.class,
                 () -> MathOperationExecutor.multiply(new ValueImpl(STRING, "foo"), new ValueImpl(STRING, "bar")));
     }
+
+    @Test
+    void divideWithRest() throws IllegalOperation {
+        //Numbers >0
+        Value result = MathOperationExecutor.divide(new ValueImpl(SHORT, "5"), new ValueImpl(INTEGER, "2"), true);
+        assertEquals(INTEGER, result.getType());
+        assertEquals(2, ((int) result.getValue()));
+
+        result = MathOperationExecutor.divide(new ValueImpl(DOUBLE, "5.0"), new ValueImpl(INTEGER, 2), true);
+        assertEquals(DOUBLE, result.getType());
+        assertEquals(2.5, ((double) result.getValue()));
+
+        result = MathOperationExecutor.divide(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, 2), true);
+        assertEquals(BYTE, result.getType());
+        assertEquals(2, ((byte) result.getValue()));
+
+        result = MathOperationExecutor.divide(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, 2), true);
+        assertEquals(BYTE, result.getType());
+        byte ans = result.getCastedValue();
+        assertEquals(2, ans);
+
+        //Numbers <0
+        result = MathOperationExecutor.divide(new ValueImpl(SHORT, "-5"), new ValueImpl(INTEGER, "2"), true);
+        assertEquals(INTEGER, result.getType());
+        assertEquals(-2, ((int) result.getValue()));
+
+        result = MathOperationExecutor.divide(new ValueImpl(DOUBLE, "-5.0"), new ValueImpl(INTEGER, 2), true);
+        assertEquals(DOUBLE, result.getType());
+        assertEquals(-2.5, ((double) result.getValue()));
+
+        result = MathOperationExecutor.divide(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, -2), true);
+        assertEquals(BYTE, result.getType());
+        assertEquals(-2, ((byte) result.getValue()));
+
+        result = MathOperationExecutor.divide(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, -2), true);
+        assertEquals(BYTE, result.getType());
+        ans = result.getCastedValue();
+        assertEquals(-2, ans);
+        //Errors
+        assertThrows(IllegalOperation.class,
+                () -> MathOperationExecutor.divide(new ValueImpl(BOOLEAN, "true"), new ValueImpl(BOOLEAN, false), true));
+
+        //Errors
+        assertThrows(IllegalOperation.class,
+                () -> MathOperationExecutor.divide(new ValueImpl(STRING, "foo"), new ValueImpl(STRING, "bar"), true));
+    }
+
+    @Test
+    void divideWithoutRest() throws IllegalOperation {
+        //Numbers >0
+        Value result = MathOperationExecutor.divide(new ValueImpl(SHORT, "5"), new ValueImpl(INTEGER, "2"), false);
+        assertEquals(INTEGER, result.getType());
+        assertEquals(2, ((int) result.getValue()));
+
+        result = MathOperationExecutor.divide(new ValueImpl(DOUBLE, "5.0"), new ValueImpl(INTEGER, 2), false);
+        assertEquals(DOUBLE, result.getType());
+        assertEquals(2, ((double) result.getValue()));
+
+        result = MathOperationExecutor.divide(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, 2), false);
+        assertEquals(BYTE, result.getType());
+        assertEquals(2, ((byte) result.getValue()));
+
+        result = MathOperationExecutor.divide(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, 2), false);
+        assertEquals(BYTE, result.getType());
+        byte ans = result.getCastedValue();
+        assertEquals(2, ans);
+
+        //Numbers <0
+        result = MathOperationExecutor.divide(new ValueImpl(SHORT, "-5"), new ValueImpl(INTEGER, "2"), false);
+        assertEquals(INTEGER, result.getType());
+        assertEquals(-2, ((int) result.getValue()));
+
+        result = MathOperationExecutor.divide(new ValueImpl(DOUBLE, "-5.0"), new ValueImpl(INTEGER, 2), false);
+        assertEquals(DOUBLE, result.getType());
+        assertEquals(-2, ((double) result.getValue()));
+
+        result = MathOperationExecutor.divide(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, -2), false);
+        assertEquals(BYTE, result.getType());
+        assertEquals(-2, ((byte) result.getValue()));
+
+        result = MathOperationExecutor.divide(new ValueImpl(BYTE, "5.0"), new ValueImpl(BYTE, -2), false);
+        assertEquals(BYTE, result.getType());
+        ans = result.getCastedValue();
+        assertEquals(-2, ans);
+        //Errors
+        assertThrows(IllegalOperation.class,
+                () -> MathOperationExecutor.divide(new ValueImpl(BOOLEAN, "true"), new ValueImpl(BOOLEAN, false), false));
+
+        //Errors
+        assertThrows(IllegalOperation.class,
+                () -> MathOperationExecutor.divide(new ValueImpl(STRING, "foo"), new ValueImpl(STRING, "bar"), false));
+    }
 }

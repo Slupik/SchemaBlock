@@ -74,8 +74,12 @@ class ByteCodeExe {
                             register.add(MathOperationExecutor.multiply(args[0], args[1]));
                             break;
                         }
-                        case "": {
-
+                        case "/": {
+                            register.add(MathOperationExecutor.divide(args[0], args[1], true));
+                            break;
+                        }
+                        case "\\": {
+                            register.add(MathOperationExecutor.divide(args[0], args[1], false));
                             break;
                         }
                     }
