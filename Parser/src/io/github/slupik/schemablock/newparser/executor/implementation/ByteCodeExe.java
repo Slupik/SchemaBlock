@@ -63,19 +63,11 @@ class ByteCodeExe {
                     switch (bc.getSymbol()) {
                         //TODO better type managing
                         case "+": {
-                            Value value = MathOperationExecutor.add(args[0], args[1]);
-                            System.out.println("value = " + value.getType());
-                            System.out.println("value = " + value.getValue());
                             register.add(MathOperationExecutor.add(args[0], args[1]));
                             break;
                         }
                         case "-": {
-                            register.add(
-                                    new ValueImpl(
-                                            ValueType.DOUBLE,
-                                            ((Integer) args[0].getValue())-((Integer) args[1].getValue())
-                                    )
-                            );
+                            register.add(MathOperationExecutor.subtract(args[0], args[1]));
                             break;
                         }
                         case "*": {

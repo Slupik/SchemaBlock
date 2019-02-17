@@ -35,9 +35,26 @@ class MathOperationExecutor {
         throw new IllegalOperation(a.getType(), b.getType(), "+");
     }
 
-//    static Value subtract(Value a, Value b) {
-//
-//    }
+    static Value subtract(Value a, Value b) throws IllegalOperation {
+        ValueType resultType = getResultType(a, b);
+
+        if(resultType.IS_NUMBER) {
+
+            Number nA = a.getCastedValue();
+            Number nB = b.getCastedValue();
+
+            if(resultType==DOUBLE || resultType==FLOAT) {
+                double parsedA = nA.doubleValue();
+                double parsedB = nB.doubleValue();
+                return new ValueImpl(resultType, parsedA-parsedB);
+            } else {
+                long parsedA = nA.longValue();
+                long parsedB = nB.longValue();
+                return new ValueImpl(resultType, parsedA-parsedB);
+            }
+        }
+        throw new IllegalOperation(a.getType(), b.getType(), "-");
+    }
 
     private static final ValueType[] PRIORITY_TYPES = new ValueType[]{DOUBLE, FLOAT, LONG, INTEGER, SHORT, BYTE, STRING};
     private static ValueType getResultType(Value a, Value b) {
