@@ -61,4 +61,29 @@ class LogicOperationExecutorTest {
         assertThrows(IllegalOperation.class,
                 () -> LogicOperationExecutor.and(new ValueImpl(STRING, "2"), new ValueImpl(STRING, 5)));
     }
+
+    @Test
+    void not() throws Throwable {
+        Value result = LogicOperationExecutor.not(new ValueImpl(BOOLEAN, "false"));
+        assertEquals(BOOLEAN, result.getType());
+        assertTrue(((boolean) result.getValue()));
+
+        result = LogicOperationExecutor.not(new ValueImpl(BOOLEAN, false));
+        assertEquals(BOOLEAN, result.getType());
+        assertTrue(((boolean) result.getValue()));
+
+        result = LogicOperationExecutor.not(new ValueImpl(BOOLEAN, "true"));
+        assertEquals(BOOLEAN, result.getType());
+        assertFalse(((boolean) result.getValue()));
+
+        result = LogicOperationExecutor.not(new ValueImpl(BOOLEAN, true));
+        assertEquals(BOOLEAN, result.getType());
+        assertFalse(((boolean) result.getValue()));
+
+        //Errors
+        assertThrows(IllegalOperation.class,
+                () -> LogicOperationExecutor.and(new ValueImpl(STRING, "foo"), new ValueImpl(STRING, "bar")));
+        assertThrows(IllegalOperation.class,
+                () -> LogicOperationExecutor.and(new ValueImpl(STRING, "2"), new ValueImpl(STRING, 5)));
+    }
 }

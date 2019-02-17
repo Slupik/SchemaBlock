@@ -16,7 +16,7 @@ import java.util.Queue;
  */
 class ByteCodeExe {
 
-    static void execute(Queue<ByteCommand> cmds, Memory memory, Register register) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig {
+    static void execute(Queue<ByteCommand> cmds, Memory memory, Register register) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig, UnknownOperation {
 
         //TODO remove
         for(ByteCommand cmd:cmds) {
@@ -62,7 +62,6 @@ class ByteCodeExe {
                     }
 
                     switch (bc.getSymbol()) {
-                        //TODO add all operations
                         case "+": {
                             register.add(MathOperationExecutor.add(args[0], args[1]));
                             break;
@@ -108,6 +107,10 @@ class ByteCodeExe {
                             register.add(BitwiseOperationExecutor.or(args[0], args[1]));
                             break;
                         }
+                        case "~": {
+                            register.add(BitwiseOperationExecutor.not(args[0]));
+                            break;
+                        }
 
                         case "&&": {
                             register.add(LogicOperationExecutor.and(args[0], args[1]));
@@ -115,6 +118,10 @@ class ByteCodeExe {
                         }
                         case "||": {
                             register.add(LogicOperationExecutor.or(args[0], args[1]));
+                            break;
+                        }
+                        case "!": {
+                            register.add(LogicOperationExecutor.not(args[0]));
                             break;
                         }
 
@@ -142,8 +149,11 @@ class ByteCodeExe {
                             register.add(ComparisonOperationExecutor.notEqual(args[0], args[1]));
                             break;
                         }
-                    }
 
+                        default: {
+                            throw new UnknownOperation(bc.getSymbol());
+                        }
+                    }
                     break;
                 }
                 case HEAP_VIRTUAL_ARRAY: {

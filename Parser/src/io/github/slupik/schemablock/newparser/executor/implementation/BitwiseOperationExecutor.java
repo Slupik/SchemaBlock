@@ -303,4 +303,13 @@ class BitwiseOperationExecutor extends OperationExecutor {
         }
         throw new IllegalOperation(a.getType(), b.getType(), "|");
     }
+    
+    static Value not(Value a) throws IllegalOperation {
+        if(a.getType().IS_NUMBER && a.getType()!=DOUBLE && a.getType()!=FLOAT) {
+            Number nA = a.getCastedValue();
+            long parsedA = nA.longValue();
+            return new ValueImpl(a.getType(), ~parsedA);
+        }
+        throw new IllegalOperation(a.getType(), "~");
+    }
 }

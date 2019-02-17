@@ -222,4 +222,53 @@ class BitwiseOperationExecutorTest {
         assertThrows(IllegalOperation.class,
                 () -> BitwiseOperationExecutor.or(new ValueImpl(STRING, "foo"), new ValueImpl(STRING, "bar")));
     }
+
+    @Test
+    void not() throws Throwable {
+        //Numbers >0
+        Value result = BitwiseOperationExecutor.not(new ValueImpl(BYTE, "5"));
+        assertEquals(BYTE, result.getType());
+        assertEquals(((byte) ~5), result.getValue());
+
+        result = BitwiseOperationExecutor.not(new ValueImpl(SHORT, "5"));
+        assertEquals(SHORT, result.getType());
+        assertEquals(((short) ~5), result.getValue());
+
+        result = BitwiseOperationExecutor.not(new ValueImpl(INTEGER, "5"));
+        assertEquals(INTEGER, result.getType());
+        assertEquals(~5, result.getValue());
+
+        result = BitwiseOperationExecutor.not(new ValueImpl(LONG, "5"));
+        assertEquals(LONG, result.getType());
+        assertEquals(((long) ~5), result.getValue());
+
+
+        //Numbers <0
+        result = BitwiseOperationExecutor.not(new ValueImpl(BYTE, "-5"));
+        assertEquals(BYTE, result.getType());
+        assertEquals(((byte) ~-5), result.getValue());
+
+        result = BitwiseOperationExecutor.not(new ValueImpl(SHORT, "-5"));
+        assertEquals(SHORT, result.getType());
+        assertEquals(((short) ~-5), result.getValue());
+
+        result = BitwiseOperationExecutor.not(new ValueImpl(INTEGER, "-5"));
+        assertEquals(INTEGER, result.getType());
+        assertEquals(~-5, result.getValue());
+
+        result = BitwiseOperationExecutor.not(new ValueImpl(LONG, "-5"));
+        assertEquals(LONG, result.getType());
+        assertEquals(((long) ~-5), result.getValue());
+
+        //Errors
+        assertThrows(IllegalOperation.class,
+                () -> BitwiseOperationExecutor.or(new ValueImpl(BOOLEAN, "true"), new ValueImpl(BOOLEAN, false)));
+
+
+        assertThrows(IllegalOperation.class,
+                () -> BitwiseOperationExecutor.or(new ValueImpl(DOUBLE, "-2.0"), new ValueImpl(INTEGER, 5)));
+
+        assertThrows(IllegalOperation.class,
+                () -> BitwiseOperationExecutor.or(new ValueImpl(STRING, "foo"), new ValueImpl(STRING, "bar")));
+    }
 }
