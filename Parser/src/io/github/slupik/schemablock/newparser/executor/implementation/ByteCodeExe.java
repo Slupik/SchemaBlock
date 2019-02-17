@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.newparser.executor.exception;
+package io.github.slupik.schemablock.newparser.executor.implementation;
 
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.*;
 import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleArrayException;

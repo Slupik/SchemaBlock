@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.newparser.executor.exception;
+package io.github.slupik.schemablock.newparser.executor.implementation;
 
 import io.github.slupik.schemablock.newparser.compilator.Compilator;
 import io.github.slupik.schemablock.newparser.compilator.implementation.DefaultCompilator;
