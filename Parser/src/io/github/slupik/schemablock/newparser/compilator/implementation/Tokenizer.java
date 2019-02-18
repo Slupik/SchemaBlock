@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.newparser.compilator.implementation;
 
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
+import io.github.slupik.schemablock.newparser.utils.CodeOperations;
 import io.github.slupik.schemablock.newparser.utils.CodeUtils;
 import io.github.slupik.schemablock.newparser.utils.TextUtils;
 
@@ -144,6 +145,18 @@ class Tokenizer {
                     linePos++;
                     for(;i<code.length() && CodeUtils.isSignOfAction(code.charAt(i));i++) {
                         word.append(code.charAt(i));
+                        if(!new CodeOperations().containsKey(word.toString())) {
+                            linePos--;
+
+                            //Split to 2 known words
+                            word.deleteCharAt(word.length()-1);
+                            addNewToken(word);
+
+                            word.append(code.charAt(i));
+                            addNewToken(word);
+
+                            linePos++;
+                        }
                         linePos++;
                     }
                     i--;

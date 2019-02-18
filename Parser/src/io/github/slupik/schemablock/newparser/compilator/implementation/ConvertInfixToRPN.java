@@ -20,6 +20,9 @@ class ConvertInfixToRPN {
         List<Token> rpn = new LinkedList<>();
         Stack<Token> operatorsStack = new Stack<>();
 
+        //It should be true at the beginning to allow to parse raw data ex. "-3"
+        boolean lastWasOperation = true;
+
         for (int i=0;i<infixNotation.size();i++) {
             Token token = infixNotation.get(i);
             if ("(".equals(token.getData())) {
@@ -87,20 +90,35 @@ class ConvertInfixToRPN {
                 if("=".equals(token.getData())) {
                     rpn.add(new SpecialToken(token));
                 }
-                while (!operatorsStack.empty() && OPERATION.get(token.getData()) <= OPERATION.get(operatorsStack.peek().getData())) {
-                    rpn.add(operatorsStack.pop());
+                if(lastWasOperation && ("-".equals(token.getData()) || "+".equals(token.getData()))) {
+                    //For example: (-9), (+-+-+-9), -9, -+-+-+9
+                    operatorsStack.push(new Token("*", token.getLine(), token.getPos()));
+                    if("-".equals(token.getData())) {
+                        rpn.add(new Token("-1", token.getLine(), token.getPos()));
+                    } else {
+                        rpn.add(new Token("1", token.getLine(), token.getPos()));
+                    }
+                } else {
+                    while (!operatorsStack.empty() && OPERATION.get(token.getData()) <= OPERATION.get(operatorsStack.peek().getData())) {
+                        rpn.add(operatorsStack.pop());
+                    }
+                    operatorsStack.push(token);
                 }
-                operatorsStack.push(token);
+                lastWasOperation = true;
                 continue;
             }
 
+            //Number
             if (TextUtils.isNumber(token.getData())) {
                 rpn.add(token);
+                lastWasOperation = false;
                 continue;
             }
 
             //If it's a function
             if(i+1<infixNotation.size() && "(".equals(infixNotation.get(i+1).getData())) {
+                lastWasOperation = false;
+
                 i+=2;
                 int nestLvl = 0;
                 int argsCount = 0;
@@ -177,6 +195,7 @@ class ConvertInfixToRPN {
                 continue;
             }
 
+            lastWasOperation = false;
             rpn.add(token);
         }
 

@@ -149,6 +149,18 @@ public interface Compilator {
         12) HEAP_VIRTUAL_ARRAY type 2 notEmpty
         13) OPERATION =
 
+
+    type name = 9*+-1;
+        1) DECLARE_VARIABLE type name 0
+        2) HEAP_VARIABLE name
+        3) HEAP_VALUE int 9
+        3) HEAP_VALUE int 1
+        3) HEAP_VALUE int 1
+        4) OPERATION *
+        3) HEAP_VALUE int -1
+        4) OPERATION *
+        4) OPERATION =
+
     int[][] a = new int[2][3];
     variable: {
         name: a
