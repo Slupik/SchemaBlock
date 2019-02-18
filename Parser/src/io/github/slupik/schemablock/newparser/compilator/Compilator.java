@@ -13,6 +13,7 @@ import java.util.Queue;
  */
 public interface Compilator {
     Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig;
+    Queue<ByteCommand> getCompiled(String code, boolean forResult) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig;
 
     /* ByteCode ideas
     type[size] value;//ok

@@ -21,27 +21,50 @@ public class DefaultCompilator implements Compilator {
 
     @Override
     public Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
+        return getCompiled(code, false);
+    }
+
+    @Override
+    public Queue<ByteCommand> getCompiled(String code, boolean forResult) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
         LinkedList<ByteCommand> commands = new LinkedList<>();
 
         List<Token> tokenized = new Tokenizer(code).getTokenized();
         List<Token> cleared = new BracketsRemover().getCleared(tokenized);
 
-        List<Token> buffer = new ArrayList<>();
-        for(Token token:cleared) {
-            if(token.getData().equals(";")) {
-                List<Token> rpn = ConvertInfixToRPN.convertInfixToRPN(buffer);
-                commands.addAll(getCompiledLine(rpn, token));
-                buffer.clear();
-            } else {
-                buffer.add(token);
+        if(forResult) {
+            for(int i=cleared.size()-1;i>=0;i--) {
+                if(cleared.get(i).getData().equals(";")) {
+                    cleared.remove(i);
+                } else {
+                    break;
+                }
+            }
+            List<Token> rpn = ConvertInfixToRPN.convertInfixToRPN(cleared);
+            commands.addAll(getCompiledLine(rpn, cleared.get(cleared.size()-1), false));
+        } else {
+            List<Token> buffer = new ArrayList<>();
+            for(Token token:cleared) {
+                if(token.getData().equals(";")) {
+                    List<Token> rpn = ConvertInfixToRPN.convertInfixToRPN(buffer);
+                    commands.addAll(getCompiledLine(rpn, token));
+                    buffer.clear();
+                } else {
+                    buffer.add(token);
+                }
             }
         }
         return commands;
     }
 
     private List<ByteCommand> getCompiledLine(List<Token> parts, Token end) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
+        return getCompiledLine(parts, end, true);
+    }
+
+    private List<ByteCommand> getCompiledLine(List<Token> parts, Token end, boolean clearRegister) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
         List<ByteCommand> compiled = new ArrayList<>(LineCompilator.getCompiledLine(parts));
-        compiled.add(new ByteCommandClearImpl(end.getLine(), end.getPos(), false));
+        if(clearRegister) {
+            compiled.add(new ByteCommandClearImpl(end.getLine(), end.getPos(), false));
+        }
         return compiled;
     }
 

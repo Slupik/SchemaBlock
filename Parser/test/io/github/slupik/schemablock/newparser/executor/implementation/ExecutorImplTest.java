@@ -52,6 +52,18 @@ class ExecutorImplTest {
     }
 
     @Test
+    void executeForValue() throws Throwable {
+        checkForValue("5 * (+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+9);", 5 * (+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+9));
+        checkForValue("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+5 * (+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+9);", +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+5 * (+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+9));
+    }
+
+    private void checkForValue(String code, Object result) throws Throwable {
+        Assertions.assertEquals(result, exe.getResult(code).getValue());
+        memory.clear();
+        register.clear();
+    }
+
+    @Test
     void repair() throws Throwable {
 
     }
@@ -60,5 +72,6 @@ class ExecutorImplTest {
         exe.execute(code);
         Assertions.assertEquals(result, memory.get("a").getValue().getValue());
         memory.clear();
+        register.clear();
     }
 }

@@ -10,6 +10,7 @@ import io.github.slupik.schemablock.newparser.compilator.implementation.compilat
 import io.github.slupik.schemablock.newparser.executor.Executor;
 import io.github.slupik.schemablock.newparser.memory.Memory;
 import io.github.slupik.schemablock.newparser.memory.Register;
+import io.github.slupik.schemablock.newparser.memory.element.Value;
 import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
 import java.util.Queue;
@@ -41,14 +42,14 @@ public class ExecutorImpl implements Executor {
     }
 
     @Override
-    public Object getResult(String code) throws ValueTooBig, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ComExIllegalEscapeChar {
-        Queue<ByteCommand> cmds = compilator.getCompiled(code);
+    public Value getResult(String code) throws ValueTooBig, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ComExIllegalEscapeChar, UnknownOperation, IncompatibleArrayException, IncompatibleTypeException, IllegalOperation {
+        Queue<ByteCommand> cmds = compilator.getCompiled(code, true);
         return getResult(cmds);
     }
 
     @Override
-    public Object getResult(Queue<ByteCommand> cmds) {
-        //TODO implement
-        return null;
+    public Value getResult(Queue<ByteCommand> cmds) throws ValueTooBig, IncompatibleArrayException, UnknownOperation, IllegalOperation, IncompatibleTypeException {
+        ByteCodeExe.execute(cmds, memory, register);
+        return ((Value) register.pop());
     }
 }
