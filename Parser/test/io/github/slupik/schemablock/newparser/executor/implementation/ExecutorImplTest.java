@@ -65,12 +65,13 @@ class ExecutorImplTest {
 
     @Test
     void repair() throws Throwable {
-
+        check("double[] b = {1, 2};" +
+                "double a = b[1];", 2);
     }
 
     private void check(String code, Object result) throws Throwable {
         exe.execute(code);
-        Assertions.assertEquals(result, memory.get("a").getValue().getValue());
+        Assertions.assertEquals(result, memory.get("a").getContent().getValue());
         memory.clear();
         register.clear();
     }

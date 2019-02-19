@@ -28,12 +28,12 @@ public class VariableImpl implements Variable {
     }
 
     @Override
-    public Value getValue() {
+    public Value getContent() {
         return value;
     }
 
     @Override
-    public void setValue(Value value) throws IncompatibleTypeException, IncompatibleArrayException {
+    public void setContent(Value value) throws IncompatibleTypeException, IncompatibleArrayException {
         if(value!=null) {
             if(!ValueType.isCompatible(type, value.getType())) {
                 throw new IncompatibleTypeException(type, value.getType());
@@ -46,7 +46,7 @@ public class VariableImpl implements Variable {
     }
 
     @Override
-    public Value getValue(int index) throws ExceptedArrayButNotReceivedException, IndexOutOfBoundsException {
+    public Value getContent(int index) throws ExceptedArrayButNotReceivedException, IndexOutOfBoundsException {
         if(!value.isArray()) {
             throw new ExceptedArrayButNotReceivedException();
         }
@@ -54,7 +54,7 @@ public class VariableImpl implements Variable {
     }
 
     @Override
-    public void setValue(int index, Value value) throws IncompatibleTypeException, IndexOutOfBoundsException, ExceptedArrayButNotReceivedException, IncompatibleArrayException {
+    public void setContent(int index, Value value) throws IncompatibleTypeException, IndexOutOfBoundsException, ExceptedArrayButNotReceivedException, IncompatibleArrayException {
         if(!this.value.isArray()) {
             throw new ExceptedArrayButNotReceivedException();
         }
@@ -63,7 +63,7 @@ public class VariableImpl implements Variable {
 
 
     @Override
-    public void setValue(int indexes[], Value value) throws IncompatibleTypeException, IndexOutOfBoundsException, ExceptedArrayButNotReceivedException, IncompatibleArrayException {
+    public void setContent(int indexes[], Value value) throws IncompatibleTypeException, IndexOutOfBoundsException, ExceptedArrayButNotReceivedException, IncompatibleArrayException {
         if(!this.value.isArray()) {
             throw new ExceptedArrayButNotReceivedException();
         }

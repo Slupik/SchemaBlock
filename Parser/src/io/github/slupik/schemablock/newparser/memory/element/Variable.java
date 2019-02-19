@@ -10,11 +10,11 @@ import io.github.slupik.schemablock.newparser.compilator.exception.IndexOutOfBou
  */
 public interface Variable extends Memoryable  {
     String getName();
-    Value getValue();
-    void setValue(Value value) throws IncompatibleTypeException, IncompatibleArrayException;
+    Value getContent();
+    void setContent(Value value) throws IncompatibleTypeException, IncompatibleArrayException;
 
     //if is an array
-    Value getValue(int index) throws ExceptedArrayButNotReceivedException, IndexOutOfBoundsException;
-    void setValue(int index, Value value) throws IncompatibleTypeException, IndexOutOfBoundsException, ExceptedArrayButNotReceivedException, IncompatibleArrayException;
-    void setValue(int indexes[], Value value) throws IncompatibleTypeException, IndexOutOfBoundsException, ExceptedArrayButNotReceivedException, IncompatibleArrayException;
+    Value getContent(int index) throws ExceptedArrayButNotReceivedException, IndexOutOfBoundsException;
+    void setContent(int index, Value value) throws IncompatibleTypeException, IndexOutOfBoundsException, ExceptedArrayButNotReceivedException, IncompatibleArrayException;
+    void setContent(int indexes[], Value value) throws IncompatibleTypeException, IndexOutOfBoundsException, ExceptedArrayButNotReceivedException, IncompatibleArrayException;
 }

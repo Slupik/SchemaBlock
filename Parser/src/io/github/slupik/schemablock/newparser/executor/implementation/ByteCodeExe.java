@@ -19,10 +19,22 @@ class ByteCodeExe {
     static void execute(Queue<ByteCommand> cmds, Memory memory, Register register) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig, UnknownOperation {
 
         for(ByteCommand cmd:cmds) {
+            System.out.println("cmd.toString() = " + cmd.toString());
+        }
+
+        for(ByteCommand cmd:cmds) {
             switch (cmd.getCommandType()) {
                 case HEAP_VAR: {
                     ByteCommandHeapVariable bc = ((ByteCommandHeapVariable) cmd);
-                    Memoryable var = memory.get(bc.getName());
+                    Variable var = memory.get(bc.getName());
+
+                    Variable toHeap;
+                    if(bc.getIndexes()>0) {
+
+                    } else {
+                        toHeap = var;
+                    }
+
                     register.add(var);
                     break;
                 }
@@ -45,7 +57,7 @@ class ByteCodeExe {
                         Value val = pollValue(register);
                         Variable var = (Variable) register.pop();
 
-                        var.setValue(val);
+                        var.setContent(val);
                         break;
                     }
 
@@ -152,7 +164,17 @@ class ByteCodeExe {
                     break;
                 }
                 case HEAP_VIRTUAL_ARRAY: {
-                    //TODO implement
+                    ByteCommandHeapVirArr bc = ((ByteCommandHeapVirArr) cmd);
+                    //TODO implement correctly
+                    Value[] values = new Value[bc.getElementsCount()];
+                    for(int i=0;i<bc.getElementsCount();i++) {
+                        Value val = pollValue(register);
+                        values[bc.getElementsCount()-1-i] = val;
+                    }
+
+                    Value array = new ValueImpl(bc.getType(), values);
+                    register.add(array);
+                    break;
                 }
                 case EXECUTE: {
                     System.out.println("EXECUTE");
@@ -177,7 +199,7 @@ class ByteCodeExe {
 
         Value value = null;
         if(memoried instanceof Variable) {
-            value = ((Variable) memoried).getValue();
+            value = ((Variable) memoried).getContent();
         } else if(memoried instanceof Value) {
             value = ((Value) memoried);
         }
