@@ -132,7 +132,7 @@ class DefaultCompilatorTest {
                         "DECLARE_VAR DOUBLE name 1",
                         "HEAP_VAR name",
                         "HEAP_VALUE INTEGER 8",
-                        "HEAP_VIRTUAL_ARRAY DOUBLE 1",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 1 empty",
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
@@ -143,7 +143,7 @@ class DefaultCompilatorTest {
                         "HEAP_VAR a",
                         "HEAP_VALUE INTEGER 8",
                         "OPERATION =",
-                        "HEAP_VIRTUAL_ARRAY DOUBLE 1",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 1 empty",
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
@@ -154,7 +154,7 @@ class DefaultCompilatorTest {
                         "DECLARE_VAR DOUBLE name 1",
                         "HEAP_VAR name",
                         "HEAP_VALUE INTEGER 8",
-                        "HEAP_VIRTUAL_ARRAY DOUBLE 1",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 1 empty",
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
@@ -164,7 +164,7 @@ class DefaultCompilatorTest {
                         "HEAP_VAR name",
                         "HEAP_VALUE INTEGER 8",
                         "HEAP_VAR b 1",
-                        "HEAP_VIRTUAL_ARRAY DOUBLE 1",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 1 empty",
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
@@ -176,7 +176,7 @@ class DefaultCompilatorTest {
                         "HEAP_VAR name",
                         "HEAP_VALUE INTEGER 9",
                         "HEAP_VALUE INTEGER 8",
-                        "HEAP_VIRTUAL_ARRAY DOUBLE 2",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 2 empty",
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
@@ -188,7 +188,7 @@ class DefaultCompilatorTest {
                         "HEAP_VAR c 1",
                         "HEAP_VALUE INTEGER 8",
                         "HEAP_VAR b 1",
-                        "HEAP_VIRTUAL_ARRAY DOUBLE 2",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 2 empty",
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
@@ -199,7 +199,7 @@ class DefaultCompilatorTest {
                         "DECLARE_VAR DOUBLE name 1",
                         "HEAP_VAR name",
                         "HEAP_VALUE INTEGER 8",
-                        "HEAP_VIRTUAL_ARRAY DOUBLE 1",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 1 empty",
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
@@ -209,7 +209,7 @@ class DefaultCompilatorTest {
                         "HEAP_VAR name",
                         "HEAP_VALUE INTEGER 8",
                         "HEAP_VAR b 1",
-                        "HEAP_VIRTUAL_ARRAY DOUBLE 1",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 1 empty",
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
@@ -219,7 +219,7 @@ class DefaultCompilatorTest {
                         "HEAP_VAR name",
                         "HEAP_VALUE INTEGER 9",
                         "HEAP_VALUE INTEGER 8",
-                        "HEAP_VIRTUAL_ARRAY DOUBLE 2",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 2 empty",
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });
@@ -231,7 +231,7 @@ class DefaultCompilatorTest {
                         "HEAP_VAR c 1",
                         "HEAP_VALUE INTEGER 8",
                         "HEAP_VAR b 1",
-                        "HEAP_VIRTUAL_ARRAY DOUBLE 2",
+                        "HEAP_VIRTUAL_ARRAY DOUBLE 2 empty",
                         "OPERATION =",
                         "CLEAR_EXEC_HEAP"
                 });

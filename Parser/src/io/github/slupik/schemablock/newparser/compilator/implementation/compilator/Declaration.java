@@ -101,7 +101,7 @@ class Declaration {
                     tokenWithName.getPos(),
                     type,
                     dimensions.size(),
-                    false
+                    true
             ));
             compiled.add(new ByteCommandOperationImpl(
                     tokenWithName.getLine(),

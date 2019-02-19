@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.newparser.executor.implementation;
 
-import io.github.slupik.schemablock.newparser.memory.element.Value;
+import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 
 import static io.github.slupik.schemablock.newparser.memory.element.ValueType.*;
@@ -12,7 +12,7 @@ import static io.github.slupik.schemablock.newparser.memory.element.ValueType.UN
 class OperationExecutor {
 
     protected static final ValueType[] PRIORITY_TYPES = new ValueType[]{STRING, DOUBLE, FLOAT, LONG, INTEGER, SHORT, BYTE};
-    protected static ValueType getResultType(Value a, Value b) {
+    protected static ValueType getResultType(SimpleValue a, SimpleValue b) {
         for(ValueType type:PRIORITY_TYPES) {
             if(isTypeOf(type, a, b)) {
                 return type;
@@ -28,7 +28,7 @@ class OperationExecutor {
         return UNKNOWN;
     }
 
-    protected static boolean isTypeOf(ValueType type, Value a, Value b) {
+    protected static boolean isTypeOf(ValueType type, SimpleValue a, SimpleValue b) {
         return a.getType() == type || b.getType() == type;
     }
 }

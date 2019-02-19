@@ -1,7 +1,7 @@
 package io.github.slupik.schemablock.newparser.executor.implementation;
 
-import io.github.slupik.schemablock.newparser.memory.element.Value;
-import io.github.slupik.schemablock.newparser.memory.element.ValueImpl;
+import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
+import io.github.slupik.schemablock.newparser.memory.element.SimpleValueImpl;
 import org.junit.jupiter.api.Test;
 
 import static io.github.slupik.schemablock.newparser.memory.element.ValueType.*;
@@ -16,264 +16,264 @@ class ComparisonOperationExecutorTest {
     @Test
     void smallerOrEqual() throws Throwable {
         //equal
-        Value result = ComparisonOperationExecutor.smallerOrEqual(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "5.0"));
+        SimpleValue result = ComparisonOperationExecutor.smallerOrEqual(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "5.0"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smallerOrEqual(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "5"));
+        result = ComparisonOperationExecutor.smallerOrEqual(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "5"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
         //true
-        result = ComparisonOperationExecutor.smallerOrEqual(new ValueImpl(SHORT, "2"), new ValueImpl(INTEGER, "5"));
+        result = ComparisonOperationExecutor.smallerOrEqual(new SimpleValueImpl(SHORT, "2"), new SimpleValueImpl(INTEGER, "5"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smallerOrEqual(new ValueImpl(DOUBLE, "2.0"), new ValueImpl(INTEGER, 5));
+        result = ComparisonOperationExecutor.smallerOrEqual(new SimpleValueImpl(DOUBLE, "2.0"), new SimpleValueImpl(INTEGER, 5));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smallerOrEqual(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.smallerOrEqual(new SimpleValueImpl(BYTE, "2.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smallerOrEqual(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.smallerOrEqual(new SimpleValueImpl(BYTE, "2.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         boolean ans = result.getCastedValue();
         assertTrue(ans);
 
 
         //false
-        result = ComparisonOperationExecutor.smallerOrEqual(new ValueImpl(INTEGER, "5"), new ValueImpl(SHORT, "2"));
+        result = ComparisonOperationExecutor.smallerOrEqual(new SimpleValueImpl(INTEGER, "5"), new SimpleValueImpl(SHORT, "2"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smallerOrEqual(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "2.0"));
+        result = ComparisonOperationExecutor.smallerOrEqual(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smallerOrEqual(new ValueImpl(BYTE, 5), new ValueImpl(BYTE, "2.0"));
+        result = ComparisonOperationExecutor.smallerOrEqual(new SimpleValueImpl(BYTE, 5), new SimpleValueImpl(BYTE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smallerOrEqual(new ValueImpl(BYTE, 5), new ValueImpl(BYTE, "2.0"));
+        result = ComparisonOperationExecutor.smallerOrEqual(new SimpleValueImpl(BYTE, 5), new SimpleValueImpl(BYTE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         ans = result.getCastedValue();
         assertFalse(ans);
 
         //Errors
         assertThrows(IllegalOperation.class,
-                () -> ComparisonOperationExecutor.smallerOrEqual(new ValueImpl(STRING, "2"), new ValueImpl(STRING, 5)));
+                () -> ComparisonOperationExecutor.smallerOrEqual(new SimpleValueImpl(STRING, "2"), new SimpleValueImpl(STRING, 5)));
         assertThrows(IllegalOperation.class,
-                () -> ComparisonOperationExecutor.smallerOrEqual(new ValueImpl(BOOLEAN, "true"), new ValueImpl(BOOLEAN, false)));
+                () -> ComparisonOperationExecutor.smallerOrEqual(new SimpleValueImpl(BOOLEAN, "true"), new SimpleValueImpl(BOOLEAN, false)));
     }
 
     @Test
     void greaterOrEqual() throws Throwable {
         //equal
-        Value result = ComparisonOperationExecutor.greaterOrEqual(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "5.0"));
+        SimpleValue result = ComparisonOperationExecutor.greaterOrEqual(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "5.0"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greaterOrEqual(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "5"));
+        result = ComparisonOperationExecutor.greaterOrEqual(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "5"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
         //true
-        result = ComparisonOperationExecutor.greaterOrEqual(new ValueImpl(INTEGER, "5"), new ValueImpl(SHORT, "2"));
+        result = ComparisonOperationExecutor.greaterOrEqual(new SimpleValueImpl(INTEGER, "5"), new SimpleValueImpl(SHORT, "2"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greaterOrEqual(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "2.0"));
+        result = ComparisonOperationExecutor.greaterOrEqual(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greaterOrEqual(new ValueImpl(BYTE, 5), new ValueImpl(BYTE, "2.0"));
+        result = ComparisonOperationExecutor.greaterOrEqual(new SimpleValueImpl(BYTE, 5), new SimpleValueImpl(BYTE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greaterOrEqual(new ValueImpl(BYTE, 5), new ValueImpl(BYTE, "2.0"));
+        result = ComparisonOperationExecutor.greaterOrEqual(new SimpleValueImpl(BYTE, 5), new SimpleValueImpl(BYTE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         boolean ans = result.getCastedValue();
         assertTrue(ans);
 
         //false
-        result = ComparisonOperationExecutor.greaterOrEqual(new ValueImpl(SHORT, "2"), new ValueImpl(INTEGER, "5"));
+        result = ComparisonOperationExecutor.greaterOrEqual(new SimpleValueImpl(SHORT, "2"), new SimpleValueImpl(INTEGER, "5"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greaterOrEqual(new ValueImpl(DOUBLE, "2.0"), new ValueImpl(INTEGER, 5));
+        result = ComparisonOperationExecutor.greaterOrEqual(new SimpleValueImpl(DOUBLE, "2.0"), new SimpleValueImpl(INTEGER, 5));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greaterOrEqual(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.greaterOrEqual(new SimpleValueImpl(BYTE, "2.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greaterOrEqual(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.greaterOrEqual(new SimpleValueImpl(BYTE, "2.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         ans = result.getCastedValue();
         assertFalse(ans);
 
         //Errors
         assertThrows(IllegalOperation.class,
-                () -> ComparisonOperationExecutor.greaterOrEqual(new ValueImpl(STRING, "2"), new ValueImpl(STRING, 5)));
+                () -> ComparisonOperationExecutor.greaterOrEqual(new SimpleValueImpl(STRING, "2"), new SimpleValueImpl(STRING, 5)));
         assertThrows(IllegalOperation.class,
-                () -> ComparisonOperationExecutor.greaterOrEqual(new ValueImpl(BOOLEAN, "true"), new ValueImpl(BOOLEAN, false)));
+                () -> ComparisonOperationExecutor.greaterOrEqual(new SimpleValueImpl(BOOLEAN, "true"), new SimpleValueImpl(BOOLEAN, false)));
     }
 
     @Test
     void smaller() throws Throwable {
         //equal
-        Value result = ComparisonOperationExecutor.smaller(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "5.0"));
+        SimpleValue result = ComparisonOperationExecutor.smaller(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "5.0"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smaller(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "5"));
+        result = ComparisonOperationExecutor.smaller(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "5"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
         //true
-        result = ComparisonOperationExecutor.smaller(new ValueImpl(SHORT, "2"), new ValueImpl(INTEGER, "5"));
+        result = ComparisonOperationExecutor.smaller(new SimpleValueImpl(SHORT, "2"), new SimpleValueImpl(INTEGER, "5"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smaller(new ValueImpl(DOUBLE, "2.0"), new ValueImpl(INTEGER, 5));
+        result = ComparisonOperationExecutor.smaller(new SimpleValueImpl(DOUBLE, "2.0"), new SimpleValueImpl(INTEGER, 5));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smaller(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.smaller(new SimpleValueImpl(BYTE, "2.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smaller(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.smaller(new SimpleValueImpl(BYTE, "2.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         boolean ans = result.getCastedValue();
         assertTrue(ans);
 
 
         //false
-        result = ComparisonOperationExecutor.smaller(new ValueImpl(INTEGER, "5"), new ValueImpl(SHORT, "2"));
+        result = ComparisonOperationExecutor.smaller(new SimpleValueImpl(INTEGER, "5"), new SimpleValueImpl(SHORT, "2"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smaller(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "2.0"));
+        result = ComparisonOperationExecutor.smaller(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smaller(new ValueImpl(BYTE, 5), new ValueImpl(BYTE, "2.0"));
+        result = ComparisonOperationExecutor.smaller(new SimpleValueImpl(BYTE, 5), new SimpleValueImpl(BYTE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.smaller(new ValueImpl(BYTE, 5), new ValueImpl(BYTE, "2.0"));
+        result = ComparisonOperationExecutor.smaller(new SimpleValueImpl(BYTE, 5), new SimpleValueImpl(BYTE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         ans = result.getCastedValue();
         assertFalse(ans);
 
         //Errors
         assertThrows(IllegalOperation.class,
-                () -> ComparisonOperationExecutor.smaller(new ValueImpl(STRING, "2"), new ValueImpl(STRING, 5)));
+                () -> ComparisonOperationExecutor.smaller(new SimpleValueImpl(STRING, "2"), new SimpleValueImpl(STRING, 5)));
         assertThrows(IllegalOperation.class,
-                () -> ComparisonOperationExecutor.smaller(new ValueImpl(BOOLEAN, "true"), new ValueImpl(BOOLEAN, false)));
+                () -> ComparisonOperationExecutor.smaller(new SimpleValueImpl(BOOLEAN, "true"), new SimpleValueImpl(BOOLEAN, false)));
     }
 
     @Test
     void greater() throws Throwable {
         //equal
-        Value result = ComparisonOperationExecutor.greater(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "5.0"));
+        SimpleValue result = ComparisonOperationExecutor.greater(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "5.0"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greater(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "5"));
+        result = ComparisonOperationExecutor.greater(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "5"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
         //true
-        result = ComparisonOperationExecutor.greater(new ValueImpl(INTEGER, "5"), new ValueImpl(SHORT, "2"));
+        result = ComparisonOperationExecutor.greater(new SimpleValueImpl(INTEGER, "5"), new SimpleValueImpl(SHORT, "2"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greater(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "2.0"));
+        result = ComparisonOperationExecutor.greater(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greater(new ValueImpl(BYTE, 5), new ValueImpl(BYTE, "2.0"));
+        result = ComparisonOperationExecutor.greater(new SimpleValueImpl(BYTE, 5), new SimpleValueImpl(BYTE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greater(new ValueImpl(BYTE, 5), new ValueImpl(BYTE, "2.0"));
+        result = ComparisonOperationExecutor.greater(new SimpleValueImpl(BYTE, 5), new SimpleValueImpl(BYTE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         boolean ans = result.getCastedValue();
         assertTrue(ans);
 
         //false
-        result = ComparisonOperationExecutor.greater(new ValueImpl(SHORT, "2"), new ValueImpl(INTEGER, "5"));
+        result = ComparisonOperationExecutor.greater(new SimpleValueImpl(SHORT, "2"), new SimpleValueImpl(INTEGER, "5"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greater(new ValueImpl(DOUBLE, "2.0"), new ValueImpl(INTEGER, 5));
+        result = ComparisonOperationExecutor.greater(new SimpleValueImpl(DOUBLE, "2.0"), new SimpleValueImpl(INTEGER, 5));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greater(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.greater(new SimpleValueImpl(BYTE, "2.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.greater(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.greater(new SimpleValueImpl(BYTE, "2.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         ans = result.getCastedValue();
         assertFalse(ans);
 
         //Errors
         assertThrows(IllegalOperation.class,
-                () -> ComparisonOperationExecutor.greater(new ValueImpl(STRING, "2"), new ValueImpl(STRING, 5)));
+                () -> ComparisonOperationExecutor.greater(new SimpleValueImpl(STRING, "2"), new SimpleValueImpl(STRING, 5)));
         assertThrows(IllegalOperation.class,
-                () -> ComparisonOperationExecutor.greater(new ValueImpl(BOOLEAN, "true"), new ValueImpl(BOOLEAN, false)));
+                () -> ComparisonOperationExecutor.greater(new SimpleValueImpl(BOOLEAN, "true"), new SimpleValueImpl(BOOLEAN, false)));
     }
 
     @Test
     void equal() throws Throwable {
         //equal
-        Value result = ComparisonOperationExecutor.equal(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "5.0"));
+        SimpleValue result = ComparisonOperationExecutor.equal(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "5.0"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.equal(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "5"));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "5"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
         //not equal
-        result = ComparisonOperationExecutor.equal(new ValueImpl(SHORT, "2"), new ValueImpl(INTEGER, "5"));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(SHORT, "2"), new SimpleValueImpl(INTEGER, "5"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.equal(new ValueImpl(DOUBLE, "2.0"), new ValueImpl(INTEGER, 5));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(DOUBLE, "2.0"), new SimpleValueImpl(INTEGER, 5));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.equal(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(BYTE, "2.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.equal(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(BYTE, "2.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         boolean ans = result.getCastedValue();
         assertFalse(ans);
 
         
-        result = ComparisonOperationExecutor.equal(new ValueImpl(INTEGER, "5"), new ValueImpl(SHORT, "2"));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(INTEGER, "5"), new SimpleValueImpl(SHORT, "2"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.equal(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "2.0"));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.equal(new ValueImpl(BYTE, 5), new ValueImpl(BYTE, "2.0"));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(BYTE, 5), new SimpleValueImpl(BYTE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.equal(new ValueImpl(BYTE, 5), new ValueImpl(BYTE, "2.0"));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(BYTE, 5), new SimpleValueImpl(BYTE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         ans = result.getCastedValue();
         assertFalse(ans);
@@ -281,40 +281,40 @@ class ComparisonOperationExecutorTest {
 
 
         //String
-        result = ComparisonOperationExecutor.equal(new ValueImpl(STRING, "2"), new ValueImpl(STRING, 5));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(STRING, "2"), new SimpleValueImpl(STRING, 5));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.equal(new ValueImpl(STRING, "5.0"), new ValueImpl(STRING, 5));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(STRING, "5.0"), new SimpleValueImpl(STRING, 5));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.equal(new ValueImpl(STRING, "2"), new ValueImpl(INTEGER, 5));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(STRING, "2"), new SimpleValueImpl(INTEGER, 5));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.equal(new ValueImpl(STRING, "5.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(STRING, "5.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
 
-        result = ComparisonOperationExecutor.equal(new ValueImpl(STRING, "5.0"), new ValueImpl(DOUBLE, 5));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(STRING, "5.0"), new SimpleValueImpl(DOUBLE, 5));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.equal(new ValueImpl(STRING, "5.0"), new ValueImpl(STRING, 5.0));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(STRING, "5.0"), new SimpleValueImpl(STRING, 5.0));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
 
 
         //Boolean
-        result = ComparisonOperationExecutor.equal(new ValueImpl(BOOLEAN, "true"), new ValueImpl(BOOLEAN, false));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(BOOLEAN, "true"), new SimpleValueImpl(BOOLEAN, false));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
 
-        result = ComparisonOperationExecutor.equal(new ValueImpl(BOOLEAN, "false"), new ValueImpl(BOOLEAN, false));
+        result = ComparisonOperationExecutor.equal(new SimpleValueImpl(BOOLEAN, "false"), new SimpleValueImpl(BOOLEAN, false));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
     }
@@ -322,46 +322,46 @@ class ComparisonOperationExecutorTest {
     @Test
     void notEqual() throws Throwable {
         //equal
-        Value result = ComparisonOperationExecutor.notEqual(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "5.0"));
+        SimpleValue result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "5.0"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "5"));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "5"));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
         //not equal
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(SHORT, "2"), new ValueImpl(INTEGER, "5"));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(SHORT, "2"), new SimpleValueImpl(INTEGER, "5"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(DOUBLE, "2.0"), new ValueImpl(INTEGER, 5));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(DOUBLE, "2.0"), new SimpleValueImpl(INTEGER, 5));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(BYTE, "2.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(BYTE, "2.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(BYTE, "2.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         boolean ans = result.getCastedValue();
         assertTrue(ans);
 
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(INTEGER, "5"), new ValueImpl(SHORT, "2"));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(INTEGER, "5"), new SimpleValueImpl(SHORT, "2"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(INTEGER, 5), new ValueImpl(DOUBLE, "2.0"));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(INTEGER, 5), new SimpleValueImpl(DOUBLE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(BYTE, 5), new ValueImpl(BYTE, "2.0"));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(BYTE, 5), new SimpleValueImpl(BYTE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(BYTE, 5), new ValueImpl(BYTE, "2.0"));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(BYTE, 5), new SimpleValueImpl(BYTE, "2.0"));
         assertEquals(BOOLEAN, result.getType());
         ans = result.getCastedValue();
         assertTrue(ans);
@@ -369,40 +369,40 @@ class ComparisonOperationExecutorTest {
 
 
         //String
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(STRING, "2"), new ValueImpl(STRING, 5));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(STRING, "2"), new SimpleValueImpl(STRING, 5));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(STRING, "5.0"), new ValueImpl(STRING, 5));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(STRING, "5.0"), new SimpleValueImpl(STRING, 5));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(STRING, "2"), new ValueImpl(INTEGER, 5));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(STRING, "2"), new SimpleValueImpl(INTEGER, 5));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(STRING, "5.0"), new ValueImpl(BYTE, 5));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(STRING, "5.0"), new SimpleValueImpl(BYTE, 5));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(STRING, "5.0"), new ValueImpl(DOUBLE, 5));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(STRING, "5.0"), new SimpleValueImpl(DOUBLE, 5));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(STRING, "5.0"), new ValueImpl(STRING, 5.0));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(STRING, "5.0"), new SimpleValueImpl(STRING, 5.0));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
 
 
 
         //Boolean
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(BOOLEAN, "true"), new ValueImpl(BOOLEAN, false));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(BOOLEAN, "true"), new SimpleValueImpl(BOOLEAN, false));
         assertEquals(BOOLEAN, result.getType());
         assertTrue(((boolean) result.getValue()));
 
 
-        result = ComparisonOperationExecutor.notEqual(new ValueImpl(BOOLEAN, "false"), new ValueImpl(BOOLEAN, false));
+        result = ComparisonOperationExecutor.notEqual(new SimpleValueImpl(BOOLEAN, "false"), new SimpleValueImpl(BOOLEAN, false));
         assertEquals(BOOLEAN, result.getType());
         assertFalse(((boolean) result.getValue()));
     }

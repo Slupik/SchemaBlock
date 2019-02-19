@@ -1,14 +1,18 @@
 package io.github.slupik.schemablock.newparser.executor.implementation;
 
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.*;
+import io.github.slupik.schemablock.newparser.compilator.exception.ExceptedArrayButNotReceivedException;
 import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleArrayException;
 import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleTypeException;
+import io.github.slupik.schemablock.newparser.compilator.exception.IndexOutOfBoundsException;
 import io.github.slupik.schemablock.newparser.memory.Memory;
 import io.github.slupik.schemablock.newparser.memory.Register;
 import io.github.slupik.schemablock.newparser.memory.element.*;
 import io.github.slupik.schemablock.newparser.utils.CodeUtils;
 import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -16,11 +20,7 @@ import java.util.Queue;
  */
 class ByteCodeExe {
 
-    static void execute(Queue<ByteCommand> cmds, Memory memory, Register register) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig, UnknownOperation {
-
-        for(ByteCommand cmd:cmds) {
-            System.out.println("cmd.toString() = " + cmd.toString());
-        }
+    static void execute(Queue<ByteCommand> cmds, Memory memory, Register register) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig, UnknownOperation, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException {
 
         for(ByteCommand cmd:cmds) {
             switch (cmd.getCommandType()) {
@@ -28,19 +28,37 @@ class ByteCodeExe {
                     ByteCommandHeapVariable bc = ((ByteCommandHeapVariable) cmd);
                     Variable var = memory.get(bc.getName());
 
-                    Variable toHeap;
                     if(bc.getIndexes()>0) {
+                        Value value = var.getContent();
+                        if(value.isArray()) {
+                            Array array = ((Array) value);
 
+                            Value[] args = getValues(register, bc.getIndexes());
+                            int[] indexes = new int[args.length];
+                            if(args.length>0) {
+                                for(int i = 0;i<args.length;i++) {
+                                    Value arg = args[i];
+                                    if(arg instanceof SimpleValue) {
+                                        indexes[args.length-1-i] = ((SimpleValue) arg).getCastedValue();
+                                    } else {
+                                        System.err.println("BCE exe heap_1");
+                                        //TODO error
+                                    }
+                                }
+                            }
+
+                            register.add(array.getCell(indexes));
+                        } else {
+                            //TODO error
+                        }
                     } else {
-                        toHeap = var;
+                        register.add(var);
                     }
-
-                    register.add(var);
                     break;
                 }
                 case HEAP_VALUE: {
                     ByteCommandHeapValue bc = ((ByteCommandHeapValue) cmd);
-                    Value value = new ValueImpl(bc.getValueType(), bc.getRawValue());
+                    SimpleValue value = new SimpleValueImpl(bc.getValueType(), bc.getRawValue());
                     register.add(value);
                     break;
                 }
@@ -55,17 +73,25 @@ class ByteCodeExe {
 
                     if(bc.getSymbol().equals("=")) {
                         Value val = pollValue(register);
-                        Variable var = (Variable) register.pop();
+                        Memoryable container = register.pop();
+                        if(container instanceof Variable) {
+                            ((Variable) container).setContent(val);
+                        } else if(container instanceof ArrayCell) {
+                            ((ArrayCell) container).setValue(val);
+                        }
 
-                        var.setContent(val);
                         break;
                     }
 
                     int argsCount = CodeUtils.getArgsCount(bc.getSymbol());
-                    Value[] args = new Value[argsCount];
+                    SimpleValue[] args = new SimpleValue[argsCount];
                     for(int i=0;i<argsCount;i++) {
                         Value val = pollValue(register);
-                        args[argsCount-1-i] = val;
+                        if(val.isArray()) {
+                            //TODO throw error
+                        } else {
+                            args[argsCount-1-i] = ((SimpleValue) val);
+                        }
                     }
 
                     switch (bc.getSymbol()) {
@@ -165,15 +191,58 @@ class ByteCodeExe {
                 }
                 case HEAP_VIRTUAL_ARRAY: {
                     ByteCommandHeapVirArr bc = ((ByteCommandHeapVirArr) cmd);
-                    //TODO implement correctly
-                    Value[] values = new Value[bc.getElementsCount()];
-                    for(int i=0;i<bc.getElementsCount();i++) {
-                        Value val = pollValue(register);
-                        values[bc.getElementsCount()-1-i] = val;
-                    }
+                    Value[] values = getValues(register, bc.getElementsCount());
 
-                    Value array = new ValueImpl(bc.getType(), values);
-                    register.add(array);
+                    if(bc.isEmpty()) {
+                        int[] indexes = new int[values.length];
+                        for(int i=0;i<values.length;i++) {
+                            Value value = values[i];
+                            if(value instanceof SimpleValue) {
+                                indexes[i] = ((SimpleValue) value).getCastedValue();
+                            } else {
+                                System.err.println("Heap_array_1");
+                                //TODO throw error
+                            }
+                        }
+
+                        List<Array> arrays = new ArrayList<>();
+                        for (int index : indexes) {
+                            int dimensions = bc.getElementsCount()+1-indexes.length;
+                            if (arrays.isEmpty()) {
+                                Array array = new ArrayImpl(bc.getType(), dimensions, index);
+                                register.add(array);
+                                arrays.add(array);
+                            } else {
+                                List<Array> toFill = arrays;
+                                arrays = new ArrayList<>();
+                                for (Array elementToFill : toFill) {
+                                    for (ArrayCell cell : elementToFill.getCells()) {
+                                        Array array = new ArrayImpl(bc.getType(), dimensions, index);
+                                        cell.setValue(array);
+                                        arrays.add(array);
+                                    }
+                                }
+                                System.out.println("arrays.size() = " + arrays.size());
+                            }
+                        }
+                    } else {
+                        int dimensions = 1;
+                        if(values[0].isArray()) {
+                            dimensions += ((Array) values[0]).getDimensionsCount();
+                        }
+                        Array array = new ArrayImpl(bc.getType(), dimensions, bc.getElementsCount());
+                        for(int i=0;i<values.length;i++) {
+                            if(values[i] instanceof Array) {
+                                array.setValue(new int[]{i}, (Array) values[values.length-1-i]);
+                            } else if(values[i] instanceof SimpleValue) {
+                                array.setValue(new int[]{i}, (SimpleValue) values[values.length-1-i]);
+                            } else {
+                                System.err.println("Heap_array_2");
+                                //TODO throw error
+                            }
+                        }
+                        register.add(array);
+                    }
                     break;
                 }
                 case EXECUTE: {
@@ -181,7 +250,14 @@ class ByteCodeExe {
                     ByteCommandExecute bc = ((ByteCommandExecute) cmd);
                     if(bc.getName().equals("sqrt")) {
                         Value value = pollValue(register);
-                        Value result = new ValueImpl(ValueType.DOUBLE, Math.sqrt(((Integer) value.getValue())));
+                        Value result = null;
+                        if(value.isArray()) {
+                            Array array = ((Array) value);
+                            //TODO only for this specific function it's error...
+                        } else {
+                            SimpleValue sValue = ((SimpleValue) value);
+                            result = new SimpleValueImpl(ValueType.DOUBLE, Math.sqrt(((Integer) sValue.getValue())));
+                        }
                         register.add(result);
                     }
                     break;
@@ -194,14 +270,29 @@ class ByteCodeExe {
         }
     }
 
+    private static Value[] getValues(Register register, int amount) {
+        Value[] args = new Value[amount];
+        for(int i=0;i<amount;i++) {
+            Value val = pollValue(register);
+            args[amount-1-i] = val;
+        }
+        return args;
+    }
+
     private static Value pollValue(Register register) {
         Memoryable memoried = register.pop();
 
         Value value = null;
         if(memoried instanceof Variable) {
             value = ((Variable) memoried).getContent();
-        } else if(memoried instanceof Value) {
-            value = ((Value) memoried);
+        } else if(memoried instanceof ArrayCell) {
+            value = ((ArrayCell) memoried).getValue();
+        } else if(memoried instanceof SimpleValue) {
+            value = ((SimpleValue) memoried);
+        } else if(memoried instanceof Array) {
+            value = ((Array) memoried);
+        } else {
+            //TODO throw error
         }
         return value;
     }

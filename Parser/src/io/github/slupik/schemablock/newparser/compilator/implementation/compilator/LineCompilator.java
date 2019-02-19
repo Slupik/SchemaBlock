@@ -73,7 +73,7 @@ public class LineCompilator {
                             token.getPos(),
                             type,
                             data.dimensions,
-                            false
+                            true
                     ));
                     i+=data.elementsCount;
 

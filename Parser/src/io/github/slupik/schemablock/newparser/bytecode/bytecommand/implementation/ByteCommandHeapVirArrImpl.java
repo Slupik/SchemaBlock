@@ -37,6 +37,10 @@ public class ByteCommandHeapVirArrImpl extends ByteCommandBase implements ByteCo
 
     @Override
     public String toString(){
-        return getCommandType().toString()+" "+type.toString()+" "+ arraySize;
+        if(empty) {
+            return getCommandType().toString()+" "+type.toString()+" "+ arraySize+" empty";
+        } else {
+            return getCommandType().toString()+" "+type.toString()+" "+ arraySize;
+        }
     }
 }

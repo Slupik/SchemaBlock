@@ -7,6 +7,8 @@ import io.github.slupik.schemablock.newparser.memory.Memory;
 import io.github.slupik.schemablock.newparser.memory.MemoryImpl;
 import io.github.slupik.schemablock.newparser.memory.Register;
 import io.github.slupik.schemablock.newparser.memory.RegisterImpl;
+import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
+import io.github.slupik.schemablock.newparser.memory.element.Value;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,6 +51,22 @@ class ExecutorImplTest {
                 "double c = 5/2;" +
                 "String a = \"text\"+b+c;",
                 "text482");
+
+        check("double[] b = {1, 2};" +
+                "double a = b[1];", 2);
+        check("double[4] b;" +
+                "b[1] = 2;" +
+                "double a = b[1];", 2);
+        check("double[][] b = {{1}};" +
+                "double a = b[0][0];", 1);
+        check("double[][][] b = {{{1}}};" +
+                "double a = b[0][0][0];", 1);
+        check("double[][] b = {{1}, {2}};" +
+                "double a = b[0][0];", 1);
+        check("double[][] b = {{1}, {2}};" +
+                "double a = b[1][0];", 2);
+        check("double[][] b = {{1, 4}, {3, 2}};" +
+                "double a = b[1][1];", 2);
     }
 
     @Test
@@ -65,13 +83,31 @@ class ExecutorImplTest {
 
     @Test
     void repair() throws Throwable {
-        check("double[] b = {1, 2};" +
-                "double a = b[1];", 2);
+    }
+
+    @Test
+    void handRepair() throws Throwable {
+//        exe.execute("double[] b = {1, 2};");
+//
+//
+//
+//        Value value = memory.get("b").getContent();
+//        Assertions.assertTrue(value.isArray());
+//        Array array = ((Array) value);
+//        Assertions.assertEquals(1, ((int) ((SimpleValue) array.getElement(new int[]{0})).getCastedValue()));
+//
+//
+//
+//        memory.clear();
+//        register.clear();
     }
 
     private void check(String code, Object result) throws Throwable {
         exe.execute(code);
-        Assertions.assertEquals(result, memory.get("a").getContent().getValue());
+        Value value = memory.get("a").getContent();
+        Assertions.assertFalse(value.isArray());
+        SimpleValue sValue = ((SimpleValue) value);
+        Assertions.assertEquals(result, sValue.getValue());
         memory.clear();
         register.clear();
     }

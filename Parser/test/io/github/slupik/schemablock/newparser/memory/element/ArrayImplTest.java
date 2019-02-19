@@ -14,8 +14,8 @@ class ArrayImplTest {
         ArrayImpl array = new ArrayImpl(ValueType.INTEGER, 1, 10);
         assertNull(array.getElement(new int[]{5}));
 
-        array.setValue(new int[]{5}, new ValueImpl(ValueType.INTEGER, 99));
-        assertEquals(99, ((Value) array.getElement(new int[]{5})).getValue());
+        array.setValue(new int[]{5}, new SimpleValueImpl(ValueType.INTEGER, 99));
+        assertEquals(99, ((SimpleValue) array.getElement(new int[]{5})).getValue());
     }
 
     @Test
@@ -24,10 +24,11 @@ class ArrayImplTest {
         ArrayImpl childArray = new ArrayImpl(ValueType.INTEGER, 1, 6);
 
         parentArray.setValue(new int[]{5}, childArray);
-        childArray.setValue(new int[]{2}, new ValueImpl(ValueType.INTEGER, 99));
-        assertEquals(99, ((Value) parentArray.getElement(new int[]{5, 2})).getValue());
+        childArray.setValue(new int[]{2}, new SimpleValueImpl(ValueType.INTEGER, 99));
+        assertEquals(99, ((SimpleValue) ((Array) parentArray.getElement(new int[]{5})).getElement(new int[]{2})).getValue());
+        assertEquals(99, ((SimpleValue) parentArray.getElement(new int[]{5, 2})).getValue());
 
-        parentArray.setValue(new int[]{5, 2}, new ValueImpl(ValueType.INTEGER, 85));
-        assertEquals(85, ((Value) parentArray.getElement(new int[]{5, 2})).getValue());
+        parentArray.setValue(new int[]{5, 2}, new SimpleValueImpl(ValueType.INTEGER, 85));
+        assertEquals(85, ((SimpleValue) parentArray.getElement(new int[]{5, 2})).getValue());
     }
 }

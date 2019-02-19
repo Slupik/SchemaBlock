@@ -9,12 +9,15 @@ public class ArrayImpl implements Array {
 
     private final ValueType TYPE;
     private final int DIMENSIONS;
-    private final Memoryable[] VALUES;
+    private final ArrayCell[] VALUES;
 
     public ArrayImpl(ValueType type, int dimensions, int size) {
         TYPE = type;
         DIMENSIONS = dimensions;
-        VALUES = new Memoryable[size];
+        VALUES = new ArrayCell[size];
+        for(int i = 0;i<size;i++) {
+            VALUES[i] = new ArrayCellImpl(type);
+        }
     }
 
     @Override
@@ -23,8 +26,8 @@ public class ArrayImpl implements Array {
     }
 
     @Override
-    public void setValue(int[] indexes, Value value) {
-        if(value.getType()==TYPE) {
+    public void setValue(int[] indexes, SimpleValue value) {
+        if(ValueType.isCompatible(TYPE, value.getType())) {
             if(indexes.length>1) {
                 getArray(
                         Arrays.copyOfRange(indexes, 0, indexes.length-1)
@@ -35,15 +38,18 @@ public class ArrayImpl implements Array {
             } else {
                 if(indexes.length == 1) {
                     if(DIMENSIONS==1) {
-                        VALUES[indexes[0]] = value;
+                        VALUES[indexes[0]].setValue(value);
                     } else {
+                        System.err.println("SVE1");
                         //TODO throw error
                     }
                 } else {
+                    System.err.println("SVE2");
                     //TODO throw error
                 }
             }
         } else {
+            System.err.println("SVE3");
             //TODO throw error
         }
     }
@@ -53,39 +59,32 @@ public class ArrayImpl implements Array {
         if(value.getType() == TYPE) {
             if(value.getDimensionsCount()+indexes.length==DIMENSIONS) {
                 if(indexes.length==1) {
-                    VALUES[indexes[0]] = value;
+                    VALUES[indexes[0]].setValue(value);
                 } else {
                     Array array = getArray(Arrays.copyOfRange(indexes, 0, indexes.length-1));
                     array.setValue(new int[]{indexes[indexes.length-1]}, value);
                 }
             } else {
+                System.err.println("SAE1");
                 //TODO throw error
             }
         } else {
+            System.err.println("SAE2");
             //TODO throw error
-        }
-    }
-
-    private Array getArray(int[] indexes) {
-        Memoryable memorized = getElement(indexes);
-        if(memorized instanceof Array) {
-            return (Array) memorized;
-        } else {
-            //TODO throw error
-            return null;
         }
     }
 
     @Override
-    public Memoryable getElement(int[] indexes) {
+    public ArrayCell getCell(int[] indexes) {
         if(indexes.length>0) {
             if(indexes.length==1) {
                 return VALUES[indexes[0]];
             } else {
                 if(DIMENSIONS==indexes.length) {
-                    Memoryable memorizes = VALUES[indexes[0]];
+                    ArrayCell cell = VALUES[indexes[0]];
+                    Value memorizes = cell.getValue();
                     if(memorizes instanceof Array) {
-                        return ((Array) memorizes).getElement(Arrays.copyOfRange(indexes, 1, indexes.length));
+                        return ((Array) memorizes).getCell(Arrays.copyOfRange(indexes, 1, indexes.length));
                     } else {
                         System.err.println("GE1");
                         //TODO throw error
@@ -103,17 +102,22 @@ public class ArrayImpl implements Array {
     }
 
     @Override
+    public ArrayCell[] getCells() {
+        return VALUES;
+    }
+
+    private Array getArray(int[] indexes) {
+        Memoryable memorized = getElement(indexes);
+        if(memorized instanceof Array) {
+            return (Array) memorized;
+        } else {
+            //TODO throw error
+            return null;
+        }
+    }
+
+    @Override
     public ValueType getType() {
         return TYPE;
-    }
-
-    @Override
-    public int getDimensions() {
-        return getDimensionsCount();
-    }
-
-    @Override
-    public boolean isValue() {
-        return false;
     }
 }
