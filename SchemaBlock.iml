@@ -11,7 +11,7 @@
     <orderEntry type="module" module-name="0 Entity" exported="" />
     <orderEntry type="module" module-name="1 Model" exported="" />
     <orderEntry type="module" module-name="2 Logic" exported="" />
-    <orderEntry type="module" module-name="2 Parser" exported="" />
+    <orderEntry type="module" module-name="1 Parser" exported="" />
     <orderEntry type="module" module-name="3 JavaFx" exported="" />
   </component>
 </module>
