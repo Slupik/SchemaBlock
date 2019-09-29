@@ -23,6 +23,7 @@ class ByteCodeExe {
     static void execute(Queue<ByteCommand> cmds, Memory memory, Register register) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig, UnknownOperation, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException {
 
         for(ByteCommand cmd:cmds) {
+//            System.out.println("cmd.getCommandType() = " + cmd.getCommandType());
             switch (cmd.getCommandType()) {
                 case HEAP_VAR: {
                     ByteCommandHeapVariable bc = ((ByteCommandHeapVariable) cmd);
@@ -246,7 +247,7 @@ class ByteCodeExe {
                     break;
                 }
                 case EXECUTE: {
-                    System.out.println("EXECUTE");
+                    //TODO implement functions
                     ByteCommandExecute bc = ((ByteCommandExecute) cmd);
                     if(bc.getName().equals("sqrt")) {
                         Value value = pollValue(register);
@@ -256,10 +257,11 @@ class ByteCodeExe {
                             //TODO only for this specific function it's error...
                         } else {
                             SimpleValue sValue = ((SimpleValue) value);
-                            result = new SimpleValueImpl(ValueType.DOUBLE, Math.sqrt(((Integer) sValue.getValue())));
+                            double valueForCalculations = Double.parseDouble(sValue.getValue().toString());
+                            result = new SimpleValueImpl(ValueType.DOUBLE, Math.sqrt(valueForCalculations));
                         }
                         register.add(result);
-                    }
+                    } else if(bc.getName().equals("test"))
                     break;
                 }
                 case CLEAR_EXEC_HEAP: {

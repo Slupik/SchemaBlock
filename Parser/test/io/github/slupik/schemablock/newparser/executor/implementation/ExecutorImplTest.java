@@ -48,8 +48,8 @@ class ExecutorImplTest {
                 "test aaa");
 
         check("int b = 5 * 9+3;" +
-                "double c = 5/2;" +
-                "String a = \"text\"+b+c;",
+                        "double c = 5/2;" +
+                        "String a = \"text\"+b+c;",
                 "text482");
 
         check("double[] b = {1, 2};" +
@@ -67,6 +67,34 @@ class ExecutorImplTest {
                 "double a = b[1][0];", 2);
         check("double[][] b = {{1, 4}, {3, 2}};" +
                 "double a = b[1][1];", 2);
+
+        check("double a = 0;" +
+                "a = sqrt(4);",2.0);
+        check("double a = sqrt(4);",2.0);
+        check("int b = 9;" +
+                        "double a = sqrt(b);",
+                3.0);
+        check("double b = sqrt(81);" +
+                        "double a = sqrt(b);",
+                3.0);
+        check("double a = sqrt(sqrt(81));",
+                3.0);
+        check("double[] b = {3, 9};" +
+                        "double a = sqrt(b[1]);",
+                3.0);
+        check("double[] b = {3, 9, 81};" +
+                        "double a = sqrt(sqrt(b[2]));",
+                3.0);
+        check("double[] b = new double[2];" +
+                        "b[1] = 9;" +
+                        "double a = sqrt(b[1]);",
+                3.0);
+        check("double[] b = new double[3];" +
+                        "b[2] = 81;" +
+                        "double a = sqrt(sqrt(b[2]));",
+                3.0);
+        check("double a = sqrt(sqrt(40+41));",
+                3.0);
     }
 
     @Test
@@ -83,6 +111,9 @@ class ExecutorImplTest {
 
     @Test
     void repair() throws Throwable {
+        String code = "double a = 0;" +
+                "a = sqrt(4);";
+        check(code,2.0);
     }
 
     @Test
