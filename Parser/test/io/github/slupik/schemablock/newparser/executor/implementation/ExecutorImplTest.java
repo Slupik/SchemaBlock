@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
  * All rights reserved & copyright ©
  */
 class ExecutorImplTest {
+
     private Compilator compilator;
     private Memory memory;
     private Register register;

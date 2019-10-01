@@ -226,7 +226,6 @@ class ByteCodeExe {
                                         arrays.add(array);
                                     }
                                 }
-                                System.out.println("arrays.size() = " + arrays.size());
                             }
                         }
                     } else {

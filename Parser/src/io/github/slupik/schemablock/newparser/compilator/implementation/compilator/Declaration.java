@@ -22,6 +22,30 @@ class Declaration {
     static List<ByteCommand> compile(ValueType type, List<Token> parts) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
         List<ByteCommand> compiled = new ArrayList<>();
 
+        List<Token> partialDeclaration = new ArrayList<>();//ex. int a, b;
+        int arrayNestLvl = 0;
+        for(Token part:parts) {
+            if(CodeUtils.isArrayStart(part)) arrayNestLvl++;
+            if(CodeUtils.isArrayEnd(part)) arrayNestLvl--;
+
+            if(",".equals(part.getData()) && arrayNestLvl==0) {
+                compiled.addAll(compilePart(type, partialDeclaration));
+                partialDeclaration.clear();
+            } else {
+                partialDeclaration.add(part);
+            }
+        }
+
+        if(partialDeclaration.size()>0) {
+            compiled.addAll(compilePart(type, partialDeclaration));
+        }
+
+        return compiled;
+    }
+
+    private static List<ByteCommand> compilePart(ValueType type, List<Token> parts) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
+        List<ByteCommand> compiled = new ArrayList<>();
+
         Token tokenWithName = null;
         if(isNameOfVariable(parts.get(0).getData())) {
             tokenWithName = parts.get(0);
