@@ -5,6 +5,10 @@ import io.github.slupik.schemablock.newparser.compilator.exception.ExceptedArray
 import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleArrayException;
 import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleTypeException;
 import io.github.slupik.schemablock.newparser.compilator.exception.IndexOutOfBoundsException;
+import io.github.slupik.schemablock.newparser.function.Function;
+import io.github.slupik.schemablock.newparser.function.FunctionContainer;
+import io.github.slupik.schemablock.newparser.function.FunctionExecutor;
+import io.github.slupik.schemablock.newparser.function.exception.NoMatchingFunction;
 import io.github.slupik.schemablock.newparser.memory.Memory;
 import io.github.slupik.schemablock.newparser.memory.Register;
 import io.github.slupik.schemablock.newparser.memory.element.*;
@@ -20,10 +24,9 @@ import java.util.Queue;
  */
 class ByteCodeExe {
 
-    static void execute(Queue<ByteCommand> cmds, Memory memory, Register register) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig, UnknownOperation, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException {
+    static void execute(Queue<ByteCommand> cmds, Memory memory, Register register, FunctionContainer functionContainer, FunctionExecutor executor) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig, UnknownOperation, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException, NoMatchingFunction {
 
         for(ByteCommand cmd:cmds) {
-//            System.out.println("cmd.getCommandType() = " + cmd.getCommandType());
             switch (cmd.getCommandType()) {
                 case HEAP_VAR: {
                     ByteCommandHeapVariable bc = ((ByteCommandHeapVariable) cmd);
@@ -249,19 +252,16 @@ class ByteCodeExe {
                 case EXECUTE: {
                     //TODO implement functions
                     ByteCommandExecute bc = ((ByteCommandExecute) cmd);
-                    if(bc.getName().equals("sqrt")) {
-                        Value value = pollValue(register);
-                        Value result = null;
-                        if(value.isArray()) {
-                            Array array = ((Array) value);
-                            //TODO only for this specific function it's error...
-                        } else {
-                            SimpleValue sValue = ((SimpleValue) value);
-                            double valueForCalculations = Double.parseDouble(sValue.getValue().toString());
-                            result = new SimpleValueImpl(ValueType.DOUBLE, Math.sqrt(valueForCalculations));
-                        }
-                        register.add(result);
-                    } else if(bc.getName().equals("test"))
+
+                    List<Value> args = new ArrayList<>();
+                    for(int i=0;i<bc.getArgsCount();i++) {
+                        args.add(pollValue(register));
+                    }
+
+                    List<Function> matchingFunctions = functionContainer.getMatchingFunctions(bc.getName());
+                    Value result = executor.execute(matchingFunctions, args);
+
+                    register.add(result);
                     break;
                 }
                 case CLEAR_EXEC_HEAP: {

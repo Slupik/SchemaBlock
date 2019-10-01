@@ -10,6 +10,7 @@ import io.github.slupik.schemablock.newparser.compilator.implementation.compilat
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
 import io.github.slupik.schemablock.newparser.executor.implementation.IllegalOperation;
 import io.github.slupik.schemablock.newparser.executor.implementation.UnknownOperation;
+import io.github.slupik.schemablock.newparser.function.exception.NoMatchingFunction;
 import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
 import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
@@ -20,9 +21,9 @@ import java.util.Queue;
  */
 public interface Executor {
 
-    void execute(String code) throws ValueTooBig, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ComExIllegalEscapeChar, IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, UnknownOperation, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException;
-    void execute(Queue<ByteCommand> cmds) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig, UnknownOperation, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException;
+    void execute(String code) throws ValueTooBig, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ComExIllegalEscapeChar, IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, UnknownOperation, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException, NoMatchingFunction;
+    void execute(Queue<ByteCommand> cmds) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig, UnknownOperation, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException, NoMatchingFunction;
 
-    SimpleValue getResult(String code) throws ValueTooBig, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ComExIllegalEscapeChar, UnknownOperation, IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException;
-    SimpleValue getResult(Queue<ByteCommand> cmds) throws ValueTooBig, IncompatibleArrayException, UnknownOperation, IllegalOperation, IncompatibleTypeException, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException;
+    SimpleValue getResult(String code) throws ValueTooBig, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ComExIllegalEscapeChar, UnknownOperation, IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException, NoMatchingFunction;
+    SimpleValue getResult(Queue<ByteCommand> cmds) throws ValueTooBig, IncompatibleArrayException, UnknownOperation, IllegalOperation, IncompatibleTypeException, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException, NoMatchingFunction;
 }

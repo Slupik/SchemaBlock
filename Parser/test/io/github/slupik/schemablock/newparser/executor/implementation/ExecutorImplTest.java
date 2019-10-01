@@ -95,6 +95,18 @@ class ExecutorImplTest {
                 3.0);
         check("double a = sqrt(sqrt(40+41));",
                 3.0);
+        check("double a = 0;" +
+                "a = sqrt(4);",
+                2.0);
+        check("double a = 0;" +
+                "a = min(-2, 9);",
+                -2.0);
+        check("double a = 0;" +
+                "a = power(2, 3);",
+                Math.pow(2, 3));
+        check("double a = 0;" +
+                "a = power(2, sqrt(9));",
+                Math.pow(2, Math.sqrt(9)));
     }
 
     @Test
@@ -111,9 +123,9 @@ class ExecutorImplTest {
 
     @Test
     void repair() throws Throwable {
-        String code = "double a = 0;" +
-                "a = sqrt(4);";
-        check(code,2.0);
+//        String code = "double a = 0;" +
+//                "a = power(2, 3);";
+//        check(code, Math.pow(2, 3));
     }
 
     @Test
