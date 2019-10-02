@@ -4,6 +4,8 @@ import io.github.slupik.schemablock.javafx.element.ElementSizeBinder;
 import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import io.github.slupik.schemablock.model.ui.abstraction.element.OperationElement;
+import io.github.slupik.schemablock.model.ui.newparser.HeapController;
+import io.github.slupik.schemablock.newparser.executor.Executor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,11 @@ import java.util.List;
  * All rights reserved & copyright ©
  */
 public abstract class UiStandardElement extends UiElementBase implements ElementSizeBinder.Input {
+
+    public UiStandardElement(Executor executor, HeapController heap) {
+        super(executor, heap);
+        System.out.println("UiStandardElement executor = " + executor);
+    }
 
     @Override
     protected ElementSizeBinder.Input getBinderInput() {

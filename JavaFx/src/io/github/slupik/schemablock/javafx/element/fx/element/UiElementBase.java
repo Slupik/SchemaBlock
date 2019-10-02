@@ -9,6 +9,8 @@ import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
+import io.github.slupik.schemablock.model.ui.newparser.HeapController;
+import io.github.slupik.schemablock.newparser.executor.Executor;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -23,12 +25,15 @@ import java.io.IOException;
  */
 public abstract class UiElementBase extends Pane implements UiElement {
 
+    protected final Executor executor;
+    protected final HeapController heap;
+
     private DeletionHandler deletionHandler;
     private ElementSizeBinder size;
     private CustomShapeBase background;
     protected Element element;
 
-    public UiElementBase(){
+    public UiElementBase(Executor executor, HeapController heap){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(getResourcePath()));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -40,6 +45,9 @@ public abstract class UiElementBase extends Pane implements UiElement {
         }
         initBackground();
         initDialog();
+
+        this.executor = executor;
+        this.heap = heap;
 
         onPreInit();
         init();

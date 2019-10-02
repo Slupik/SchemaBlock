@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.javafx.logic.heap;
 
-import io.github.slupik.schemablock.parser.math.rpn.variable.value.ValueType;
+import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 import javafx.beans.property.SimpleStringProperty;
 
 /**

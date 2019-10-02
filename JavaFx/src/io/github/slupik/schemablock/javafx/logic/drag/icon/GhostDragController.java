@@ -2,6 +2,8 @@ package io.github.slupik.schemablock.javafx.logic.drag.icon;
 
 import io.github.slupik.schemablock.javafx.logic.drag.DragControllerBase;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
+import io.github.slupik.schemablock.model.ui.newparser.HeapController;
+import io.github.slupik.schemablock.newparser.executor.Executor;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -19,23 +21,23 @@ public class GhostDragController extends DragControllerBase<DragGhostIcon> {
     private final GhostDragElementFactory factory;
 
     private DragGhostIcon mDragOverIcon;
+    private final Executor executor;
+    private final HeapController heap;
     private final DestContainerAfterDrop container;
 
     private EventHandler<DragEvent> mIconDragOverRoot = null;
     private EventHandler<DragEvent> mIconDragDropped = null;
     private EventHandler<DragEvent> mIconDragOverRightPane = null;
 
-    public GhostDragController(Pane draggableArea, Pane placeForElement, GhostDragElementFactory factory) {
-        this(draggableArea, placeForElement, factory, new DestContainerAfterDropImpl(placeForElement));
-    }
-
-    public GhostDragController(Pane draggableArea, Pane placeForElement, GhostDragElementFactory factory, DestContainerAfterDrop container) {
+    public GhostDragController(Pane draggableArea, Pane placeForElement, GhostDragElementFactory factory, DestContainerAfterDrop container, Executor executor, HeapController heap) {
         this.draggableArea = draggableArea;
         this.placeForElement = placeForElement;
         this.factory = factory;
         this.container = container;
 
-        mDragOverIcon = factory.getDragIcon();
+        mDragOverIcon = factory.getDragIcon(executor, heap);
+        this.executor = executor;
+        this.heap = heap;
 
         mDragOverIcon.setVisible(false);
         mDragOverIcon.setOpacity(0.65);
@@ -138,7 +140,7 @@ public class GhostDragController extends DragControllerBase<DragGhostIcon> {
             if (container != null) {
                 if (container.getValue("scene_coords") != null) {
 
-                    Node droppedElement = factory.getNode(container);
+                    Node droppedElement = factory.getNode(container, executor, heap);
                     this.container.addNode(droppedElement);
 
                     Point2D cursorPoint = container.getValue("scene_coords");

@@ -7,11 +7,19 @@ import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetWithElements;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
 import io.github.slupik.schemablock.javafx.logic.execution.ExecutionController;
-import io.github.slupik.schemablock.javafx.logic.heap.DefaultHeapSpy;
-import io.github.slupik.schemablock.javafx.logic.heap.HeapValueFx;
+import io.github.slupik.schemablock.javafx.logic.heap.NewHeapSpy;
 import io.github.slupik.schemablock.javafx.logic.persistence.SchemaSaver;
 import io.github.slupik.schemablock.model.ui.implementation.container.DefaultElementContainer;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
+import io.github.slupik.schemablock.model.ui.parser.ElementParser;
+import io.github.slupik.schemablock.newparser.compilator.Compilator;
+import io.github.slupik.schemablock.newparser.compilator.implementation.DefaultCompilator;
+import io.github.slupik.schemablock.newparser.executor.Executor;
+import io.github.slupik.schemablock.newparser.executor.implementation.ExecutorImpl;
+import io.github.slupik.schemablock.newparser.memory.Memory;
+import io.github.slupik.schemablock.newparser.memory.MemoryImpl;
+import io.github.slupik.schemablock.newparser.memory.RegisterImpl;
+import io.github.slupik.schemablock.newparser.memory.element.Variable;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -90,21 +98,28 @@ public class MainViewController implements Initializable {
     private Button btnContinue;
 
     @FXML
-    private TableView<HeapValueFx> tvVariables;
+    private TableView<Variable> tvVariables;
 
     @FXML
-    private TableColumn<HeapValueFx, String> tcVarType;
+    private TableColumn<Variable, String> tcVarType;
 
     @FXML
-    private TableColumn<HeapValueFx, String> tcVarName;
+    private TableColumn<Variable, String> tcVarName;
 
     @FXML
-    private TableColumn<HeapValueFx, String> tcVarValue;
+    private TableColumn<Variable, String> tcVarValue;
 
     private SheetWithElements container;
     private GhostDragController ghost;
     private SchemaSaver saver;
     private SchemaLoader loader;
+
+    private Compilator compilator = new DefaultCompilator();
+    private Memory memory = new MemoryImpl();
+    private RegisterImpl register = new RegisterImpl();
+    private NewHeapSpy heap = new NewHeapSpy(memory);
+    private Executor executor = new ExecutorImpl(compilator, memory, register);
+    private ElementParser elementParser = new ElementParser(executor, heap);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -114,12 +129,12 @@ public class MainViewController implements Initializable {
     private void setupDragging() {
         IOCommunicable communicable = new UIIOCommunicator(tfInput, outputView, btnEnter);
 
-        DefaultElementContainer elementContainer = new DefaultElementContainer();
+        DefaultElementContainer elementContainer = new DefaultElementContainer(register, elementParser);
         ExecutionController executionController = new ExecutionController(communicable, elementContainer, btnContinue);
         elementContainer.setExecutionFlowController(executionController);
-        container = new DefaultSheetWithElements(sheet, communicable, elementContainer);
+        container = new DefaultSheetWithElements(sheet, communicable, elementContainer, executor, heap);
 
-        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()), container.getChildrenHandler());
+        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()), container.getChildrenHandler(), executor, heap);
 
         addIconsToMenu();
         bindIOView();
@@ -130,7 +145,7 @@ public class MainViewController implements Initializable {
     }
 
     private void bindTable() {
-        ObservableList<HeapValueFx> valueList = new DefaultHeapSpy().getList();
+        ObservableList<Variable> valueList = heap.getVariableList();
         tvVariables.setItems(valueList);
         tcVarType.setCellValueFactory(
                 new PropertyValueFactory<>("type")
@@ -172,10 +187,10 @@ public class MainViewController implements Initializable {
     }
 
     private void addIconsToMenu() {
-        addDragDetection(new DragGhostIconUiElement(UiElementType.STOP));
-        addDragDetection(new DragGhostIconUiElement(UiElementType.CALCULATION));
-        addDragDetection(new DragGhostIconUiElement(UiElementType.IF));
-        addDragDetection(new DragGhostIconUiElement(UiElementType.IO));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.STOP, executor, heap));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.CALCULATION, executor, heap));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.IF, executor, heap));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.IO, executor, heap));
     }
 
     private void addDragDetection(DragGhostIcon dragIcon) {

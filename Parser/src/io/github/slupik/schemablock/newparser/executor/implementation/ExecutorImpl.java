@@ -17,7 +17,9 @@ import io.github.slupik.schemablock.newparser.function.FunctionExecutor;
 import io.github.slupik.schemablock.newparser.function.exception.NoMatchingFunction;
 import io.github.slupik.schemablock.newparser.memory.Memory;
 import io.github.slupik.schemablock.newparser.memory.Register;
+import io.github.slupik.schemablock.newparser.memory.element.Memoryable;
 import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
+import io.github.slupik.schemablock.newparser.memory.element.Variable;
 import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
 import java.util.Queue;
@@ -60,6 +62,11 @@ public class ExecutorImpl implements Executor {
     @Override
     public SimpleValue getResult(Queue<ByteCommand> cmds) throws ValueTooBig, IncompatibleArrayException, UnknownOperation, IllegalOperation, IncompatibleTypeException, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException, NoMatchingFunction {
         ByteCodeExe.execute(cmds, memory, register, FUNCTIONS_CONTAINER, FUNCTION_EXECUTOR);
-        return ((SimpleValue) register.pop());
+        Memoryable memoryable = register.pop();
+        if(memoryable instanceof SimpleValue) {
+            return ((SimpleValue) memoryable);
+        } else {
+            return ((SimpleValue) ((Variable) memoryable).getContent());
+        }
     }
 }

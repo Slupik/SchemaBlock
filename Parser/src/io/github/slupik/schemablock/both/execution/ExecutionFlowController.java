@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.parser.execution;
+package io.github.slupik.schemablock.both.execution;
 
 /**
  * All rights reserved & copyright ©

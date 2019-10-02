@@ -10,6 +10,8 @@ import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragElementFactory;
 import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableNode;
 import io.github.slupik.schemablock.javafx.logic.drag.node.NodeDragController;
+import io.github.slupik.schemablock.model.ui.newparser.HeapController;
+import io.github.slupik.schemablock.newparser.executor.Executor;
 import javafx.scene.Node;
 
 /**
@@ -24,9 +26,9 @@ class GhostDragElementFactoryImpl implements GhostDragElementFactory {
     }
 
     @Override
-    public Node getNode(DragContainer container) {
+    public Node getNode(DragContainer container, Executor executor, HeapController heap) {
         UiElementType type = UiElementType.valueOf(container.getValue("type"));
-        UiElementBase droppedElement = UiElementFactory.createByType(type);
+        UiElementBase droppedElement = UiElementFactory.createByType(type, executor, heap);
 
         NodeDragController draggingController = new NodeDragController(new DraggableNode(droppedElement, false));
         draggingController.addListener((dragEvent, draggableNode) -> {
@@ -39,7 +41,7 @@ class GhostDragElementFactoryImpl implements GhostDragElementFactory {
     }
 
     @Override
-    public DragGhostIcon getDragIcon() {
-        return new DragGhostIconUiElement();
+    public DragGhostIcon getDragIcon(Executor executor, HeapController heap) {
+        return new DragGhostIconUiElement(executor, heap);
     }
 }

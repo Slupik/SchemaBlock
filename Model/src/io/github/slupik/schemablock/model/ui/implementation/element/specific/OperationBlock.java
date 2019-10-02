@@ -2,17 +2,19 @@ package io.github.slupik.schemablock.model.ui.implementation.element.specific;
 
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.OperationElement;
-import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.element.StandardElementBase;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
-import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
-import io.github.slupik.schemablock.parser.code.VariableNotFound;
-import io.github.slupik.schemablock.parser.code.WrongArgumentException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.VariableIsAlreadyDefinedException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
+import io.github.slupik.schemablock.newparser.compilator.exception.IndexOutOfBoundsException;
+import io.github.slupik.schemablock.newparser.compilator.exception.*;
+import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.ExceptedTypeOfArray;
+import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
+import io.github.slupik.schemablock.newparser.executor.Executor;
+import io.github.slupik.schemablock.newparser.executor.implementation.IllegalOperation;
+import io.github.slupik.schemablock.newparser.executor.implementation.UnknownOperation;
+import io.github.slupik.schemablock.newparser.function.exception.NoMatchingFunction;
+import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
+import io.github.slupik.schemablock.both.execution.VariableNotFound;
 
 /**
  * All rights reserved & copyright ©
@@ -20,6 +22,10 @@ import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeE
 public class OperationBlock extends StandardElementBase implements OperationElement {
 
     private String nextElement = "";
+
+    public OperationBlock(Executor executor) {
+        super(executor);
+    }
 
     @Override
     public void setNextElement(String elementId) {
@@ -44,7 +50,7 @@ public class OperationBlock extends StandardElementBase implements OperationElem
     }
 
     @Override
-    public void run() throws InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException, NextElementNotFound, VariableNotFound, WrongArgumentException, VariableIsAlreadyDefinedException, IncompatibleTypeException {
+    public void run() throws UnknownOperation, IncompatibleArrayException, ExceptedArrayButNotReceivedException, ExceptedTypeOfArray, ValueTooBig, IndexOutOfBoundsException, IncompatibleTypeException, IllegalOperation, VariableNotFound, ComExIllegalEscapeChar, NoMatchingFunction, NameForDeclarationCannotBeFound {
         onStart();
         justRunCode();
         tryRun(nextElement);

@@ -2,7 +2,7 @@ package io.github.slupik.schemablock.model.ui.abstraction.container;
 
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
-import io.github.slupik.schemablock.parser.execution.ExecutionFlowController;
+import io.github.slupik.schemablock.both.execution.ExecutionFlowController;
 
 /**
  * All rights reserved & copyright ©

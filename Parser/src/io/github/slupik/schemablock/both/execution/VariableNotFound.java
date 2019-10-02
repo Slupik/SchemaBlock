@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.parser.code;
+package io.github.slupik.schemablock.both.execution;
 
 import io.github.slupik.schemablock.model.ui.error.AlgorithmErrorType;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;

@@ -11,6 +11,8 @@ import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.element.OperationElement;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.OperationBlock;
+import io.github.slupik.schemablock.model.ui.newparser.HeapController;
+import io.github.slupik.schemablock.newparser.executor.Executor;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Dialog;
@@ -37,16 +39,22 @@ public class OperatingUiElement extends UiStandardElement {
 
     private MyRectangle shape;
 
+    public OperatingUiElement(Executor executor, HeapController heap) {
+        super(executor, heap);
+        System.out.println("OperatingUiElement executor = " + executor);
+    }
+
     @Override
     protected void onPostInit() {
         super.onPostInit();
-        element = new OperationBlock();
+        System.out.println("onPostInit executor = " + executor);
+        element = new OperationBlock(executor);
     }
 
     @Override
     protected CustomShapeBase createBackgroundElement() {
         shape = new MyRectangle();
-        element = new OperationBlock();
+        element = new OperationBlock(executor);
         return shape;
     }
 

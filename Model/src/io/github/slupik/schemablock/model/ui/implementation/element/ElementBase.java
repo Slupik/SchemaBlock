@@ -3,18 +3,9 @@ package io.github.slupik.schemablock.model.ui.implementation.element;
 import com.google.gson.Gson;
 import io.github.slupik.schemablock.model.ui.abstraction.controller.ElementCallback;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
-import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
 import io.github.slupik.schemablock.model.utils.RandomString;
-import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
-import io.github.slupik.schemablock.parser.code.VariableNotFound;
-import io.github.slupik.schemablock.parser.code.WrongArgumentException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.VariableIsAlreadyDefinedException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +58,7 @@ public abstract class ElementBase implements Element {
         }
     }
 
-    protected final void tryRun(String elementId) throws NextElementNotFound, IncompatibleTypeException, UnsupportedValueException, VariableIsAlreadyDefinedException, InvalidArgumentsException, WrongArgumentException, NotFoundTypeException, VariableNotFound {
+    protected final void tryRun(String elementId) {
         for(ElementCallback callback:callbacks) {
             callback.onTryRun(elementId);
         }

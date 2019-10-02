@@ -4,7 +4,7 @@ import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContai
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
-import io.github.slupik.schemablock.parser.execution.ExecutionFlowController;
+import io.github.slupik.schemablock.both.execution.ExecutionFlowController;
 import javafx.scene.control.Button;
 
 
