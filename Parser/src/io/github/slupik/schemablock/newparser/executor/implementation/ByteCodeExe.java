@@ -249,7 +249,6 @@ class ByteCodeExe {
                     break;
                 }
                 case EXECUTE: {
-                    //TODO implement functions
                     ByteCommandExecute bc = ((ByteCommandExecute) cmd);
 
                     List<Value> args = new ArrayList<>();
@@ -260,7 +259,9 @@ class ByteCodeExe {
                     List<Function> matchingFunctions = functionContainer.getMatchingFunctions(bc.getName());
                     Value result = executor.execute(matchingFunctions, args);
 
-                    register.add(result);
+                    if(result.getType()!=ValueType.VOID) {
+                        register.add(result);
+                    }
                     break;
                 }
                 case CLEAR_EXEC_HEAP: {

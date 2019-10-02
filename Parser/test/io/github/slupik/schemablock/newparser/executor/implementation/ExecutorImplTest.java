@@ -108,6 +108,10 @@ class ExecutorImplTest {
         check("double a = 0;" +
                 "a = power(2, sqrt(9));",
                 Math.pow(2, Math.sqrt(9)));
+        check("double[] array = {9, 81};" +
+                        "double a = 0;" +
+                        "a = power(2, sqrt(array[0]));",
+                Math.pow(2, Math.sqrt(9)));
     }
 
     @Test
@@ -124,9 +128,8 @@ class ExecutorImplTest {
 
     @Test
     void repair() throws Throwable {
-//        String code = "double a = 0;" +
-//                "a = power(2, 3);";
-//        check(code, Math.pow(2, 3));
+//        String code = "";
+//        check(code, 0);
     }
 
     @Test

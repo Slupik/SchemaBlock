@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.newparser.function;
 
 import io.github.slupik.schemablock.newparser.function.definition.FunctionMin;
 import io.github.slupik.schemablock.newparser.function.definition.FunctionPower;
+import io.github.slupik.schemablock.newparser.function.definition.FunctionPrintln;
 import io.github.slupik.schemablock.newparser.function.definition.FunctionSqrt;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class DefaultFunctionContainer implements FunctionContainer {
         IMPLEMENTED_FUNCTIONS.add(new FunctionSqrt());
         IMPLEMENTED_FUNCTIONS.add(new FunctionMin());
         IMPLEMENTED_FUNCTIONS.add(new FunctionPower());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionPrintln());
     }
 
     @Override

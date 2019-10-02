@@ -39,7 +39,7 @@ public class DefaultFunctionExecutor implements FunctionExecutor {
         //TODO simplify (remove array enums)
         ValueType valueType = value.getType();
         if (value.isArray()) {
-            if(argType == FunctionArgType.NUMBER_ARRAY) {
+            if (argType == FunctionArgType.NUMBER_ARRAY) {
                 return valueType.IS_NUMBER;
             } else if (argType == FunctionArgType.INTEGER_ARRAY) {
                 return (valueType == ValueType.BYTE || valueType == ValueType.SHORT || valueType == ValueType.INTEGER || valueType == ValueType.LONG);
@@ -47,9 +47,11 @@ public class DefaultFunctionExecutor implements FunctionExecutor {
                 return (valueType == ValueType.DOUBLE || valueType == ValueType.FLOAT);
             } else if (argType == FunctionArgType.STRING_ARRAY) {
                 return valueType == ValueType.STRING;
+            } else {
+                return argType == FunctionArgType.ANY_ARRAY;
             }
         } else {
-            if(argType == FunctionArgType.NUMBER) {
+            if (argType == FunctionArgType.NUMBER) {
                 return valueType.IS_NUMBER;
             } else if (argType == FunctionArgType.INTEGER) {
                 return (valueType == ValueType.BYTE || valueType == ValueType.SHORT || valueType == ValueType.INTEGER || valueType == ValueType.LONG);
@@ -57,9 +59,10 @@ public class DefaultFunctionExecutor implements FunctionExecutor {
                 return (valueType == ValueType.DOUBLE || valueType == ValueType.FLOAT);
             } else if (argType == FunctionArgType.STRING) {
                 return valueType == ValueType.STRING;
+            } else {
+                return argType == FunctionArgType.ANY;
             }
         }
-        return false;
     }
 
 }
