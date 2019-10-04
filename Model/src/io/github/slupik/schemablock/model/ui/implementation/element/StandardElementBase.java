@@ -1,6 +1,8 @@
 package io.github.slupik.schemablock.model.ui.implementation.element;
 
 import com.google.gson.Gson;
+import io.github.slupik.schemablock.model.ui.abstraction.element.ElementState;
+import io.github.slupik.schemablock.model.ui.abstraction.element.ElementStateListener;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
@@ -14,6 +16,7 @@ public abstract class StandardElementBase extends ElementBase implements Standar
 
     private String codeToRun = "";
     private Executor executor;
+    private ElementStateListener stateListener;
 
     public StandardElementBase(Executor executor) {
         this.executor = executor;
@@ -30,8 +33,6 @@ public abstract class StandardElementBase extends ElementBase implements Standar
     }
 
     protected void justRunCode() throws AlgorithmException {
-        System.out.println("executor = " + executor);
-        System.out.println("codeToRun = " + codeToRun);
         executor.execute(codeToRun);
     }
 
@@ -46,7 +47,7 @@ public abstract class StandardElementBase extends ElementBase implements Standar
 
     protected abstract ElementPOJO getPOJO();
 
-    protected ElementPOJO getPreCreatedPOJO(){
+    protected ElementPOJO getPreCreatedPOJO() {
         ElementPOJO pojo = new ElementPOJO();
         pojo.elementType = getType();
         pojo.content = codeToRun;
@@ -59,4 +60,17 @@ public abstract class StandardElementBase extends ElementBase implements Standar
         codeToRun = pojo.content;
         id = pojo.id;
     }
+
+    @Override
+    public void setState(ElementState state) {
+        if (stateListener != null) {
+            stateListener.onStateChange(state);
+        }
+    }
+
+    @Override
+    public void setStateListener(ElementStateListener listener) {
+        stateListener = listener;
+    }
+
 }

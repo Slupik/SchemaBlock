@@ -17,7 +17,6 @@ public abstract class UiStandardElement extends UiElementBase implements Element
 
     public UiStandardElement(Executor executor, HeapController heap) {
         super(executor, heap);
-        System.out.println("UiStandardElement executor = " + executor);
     }
 
     @Override

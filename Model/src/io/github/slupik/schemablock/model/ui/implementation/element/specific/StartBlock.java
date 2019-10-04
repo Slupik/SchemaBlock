@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.model.ui.implementation.element.specific;
 
 import com.google.gson.Gson;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
+import io.github.slupik.schemablock.model.ui.abstraction.element.ElementState;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StartElement;
 import io.github.slupik.schemablock.model.ui.implementation.element.ElementBase;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
@@ -51,6 +52,11 @@ public class StartBlock extends ElementBase implements StartElement {
         pojo.nextBlocks[0] = nextElement;
         pojo.id = getId();
         return new Gson().toJson(pojo);
+    }
+
+    @Override
+    public void setState(ElementState state) {
+
     }
 
     @Override

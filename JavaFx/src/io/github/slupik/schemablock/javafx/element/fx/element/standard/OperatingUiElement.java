@@ -41,14 +41,11 @@ public class OperatingUiElement extends UiStandardElement {
 
     public OperatingUiElement(Executor executor, HeapController heap) {
         super(executor, heap);
-        System.out.println("OperatingUiElement executor = " + executor);
     }
 
     @Override
-    protected void onPostInit() {
-        super.onPostInit();
-        System.out.println("onPostInit executor = " + executor);
-        element = new OperationBlock(executor);
+    protected Element generateLogicElement() {
+        return new OperationBlock(executor);
     }
 
     @Override

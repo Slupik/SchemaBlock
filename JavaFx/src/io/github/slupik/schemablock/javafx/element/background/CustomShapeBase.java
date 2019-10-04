@@ -214,6 +214,16 @@ public abstract class CustomShapeBase extends Pane implements CustomShape {
     }
 
     @Override
+    public void markAsError() {
+        setFill(Color.web("#de3700"));
+    }
+
+    @Override
+    public void markAsExecuting() {
+        setFill(Color.web("#00d5e0"));
+    }
+
+    @Override
     public boolean isContainsCoords(double x, double y) {
         return shape.contains(x, y);
     }

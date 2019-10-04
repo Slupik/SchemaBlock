@@ -19,4 +19,7 @@ public interface Element {
     void unregisterCallback(ElementCallback callback);
 
     String getId();
+
+    void setState(ElementState state);
+
 }

@@ -18,7 +18,6 @@ public class UiElementFactory {
     private UiElementFactory(){}
 
     public static UiElementBase createByType(UiElementType type, Executor executor, HeapController heap) {
-        System.out.println("createByType executor = " + executor);
         UiElementBase element = new ConditionUiElement(executor, heap);
         switch (type) {
             case CALCULATION:

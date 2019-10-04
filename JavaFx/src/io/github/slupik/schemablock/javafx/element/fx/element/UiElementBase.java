@@ -8,6 +8,7 @@ import io.github.slupik.schemablock.javafx.element.WrongTypeOfElement;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
+import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.newparser.HeapController;
 import io.github.slupik.schemablock.newparser.executor.Executor;
@@ -51,8 +52,30 @@ public abstract class UiElementBase extends Pane implements UiElement {
 
         onPreInit();
         init();
+        element = generateLogicElement();
+        setupLogicElement();
         onPostInit();
     }
+
+    private void setupLogicElement() {
+        if(element instanceof StandardElement)
+        ((StandardElement) element).setStateListener(state -> {
+                    switch (state) {
+                        case STOP:
+                            markAsStop();
+                            break;
+                        case ERROR:
+                            markAsError();
+                            break;
+                        case RUNNING:
+                            markAsExecuting();
+                            break;
+                    }
+                }
+        );
+    }
+
+    protected abstract Element generateLogicElement();
 
     private void initDialog() {
         addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -119,6 +142,21 @@ public abstract class UiElementBase extends Pane implements UiElement {
             contextMenu.show(this, event.getScreenX(), event.getScreenY());
         });
         contextMenu.setOnHiding(event -> background.resetColor());
+    }
+
+    @Override
+    public void markAsError() {
+        background.markAsError();
+    }
+
+    @Override
+    public void markAsExecuting() {
+        background.markAsExecuting();
+    }
+
+    @Override
+    public void markAsStop() {
+        background.resetColor();
     }
 
     protected abstract boolean canBeDeleted();

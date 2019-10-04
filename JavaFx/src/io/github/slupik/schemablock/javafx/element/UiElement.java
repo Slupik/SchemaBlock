@@ -26,4 +26,9 @@ public interface UiElement {
     void restore(String data, ElementContainer container);
 
     List<PortInfo> getPortsInfo();
+
+    void markAsError();
+    void markAsExecuting();
+    void markAsStop();
+
 }

@@ -7,6 +7,7 @@ import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.abstraction.controller.ElementCallback;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
+import io.github.slupik.schemablock.model.ui.abstraction.element.ElementState;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementParser;
 import io.github.slupik.schemablock.newparser.memory.Memory;
@@ -27,6 +28,7 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
     private final List<Element> elements = new ArrayList<>();
     private ExecutionFlowController controller = new DefaultExecutionFlowController();
     private String start;
+    private String previousElement = null;
 
     public DefaultElementContainer(Register register, Memory memory, ElementParser elementParser){
         this.register = register;
@@ -38,11 +40,14 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
     public void run() {
         memory.clear();
         register.clear();
+        previousElement = null;
 
         controller.onStart();
 
         try {
+            getElement(start).setState(ElementState.RUNNING);
             getElement(start).run();
+            getElement(start).setState(ElementState.STOP);
         } catch (Throwable e) {
             controller.onException(e);
         }
@@ -152,9 +157,20 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
             e.printStackTrace();
         }
         try {
+            if(previousElement!=null) {
+                getElement(previousElement).setState(ElementState.STOP);
+            }
+            previousElement = elementId;
+            getElement(elementId).setState(ElementState.RUNNING);
             getElement(elementId).run();
+            getElement(elementId).setState(ElementState.STOP);
         } catch (Throwable e) {
             controller.onException(e);
+            if(!(e instanceof NextElementNotFound)) {
+                try {
+                    getElement(elementId).setState(ElementState.ERROR);
+                } catch (NextElementNotFound ignore) {}
+            }
         }
     }
 }

@@ -43,9 +43,8 @@ public class ConditionUiElement extends UiStandardElement {
     }
 
     @Override
-    protected void onPostInit() {
-        super.onPostInit();
-        element = new ConditionBlock(executor);
+    protected Element generateLogicElement() {
+        return new ConditionBlock(executor);
     }
 
     @Override

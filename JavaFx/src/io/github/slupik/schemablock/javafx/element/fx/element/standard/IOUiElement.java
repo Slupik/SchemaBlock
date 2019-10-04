@@ -49,9 +49,8 @@ public class IOUiElement extends UiStandardElement {
     }
 
     @Override
-    protected void onPostInit() {
-        super.onPostInit();
-        element = new IOBlock(executor, heap);
+    protected Element generateLogicElement() {
+        return new IOBlock(executor, heap);
     }
 
     @Override

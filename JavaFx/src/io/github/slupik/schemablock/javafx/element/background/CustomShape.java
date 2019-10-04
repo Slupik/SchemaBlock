@@ -31,5 +31,9 @@ public interface CustomShape {
     void highlight();
     void resetColor();
 
+    void markAsError();
+
+    void markAsExecuting();
+
     boolean isContainsCoords(double x, double y);
 }
