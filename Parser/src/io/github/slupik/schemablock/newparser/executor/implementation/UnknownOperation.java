@@ -8,8 +8,11 @@ import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
  */
 public class UnknownOperation extends AlgorithmException {
 
+    public final String symbol;
+
     public UnknownOperation(String symbol) {
         super("Unknown operation marked as: " + symbol);
+        this.symbol = symbol;
     }
 
     @Override

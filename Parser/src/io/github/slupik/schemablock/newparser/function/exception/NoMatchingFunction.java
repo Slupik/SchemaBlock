@@ -11,13 +11,18 @@ import java.util.stream.Collectors;
  */
 public class NoMatchingFunction extends FunctionExecutionException {
 
+    public final String name;
+    public final List<ValueType> argsTypes;
+
     public NoMatchingFunction(String name, List<ValueType> argsTypes) {
         super("Function with name: " + name + " with types of arguments: " +
                 argsTypes.stream()
                         .map(String::valueOf)
-                        .collect(Collectors.joining("-", "", ""))
+                        .collect(Collectors.joining(", ", "", ""))
                 + " doesn't exists."
         );
+        this.name = name;
+        this.argsTypes = argsTypes;
     }
 
     @Override

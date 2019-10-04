@@ -8,8 +8,11 @@ import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
  */
 public class VariableAlreadyDefined extends AlgorithmException {
 
+    public final String name;
+
     public VariableAlreadyDefined(String name) {
         super("Variable with name "+name+" already exists.");
+        this.name = name;
     }
 
     @Override

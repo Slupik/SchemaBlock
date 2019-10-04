@@ -9,8 +9,13 @@ import io.github.slupik.schemablock.newparser.memory.element.ValueType;
  */
 public class IncompatibleTypeException extends AlgorithmException {
 
+    public final ValueType excepted;
+    public final ValueType actual;
+
     public IncompatibleTypeException(ValueType excepted, ValueType actual) {
         super("Incompatibility types: "+excepted+" and "+actual);
+        this.excepted = excepted;
+        this.actual = actual;
     }
 
     @Override

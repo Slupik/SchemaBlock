@@ -31,7 +31,7 @@ public class NewHeapSpy implements HeapController, Memory {
     }
 
     @Override
-    public void setVariableValue(String name, Value value) throws IncompatibleArrayException, IncompatibleTypeException, VariableNotFound {
+    public void setVariableValue(String name, Value value) throws AlgorithmException {
         Variable variable = memory.get(name);
         if(variable==null) {
             throw new VariableNotFound(name);

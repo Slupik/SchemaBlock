@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.newparser.memory.element;
 
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArrayImplTest {
 
     @Test
-    void checkOneDim() {
+    void checkOneDim() throws AlgorithmException {
         ArrayImpl array = new ArrayImpl(ValueType.INTEGER, 1, 10);
         assertNull(array.getElement(new int[]{5}));
 
@@ -19,7 +20,7 @@ class ArrayImplTest {
     }
 
     @Test
-    void checkMultiDim() {
+    void checkMultiDim() throws AlgorithmException {
         ArrayImpl parentArray = new ArrayImpl(ValueType.INTEGER, 2, 10);
         ArrayImpl childArray = new ArrayImpl(ValueType.INTEGER, 1, 6);
 

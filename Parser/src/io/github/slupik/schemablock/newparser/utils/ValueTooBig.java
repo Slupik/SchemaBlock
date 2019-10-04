@@ -8,8 +8,11 @@ import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
  */
 public class ValueTooBig extends AlgorithmException {
 
-    public ValueTooBig() {
-        super("Given number is too big to be processed.");
+    public final String value;
+
+    public ValueTooBig(String value) {
+        super("Given number ("+value+") is too big to be processed.");
+        this.value = value;
     }
 
     @Override

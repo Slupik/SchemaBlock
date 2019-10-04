@@ -1,15 +1,18 @@
 package io.github.slupik.schemablock.newparser.compilator.exception;
 
 import io.github.slupik.schemablock.model.ui.error.AlgorithmErrorType;
-import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
+import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.CompilationException;
 
 /**
  * All rights reserved & copyright ©
  */
-public class ComExIllegalEscapeChar extends AlgorithmException {
+public class ComExIllegalEscapeChar extends CompilationException {
+
+    public final char escapedChar;
 
     public ComExIllegalEscapeChar(int line, int position, char escapeChar, char escapedChar) {
-        super("Illegal escape char in line "+line+" at position "+position+". Tried to escape char "+escapedChar);
+        super("Tried to escape char \"escapedChar\" but it cannot be escaped.", line, position);
+        this.escapedChar = escapedChar;
     }
 
     @Override

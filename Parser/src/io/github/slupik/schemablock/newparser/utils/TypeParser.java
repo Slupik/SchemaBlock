@@ -39,7 +39,7 @@ public class TypeParser {
                     if(Double.toString(parsed).equals(data)) {
                         return DOUBLE;
                     } else {
-                        throw new ValueTooBig();
+                        throw new ValueTooBig(data);
                     }
                 } catch (Exception ignore) {}
             }

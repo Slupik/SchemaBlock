@@ -1,5 +1,10 @@
 package io.github.slupik.schemablock.newparser.memory.element;
 
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
+import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleArrayException;
+import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleTypeException;
+import io.github.slupik.schemablock.newparser.compilator.exception.IndexOutOfBoundsException;
+
 import java.util.Arrays;
 
 /**
@@ -26,7 +31,7 @@ public class ArrayImpl implements Array {
     }
 
     @Override
-    public void setValue(int[] indexes, SimpleValue value) {
+    public void setValue(int[] indexes, SimpleValue value) throws AlgorithmException {
         if(ValueType.isCompatible(TYPE, value.getType())) {
             if(indexes.length>1) {
                 getArray(
@@ -38,67 +43,62 @@ public class ArrayImpl implements Array {
             } else {
                 if(indexes.length == 1) {
                     if(DIMENSIONS==1) {
-                        VALUES[indexes[0]].setValue(value);
+                        if(VALUES.length>indexes[0]) {
+                            VALUES[indexes[0]].setValue(value);
+                        } else {
+                            throw new IndexOutOfBoundsException(VALUES.length, indexes[0]);
+                        }
                     } else {
-                        System.err.println("SVE1");
-                        //TODO throw error
+                        throw new IncompatibleArrayException(0, indexes.length);
                     }
                 } else {
-                    System.err.println("SVE2");
-                    //TODO throw error
+                    throw new IncompatibleArrayException(indexes.length, 1);
                 }
             }
         } else {
-            System.err.println("SVE3");
-            //TODO throw error
+            throw new IncompatibleTypeException(TYPE, value.getType());
         }
     }
 
     @Override
-    public void setValue(int[] indexes, Array value) {
+    public void setValue(int[] indexes, Array value) throws AlgorithmException {
         if(value.getType() == TYPE) {
             if(value.getDimensionsCount()+indexes.length==DIMENSIONS) {
                 if(indexes.length==1) {
-                    VALUES[indexes[0]].setValue(value);
+                    if(VALUES.length>indexes[0]) {
+                        VALUES[indexes[0]].setValue(value);
+                    } else {
+                        throw new IndexOutOfBoundsException(VALUES.length, indexes[0]);
+                    }
                 } else {
                     Array array = getArray(Arrays.copyOfRange(indexes, 0, indexes.length-1));
                     array.setValue(new int[]{indexes[indexes.length-1]}, value);
                 }
             } else {
-                System.err.println("SAE1");
-                //TODO throw error
+                throw new IncompatibleArrayException(DIMENSIONS, indexes.length);
             }
         } else {
-            System.err.println("SAE2");
-            //TODO throw error
+            throw new IncompatibleTypeException(TYPE, value.getType());
         }
     }
 
     @Override
-    public ArrayCell getCell(int[] indexes) {
-        if(indexes.length>0) {
-            if(indexes.length==1) {
-                return VALUES[indexes[0]];
-            } else {
-                if(DIMENSIONS==indexes.length) {
-                    ArrayCell cell = VALUES[indexes[0]];
-                    Value memorizes = cell.getValue();
-                    if(memorizes instanceof Array) {
-                        return ((Array) memorizes).getCell(Arrays.copyOfRange(indexes, 1, indexes.length));
-                    } else {
-                        System.err.println("GE1");
-                        //TODO throw error
-                    }
-                } else {
-                    System.err.println("GE2");
-                    //TODO throw error
-                }
-            }
+    public ArrayCell getCell(int[] indexes) throws AlgorithmException {
+        if(indexes.length==1) {
+            return VALUES[indexes[0]];
         } else {
-            System.err.println("GE3");
-            //TODO throw error
+            if(DIMENSIONS==indexes.length) {
+                ArrayCell cell = VALUES[indexes[0]];
+                Value memorizes = cell.getValue();
+                if(memorizes instanceof Array) {
+                    return ((Array) memorizes).getCell(Arrays.copyOfRange(indexes, 1, indexes.length));
+                } else {
+                    throw new ExceptedArray();
+                }
+            } else {
+                throw new IncompatibleArrayException(DIMENSIONS, indexes.length);
+            }
         }
-        return null;
     }
 
     @Override
@@ -106,13 +106,12 @@ public class ArrayImpl implements Array {
         return VALUES;
     }
 
-    private Array getArray(int[] indexes) {
+    private Array getArray(int[] indexes) throws AlgorithmException {
         Memoryable memorized = getElement(indexes);
         if(memorized instanceof Array) {
             return (Array) memorized;
         } else {
-            //TODO throw error
-            return null;
+            throw new ExceptedArray();
         }
     }
 

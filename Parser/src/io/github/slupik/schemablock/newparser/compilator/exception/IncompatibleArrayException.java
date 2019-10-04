@@ -27,7 +27,7 @@ public class IncompatibleArrayException extends AlgorithmException {
 
     @Override
     public AlgorithmErrorType getType() {
-        return AlgorithmErrorType.INCOMPATIBLE_TYPE;
+        return AlgorithmErrorType.WRONG_ARRAY_DIMENSION;
     }
 
 }

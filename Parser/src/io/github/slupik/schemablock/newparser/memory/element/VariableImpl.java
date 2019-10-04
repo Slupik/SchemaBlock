@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.newparser.memory.element;
 
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleArrayException;
 import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleTypeException;
 
@@ -31,19 +32,23 @@ public class VariableImpl implements Variable {
     }
 
     @Override
-    public void setContent(Value value) throws IncompatibleTypeException, IncompatibleArrayException {
+    public void setContent(Value value) throws AlgorithmException {
         if(value!=null) {
             if(!ValueType.isCompatible(type, value.getType())) {
                 throw new IncompatibleTypeException(type, value.getType());
             }
             if(value.isArray()) {
-                Array array = ((Array) value);
-                if(array.getDimensionsCount()!= dimensions) {
-                    throw new IncompatibleArrayException(dimensions, array.getDimensionsCount());
+                if(getDimensionsCount()>0) {
+                    Array array = ((Array) value);
+                    if(array.getDimensionsCount()!= dimensions) {
+                        throw new IncompatibleArrayException(dimensions, array.getDimensionsCount());
+                    }
+                } else {
+                    throw new ExceptedArray();
                 }
             } else {
                 if(dimensions!=0) {
-                    //TODO error
+                    throw new ExceptedValue();
                 }
             }
         }
@@ -59,43 +64,5 @@ public class VariableImpl implements Variable {
     public int getDimensionsCount() {
         return dimensions;
     }
-
-
-
-
-
-//    public void setContentOld(Value value) throws IncompatibleTypeException, IncompatibleArrayException {
-//        if(value!=null) {
-//            if(!ValueType.isCompatible(type, value.getType())) {
-//                throw new IncompatibleTypeException(type, value.getType());
-//            }
-//            if(value.getDimensions()!= getDimensionsCount()) {
-//                throw new IncompatibleArrayException(getDimensionsCount(), value.getDimensions());
-//            }
-//        }
-//        this.value = value;
-//    }
-//
-//    public SimpleValue getContentOld(int index) throws ExceptedArrayButNotReceivedException, IndexOutOfBoundsException {
-//        if(!value.isArray()) {
-//            throw new ExceptedArrayButNotReceivedException();
-//        }
-//        return value.getValue(index);
-//    }
-//
-//    public void setContentOld(int index, Value value) throws IncompatibleTypeException, IndexOutOfBoundsException, ExceptedArrayButNotReceivedException, IncompatibleArrayException {
-//        if(!this.value.isArray()) {
-//            throw new ExceptedArrayButNotReceivedException();
-//        }
-//        this.value.setValue(index, value);
-//    }
-//
-//
-//    public void setContentOld(int indexes[], Value value) throws IncompatibleTypeException, IndexOutOfBoundsException, ExceptedArrayButNotReceivedException, IncompatibleArrayException {
-//        if(!this.value.isArray()) {
-//            throw new ExceptedArrayButNotReceivedException();
-//        }
-//        this.value.setValue(indexes, value);
-//    }
 
 }
