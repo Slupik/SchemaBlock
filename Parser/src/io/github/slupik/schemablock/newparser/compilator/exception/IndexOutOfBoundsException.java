@@ -1,9 +1,12 @@
 package io.github.slupik.schemablock.newparser.compilator.exception;
 
+import io.github.slupik.schemablock.model.ui.error.AlgorithmErrorType;
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
+
 /**
  * All rights reserved & copyright ©
  */
-public class IndexOutOfBoundsException extends Exception {
+public class IndexOutOfBoundsException extends AlgorithmException {
 
     private final int length;
     private final int index;
@@ -21,4 +24,10 @@ public class IndexOutOfBoundsException extends Exception {
     public int getIndex() {
         return index;
     }
+
+    @Override
+    public AlgorithmErrorType getType() {
+        return AlgorithmErrorType.INDEX_OUT_OF_BOUNDS;
+    }
+
 }

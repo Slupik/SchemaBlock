@@ -9,6 +9,7 @@ import io.github.slupik.schemablock.model.ui.abstraction.controller.ElementCallb
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementParser;
+import io.github.slupik.schemablock.newparser.memory.Memory;
 import io.github.slupik.schemablock.newparser.memory.Register;
 
 import java.util.ArrayList;
@@ -21,18 +22,21 @@ import java.util.concurrent.CountDownLatch;
 public class DefaultElementContainer implements ElementContainer, ElementCallback {
 
     private final Register register;
+    private final Memory memory;
     private final ElementParser elementParser;
     private final List<Element> elements = new ArrayList<>();
     private ExecutionFlowController controller = new DefaultExecutionFlowController();
     private String start;
 
-    public DefaultElementContainer(Register register, ElementParser elementParser){
+    public DefaultElementContainer(Register register, Memory memory, ElementParser elementParser){
         this.register = register;
+        this.memory = memory;
         this.elementParser = elementParser;
     }
 
     @Override
     public void run() {
+        memory.clear();
         register.clear();
 
         controller.onStart();

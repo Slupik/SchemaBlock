@@ -1,10 +1,7 @@
 package io.github.slupik.schemablock.newparser.executor.implementation;
 
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.*;
-import io.github.slupik.schemablock.newparser.compilator.exception.ExceptedArrayButNotReceivedException;
-import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleArrayException;
-import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleTypeException;
-import io.github.slupik.schemablock.newparser.compilator.exception.IndexOutOfBoundsException;
 import io.github.slupik.schemablock.newparser.function.Function;
 import io.github.slupik.schemablock.newparser.function.FunctionContainer;
 import io.github.slupik.schemablock.newparser.function.FunctionExecutor;
@@ -13,18 +10,18 @@ import io.github.slupik.schemablock.newparser.memory.Memory;
 import io.github.slupik.schemablock.newparser.memory.Register;
 import io.github.slupik.schemablock.newparser.memory.element.*;
 import io.github.slupik.schemablock.newparser.utils.CodeUtils;
-import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
 /**
  * All rights reserved & copyright ©
  */
 class ByteCodeExe {
 
-    static void execute(Queue<ByteCommand> cmds, Memory memory, Register register, FunctionContainer functionContainer, FunctionExecutor executor) throws IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ValueTooBig, UnknownOperation, ExceptedArrayButNotReceivedException, IndexOutOfBoundsException, NoMatchingFunction {
+    static void execute(Queue<ByteCommand> cmds, Memory memory, Register register, FunctionContainer functionContainer, FunctionExecutor executor) throws AlgorithmException {
 
         for(ByteCommand cmd:cmds) {
             switch (cmd.getCommandType()) {
@@ -258,6 +255,15 @@ class ByteCodeExe {
 
                     List<Function> matchingFunctions = functionContainer.getMatchingFunctions(bc.getName());
                     Value result = executor.execute(matchingFunctions, args);
+                    if (result == null) {
+                        throw new NoMatchingFunction(
+                                bc.getName(),
+                                args
+                                        .stream()
+                                        .map(Memoryable::getType)
+                                        .collect(Collectors.toList())
+                        );
+                    }
 
                     if(result.getType()!=ValueType.VOID) {
                         register.add(result);

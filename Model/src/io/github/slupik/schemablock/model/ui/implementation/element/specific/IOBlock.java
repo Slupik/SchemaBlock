@@ -2,25 +2,17 @@ package io.github.slupik.schemablock.model.ui.implementation.element.specific;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import io.github.slupik.schemablock.both.execution.VariableNotFound;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.IOData;
 import io.github.slupik.schemablock.model.ui.abstraction.element.IOElement;
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.implementation.element.StandardElementBase;
 import io.github.slupik.schemablock.model.ui.newparser.HeapController;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
-import io.github.slupik.schemablock.newparser.compilator.exception.IndexOutOfBoundsException;
-import io.github.slupik.schemablock.newparser.compilator.exception.*;
-import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.ExceptedTypeOfArray;
-import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
 import io.github.slupik.schemablock.newparser.executor.Executor;
-import io.github.slupik.schemablock.newparser.executor.implementation.IllegalOperation;
-import io.github.slupik.schemablock.newparser.executor.implementation.UnknownOperation;
-import io.github.slupik.schemablock.newparser.function.exception.NoMatchingFunction;
 import io.github.slupik.schemablock.newparser.memory.ValueFactory;
 import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
-import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -102,7 +94,7 @@ public class IOBlock extends StandardElementBase implements IOElement {
     }
 
     @Override
-    public void run() throws UnknownOperation, IndexOutOfBoundsException, NameForDeclarationCannotBeFound, ExceptedArrayButNotReceivedException, ExceptedTypeOfArray, ValueTooBig, IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ComExIllegalEscapeChar, NoMatchingFunction, VariableNotFound {
+    public void run() throws AlgorithmException {
         onStart();
         justRunCode();
         tryRun(nextElement);
@@ -110,7 +102,7 @@ public class IOBlock extends StandardElementBase implements IOElement {
     }
 
     @Override
-    protected void justRunCode() throws IncompatibleArrayException, IncompatibleTypeException, VariableNotFound, NoMatchingFunction, ExceptedArrayButNotReceivedException, ExceptedTypeOfArray, ValueTooBig, IndexOutOfBoundsException, IllegalOperation, ComExIllegalEscapeChar, UnknownOperation, NameForDeclarationCannotBeFound {
+    protected void justRunCode() throws AlgorithmException {
         if (communicator != null) {
             for (Data instruction : instructions) {
                 if (instruction.isInput()) {

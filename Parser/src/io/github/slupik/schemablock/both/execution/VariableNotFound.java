@@ -7,6 +7,7 @@ import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
  * All rights reserved & copyright ©
  */
 public class VariableNotFound extends AlgorithmException {
+
     public VariableNotFound(String varName) {
         super("Variable with name "+varName+" doesn't exists");
     }
@@ -15,4 +16,5 @@ public class VariableNotFound extends AlgorithmException {
     public AlgorithmErrorType getType() {
         return AlgorithmErrorType.VARIABLE_NOT_FOUND;
     }
+
 }

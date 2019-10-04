@@ -2,18 +2,10 @@ package io.github.slupik.schemablock.model.ui.implementation.element;
 
 import com.google.gson.Gson;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
-import io.github.slupik.schemablock.newparser.compilator.exception.IndexOutOfBoundsException;
-import io.github.slupik.schemablock.newparser.compilator.exception.*;
-import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.ExceptedTypeOfArray;
-import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
 import io.github.slupik.schemablock.newparser.executor.Executor;
-import io.github.slupik.schemablock.newparser.executor.implementation.IllegalOperation;
-import io.github.slupik.schemablock.newparser.executor.implementation.UnknownOperation;
-import io.github.slupik.schemablock.newparser.function.exception.NoMatchingFunction;
-import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
-import io.github.slupik.schemablock.both.execution.VariableNotFound;
 
 /**
  * All rights reserved & copyright ©
@@ -37,13 +29,13 @@ public abstract class StandardElementBase extends ElementBase implements Standar
         return codeToRun;
     }
 
-    protected void justRunCode() throws IndexOutOfBoundsException, NoMatchingFunction, ExceptedArrayButNotReceivedException, ExceptedTypeOfArray, ValueTooBig, IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ComExIllegalEscapeChar, UnknownOperation, NameForDeclarationCannotBeFound, VariableNotFound {
+    protected void justRunCode() throws AlgorithmException {
         System.out.println("executor = " + executor);
         System.out.println("codeToRun = " + codeToRun);
         executor.execute(codeToRun);
     }
 
-    protected Object runAndGetResult() throws IndexOutOfBoundsException, NoMatchingFunction, ExceptedArrayButNotReceivedException, ExceptedTypeOfArray, ValueTooBig, IncompatibleArrayException, IncompatibleTypeException, IllegalOperation, ComExIllegalEscapeChar, UnknownOperation, NameForDeclarationCannotBeFound {
+    protected Object runAndGetResult() throws AlgorithmException {
         return executor.getResult(codeToRun);
     }
 

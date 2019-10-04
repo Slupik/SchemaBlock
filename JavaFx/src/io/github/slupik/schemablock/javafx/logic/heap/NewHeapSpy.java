@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.javafx.logic.heap;
 
 import io.github.slupik.schemablock.both.execution.VariableNotFound;
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.newparser.HeapController;
 import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleArrayException;
 import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleTypeException;
@@ -50,7 +51,7 @@ public class NewHeapSpy implements HeapController, Memory {
     }
 
     @Override
-    public void register(Variable variable) {
+    public void register(Variable variable) throws AlgorithmException {
         list.add(variable);
         memory.register(variable);
     }

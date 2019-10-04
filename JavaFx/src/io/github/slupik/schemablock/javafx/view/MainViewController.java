@@ -129,7 +129,7 @@ public class MainViewController implements Initializable {
     private void setupDragging() {
         IOCommunicable communicable = new UIIOCommunicator(tfInput, outputView, btnEnter);
 
-        DefaultElementContainer elementContainer = new DefaultElementContainer(register, elementParser);
+        DefaultElementContainer elementContainer = new DefaultElementContainer(register, memory, elementParser);
         ExecutionController executionController = new ExecutionController(communicable, elementContainer, btnContinue);
         elementContainer.setExecutionFlowController(executionController);
         container = new DefaultSheetWithElements(sheet, communicable, elementContainer, executor, heap);

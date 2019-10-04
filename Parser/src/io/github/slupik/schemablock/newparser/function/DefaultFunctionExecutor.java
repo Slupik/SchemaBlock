@@ -1,6 +1,5 @@
 package io.github.slupik.schemablock.newparser.function;
 
-import io.github.slupik.schemablock.newparser.function.exception.NoMatchingFunction;
 import io.github.slupik.schemablock.newparser.memory.element.Value;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 
@@ -12,7 +11,7 @@ import java.util.List;
 public class DefaultFunctionExecutor implements FunctionExecutor {
 
     @Override
-    public Value execute(List<Function> availableFunctions, List<Value> args) throws NoMatchingFunction {
+    public Value execute(List<Function> availableFunctions, List<Value> args) {
         //TODO add exceptions:
         // - no enough arguments
         // - too many arguments
@@ -32,7 +31,7 @@ public class DefaultFunctionExecutor implements FunctionExecutor {
                 }
             }
         }
-        throw new NoMatchingFunction();
+        return null;
     }
 
     private boolean isArgumentMatch(Value value, FunctionArgType argType) {
