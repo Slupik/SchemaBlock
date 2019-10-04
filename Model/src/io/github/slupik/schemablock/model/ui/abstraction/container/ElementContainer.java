@@ -1,15 +1,16 @@
 package io.github.slupik.schemablock.model.ui.abstraction.container;
 
-import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
-import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.both.execution.ExecutionFlowController;
+import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
+import io.github.slupik.schemablock.model.ui.implementation.container.ExecutionCallback;
+import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 
 /**
  * All rights reserved & copyright ©
  */
 public interface ElementContainer {
 
-    void run();
+    void run(ExecutionCallback callback);
     void setExecutionFlowController(ExecutionFlowController controller);
 
     void addElement(Element element);

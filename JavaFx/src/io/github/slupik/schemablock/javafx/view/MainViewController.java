@@ -10,6 +10,7 @@ import io.github.slupik.schemablock.javafx.logic.execution.ExecutionController;
 import io.github.slupik.schemablock.javafx.logic.heap.NewHeapSpy;
 import io.github.slupik.schemablock.javafx.logic.persistence.SchemaSaver;
 import io.github.slupik.schemablock.model.ui.implementation.container.DefaultElementContainer;
+import io.github.slupik.schemablock.model.ui.implementation.container.ExecutionCallback;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
 import io.github.slupik.schemablock.model.ui.parser.ElementParser;
 import io.github.slupik.schemablock.newparser.compilator.Compilator;
@@ -140,8 +141,22 @@ public class MainViewController implements Initializable {
         bindIOView();
         setupMenu();
         bindTable();
-        btnRun.setOnAction((event)-> executionController.execute(false));
-        btnDebug.setOnAction((event)-> executionController.execute(true));
+        ExecutionCallback callback =
+                new ExecutionCallback() {
+                    @Override
+                    public void onStart() {
+                        btnRun.setDisable(true);
+                        btnDebug.setDisable(true);
+                    }
+
+                    @Override
+                    public void onStop() {
+                        btnRun.setDisable(false);
+                        btnDebug.setDisable(false);
+                    }
+                };
+        btnRun.setOnAction((event)-> executionController.execute(false, callback));
+        btnDebug.setOnAction((event)-> executionController.execute(true, callback));
     }
 
     private void bindTable() {

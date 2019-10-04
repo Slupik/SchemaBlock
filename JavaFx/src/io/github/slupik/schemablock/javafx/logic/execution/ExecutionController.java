@@ -5,6 +5,7 @@ import io.github.slupik.schemablock.both.execution.VariableNotFound;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.ElementNotFound;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
+import io.github.slupik.schemablock.model.ui.implementation.container.ExecutionCallback;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
@@ -33,6 +34,7 @@ public class ExecutionController implements ExecutionFlowController {
     private final ElementContainer container;
     private final Button btnPlay;
     private boolean debugMode;
+    private ExecutionCallback callback;
 
     public ExecutionController(IOCommunicable communicator, ElementContainer container, Button btnPlay) {
         this.communicator = communicator;
@@ -45,11 +47,12 @@ public class ExecutionController implements ExecutionFlowController {
         btnPlay.setDisable(true);
     }
 
-    public void execute(boolean debugMode) {
+    public void execute(boolean debugMode, ExecutionCallback callback) {
         this.debugMode = debugMode;
+        this.callback = callback;
         new Thread(() -> {
             communicator.clear();
-            container.run();
+            container.run(callback);
         }).start();
     }
 
@@ -201,6 +204,9 @@ public class ExecutionController implements ExecutionFlowController {
             }
         } else {
             communicator.printAlgorithmError(exception.getMessage());
+        }
+        if(callback!=null) {
+            callback.onStop();
         }
     }
 

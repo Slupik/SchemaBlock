@@ -8,6 +8,7 @@ import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContai
 import io.github.slupik.schemablock.model.ui.abstraction.controller.ElementCallback;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.element.ElementState;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.StopBlock;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementParser;
 import io.github.slupik.schemablock.newparser.memory.Memory;
@@ -29,6 +30,7 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
     private ExecutionFlowController controller = new DefaultExecutionFlowController();
     private String start;
     private String previousElement = null;
+    private ExecutionCallback callback;
 
     public DefaultElementContainer(Register register, Memory memory, ElementParser elementParser){
         this.register = register;
@@ -37,11 +39,15 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
     }
 
     @Override
-    public void run() {
+    public void run(ExecutionCallback callback) {
+        this.callback = callback;
         memory.clear();
         register.clear();
         previousElement = null;
 
+        if(callback!=null) {
+            callback.onStart();
+        }
         controller.onStart();
 
         try {
@@ -172,5 +178,13 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
                 } catch (NextElementNotFound ignore) {}
             }
         }
+
+        try {
+            if(getElement(elementId) instanceof StopBlock) {
+                if(callback!=null) {
+                    callback.onStop();
+                }
+            }
+        } catch (NextElementNotFound ignore) {}
     }
 }
