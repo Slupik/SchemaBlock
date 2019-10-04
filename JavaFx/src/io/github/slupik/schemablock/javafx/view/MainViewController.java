@@ -7,6 +7,7 @@ import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetWithElements;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
 import io.github.slupik.schemablock.javafx.logic.execution.ExecutionController;
+import io.github.slupik.schemablock.javafx.logic.heap.HeapValueFx;
 import io.github.slupik.schemablock.javafx.logic.heap.NewHeapSpy;
 import io.github.slupik.schemablock.javafx.logic.persistence.SchemaSaver;
 import io.github.slupik.schemablock.model.ui.implementation.container.DefaultElementContainer;
@@ -20,7 +21,6 @@ import io.github.slupik.schemablock.newparser.executor.implementation.ExecutorIm
 import io.github.slupik.schemablock.newparser.memory.Memory;
 import io.github.slupik.schemablock.newparser.memory.MemoryImpl;
 import io.github.slupik.schemablock.newparser.memory.RegisterImpl;
-import io.github.slupik.schemablock.newparser.memory.element.Variable;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -99,16 +99,16 @@ public class MainViewController implements Initializable {
     private Button btnContinue;
 
     @FXML
-    private TableView<Variable> tvVariables;
+    private TableView<HeapValueFx> tvVariables;
 
     @FXML
-    private TableColumn<Variable, String> tcVarType;
+    private TableColumn<HeapValueFx, String> tcVarType;
 
     @FXML
-    private TableColumn<Variable, String> tcVarName;
+    private TableColumn<HeapValueFx, String> tcVarName;
 
     @FXML
-    private TableColumn<Variable, String> tcVarValue;
+    private TableColumn<HeapValueFx, String> tcVarValue;
 
     private SheetWithElements container;
     private GhostDragController ghost;
@@ -118,8 +118,13 @@ public class MainViewController implements Initializable {
     private Compilator compilator = new DefaultCompilator();
     private Memory memory = new MemoryImpl();
     private RegisterImpl register = new RegisterImpl();
-    private NewHeapSpy heap = new NewHeapSpy(memory);
-    private Executor executor = new ExecutorImpl(compilator, memory, register);
+    private NewHeapSpy heap = new NewHeapSpy(memory, new Runnable(){
+        @Override
+        public void run() {
+            tvVariables.refresh();
+        }
+    });
+    private Executor executor = new ExecutorImpl(compilator, heap, register);
     private ElementParser elementParser = new ElementParser(executor, heap);
 
     @Override
@@ -155,12 +160,18 @@ public class MainViewController implements Initializable {
                         btnDebug.setDisable(false);
                     }
                 };
-        btnRun.setOnAction((event)-> executionController.execute(false, callback));
-        btnDebug.setOnAction((event)-> executionController.execute(true, callback));
+        btnRun.setOnAction((event)-> {
+            heap.clear();
+            executionController.execute(false, callback);
+        });
+        btnDebug.setOnAction((event)-> {
+            heap.clear();
+            executionController.execute(true, callback);
+        });
     }
 
     private void bindTable() {
-        ObservableList<Variable> valueList = heap.getVariableList();
+        ObservableList<HeapValueFx> valueList = heap.getVariableList();
         tvVariables.setItems(valueList);
         tcVarType.setCellValueFactory(
                 new PropertyValueFactory<>("type")

@@ -3,8 +3,6 @@ package io.github.slupik.schemablock.javafx.logic.heap;
 import io.github.slupik.schemablock.both.execution.VariableNotFound;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.newparser.HeapController;
-import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleArrayException;
-import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleTypeException;
 import io.github.slupik.schemablock.newparser.memory.Memory;
 import io.github.slupik.schemablock.newparser.memory.element.Value;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
@@ -19,14 +17,16 @@ import java.util.ArrayList;
  */
 public class NewHeapSpy implements HeapController, Memory {
 
-    private final ObservableList<Variable> list = FXCollections.observableList(new ArrayList<>());
+    private final ObservableList<HeapValueFx> list = FXCollections.observableList(new ArrayList<>());
     private final Memory memory;
+    private final Runnable callbackAfterItemChange;
 
-    public NewHeapSpy(Memory memory) {
+    public NewHeapSpy(Memory memory, Runnable callbackAfterItemChange) {
         this.memory = memory;
+        this.callbackAfterItemChange = callbackAfterItemChange;
     }
 
-    public ObservableList<Variable> getVariableList() {
+    public ObservableList<HeapValueFx> getVariableList() {
         return list;
     }
 
@@ -52,8 +52,9 @@ public class NewHeapSpy implements HeapController, Memory {
 
     @Override
     public void register(Variable variable) throws AlgorithmException {
-        list.add(variable);
-        memory.register(variable);
+        HeapValueFx wrapper = new HeapValueFx(variable, callbackAfterItemChange);
+        memory.register(wrapper);
+        list.add(wrapper);
     }
 
     @Override
