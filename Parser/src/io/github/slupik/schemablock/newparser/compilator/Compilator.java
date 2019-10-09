@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.newparser.compilator;
 
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommand;
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
+import io.github.slupik.schemablock.newparser.compilator.exception.SemicolonNotFound;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.ExceptedTypeOfArray;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
 import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
@@ -12,8 +13,8 @@ import java.util.Queue;
  * All rights reserved & copyright ©
  */
 public interface Compilator {
-    Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig;
-    Queue<ByteCommand> getCompiled(String code, boolean forResult) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig;
+    Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig, SemicolonNotFound;
+    Queue<ByteCommand> getCompiled(String code, boolean forResult) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig, SemicolonNotFound;
 
     /* ByteCode ideas
     type[size] value;//ok

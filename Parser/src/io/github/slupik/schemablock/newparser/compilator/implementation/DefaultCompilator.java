@@ -4,6 +4,7 @@ import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.B
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandClearImpl;
 import io.github.slupik.schemablock.newparser.compilator.Compilator;
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
+import io.github.slupik.schemablock.newparser.compilator.exception.SemicolonNotFound;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.ExceptedTypeOfArray;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.LineCompilator;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
@@ -20,12 +21,12 @@ import java.util.Queue;
 public class DefaultCompilator implements Compilator {
 
     @Override
-    public Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
+    public Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig, SemicolonNotFound {
         return getCompiled(code, false);
     }
 
     @Override
-    public Queue<ByteCommand> getCompiled(String code, boolean forResult) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
+    public Queue<ByteCommand> getCompiled(String code, boolean forResult) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig, SemicolonNotFound {
         LinkedList<ByteCommand> commands = new LinkedList<>();
 
         List<Token> tokenized = new Tokenizer(code).getTokenized();
@@ -51,6 +52,10 @@ public class DefaultCompilator implements Compilator {
                 } else {
                     buffer.add(token);
                 }
+            }
+            if(buffer.size()>0) {
+                Token lastToken = buffer.get(buffer.size()-1);
+                throw new SemicolonNotFound(lastToken.getLine(), lastToken.getPos()+1);
             }
         }
         return commands;

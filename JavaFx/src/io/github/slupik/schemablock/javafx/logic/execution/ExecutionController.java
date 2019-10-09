@@ -8,9 +8,7 @@ import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.implementation.container.ExecutionCallback;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
-import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
-import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleArrayException;
-import io.github.slupik.schemablock.newparser.compilator.exception.IncompatibleTypeException;
+import io.github.slupik.schemablock.newparser.compilator.exception.*;
 import io.github.slupik.schemablock.newparser.compilator.exception.IndexOutOfBoundsException;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.CompilationException;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.ExceptedTypeOfArray;
@@ -162,6 +160,13 @@ public class ExecutionController implements ExecutionFlowController {
                     communicator.printAlgorithmError(
                             getMessagePrefix(nameForDeclarationCannotBeFound) +
                                     "Nie znaleziono nazwy zmiennej podczas próby jej deklaracji."
+                    );
+                    break;
+                case EXCEPTED_SEMICOLON:
+                    SemicolonNotFound semicolonNotFound = ((SemicolonNotFound) exception);
+                    communicator.printAlgorithmError(
+                            getMessagePrefix(semicolonNotFound) +
+                                    "Oczekiwano średnika (;), ale go nie znaleziono."
                     );
                     break;
                 case ILLEGAL_OPERATION:
