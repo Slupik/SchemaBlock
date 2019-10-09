@@ -58,7 +58,7 @@ public class NewHeapSpy implements HeapController, Memory {
     }
 
     @Override
-    public Variable get(String name) {
+    public Variable get(String name) throws VariableNotFound {
         return memory.get(name);
     }
 

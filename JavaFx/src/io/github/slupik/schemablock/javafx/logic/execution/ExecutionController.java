@@ -131,7 +131,7 @@ public class ExecutionController implements ExecutionFlowController {
                 case VARIABLE_NOT_FOUND:
                     VariableNotFound variableNotFound = ((VariableNotFound) exception);
                     communicator.printAlgorithmError(
-                            "Próbowano ponownie zadeklarować zmienną o nazwie: " + variableNotFound.varName
+                            "Próbowano użyć niezadeklarowanej zmiennej: " + variableNotFound.varName
                     );
                     break;
                 case ELEMENT_NOT_FOUND:

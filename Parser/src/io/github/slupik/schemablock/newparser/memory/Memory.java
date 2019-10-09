@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.newparser.memory;
 
+import io.github.slupik.schemablock.both.execution.VariableNotFound;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.newparser.memory.element.Variable;
 
@@ -9,7 +10,7 @@ import io.github.slupik.schemablock.newparser.memory.element.Variable;
 public interface Memory {
 
     void register(Variable variable) throws AlgorithmException;
-    Variable get(String name);
+    Variable get(String name) throws VariableNotFound;
 
     void clear();
 }
