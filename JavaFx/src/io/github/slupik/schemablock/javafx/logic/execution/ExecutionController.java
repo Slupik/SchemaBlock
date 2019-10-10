@@ -16,6 +16,7 @@ import io.github.slupik.schemablock.newparser.compilator.implementation.compilat
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
 import io.github.slupik.schemablock.newparser.executor.implementation.IllegalOperation;
 import io.github.slupik.schemablock.newparser.executor.implementation.UnknownOperation;
+import io.github.slupik.schemablock.newparser.function.exception.CannotParseData;
 import io.github.slupik.schemablock.newparser.function.exception.NoMatchingFunction;
 import io.github.slupik.schemablock.newparser.memory.VariableAlreadyDefined;
 import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
@@ -205,6 +206,12 @@ public class ExecutionController implements ExecutionFlowController {
                                     ") wybiegł poza maksymalny indeks tablicy (" +
                                     indexOutOfBoundsException.getLength() +
                                     ")."
+                    );
+                    break;
+                case FUNCTION_DATA_PARSE_ERROR:
+                    CannotParseData cannotParseData = ((CannotParseData) exception);
+                    communicator.printAlgorithmError(
+                            "Nieskutecznie próbowano wartość \""+cannotParseData.input+"\" przekonwertować na typ "+cannotParseData.type
                     );
                     break;
                 case EXCEPTED_ARRAY:

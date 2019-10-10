@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.newparser.function;
 
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.newparser.memory.element.Value;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 
@@ -11,7 +12,7 @@ import java.util.List;
 public class DefaultFunctionExecutor implements FunctionExecutor {
 
     @Override
-    public Value execute(List<Function> availableFunctions, List<Value> args) {
+    public Value execute(List<Function> availableFunctions, List<Value> args) throws AlgorithmException {
         //TODO add exceptions:
         // - no enough arguments
         // - too many arguments

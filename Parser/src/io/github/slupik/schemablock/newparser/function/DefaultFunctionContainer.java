@@ -1,9 +1,6 @@
 package io.github.slupik.schemablock.newparser.function;
 
-import io.github.slupik.schemablock.newparser.function.definition.FunctionMin;
-import io.github.slupik.schemablock.newparser.function.definition.FunctionPower;
-import io.github.slupik.schemablock.newparser.function.definition.FunctionPrintln;
-import io.github.slupik.schemablock.newparser.function.definition.FunctionSqrt;
+import io.github.slupik.schemablock.newparser.function.definition.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +13,20 @@ public class DefaultFunctionContainer implements FunctionContainer {
     private static final List<Function> IMPLEMENTED_FUNCTIONS = new ArrayList<>();
 
     static {
+        //math
         IMPLEMENTED_FUNCTIONS.add(new FunctionSqrt());
         IMPLEMENTED_FUNCTIONS.add(new FunctionMin());
         IMPLEMENTED_FUNCTIONS.add(new FunctionPower());
+        //convert
+        IMPLEMENTED_FUNCTIONS.add(new FunctionAsBoolean());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionAsByte());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionAsShort());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionAsInteger());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionAsLong());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionAsFloat());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionAsDouble());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionAsString());
+        //io
         IMPLEMENTED_FUNCTIONS.add(new FunctionPrintln());
     }
 

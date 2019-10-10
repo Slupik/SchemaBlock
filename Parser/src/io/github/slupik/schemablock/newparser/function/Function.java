@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.newparser.function;
 
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.newparser.memory.element.Value;
 
 import java.util.List;
@@ -13,6 +14,6 @@ public interface Function {
 
     List<FunctionArgType> getArgumentsType();
 
-    Value execute(List<Value> args);
+    Value execute(List<Value> args) throws AlgorithmException;
 
 }
