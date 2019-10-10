@@ -16,7 +16,18 @@ public class DefaultFunctionContainer implements FunctionContainer {
         //math
         IMPLEMENTED_FUNCTIONS.add(new FunctionSqrt());
         IMPLEMENTED_FUNCTIONS.add(new FunctionMin());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionMax());
         IMPLEMENTED_FUNCTIONS.add(new FunctionPower());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionAbs());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionCeil());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionCos());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionExp());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionFloor());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionLn());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionLog10());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionMax());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionSin());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionTan());
         //convert
         IMPLEMENTED_FUNCTIONS.add(new FunctionAsBoolean());
         IMPLEMENTED_FUNCTIONS.add(new FunctionAsByte());
