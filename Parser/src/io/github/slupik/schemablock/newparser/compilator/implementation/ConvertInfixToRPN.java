@@ -1,6 +1,5 @@
 package io.github.slupik.schemablock.newparser.compilator.implementation;
 
-import io.github.slupik.schemablock.newparser.compilator.exception.MissingSemicolon;
 import io.github.slupik.schemablock.newparser.utils.CodeOperations;
 import io.github.slupik.schemablock.newparser.utils.TextUtils;
 
@@ -12,19 +11,17 @@ import java.util.*;
 class ConvertInfixToRPN {
     private static final Map<String, Integer> OPERATION = new CodeOperations();
 
-    static List<Token> convertInfixToRPN(List<Token> infixNotation) throws MissingSemicolon {
+    static List<Token> convertInfixToRPN(List<Token> infixNotation) {
         return convertInfixToRPN(infixNotation, 0);
     }
 
-    private static List<Token> convertInfixToRPN(List<Token> infixNotation, int globalNestLvl) throws MissingSemicolon {
+    private static List<Token> convertInfixToRPN(List<Token> infixNotation, int globalNestLvl) {
 
         List<Token> rpn = new LinkedList<>();
         Stack<Token> operatorsStack = new Stack<>();
 
         //It should be true at the beginning to allow to parse raw data ex. "-3"
         boolean lastWasOperation = true;
-        //To be sure that only one assignment operation is made
-        int assingementCount = 0;
 
         for (int i=0;i<infixNotation.size();i++) {
             Token token = infixNotation.get(i);
@@ -92,10 +89,6 @@ class ConvertInfixToRPN {
             if (OPERATION.containsKey(token.getData())) {
                 if("=".equals(token.getData())) {
                     rpn.add(new SpecialToken(token));
-                    assingementCount++;
-                    if(assingementCount>1) {
-                        throw new MissingSemicolon(token.getLine(), token.getPos());
-                    }
                 }
                 if(lastWasOperation && ("-".equals(token.getData()) || "+".equals(token.getData()))) {
                     //For example: (-9), (+-+-+-9), -9, -+-+-+9
@@ -214,7 +207,7 @@ class ConvertInfixToRPN {
         return rpn;
     }
 
-    private static List<Token> getArgumentsAsRPN(List<Token> raw) throws MissingSemicolon {
+    private static List<Token> getArgumentsAsRPN(List<Token> raw) {
         List<Token> rpn = new ArrayList<>();
 
         int nestLvl = 0;

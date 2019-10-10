@@ -5,6 +5,7 @@ package io.github.slupik.schemablock.model.ui.error;
  */
 public enum AlgorithmErrorType {
     INCOMPATIBLE_TYPE,
+    UNKNOWN_ERROR,
     NUMBER_TOO_BIG,
     TYPE_OF_ARRAY_AFTER_KEYWORD_NEW_NOT_FOUND,
     WRONG_ARRAY_DIMENSION,

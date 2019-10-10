@@ -5,11 +5,12 @@ import io.github.slupik.schemablock.both.execution.VariableNotFound;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.ElementNotFound;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
+import io.github.slupik.schemablock.model.ui.error.UnkownError;
 import io.github.slupik.schemablock.model.ui.implementation.container.ExecutionCallback;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
-import io.github.slupik.schemablock.newparser.compilator.exception.*;
 import io.github.slupik.schemablock.newparser.compilator.exception.IndexOutOfBoundsException;
+import io.github.slupik.schemablock.newparser.compilator.exception.*;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.CompilationException;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.ExceptedTypeOfArray;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
@@ -83,6 +84,12 @@ public class ExecutionController implements ExecutionFlowController {
         if (exception instanceof AlgorithmException) {
             AlgorithmException ae = ((AlgorithmException) exception);
             switch (ae.getType()) {
+                case UNKNOWN_ERROR:
+                    UnkownError unkownError = ((UnkownError) exception);
+                    communicator.printAlgorithmError(
+                            "Nastąpił nieznany błąd przy uruchamianiu kodu. Sprawdź składnię poleceń. Najprawdopodobniej gdzieś brakuje średnika (;)."
+                    );
+                    break;
                 case INCOMPATIBLE_TYPE:
                     IncompatibleTypeException incompatibleTypeException = ((IncompatibleTypeException) exception);
                     communicator.printAlgorithmError(
