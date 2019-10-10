@@ -169,6 +169,13 @@ public class ExecutionController implements ExecutionFlowController {
                                     "Oczekiwano średnika (;), ale go nie znaleziono."
                     );
                     break;
+                case PROBABLY_EXCEPTED_SEMICOLON:
+                    MissingSemicolon missingSemicolon = ((MissingSemicolon) exception);
+                    communicator.printAlgorithmError(
+                            getMessagePrefix(missingSemicolon) +
+                                    "Próbowano wykonać zbyt dużo operacji. Prawdopodobnie zabrakło średnika."
+                    );
+                    break;
                 case ILLEGAL_OPERATION:
                     IllegalOperation illegalOperation = ((IllegalOperation) exception);
                     if (illegalOperation.type2 == null) {

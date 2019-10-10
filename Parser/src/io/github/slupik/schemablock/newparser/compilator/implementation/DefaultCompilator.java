@@ -4,6 +4,7 @@ import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.B
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation.ByteCommandClearImpl;
 import io.github.slupik.schemablock.newparser.compilator.Compilator;
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
+import io.github.slupik.schemablock.newparser.compilator.exception.MissingSemicolon;
 import io.github.slupik.schemablock.newparser.compilator.exception.SemicolonNotFound;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.ExceptedTypeOfArray;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.LineCompilator;
@@ -21,12 +22,12 @@ import java.util.Queue;
 public class DefaultCompilator implements Compilator {
 
     @Override
-    public Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig, SemicolonNotFound {
+    public Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig, SemicolonNotFound, MissingSemicolon {
         return getCompiled(code, false);
     }
 
     @Override
-    public Queue<ByteCommand> getCompiled(String code, boolean forResult) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig, SemicolonNotFound {
+    public Queue<ByteCommand> getCompiled(String code, boolean forResult) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig, SemicolonNotFound, MissingSemicolon {
         LinkedList<ByteCommand> commands = new LinkedList<>();
 
         List<Token> tokenized = new Tokenizer(code).getTokenized();

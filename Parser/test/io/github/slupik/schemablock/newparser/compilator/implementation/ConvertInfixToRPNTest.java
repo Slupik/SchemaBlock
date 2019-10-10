@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.newparser.compilator.implementation;
 
 import io.github.slupik.schemablock.newparser.compilator.exception.ComExIllegalEscapeChar;
+import io.github.slupik.schemablock.newparser.compilator.exception.MissingSemicolon;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ import java.util.Queue;
 class ConvertInfixToRPNTest {
 
     @Test
-    void convertInfixToRPN() throws ComExIllegalEscapeChar {
+    void convertInfixToRPN() throws ComExIllegalEscapeChar, MissingSemicolon {
         check("(2+3)*5", "2", "3", "+", "5", "*");
         check("((2+7)/3+(14-3)*4)/2", "2", "7", "+", "3", "/", "14", "3", "-", "4", "*", "+", "2", "/");
         check("(2+3)*a", "2", "3", "+", "a", "*");
@@ -56,7 +57,7 @@ class ConvertInfixToRPNTest {
 
     }
 
-    private void check(String equation, String... excepted) throws ComExIllegalEscapeChar {
+    private void check(String equation, String... excepted) throws ComExIllegalEscapeChar, MissingSemicolon {
         List<Token> tokens = new Tokenizer(equation).getTokenized();
         List<Token> cleared = new BracketsRemover().getCleared(tokens);
 
