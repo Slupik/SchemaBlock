@@ -10,6 +10,7 @@ import io.github.slupik.schemablock.newparser.function.FunctionContainer;
 import io.github.slupik.schemablock.newparser.function.FunctionExecutor;
 import io.github.slupik.schemablock.newparser.memory.Memory;
 import io.github.slupik.schemablock.newparser.memory.Register;
+import io.github.slupik.schemablock.newparser.memory.element.ArrayCell;
 import io.github.slupik.schemablock.newparser.memory.element.Memoryable;
 import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
 import io.github.slupik.schemablock.newparser.memory.element.Variable;
@@ -57,6 +58,8 @@ public class ExecutorImpl implements Executor {
         Memoryable memoryable = register.pop();
         if(memoryable instanceof SimpleValue) {
             return ((SimpleValue) memoryable);
+        } else if(memoryable instanceof ArrayCell) {
+            return ((SimpleValue) ((ArrayCell) memoryable).getValue());
         } else {
             return ((SimpleValue) ((Variable) memoryable).getContent());
         }
