@@ -10,6 +10,8 @@ import io.github.slupik.schemablock.javafx.logic.execution.ExecutionController;
 import io.github.slupik.schemablock.javafx.logic.heap.HeapValueFx;
 import io.github.slupik.schemablock.javafx.logic.heap.NewHeapSpy;
 import io.github.slupik.schemablock.javafx.logic.persistence.SchemaSaver;
+import io.github.slupik.schemablock.javafx.view.resize.BlocksAwareSizeProvider;
+import io.github.slupik.schemablock.javafx.view.resize.ResizingTool;
 import io.github.slupik.schemablock.model.ui.implementation.container.DefaultElementContainer;
 import io.github.slupik.schemablock.model.ui.implementation.container.ExecutionCallback;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
@@ -31,6 +33,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
@@ -99,6 +102,9 @@ public class MainViewController implements Initializable {
     private Button btnContinue;
 
     @FXML
+    private Rectangle resizingIcon;
+
+    @FXML
     private TableView<HeapValueFx> tvVariables;
 
     @FXML
@@ -146,6 +152,7 @@ public class MainViewController implements Initializable {
         bindIOView();
         setupMenu();
         bindTable();
+        bindResizer();
         ExecutionCallback callback =
                 new ExecutionCallback() {
                     @Override
@@ -168,6 +175,11 @@ public class MainViewController implements Initializable {
             heap.clear();
             executionController.execute(true, callback);
         });
+    }
+
+    private void bindResizer() {
+        BlocksAwareSizeProvider sizeProvider = new BlocksAwareSizeProvider(sheet);
+        new ResizingTool(sheet, resizingIcon, sizeProvider).init();
     }
 
     private void bindTable() {

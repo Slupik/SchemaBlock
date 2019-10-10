@@ -227,11 +227,21 @@ public class DefaultSheetWithElements implements SheetWithElements {
             }
         }
 
+        JsonObject sheetData = getSheetData();
+
         JsonObject data = new JsonObject();
         data.add("logicElements", parser.parse(container.stringify()));
+        data.add("sheet", sheetData);
         data.add("blocks", blocks);
         data.add("ports", parser.parse(connector.stringify()).getAsJsonArray());
         return data.toString();
+    }
+
+    private JsonObject getSheetData() {
+        JsonObject data = new JsonObject();
+        data.addProperty("width", sheet.getWidth());
+        data.addProperty("height", sheet.getHeight());
+        return data;
     }
 
     @Override
@@ -240,6 +250,10 @@ public class DefaultSheetWithElements implements SheetWithElements {
 
         JsonParser parser = new JsonParser();
         JsonObject json = parser.parse(data).getAsJsonObject();
+
+        JsonObject sheetData = json.get("sheet").getAsJsonObject();
+        sheet.setPrefHeight(sheetData.getAsJsonPrimitive("height").getAsDouble());
+        sheet.setPrefWidth(sheetData.getAsJsonPrimitive("width").getAsDouble());
 
         JsonObject logicElements = json.get("logicElements").getAsJsonObject();
         container.restore(logicElements.toString());
