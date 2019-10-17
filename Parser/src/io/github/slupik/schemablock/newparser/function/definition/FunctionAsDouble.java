@@ -38,7 +38,7 @@ public class FunctionAsDouble implements Function {
                     Double.parseDouble(value.toString())
             );
         } catch (Exception e) {
-            throw new CannotParseData(value, ValueType.SHORT);
+            throw new CannotParseData(value, ValueType.DOUBLE);
         }
     }
 
