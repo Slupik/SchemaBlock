@@ -7,6 +7,8 @@ import io.github.slupik.schemablock.javafx.element.fx.element.special.StopUiElem
 import io.github.slupik.schemablock.javafx.element.fx.element.standard.ConditionUiElement;
 import io.github.slupik.schemablock.javafx.element.fx.element.standard.IOUiElement;
 import io.github.slupik.schemablock.javafx.element.fx.element.standard.OperatingUiElement;
+import io.github.slupik.schemablock.model.ui.newparser.HeapController;
+import io.github.slupik.schemablock.newparser.executor.Executor;
 
 /**
  * All rights reserved & copyright ©
@@ -15,14 +17,14 @@ public class UiElementFactory {
 
     private UiElementFactory(){}
 
-    public static UiElementBase createByType(UiElementType type) {
-        UiElementBase element = new ConditionUiElement();
+    public static UiElementBase createByType(UiElementType type, Executor executor, HeapController heap) {
+        UiElementBase element = new ConditionUiElement(executor, heap);
         switch (type) {
             case CALCULATION:
-                element = new OperatingUiElement();
+                element = new OperatingUiElement(executor, heap);
                 break;
             case IF:
-                element = new ConditionUiElement();
+                element = new ConditionUiElement(executor, heap);
                 break;
             case START:
                 element = new StartUiElement();
@@ -31,7 +33,7 @@ public class UiElementFactory {
                 element = new StopUiElement();
                 break;
             case IO:
-                element = new IOUiElement();
+                element = new IOUiElement(executor, heap);
                 break;
         }
         element.setElementSize(50,31);

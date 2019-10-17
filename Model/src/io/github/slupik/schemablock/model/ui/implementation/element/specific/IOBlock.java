@@ -5,18 +5,14 @@ import com.google.gson.reflect.TypeToken;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.IOData;
 import io.github.slupik.schemablock.model.ui.abstraction.element.IOElement;
-import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.implementation.element.StandardElementBase;
+import io.github.slupik.schemablock.model.ui.newparser.HeapController;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
-import io.github.slupik.schemablock.parser.code.CodeParser;
-import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
-import io.github.slupik.schemablock.parser.code.VariableNotFound;
-import io.github.slupik.schemablock.parser.code.WrongArgumentException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.VariableIsAlreadyDefinedException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
+import io.github.slupik.schemablock.newparser.executor.Executor;
+import io.github.slupik.schemablock.newparser.memory.ValueFactory;
+import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -29,9 +25,17 @@ import java.util.List;
 //TODO this is not standard element... What even is "standard element"? Better names would be like executable etc.
 public class IOBlock extends StandardElementBase implements IOElement {
 
+    private final Executor executor;
+    private final HeapController heap;
     private String nextElement = "";
     private final List<Data> instructions = new ArrayList<>();
     private IOCommunicable communicator;
+
+    public IOBlock(Executor executor, HeapController heap) {
+        super(executor);
+        this.executor = executor;
+        this.heap = heap;
+    }
 
     @Override
     public void setNextElement(String elementId) {
@@ -45,7 +49,7 @@ public class IOBlock extends StandardElementBase implements IOElement {
 
     @Override
     public void removeNextElement(String elementId) {
-        if(nextElement.equals(elementId)) {
+        if (nextElement.equals(elementId)) {
             nextElement = "";
         }
     }
@@ -62,7 +66,8 @@ public class IOBlock extends StandardElementBase implements IOElement {
 
     @Override
     public void setContent(String content) {
-        Type listType = new TypeToken<ArrayList<Data>>(){}.getType();
+        Type listType = new TypeToken<ArrayList<Data>>() {
+        }.getType();
         List<Data> contentAsList = new Gson().fromJson(content, listType);
         setContent(contentAsList);
     }
@@ -89,7 +94,7 @@ public class IOBlock extends StandardElementBase implements IOElement {
     }
 
     @Override
-    public void run() throws InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException, NextElementNotFound, VariableNotFound, WrongArgumentException, VariableIsAlreadyDefinedException, IncompatibleTypeException {
+    public void run() throws AlgorithmException {
         onStart();
         justRunCode();
         tryRun(nextElement);
@@ -97,17 +102,20 @@ public class IOBlock extends StandardElementBase implements IOElement {
     }
 
     @Override
-    protected void justRunCode() throws IncompatibleTypeException, InvalidArgumentsException, UnsupportedValueException, VariableIsAlreadyDefinedException, VariableNotFound, WrongArgumentException, NotFoundTypeException {
-        if(communicator!=null) {
-            for(Data instruction:instructions) {
-                if(instruction.isInput()) {
-                    String value = communicator.getInput();
-                    CodeParser.updateVariable(instruction.getValue(), value);
+    protected void justRunCode() throws AlgorithmException {
+        if (communicator != null) {
+            for (Data instruction : instructions) {
+                if (instruction.isInput()) {
+                    String input = communicator.getInput();
+                    SimpleValue value = ValueFactory.createValue(
+                            heap.getVariableType(instruction.getValue()),
+                            input
+                    );
+                    heap.setVariableValue(instruction.getValue(), value);
                 } else {
-                    String value = CodeParser.getValueToPrint(instruction.getValue());
-                    communicator.print(value);
+                    String output = String.valueOf(executor.getResult(instruction.getValue()).getValue());
+                    communicator.print(output);
                 }
-                CodeParser.callHeapSpies();
             }
         }
     }
@@ -116,13 +124,13 @@ public class IOBlock extends StandardElementBase implements IOElement {
     protected ElementPOJO getPOJO() {
         ElementPOJO pojo = getPreCreatedPOJO();
         pojo.nextBlocks = new String[1];
-        if(nextElement!=null) {
+        if (nextElement != null) {
             pojo.nextBlocks[0] = nextElement;
         }
         return pojo;
     }
 
-    protected ElementPOJO getPreCreatedPOJO(){
+    protected ElementPOJO getPreCreatedPOJO() {
         ElementPOJO pojo = new ElementPOJO();
         pojo.elementType = getType();
         pojo.content = getContent();

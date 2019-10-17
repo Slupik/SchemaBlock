@@ -7,11 +7,22 @@ import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetWithElements;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
 import io.github.slupik.schemablock.javafx.logic.execution.ExecutionController;
-import io.github.slupik.schemablock.javafx.logic.heap.DefaultHeapSpy;
 import io.github.slupik.schemablock.javafx.logic.heap.HeapValueFx;
+import io.github.slupik.schemablock.javafx.logic.heap.NewHeapSpy;
 import io.github.slupik.schemablock.javafx.logic.persistence.SchemaSaver;
+import io.github.slupik.schemablock.javafx.view.resize.BlocksAwareSizeProvider;
+import io.github.slupik.schemablock.javafx.view.resize.ResizingTool;
 import io.github.slupik.schemablock.model.ui.implementation.container.DefaultElementContainer;
+import io.github.slupik.schemablock.model.ui.implementation.container.ExecutionCallback;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
+import io.github.slupik.schemablock.model.ui.parser.ElementParser;
+import io.github.slupik.schemablock.newparser.compilator.Compilator;
+import io.github.slupik.schemablock.newparser.compilator.implementation.DefaultCompilator;
+import io.github.slupik.schemablock.newparser.executor.Executor;
+import io.github.slupik.schemablock.newparser.executor.implementation.ExecutorImpl;
+import io.github.slupik.schemablock.newparser.memory.Memory;
+import io.github.slupik.schemablock.newparser.memory.MemoryImpl;
+import io.github.slupik.schemablock.newparser.memory.RegisterImpl;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +33,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
@@ -90,6 +102,9 @@ public class MainViewController implements Initializable {
     private Button btnContinue;
 
     @FXML
+    private Rectangle resizingIcon;
+
+    @FXML
     private TableView<HeapValueFx> tvVariables;
 
     @FXML
@@ -106,6 +121,18 @@ public class MainViewController implements Initializable {
     private SchemaSaver saver;
     private SchemaLoader loader;
 
+    private Compilator compilator = new DefaultCompilator();
+    private Memory memory = new MemoryImpl();
+    private RegisterImpl register = new RegisterImpl();
+    private NewHeapSpy heap = new NewHeapSpy(memory, new Runnable(){
+        @Override
+        public void run() {
+            tvVariables.refresh();
+        }
+    });
+    private Executor executor = new ExecutorImpl(compilator, heap, register);
+    private ElementParser elementParser = new ElementParser(executor, heap);
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupDragging();
@@ -114,23 +141,49 @@ public class MainViewController implements Initializable {
     private void setupDragging() {
         IOCommunicable communicable = new UIIOCommunicator(tfInput, outputView, btnEnter);
 
-        DefaultElementContainer elementContainer = new DefaultElementContainer();
+        DefaultElementContainer elementContainer = new DefaultElementContainer(register, memory, elementParser);
         ExecutionController executionController = new ExecutionController(communicable, elementContainer, btnContinue);
         elementContainer.setExecutionFlowController(executionController);
-        container = new DefaultSheetWithElements(sheet, communicable, elementContainer);
+        container = new DefaultSheetWithElements(sheet, communicable, elementContainer, executor, heap);
 
-        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()), container.getChildrenHandler());
+        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()), container.getChildrenHandler(), executor, heap);
 
         addIconsToMenu();
         bindIOView();
         setupMenu();
         bindTable();
-        btnRun.setOnAction((event)-> executionController.execute(false));
-        btnDebug.setOnAction((event)-> executionController.execute(true));
+        bindResizer();
+        ExecutionCallback callback =
+                new ExecutionCallback() {
+                    @Override
+                    public void onStart() {
+                        btnRun.setDisable(true);
+                        btnDebug.setDisable(true);
+                    }
+
+                    @Override
+                    public void onStop() {
+                        btnRun.setDisable(false);
+                        btnDebug.setDisable(false);
+                    }
+                };
+        btnRun.setOnAction((event)-> {
+            heap.clear();
+            executionController.execute(false, callback);
+        });
+        btnDebug.setOnAction((event)-> {
+            heap.clear();
+            executionController.execute(true, callback);
+        });
+    }
+
+    private void bindResizer() {
+        BlocksAwareSizeProvider sizeProvider = new BlocksAwareSizeProvider(sheet);
+        new ResizingTool(sheet, resizingIcon, sizeProvider).init();
     }
 
     private void bindTable() {
-        ObservableList<HeapValueFx> valueList = new DefaultHeapSpy().getList();
+        ObservableList<HeapValueFx> valueList = heap.getVariableList();
         tvVariables.setItems(valueList);
         tcVarType.setCellValueFactory(
                 new PropertyValueFactory<>("type")
@@ -172,10 +225,10 @@ public class MainViewController implements Initializable {
     }
 
     private void addIconsToMenu() {
-        addDragDetection(new DragGhostIconUiElement(UiElementType.STOP));
-        addDragDetection(new DragGhostIconUiElement(UiElementType.CALCULATION));
-        addDragDetection(new DragGhostIconUiElement(UiElementType.IF));
-        addDragDetection(new DragGhostIconUiElement(UiElementType.IO));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.STOP, executor, heap));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.CALCULATION, executor, heap));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.IF, executor, heap));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.IO, executor, heap));
     }
 
     private void addDragDetection(DragGhostIcon dragIcon) {

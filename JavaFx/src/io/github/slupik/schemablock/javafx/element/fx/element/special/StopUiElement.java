@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.javafx.element.fx.element.special;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
+import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.StopBlock;
 
 /**
@@ -13,7 +14,6 @@ public class StopUiElement extends UiSpecialElement {
     protected void onPostInit() {
         super.onPostInit();
         setDesc("STOP");
-        element = new StopBlock();
     }
 
     @Override
@@ -28,6 +28,11 @@ public class StopUiElement extends UiSpecialElement {
         base.allowForOutput = false;
         base.parentElementId = getElementId();
         return base;
+    }
+
+    @Override
+    protected Element generateLogicElement() {
+        return new StopBlock();
     }
 
     @Override

@@ -1,18 +1,13 @@
 package io.github.slupik.schemablock.model.ui.implementation.element;
 
 import com.google.gson.Gson;
+import io.github.slupik.schemablock.model.ui.abstraction.element.ElementState;
+import io.github.slupik.schemablock.model.ui.abstraction.element.ElementStateListener;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
-import io.github.slupik.schemablock.parser.code.CodeParser;
-import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
-import io.github.slupik.schemablock.parser.code.VariableNotFound;
-import io.github.slupik.schemablock.parser.code.WrongArgumentException;
-import io.github.slupik.schemablock.parser.math.rpn.MathCalculation;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.VariableIsAlreadyDefinedException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
+import io.github.slupik.schemablock.newparser.executor.Executor;
 
 /**
  * All rights reserved & copyright ©
@@ -20,6 +15,12 @@ import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeE
 public abstract class StandardElementBase extends ElementBase implements StandardElement {
 
     private String codeToRun = "";
+    private Executor executor;
+    private ElementStateListener stateListener;
+
+    public StandardElementBase(Executor executor) {
+        this.executor = executor;
+    }
 
     @Override
     public void setContent(String content) {
@@ -31,12 +32,12 @@ public abstract class StandardElementBase extends ElementBase implements Standar
         return codeToRun;
     }
 
-    protected void justRunCode() throws IncompatibleTypeException, InvalidArgumentsException, UnsupportedValueException, VariableIsAlreadyDefinedException, VariableNotFound, WrongArgumentException, NotFoundTypeException {
-        CodeParser.execute(codeToRun);
+    protected void justRunCode() throws AlgorithmException {
+        executor.execute(codeToRun);
     }
 
-    protected Object runAndGetResult() throws InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException {
-        return MathCalculation.getResult(CodeParser.getHeap(), codeToRun);
+    protected Object runAndGetResult() throws AlgorithmException {
+        return executor.getResult(codeToRun);
     }
 
     @Override
@@ -46,7 +47,7 @@ public abstract class StandardElementBase extends ElementBase implements Standar
 
     protected abstract ElementPOJO getPOJO();
 
-    protected ElementPOJO getPreCreatedPOJO(){
+    protected ElementPOJO getPreCreatedPOJO() {
         ElementPOJO pojo = new ElementPOJO();
         pojo.elementType = getType();
         pojo.content = codeToRun;
@@ -59,4 +60,17 @@ public abstract class StandardElementBase extends ElementBase implements Standar
         codeToRun = pojo.content;
         id = pojo.id;
     }
+
+    @Override
+    public void setState(ElementState state) {
+        if (stateListener != null) {
+            stateListener.onStateChange(state);
+        }
+    }
+
+    @Override
+    public void setStateListener(ElementStateListener listener) {
+        stateListener = listener;
+    }
+
 }

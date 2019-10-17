@@ -10,6 +10,8 @@ import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.ConditionBlock;
+import io.github.slupik.schemablock.model.ui.newparser.HeapController;
+import io.github.slupik.schemablock.newparser.executor.Executor;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Dialog;
@@ -36,10 +38,13 @@ public class ConditionUiElement extends UiStandardElement {
 
     private Rhombus shape;
 
+    public ConditionUiElement(Executor executor, HeapController heap) {
+        super(executor, heap);
+    }
+
     @Override
-    protected void onPostInit() {
-        super.onPostInit();
-        element = new ConditionBlock();
+    protected Element generateLogicElement() {
+        return new ConditionBlock(executor);
     }
 
     @Override

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -16,6 +17,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.web.WebView?>
 
 <BorderPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="556.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.javafx.view.MainViewController">
@@ -59,16 +61,25 @@
       <SplitPane fx:id="centerContainer" dividerPositions="0.7" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
          <items>
             <ScrollPane fx:id="sheetScroller" prefHeight="415.0" prefWidth="898.0" style="-fx-background: lightgray;">
-               <content>
-                  <Pane fx:id="sheet" maxHeight="430.0" maxWidth="938.0" prefHeight="430.0" prefWidth="938.0" style="-fx-background-color: white;">
-                     <effect>
-                        <DropShadow height="32.86" radius="13.7075" spread="0.15" width="23.97" />
-                     </effect>
-                  </Pane>
-               </content>
                <padding>
                   <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                </padding>
+               <content>
+                  <Pane>
+                     <children>
+                        <Pane fx:id="sheet" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="430.0" prefWidth="938.0" style="-fx-background-color: white;">
+                           <effect>
+                              <DropShadow height="32.86" radius="13.7075" spread="0.15" width="23.97" />
+                           </effect>
+                        </Pane>
+                        <Rectangle fx:id="resizingIcon" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="5.0" stroke="BLACK" strokeType="INSIDE" width="5.0">
+                           <cursor>
+                              <Cursor fx:constant="SE_RESIZE" />
+                           </cursor>
+                        </Rectangle>
+                     </children>
+                  </Pane>
+               </content>
             </ScrollPane>
             <SplitPane dividerPositions="0.62" prefHeight="160.0" prefWidth="200.0">
                <items>

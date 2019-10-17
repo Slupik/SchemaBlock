@@ -21,6 +21,8 @@ import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableNode;
 import io.github.slupik.schemablock.javafx.logic.drag.node.NodeDragController;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
+import io.github.slupik.schemablock.model.ui.newparser.HeapController;
+import io.github.slupik.schemablock.newparser.executor.Executor;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -34,6 +36,8 @@ import java.util.List;
 public class DefaultSheetWithElements implements SheetWithElements {
 
     private final ElementContainer container;
+    private final Executor executor;
+    private final HeapController heap;
     private final Pane sheet;
     private final IOCommunicable communicable;
     private final StartUiElement startElement;
@@ -44,12 +48,14 @@ public class DefaultSheetWithElements implements SheetWithElements {
     private PortSpawner spawner;
     private DestContainerAfterDrop childHandler;
 
-    public DefaultSheetWithElements(Pane sheet, IOCommunicable communicable, ElementContainer elementContainer) {
+    public DefaultSheetWithElements(Pane sheet, IOCommunicable communicable, ElementContainer elementContainer, Executor executor, HeapController heap) {
         this.sheet = sheet;
         this.communicable = communicable;
         container = elementContainer;
+        this.executor = executor;
+        this.heap = heap;
         uiContainer = new VisibleUIContainerImpl();
-        startElement = ((StartUiElement) UiElementFactory.createByType(UiElementType.START));
+        startElement = ((StartUiElement) UiElementFactory.createByType(UiElementType.START, executor, heap));
         init();
         deletionHandler = new DeletionHandlerImpl(this, connector);
         setup();
@@ -110,7 +116,7 @@ public class DefaultSheetWithElements implements SheetWithElements {
     //TODO delete spawnStop()
     private void spawnStop() {
         Platform.runLater(()->{
-            UiElementBase end = UiElementFactory.createByType(UiElementType.STOP);
+            UiElementBase end = UiElementFactory.createByType(UiElementType.STOP, executor, heap);
             childHandler.addNode(end);
             if(sheet.getWidth()<150){
                 end.setLayoutX(100);
@@ -221,11 +227,21 @@ public class DefaultSheetWithElements implements SheetWithElements {
             }
         }
 
+        JsonObject sheetData = getSheetData();
+
         JsonObject data = new JsonObject();
         data.add("logicElements", parser.parse(container.stringify()));
+        data.add("sheet", sheetData);
         data.add("blocks", blocks);
         data.add("ports", parser.parse(connector.stringify()).getAsJsonArray());
         return data.toString();
+    }
+
+    private JsonObject getSheetData() {
+        JsonObject data = new JsonObject();
+        data.addProperty("width", sheet.getWidth());
+        data.addProperty("height", sheet.getHeight());
+        return data;
     }
 
     @Override
@@ -235,6 +251,10 @@ public class DefaultSheetWithElements implements SheetWithElements {
         JsonParser parser = new JsonParser();
         JsonObject json = parser.parse(data).getAsJsonObject();
 
+        JsonObject sheetData = json.get("sheet").getAsJsonObject();
+        sheet.setPrefHeight(sheetData.getAsJsonPrimitive("height").getAsDouble());
+        sheet.setPrefWidth(sheetData.getAsJsonPrimitive("width").getAsDouble());
+
         JsonObject logicElements = json.get("logicElements").getAsJsonObject();
         container.restore(logicElements.toString());
 
@@ -242,7 +262,7 @@ public class DefaultSheetWithElements implements SheetWithElements {
         for(JsonElement element:blocks) {
             UiElementPOJO blockInfo = new Gson().fromJson(element, UiElementPOJO.class);
 
-            UiElementBase uiElement = UiElementFactory.createByType(blockInfo.type);
+            UiElementBase uiElement = UiElementFactory.createByType(blockInfo.type, executor, heap);
             try {
                 uiElement.restore(element.toString(), container);
                 addElementWithoutPorts(uiElement);

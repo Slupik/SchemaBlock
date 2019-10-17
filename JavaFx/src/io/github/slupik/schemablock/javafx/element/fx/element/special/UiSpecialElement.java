@@ -32,6 +32,10 @@ public abstract class UiSpecialElement extends UiElementBase implements ElementS
 
     private MyEllipse shape;
 
+    public UiSpecialElement() {
+        super(null, null);
+    }
+
     @Override
     protected CustomShapeBase createBackgroundElement() {
         shape = new MyEllipse();

@@ -1,22 +1,18 @@
 package io.github.slupik.schemablock.model.ui.implementation.container;
 
 import com.google.gson.Gson;
+import io.github.slupik.schemablock.both.execution.DefaultExecutionFlowController;
+import io.github.slupik.schemablock.both.execution.ExecutionFlowController;
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.abstraction.controller.ElementCallback;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
+import io.github.slupik.schemablock.model.ui.abstraction.element.ElementState;
+import io.github.slupik.schemablock.model.ui.implementation.element.specific.StopBlock;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementParser;
-import io.github.slupik.schemablock.parser.code.CodeParser;
-import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
-import io.github.slupik.schemablock.parser.code.VariableNotFound;
-import io.github.slupik.schemablock.parser.code.WrongArgumentException;
-import io.github.slupik.schemablock.parser.execution.DefaultExecutionFlowController;
-import io.github.slupik.schemablock.parser.execution.ExecutionFlowController;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.VariableIsAlreadyDefinedException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
+import io.github.slupik.schemablock.newparser.memory.Memory;
+import io.github.slupik.schemablock.newparser.memory.Register;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,19 +23,38 @@ import java.util.concurrent.CountDownLatch;
  */
 public class DefaultElementContainer implements ElementContainer, ElementCallback {
 
+    private final Register register;
+    private final Memory memory;
+    private final ElementParser elementParser;
     private final List<Element> elements = new ArrayList<>();
     private ExecutionFlowController controller = new DefaultExecutionFlowController();
     private String start;
+    private String previousElement = null;
+    private ExecutionCallback callback;
+
+    public DefaultElementContainer(Register register, Memory memory, ElementParser elementParser){
+        this.register = register;
+        this.memory = memory;
+        this.elementParser = elementParser;
+    }
 
     @Override
-    public void run() {
-        CodeParser.clearHeap();
+    public void run(ExecutionCallback callback) {
+        this.callback = callback;
+        memory.clear();
+        register.clear();
+        previousElement = null;
 
+        if(callback!=null) {
+            callback.onStart();
+        }
         controller.onStart();
 
         try {
+            getElement(start).setState(ElementState.RUNNING);
             getElement(start).run();
-        } catch (NotFoundTypeException | IncompatibleTypeException| UnsupportedValueException| VariableIsAlreadyDefinedException| NextElementNotFound| WrongArgumentException| InvalidArgumentsException| VariableNotFound e) {
+            getElement(start).setState(ElementState.STOP);
+        } catch (Throwable e) {
             controller.onException(e);
         }
     }
@@ -115,7 +130,7 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
         start = pojo.startElement;
         for(String elementString:pojo.elements) {
             try {
-                Element element = ElementParser.parse(elementString);
+                Element element = elementParser.parse(elementString);
                 addElement(element);
             } catch (BlockParserException e) {
                 e.printStackTrace();
@@ -148,9 +163,28 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
             e.printStackTrace();
         }
         try {
+            if(previousElement!=null) {
+                getElement(previousElement).setState(ElementState.STOP);
+            }
+            previousElement = elementId;
+            getElement(elementId).setState(ElementState.RUNNING);
             getElement(elementId).run();
-        } catch (NotFoundTypeException | IncompatibleTypeException| UnsupportedValueException| VariableIsAlreadyDefinedException| NextElementNotFound| WrongArgumentException| InvalidArgumentsException| VariableNotFound e) {
+            getElement(elementId).setState(ElementState.STOP);
+        } catch (Throwable e) {
             controller.onException(e);
+            if(!(e instanceof NextElementNotFound)) {
+                try {
+                    getElement(elementId).setState(ElementState.ERROR);
+                } catch (NextElementNotFound ignore) {}
+            }
         }
+
+        try {
+            if(getElement(elementId) instanceof StopBlock) {
+                if(callback!=null) {
+                    callback.onStop();
+                }
+            }
+        } catch (NextElementNotFound ignore) {}
     }
 }

@@ -2,12 +2,10 @@ package io.github.slupik.schemablock;
 
 import io.github.slupik.schemablock.javafx.view.MainViewController;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 public class Main extends Application {
 
@@ -28,12 +26,7 @@ public class Main extends Application {
         primaryStage.show();
         primaryStage.sizeToScene();
 
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                controller.onCloseSheet();
-            }
-        });
+        primaryStage.setOnCloseRequest(event -> controller.onCloseSheet());
     }
 
 

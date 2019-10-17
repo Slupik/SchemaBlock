@@ -15,6 +15,8 @@ import io.github.slupik.schemablock.model.ui.abstraction.element.IOElement;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOBlock;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
+import io.github.slupik.schemablock.model.ui.newparser.HeapController;
+import io.github.slupik.schemablock.newparser.executor.Executor;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Dialog;
@@ -42,10 +44,13 @@ public class IOUiElement extends UiStandardElement {
 
     private Parallelogram shape;
 
+    public IOUiElement(Executor executor, HeapController heap) {
+        super(executor, heap);
+    }
+
     @Override
-    protected void onPostInit() {
-        super.onPostInit();
-        element = new IOBlock();
+    protected Element generateLogicElement() {
+        return new IOBlock(executor, heap);
     }
 
     @Override

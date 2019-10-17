@@ -2,17 +2,12 @@ package io.github.slupik.schemablock.model.ui.implementation.element.specific;
 
 import io.github.slupik.schemablock.model.ui.abstraction.ElementType;
 import io.github.slupik.schemablock.model.ui.abstraction.element.ConditionalElement;
-import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.implementation.element.StandardElementBase;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
-import io.github.slupik.schemablock.parser.code.IncompatibleTypeException;
-import io.github.slupik.schemablock.parser.code.VariableNotFound;
-import io.github.slupik.schemablock.parser.code.WrongArgumentException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.InvalidArgumentsException;
-import io.github.slupik.schemablock.parser.math.rpn.pattern.UnsupportedValueException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.VariableIsAlreadyDefinedException;
-import io.github.slupik.schemablock.parser.math.rpn.variable.value.NotFoundTypeException;
+import io.github.slupik.schemablock.newparser.executor.Executor;
+import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
 
 /**
  * All rights reserved & copyright ©
@@ -22,15 +17,20 @@ public class ConditionBlock extends StandardElementBase implements ConditionalEl
     private String elementOnFalse = "";
     private String elementOnTrue = "";
 
+    public ConditionBlock(Executor executor) {
+        super(executor);
+    }
+
     @Override
     public ElementType getType() {
         return ElementType.CONDITION;
     }
 
     @Override
-    public void run() throws InvalidArgumentsException, NotFoundTypeException, UnsupportedValueException, NextElementNotFound, VariableNotFound, WrongArgumentException, VariableIsAlreadyDefinedException, IncompatibleTypeException {
+    public void run() throws AlgorithmException {
         onStart();
-        if(((Boolean) runAndGetResult())) {
+        SimpleValue result = (SimpleValue) runAndGetResult();
+        if(result.getCastedValue()) {
             tryRun(elementOnTrue);
         } else {
             tryRun(elementOnFalse);
