@@ -11,9 +11,7 @@
 This version of the program is still not completed. I plan to end this before 10.2019.
 
 TODO:
- - functions
- - error handling
- - binding to UI
+ - Clean code ;) Now I try to make it work... :)
 
 ### Description
 Program for universities, schools and beginner programmers.
@@ -32,5 +30,5 @@ This program is built to solve the problems of education of programmers.
 - Multidimensional arrays
 
 ### Future features
-- More mathematical and text functions
-- Clean code ;) Now I try to make it work... :)
+- Kotlin (?)
+- BNF (?)
