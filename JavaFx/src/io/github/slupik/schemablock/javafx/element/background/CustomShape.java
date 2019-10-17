@@ -30,9 +30,7 @@ public interface CustomShape {
     void setFill(Color web);
     void highlight();
     void resetColor();
-
     void markAsError();
-
     void markAsExecuting();
 
     boolean isContainsCoords(double x, double y);
