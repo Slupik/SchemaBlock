@@ -39,6 +39,16 @@ public class DefaultFunctionContainer implements FunctionContainer {
         IMPLEMENTED_FUNCTIONS.add(new FunctionAsString());
         //io
         IMPLEMENTED_FUNCTIONS.add(new FunctionPrintln());
+        //text
+        IMPLEMENTED_FUNCTIONS.add(new FunctionExplode());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionToAscii());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionToTextFromAscii());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionLength());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionEquals());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionEqualsIgnoreCase());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionContains());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionStartsWith());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionEndsWith());
     }
 
     @Override
