@@ -41,7 +41,6 @@ public class ExecutorImpl implements Executor {
         execute(cmds);
     }
 
-    @Override
     public void execute(Queue<ByteCommand> cmds) throws AlgorithmException {
         ByteCodeExe.execute(cmds, memory, register, FUNCTIONS_CONTAINER, FUNCTION_EXECUTOR);
     }
@@ -52,7 +51,6 @@ public class ExecutorImpl implements Executor {
         return getResult(cmds);
     }
 
-    @Override
     public SimpleValue getResult(Queue<ByteCommand> cmds) throws AlgorithmException {
         ByteCodeExe.execute(cmds, memory, register, FUNCTIONS_CONTAINER, FUNCTION_EXECUTOR);
         Memoryable memoryable = register.pop();
