@@ -12,5 +12,6 @@
     <orderEntry type="module" module-name="1 Model" exported="" />
     <orderEntry type="library" exported="" name="org.apache.commons:commons-lang3:3.8.1" level="project" />
     <orderEntry type="library" name="org.junit.jupiter:junit-jupiter-api:5.3.1" level="project" />
+    <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
   </component>
 </module>

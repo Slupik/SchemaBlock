@@ -6,6 +6,7 @@ import io.github.slupik.schemablock.javafx.element.UiElement;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.WrongTypeOfElement;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
+import io.github.slupik.schemablock.javafx.element.block.extension.size.ReactiveElementSizeController;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;
@@ -30,7 +31,7 @@ public abstract class UiElementBase extends Pane implements UiElement {
     protected final HeapController heap;
 
     private DeletionHandler deletionHandler;
-    private ElementSizeBinder size;
+    private ReactiveElementSizeController size;
     private CustomShapeBase background;
     protected Element element;
 
@@ -107,7 +108,12 @@ public abstract class UiElementBase extends Pane implements UiElement {
     }
 
     private void init() {
-        size = new ElementSizeBinder(getBinderInput());
+        size = new ReactiveElementSizeController(
+                this,
+                background,
+                getBinderInput().getDescLabel()
+        );
+        size.bindElements();
 
         initContextMenu();
     }
@@ -170,8 +176,7 @@ public abstract class UiElementBase extends Pane implements UiElement {
 
     @Override
     public void setElementSize(double width, double height) {
-        size.setWidth(width);
-        size.setHeight(height);
+        size.setSize(width, height);
     }
 
     @Override
