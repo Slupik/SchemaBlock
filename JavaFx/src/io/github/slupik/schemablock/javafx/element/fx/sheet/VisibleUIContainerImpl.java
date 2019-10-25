@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.sheet;
 
-import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.block.implementation.DescribedBlockPrototype;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +10,11 @@ import java.util.List;
  */
 public class VisibleUIContainerImpl implements VisibleUIContainer {
 
-    private final List<UiElementBase> list = new ArrayList<>();
+    private final List<DescribedBlockPrototype> list = new ArrayList<>();
 
     @Override
-    public UiElementBase get(String id) throws ElementNotFound {
-        for(UiElementBase element:list) {
+    public DescribedBlockPrototype get(String id) throws ElementNotFound {
+        for(DescribedBlockPrototype element:list) {
             if(element.getElementId().equals(id)) {
                 return element;
             }
@@ -23,14 +23,14 @@ public class VisibleUIContainerImpl implements VisibleUIContainer {
     }
 
     @Override
-    public void add(UiElementBase element) {
+    public void add(DescribedBlockPrototype element) {
         list.add(element);
     }
 
     @Override
     public void remove(String id) {
-        List<UiElementBase> toDelete = new ArrayList<>();
-        for(UiElementBase element:list) {
+        List<DescribedBlockPrototype> toDelete = new ArrayList<>();
+        for(DescribedBlockPrototype element:list) {
             if(element.getElementId().equals(id)) {
                 toDelete.add(element);
             }

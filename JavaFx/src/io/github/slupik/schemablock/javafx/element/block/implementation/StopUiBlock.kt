@@ -2,7 +2,7 @@ package io.github.slupik.schemablock.javafx.element.block.implementation
 
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase
-import io.github.slupik.schemablock.javafx.element.background.MyRectangle
+import io.github.slupik.schemablock.javafx.element.background.MyEllipse
 import io.github.slupik.schemablock.javafx.element.block.StopBlock
 import io.github.slupik.schemablock.javafx.element.block.implementation.DEFAULT_DESC
 import javafx.fxml.FXML
@@ -26,7 +26,7 @@ class StopUiBlock : DescribedBlockPrototype, StopBlock {
     @FXML
     private lateinit var desc: Label
 
-    private var shape: MyRectangle = MyRectangle()
+    private var shape: MyEllipse = MyEllipse()
 
     constructor(id: String) : super(UiElementType.STOP, id)
 

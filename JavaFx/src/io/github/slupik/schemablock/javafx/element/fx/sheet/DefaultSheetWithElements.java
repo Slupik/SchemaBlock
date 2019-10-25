@@ -1,14 +1,13 @@
 package io.github.slupik.schemablock.javafx.element.fx.sheet;
 
 import com.google.gson.*;
-import io.github.slupik.schemablock.javafx.element.UiElement;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
+import io.github.slupik.schemablock.javafx.element.block.Block;
+import io.github.slupik.schemablock.javafx.element.block.implementation.DescribedBlockPrototype;
+import io.github.slupik.schemablock.javafx.element.block.implementation.StartUiBlock;
 import io.github.slupik.schemablock.javafx.element.fx.element.DeletionHandler;
 import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.element.UiElementPOJO;
-import io.github.slupik.schemablock.javafx.element.fx.element.special.StartUiElement;
-import io.github.slupik.schemablock.javafx.element.fx.element.standard.IOUiElement;
-import io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactory;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortElement;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnectorOnSheet;
@@ -30,6 +29,8 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactoryKt.createUiBlockByType;
+
 /**
  * All rights reserved & copyright ©
  */
@@ -40,7 +41,7 @@ public class DefaultSheetWithElements implements SheetWithElements {
     private final HeapController heap;
     private final Pane sheet;
     private final IOCommunicable communicable;
-    private final StartUiElement startElement;
+    private final StartUiBlock startElement;
     private final VisibleUIContainer uiContainer;
     private final DeletionHandler deletionHandler;
 
@@ -55,7 +56,7 @@ public class DefaultSheetWithElements implements SheetWithElements {
         this.executor = executor;
         this.heap = heap;
         uiContainer = new VisibleUIContainerImpl();
-        startElement = ((StartUiElement) UiElementFactory.createByType(UiElementType.START, executor, heap));
+        startElement = ((StartUiBlock) createUiBlockByType(UiElementType.START));
         init();
         deletionHandler = new DeletionHandlerImpl(this, connector);
         setup();
@@ -67,9 +68,9 @@ public class DefaultSheetWithElements implements SheetWithElements {
         childHandler = new DestContainerAfterDropImpl(sheet) {
             @Override
             public void addNode(Node node) {
-                if(node instanceof UiElement) {
+                if(node instanceof DescribedBlockPrototype) {
                     try {
-                        addElement(((UiElement) node));
+                        addElement(((DescribedBlockPrototype) node));
                     } catch (InvalidTypeException ignore) {/*Impossible*/}
                 } else {
                     super.addNode(node);
@@ -77,8 +78,8 @@ public class DefaultSheetWithElements implements SheetWithElements {
             }
             @Override
             public void removeNode(Node node) {
-                if(node instanceof UiElement) {
-                    UiElement element = ((UiElement) node);
+                if(node instanceof DescribedBlockPrototype) {
+                    DescribedBlockPrototype element = ((DescribedBlockPrototype) node);
                     removeElement(element);
                 } else {
                     super.addNode(node);
@@ -116,7 +117,7 @@ public class DefaultSheetWithElements implements SheetWithElements {
     //TODO delete spawnStop()
     private void spawnStop() {
         Platform.runLater(()->{
-            UiElementBase end = UiElementFactory.createByType(UiElementType.STOP, executor, heap);
+            Pane end = createUiBlockByType(UiElementType.STOP);
             childHandler.addNode(end);
             if(sheet.getWidth()<150){
                 end.setLayoutX(100);
@@ -134,27 +135,28 @@ public class DefaultSheetWithElements implements SheetWithElements {
     }
 
     @Override
-    public void addElement(UiElement element) throws InvalidTypeException {
-        if(element instanceof Node) {
-            container.addElement(element.getLogicElement());
+    public void addElement(DescribedBlockPrototype element) throws InvalidTypeException {
+//        if(element instanceof Node) {
+//            container.addElement(element.getLogicElement());
             addElementWithoutPorts(element);
-            if(element instanceof UiElementBase) {
-                spawner.spawnForElement(((UiElementBase) element));
-            }
-        } else {
-            throw new InvalidTypeException();
-        }
+//            if(element instanceof UiElementBase) {
+                spawner.spawnForElement(element);
+//            }
+//        } else {
+//            throw new InvalidTypeException();
+//        }
     }
 
-    private void addElementWithoutPorts(UiElement element) throws InvalidTypeException {
+    private void addElementWithoutPorts(Block element) throws InvalidTypeException {
         if(element instanceof Node) {
             sheet.getChildren().add(((Node) element));
-            if(element instanceof UiElementBase) {
-                uiContainer.add((UiElementBase) element);
+            if(element instanceof DescribedBlockPrototype) {
+                uiContainer.add((DescribedBlockPrototype) element);
             }
 
             if(element.getType()==UiElementType.IO) {
-                ((IOUiElement) element).setCommunicator(communicable);
+                //TODO setup
+//                ((IOBlock) element).setCommunicator(communicable);
             }
             if(element instanceof UiElementBase) {
                 ((UiElementBase) element).setDeletionHandler(deletionHandler);
@@ -165,18 +167,21 @@ public class DefaultSheetWithElements implements SheetWithElements {
     }
 
     @Override
-    public void removeElement(UiElement element) {
-        container.removeElement(element.getElementId());
-        if(element instanceof Node) {
+    public void removeElement(Node element) {
+//        if(element instanceof Node) {
             sheet.getChildren().remove(element);
-            uiContainer.remove(element.getElementId());
-        }
-        if(element instanceof UiElementBase) {
-            deletionHandler.deleteIngoing(element.getElementId());
-            deletionHandler.deleteOutgoing(element.getElementId());
+//        }
+        if(element instanceof DescribedBlockPrototype) {
+            DescribedBlockPrototype block = (DescribedBlockPrototype) element;
+
+            uiContainer.remove(block.getElementId());
+            container.removeElement(block.getElementId());
+
+            deletionHandler.deleteIngoing(block.getElementId());
+            deletionHandler.deleteOutgoing(block.getElementId());
             List<PortElement> ports = new ArrayList<>(connector.getPorts());
             for(PortElement port:ports) {
-                if(port.getElement().getElementId().equals(element.getElementId())) {
+                if(port.getElement().getElementId().equals(block.getElementId())) {
                     connector.deletePort(port);
                     sheet.getChildren().remove(port);
                 }
@@ -186,13 +191,11 @@ public class DefaultSheetWithElements implements SheetWithElements {
 
     @Override
     public void clear() {
-        List<UiElement> toDelete = new ArrayList<>();
+        List<DescribedBlockPrototype> toDelete = new ArrayList<>();
         for(Node child:sheet.getChildren()) {
-            if(child instanceof  UiElement) {
-                toDelete.add(((UiElement) child));
-            }
+            toDelete.add(((DescribedBlockPrototype) child));
         }
-        for(UiElement element:toDelete) {
+        for(DescribedBlockPrototype element:toDelete) {
             removeElement(element);
         }
         sheet.getChildren().clear();
@@ -262,22 +265,23 @@ public class DefaultSheetWithElements implements SheetWithElements {
         for(JsonElement element:blocks) {
             UiElementPOJO blockInfo = new Gson().fromJson(element, UiElementPOJO.class);
 
-            UiElementBase uiElement = UiElementFactory.createByType(blockInfo.type, executor, heap);
-            try {
-                uiElement.restore(element.toString(), container);
-                addElementWithoutPorts(uiElement);
-
-                //Make element draggable
-                NodeDragController draggingController = new NodeDragController(new DraggableNode(uiElement, false));
-                draggingController.addListener((dragEvent, draggableNode) -> {
-                    if(dragEvent == DragEventState.DRAG_START) {
-                        draggingController.getEventNode().toFront();
-                    }
-                });
-
-            } catch (InvalidTypeException e) {
-                e.printStackTrace();
-            }
+            DescribedBlockPrototype uiElement = createUiBlockByType(blockInfo.type);
+//            try {
+//                //TODO repair
+//                uiElement.restore(element.toString(), container);
+//                addElementWithoutPorts(uiElement);
+//
+//                //Make element draggable
+//                NodeDragController draggingController = new NodeDragController(new DraggableNode(uiElement, false));
+//                draggingController.addListener((dragEvent, draggableNode) -> {
+//                    if(dragEvent == DragEventState.DRAG_START) {
+//                        draggingController.getEventNode().toFront();
+//                    }
+//                });
+//
+//            } catch (InvalidTypeException e) {
+//                e.printStackTrace();
+//            }
         }
 
         JsonArray ports = json.get("ports").getAsJsonArray();

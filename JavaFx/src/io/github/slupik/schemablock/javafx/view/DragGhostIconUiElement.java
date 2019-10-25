@@ -1,11 +1,12 @@
 package io.github.slupik.schemablock.javafx.view;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
-import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
-import io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactory;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.model.ui.newparser.HeapController;
 import io.github.slupik.schemablock.newparser.executor.Executor;
+import javafx.scene.layout.Pane;
+
+import static io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactoryKt.createUiBlockByType;
 
 /**
  * All rights reserved & copyright ©
@@ -28,7 +29,7 @@ public class DragGhostIconUiElement extends DragGhostIcon<UiElementType> {
 
     @Override
     protected void onSetData(UiElementType type) {
-        UiElementBase element = UiElementFactory.createByType(type, executor, heap);
+        Pane element = createUiBlockByType(type);
         getChildren().clear();
         getChildren().add(element);
     }

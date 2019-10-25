@@ -1,11 +1,10 @@
 package io.github.slupik.schemablock.javafx.element.fx.port;
 
 import com.google.gson.Gson;
-import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
+import io.github.slupik.schemablock.javafx.element.block.implementation.DescribedBlockPrototype;
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
 import io.github.slupik.schemablock.javafx.element.fx.port.group.PortListener;
-import io.github.slupik.schemablock.model.ui.abstraction.element.*;
 import io.github.slupik.schemablock.model.utils.RandomString;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
@@ -37,14 +36,14 @@ public class PortElement extends AnchorPane {
     private final boolean allowForOutput;
     private final List<PortListener> listeners = new ArrayList<>();
 
-    private UiElementBase base;
+    private DescribedBlockPrototype base;
     private PortConnector connector;
     private boolean isPortForTrue = true;
 
     private Circle circle = new Circle();
     private Arrow arrowToNextElement;
 
-    public PortElement(UiElementBase base, PortConnector connector, PortInfo info){
+    public PortElement(DescribedBlockPrototype base, PortConnector connector, PortInfo info){
         this.base = base;
         this.connector = connector;
         this.allowForInput = info.allowForInput;
@@ -129,7 +128,8 @@ public class PortElement extends AnchorPane {
     public void onMouseReleased() {
         if(connector.isSearchingInput() && allowForInput) {
             connector.setLineEnd(this, getLayoutX(), getLayoutY());
-            connector.setInput(base.getLogicElement());
+            //TODO repair
+//            connector.setInput(base.getLogicElement());
             toFront();
         }
     }
@@ -141,11 +141,11 @@ public class PortElement extends AnchorPane {
         }
     }
 
-    public UiElementBase getElement(){
+    public DescribedBlockPrototype getElement(){
         return base;
     }
 
-    public void setNextElement(UiElementBase next) throws CannotSetupPort {
+    public void setNextElement(DescribedBlockPrototype next) throws CannotSetupPort {
         boolean checkedForTrue = true;
         if(base.getType() == IF) {
             checkedForTrue = getPortBoolType();
@@ -156,7 +156,7 @@ public class PortElement extends AnchorPane {
         setNextElement(next, checkedForTrue);
     }
 
-    public void setNextElement(UiElementBase next, boolean checkedForTrue) {
+    public void setNextElement(DescribedBlockPrototype next, boolean checkedForTrue) {
         isPortForTrue = checkedForTrue;
         if(base.getType() == IF) {
             for(PortListener listener:listeners) {
@@ -194,32 +194,33 @@ public class PortElement extends AnchorPane {
 
     private void setNextElementInLogic(String elementId, boolean isForTrue) {
         actualInfo.isNextElementForTrue = isForTrue;
-        Element element = base.getLogicElement();
-        switch (element.getType()) {
-            case CALCULATION: {
-                ((OperationElement) element).setNextElement(elementId);
-                break;
-            }
-            case COMMUNICATION: {
-                ((IOElement) element).setNextElement(elementId);
-                break;
-            }
-            case START: {
-                ((StartElement) element).setNextElement(elementId);
-                break;
-            }
-            case CONDITION: {
-                if(isForTrue) {
-                    ((ConditionalElement) element).setOnTrue(elementId);
-                } else {
-                    ((ConditionalElement) element).setOnFalse(elementId);
-                }
-                break;
-            }
-            default: {
-                System.err.println("Error unsupported type "+element.getType());
-            }
-        }
+        //TODO repair
+//        Element element = base.getLogicElement();
+//        switch (element.getType()) {
+//            case CALCULATION: {
+//                ((OperationElement) element).setNextElement(elementId);
+//                break;
+//            }
+//            case COMMUNICATION: {
+//                ((IOElement) element).setNextElement(elementId);
+//                break;
+//            }
+//            case START: {
+//                ((StartElement) element).setNextElement(elementId);
+//                break;
+//            }
+//            case CONDITION: {
+//                if(isForTrue) {
+//                    ((ConditionalElement) element).setOnTrue(elementId);
+//                } else {
+//                    ((ConditionalElement) element).setOnFalse(elementId);
+//                }
+//                break;
+//            }
+//            default: {
+//                System.err.println("Error unsupported type "+element.getType());
+//            }
+//        }
     }
 
     public void configureArrowOut(Arrow arrow) {

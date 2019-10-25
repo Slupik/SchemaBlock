@@ -4,7 +4,7 @@ import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase
 import io.github.slupik.schemablock.javafx.element.background.MyRectangle
 import io.github.slupik.schemablock.javafx.element.block.OperationsBlock
-import io.github.slupik.schemablock.javafx.element.block.implementation.DEFAULT_DESC as DEFAULT_DESC
+import io.github.slupik.schemablock.javafx.element.block.implementation.DEFAULT_DESC
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import javafx.scene.layout.Pane
@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox
  * All rights reserved & copyright ©
  */
 private const val DEFAULT_CODE = ""
-private const val DEFAULT_DESC = ""
+private const val DEFAULT_DESC = "Operacje"
 
 class OperationsUiBlock : EditableBlockPrototype, OperationsBlock {
 

@@ -34,6 +34,9 @@ abstract class DescribedBlockPrototype constructor(
 
     init {
         initStructure()
+    }
+
+    override fun setup() {
         initBackground()
         setupResizing()
     }

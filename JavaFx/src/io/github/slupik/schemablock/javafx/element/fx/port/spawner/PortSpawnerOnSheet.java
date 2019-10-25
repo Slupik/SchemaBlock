@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import io.github.slupik.schemablock.javafx.element.block.implementation.DescribedBlockPrototype;
+import io.github.slupik.schemablock.javafx.element.block.port.PortInfoProvider;
 import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortElement;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
@@ -32,8 +34,9 @@ public class PortSpawnerOnSheet implements PortSpawner {
     }
 
     @Override
-    public void spawnForElement(UiElementBase element) {
-        List<PortInfo> infoList = element.getPortsInfo();
+    public void spawnForElement(DescribedBlockPrototype element) {
+        List<PortInfo> infoList =
+                PortInfoProvider.INSTANCE.getPortsFor$3_JavaFx(element.getType(), element.getElementId());
         PortGroup group = new PortGroupImpl();
         for(PortInfo info:infoList) {
             PortElement port = spawnPort(element, info);
@@ -41,7 +44,7 @@ public class PortSpawnerOnSheet implements PortSpawner {
         }
     }
 
-    private PortElement spawnPort(UiElementBase element, PortInfo info) {
+    private PortElement spawnPort(DescribedBlockPrototype element, PortInfo info) {
         PortElement port = new PortElement(element, connector, info);
         port.setRelativePos(info.percentOfWidth, info.percentOfHeight);
         connector.addPort(port);

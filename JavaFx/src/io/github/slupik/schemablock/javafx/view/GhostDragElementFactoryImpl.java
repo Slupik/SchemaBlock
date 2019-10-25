@@ -1,8 +1,7 @@
 package io.github.slupik.schemablock.javafx.view;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
-import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
-import io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactory;
+import io.github.slupik.schemablock.javafx.element.block.implementation.DescribedBlockPrototype;
 import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragContainer;
@@ -13,6 +12,8 @@ import io.github.slupik.schemablock.javafx.logic.drag.node.NodeDragController;
 import io.github.slupik.schemablock.model.ui.newparser.HeapController;
 import io.github.slupik.schemablock.newparser.executor.Executor;
 import javafx.scene.Node;
+
+import static io.github.slupik.schemablock.javafx.element.fx.factory.UiElementFactoryKt.createUiBlockByType;
 
 /**
  * All rights reserved & copyright ©
@@ -28,7 +29,7 @@ class GhostDragElementFactoryImpl implements GhostDragElementFactory {
     @Override
     public Node getNode(DragContainer container, Executor executor, HeapController heap) {
         UiElementType type = UiElementType.valueOf(container.getValue("type"));
-        UiElementBase droppedElement = UiElementFactory.createByType(type, executor, heap);
+        DescribedBlockPrototype droppedElement = createUiBlockByType(type);
 
         NodeDragController draggingController = new NodeDragController(new DraggableNode(droppedElement, false));
         draggingController.addListener((dragEvent, draggableNode) -> {

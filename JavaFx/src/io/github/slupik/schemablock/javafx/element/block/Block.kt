@@ -13,6 +13,8 @@ interface Block {
     val background: Pane
     var description: String
 
+    fun setup()
+
     fun setElementSize(width: Double, height: Double)
     fun setElementWidth(width: Double)
     fun setElementHeight(height: Double)

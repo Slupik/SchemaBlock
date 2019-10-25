@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox
 /**
  * All rights reserved & copyright ©
  */
-private const val DEFAULT_DESC = ""
+private const val DEFAULT_DESC = "I/O"
 
 class IoUiBlock : EditableBlockPrototype, IOBlock {
 

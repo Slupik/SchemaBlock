@@ -23,6 +23,10 @@ internal open class BlockWrapper constructor(
     override val background: Pane
         get() = wrappee.background
 
+    override fun setup() {
+        wrappee.setup()
+    }
+
     override fun setElementSize(width: Double, height: Double) {
         wrappee.setElementSize(width, height)
     }
