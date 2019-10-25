@@ -1,10 +1,10 @@
-package io.github.slupik.schemablock.javafx.element.block.utils.port
+package io.github.slupik.schemablock.javafx.element.block.port
 
 import io.github.slupik.schemablock.javafx.element.UiElementType
-import io.github.slupik.schemablock.javafx.element.block.utils.port.oval.StartBlockPortsFactory
-import io.github.slupik.schemablock.javafx.element.block.utils.port.oval.StopBlockPortsFactory
-import io.github.slupik.schemablock.javafx.element.block.utils.port.parallelogram.IOBlockPortsFactory
-import io.github.slupik.schemablock.javafx.element.block.utils.port.rectangular.RectangularBlockPortsFactory
+import io.github.slupik.schemablock.javafx.element.block.port.oval.StartBlockPortsFactory
+import io.github.slupik.schemablock.javafx.element.block.port.oval.StopBlockPortsFactory
+import io.github.slupik.schemablock.javafx.element.block.port.parallelogram.IOBlockPortsFactory
+import io.github.slupik.schemablock.javafx.element.block.port.rectangular.RectangularBlockPortsFactory
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo
 
 /**

@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.block.extension.size
+package io.github.slupik.schemablock.javafx.element.block.size
 
 import javafx.scene.control.Label
 import javafx.scene.text.Font

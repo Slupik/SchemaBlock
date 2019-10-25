@@ -1,5 +1,7 @@
-package io.github.slupik.schemablock.javafx.element.fx.dialog;
+package io.github.slupik.schemablock.javafx.element.block.wrapper.edition;
 
+import io.github.slupik.schemablock.javafx.element.block.settings.IoOperation;
+import io.github.slupik.schemablock.javafx.element.fx.dialog.IOType;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -52,16 +54,20 @@ public class IODialogPart extends Pane {
         content.setMaxWidth(300);
     }
 
-    public void load(IODialogInput.Value value) {
-        content.setText(value.value);
-        selector.setValue(value.ioType);
+    public void load(String code, boolean input) {
+        content.setText(code);
+        if(input) {
+            selector.setValue(IOType.INPUT);
+        } else {
+            selector.setValue(IOType.OUTPUT);
+        }
     }
 
-    public IODialogInput.Value getAsValue(){
-        IODialogInput.Value value = new IODialogInput.Value();
-        value.ioType = selector.getValue();
-        value.value = content.getText();
-        return value;
+    public IoOperation getAsField(){
+        return new IoOperation(
+                selector.getValue() == IOType.INPUT,
+                content.getText()
+        );
     }
 
     public void setRemover(Runnable runnable) {

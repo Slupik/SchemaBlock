@@ -1,10 +1,10 @@
-package io.github.slupik.schemablock.javafx.element.block.base
+package io.github.slupik.schemablock.javafx.element.block.implementation
 
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase
-import io.github.slupik.schemablock.javafx.element.block.UiBlock
-import io.github.slupik.schemablock.javafx.element.block.extension.size.ElementSizeController
-import io.github.slupik.schemablock.javafx.element.block.extension.size.ReactiveElementSizeController
+import io.github.slupik.schemablock.javafx.element.block.Block
+import io.github.slupik.schemablock.javafx.element.block.size.ElementSizeController
+import io.github.slupik.schemablock.javafx.element.block.size.ReactiveElementSizeController
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.control.Label
@@ -15,21 +15,22 @@ import java.io.IOException
 /**
  * All rights reserved & copyright ©
  */
-abstract class UiBlockBase constructor(
+abstract class DescribedBlockPrototype constructor(
         override val type: UiElementType,
-        override val elementId: String
-) : Pane(), UiBlock {
+        override val elementId: String = RandomStringUtils.random(16)
+) : Pane(), Block {
 
-    private lateinit var background: CustomShapeBase
-    private lateinit var sizeController: ElementSizeController
-
+    private lateinit var backgroundShape: CustomShapeBase
+    override val background: Pane
+        get() = backgroundShape
     override var description: String
         get() = getDescriptionLabel().text
         set(value) {
             getDescriptionLabel().text = value
         }
 
-    constructor(type: UiElementType) : this(type, RandomStringUtils.random(16))
+    protected abstract val resourcePath: String
+    private lateinit var sizeController: ElementSizeController
 
     init {
         initStructure()
@@ -40,7 +41,7 @@ abstract class UiBlockBase constructor(
     private fun setupResizing() {
         sizeController = ReactiveElementSizeController(
                 this,
-                background,
+                backgroundShape,
                 getDescriptionLabel()
         )
         sizeController.bindElements()
@@ -65,15 +66,13 @@ abstract class UiBlockBase constructor(
 
     }
 
-    protected abstract val resourcePath: String
-
     private fun getJavaClass() = this.javaClass::class.java
 
     private fun initBackground() {
-        background = createBackgroundElement()
-        background.resetColor()
-        children.add(background)
-        background.toBack()
+        backgroundShape = createBackgroundElement()
+        backgroundShape.resetColor()
+        children.add(backgroundShape)
+        backgroundShape.toBack()
     }
 
     protected abstract fun createBackgroundElement(): CustomShapeBase
@@ -89,16 +88,17 @@ abstract class UiBlockBase constructor(
     override fun setElementHeight(height: Double) {
         sizeController.setHeight(height)
     }
+
     override fun markAsError() {
-        background.markAsError()
+        backgroundShape.markAsError()
     }
 
     override fun markAsExecuting() {
-        background.markAsExecuting()
+        backgroundShape.markAsExecuting()
     }
 
     override fun markAsStop() {
-        background.resetColor()
+        backgroundShape.resetColor()
     }
 
 }

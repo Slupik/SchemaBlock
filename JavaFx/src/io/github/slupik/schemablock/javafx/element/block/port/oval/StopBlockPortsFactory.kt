@@ -1,14 +1,14 @@
-package io.github.slupik.schemablock.javafx.element.block.utils.port.oval
+package io.github.slupik.schemablock.javafx.element.block.port.oval
 
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo
-import io.github.slupik.schemablock.javafx.element.block.utils.port.oval.OvalElementPortConfigurator as Configurator
+import io.github.slupik.schemablock.javafx.element.block.port.oval.OvalElementPortConfigurator as Configurator
 
 /**
  * All rights reserved & copyright ©
  */
-internal object StartBlockPortsFactory {
+internal object StopBlockPortsFactory {
 
-    internal fun getList(elementId: String): List<PortInfo> =
+    internal fun getList(elementId: String) =
             arrayListOf(
                     Configurator.configureForUp(getBase(elementId)),
                     Configurator.configureForRight(getBase(elementId)),
@@ -18,8 +18,8 @@ internal object StartBlockPortsFactory {
 
     private fun getBase(elementId: String): PortInfo {
         val base = PortInfo()
-        base.allowForInput = false
-        base.allowForOutput = true
+        base.allowForInput = true
+        base.allowForOutput = false
         base.parentElementId = elementId
         return base
     }

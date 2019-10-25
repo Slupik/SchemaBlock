@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.block.utils.port.parallelogram
+package io.github.slupik.schemablock.javafx.element.block.port.parallelogram
 
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo
 

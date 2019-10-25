@@ -1,17 +1,17 @@
 package io.github.slupik.schemablock.javafx.element.block
 
 import io.github.slupik.schemablock.javafx.element.UiElementType
-import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo
+import javafx.scene.layout.Pane
 
 /**
  * All rights reserved & copyright ©
  */
-interface UiBlock {
+interface Block {
 
     val type: UiElementType
     val elementId: String
+    val background: Pane
     var description: String
-    val portsInfo: List<PortInfo>
 
     fun setElementSize(width: Double, height: Double)
     fun setElementWidth(width: Double)

@@ -1,12 +1,12 @@
-package io.github.slupik.schemablock.javafx.element.block.utils.port.rectangular
+package io.github.slupik.schemablock.javafx.element.block.port.oval
 
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo
-import io.github.slupik.schemablock.javafx.element.block.utils.port.rectangular.RectangularElementPortConfigurator as Configurator
+import io.github.slupik.schemablock.javafx.element.block.port.oval.OvalElementPortConfigurator as Configurator
 
 /**
  * All rights reserved & copyright ©
  */
-internal object RectangularBlockPortsFactory {
+internal object StartBlockPortsFactory {
 
     internal fun getList(elementId: String): List<PortInfo> =
             arrayListOf(
@@ -18,7 +18,7 @@ internal object RectangularBlockPortsFactory {
 
     private fun getBase(elementId: String): PortInfo {
         val base = PortInfo()
-        base.allowForInput = true
+        base.allowForInput = false
         base.allowForOutput = true
         base.parentElementId = elementId
         return base

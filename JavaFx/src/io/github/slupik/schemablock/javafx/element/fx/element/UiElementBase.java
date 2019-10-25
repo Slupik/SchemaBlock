@@ -6,7 +6,7 @@ import io.github.slupik.schemablock.javafx.element.UiElement;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.WrongTypeOfElement;
 import io.github.slupik.schemablock.javafx.element.background.CustomShapeBase;
-import io.github.slupik.schemablock.javafx.element.block.extension.size.ReactiveElementSizeController;
+import io.github.slupik.schemablock.javafx.element.block.size.ReactiveElementSizeController;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.abstraction.element.StandardElement;

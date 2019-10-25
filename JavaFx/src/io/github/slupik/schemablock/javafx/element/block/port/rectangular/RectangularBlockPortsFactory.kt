@@ -1,12 +1,12 @@
-package io.github.slupik.schemablock.javafx.element.block.utils.port.parallelogram
+package io.github.slupik.schemablock.javafx.element.block.port.rectangular
 
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo
-import io.github.slupik.schemablock.javafx.element.block.utils.port.parallelogram.ParallelogramElementPortConfigurator as Configurator
+import io.github.slupik.schemablock.javafx.element.block.port.rectangular.RectangularElementPortConfigurator as Configurator
 
 /**
  * All rights reserved & copyright ©
  */
-internal object IOBlockPortsFactory {
+internal object RectangularBlockPortsFactory {
 
     internal fun getList(elementId: String): List<PortInfo> =
             arrayListOf(

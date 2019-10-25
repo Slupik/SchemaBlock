@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.block.utils.port.oval
+package io.github.slupik.schemablock.javafx.element.block.port.oval
 
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo
 

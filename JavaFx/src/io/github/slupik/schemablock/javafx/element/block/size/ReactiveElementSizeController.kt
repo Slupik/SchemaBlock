@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.block.extension.size
+package io.github.slupik.schemablock.javafx.element.block.size
 
 import io.github.slupik.schemablock.javafx.element.background.CustomShape
 import javafx.application.Platform

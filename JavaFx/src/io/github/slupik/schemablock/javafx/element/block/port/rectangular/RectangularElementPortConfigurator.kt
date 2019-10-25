@@ -1,6 +1,6 @@
-package io.github.slupik.schemablock.javafx.element.block.utils.port.rectangular
+package io.github.slupik.schemablock.javafx.element.block.port.rectangular
 
-import io.github.slupik.schemablock.javafx.element.block.utils.port.oval.OvalElementPortConfigurator
+import io.github.slupik.schemablock.javafx.element.block.port.oval.OvalElementPortConfigurator
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo
 
 /**
