@@ -25,6 +25,8 @@ internal open class BlockWrapper constructor(
         get() = wrappee.background
     override val graphic: Node
         get() = wrappee.graphic
+    override val draggingMask: Node
+        get() = wrappee.draggingMask
 
     override fun setup() {
         wrappee.setup()

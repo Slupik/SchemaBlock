@@ -15,25 +15,25 @@ import java.util.List;
  * https://stackoverflow.com/questions/17312734/how-to-make-a-draggable-node-in-javafx-2-0
  * @author phill
  */
-public class ElementDragController extends DragControllerBase<DraggableElement> implements EventHandler<MouseEvent> {
+public class ElementDragController extends DragControllerBase<DraggableElementContainer> implements EventHandler<MouseEvent> {
     private double lastMouseX = 0, lastMouseY = 0; // scene coords
 
     private boolean dragging = false;
 
-    private final DraggableElement eventNode;
-    private final List<DraggableElement> dragNodes = new ArrayList<>();
+    private final DraggableElementContainer eventNode;
+    private final List<DraggableElementContainer> dragNodes = new ArrayList<>();
 
-    public ElementDragController(final DraggableElement node) {
+    public ElementDragController(final DraggableElementContainer node) {
         this(node, node);
     }
 
-    public ElementDragController(final DraggableElement eventNode, final DraggableElement... dragNodes) {
+    public ElementDragController(final DraggableElementContainer eventNode, final DraggableElementContainer... dragNodes) {
         this.eventNode = eventNode;
         this.dragNodes.addAll(Arrays.asList(dragNodes));
-        this.eventNode.element.getGraphic().addEventHandler(MouseEvent.ANY, this);
+        this.eventNode.element.getDraggingMask().addEventHandler(MouseEvent.ANY, this);
     }
 
-    public final boolean addDraggedNode(final DraggableElement node) {
+    public final boolean addDraggedNode(final DraggableElementContainer node) {
         if (!this.dragNodes.contains(node)) {
             return this.dragNodes.add(node);
         }
@@ -44,7 +44,7 @@ public class ElementDragController extends DragControllerBase<DraggableElement> 
         this.eventNode.element.getGraphic().removeEventFilter(MouseEvent.ANY, this);
     }
 
-    public final List<DraggableElement> getDragNodes() {
+    public final List<DraggableElementContainer> getDragNodes() {
         return new ArrayList<>(this.dragNodes);
     }
 
@@ -69,7 +69,7 @@ public class ElementDragController extends DragControllerBase<DraggableElement> 
                 final double deltaX = event.getSceneX() - this.lastMouseX;
                 final double deltaY = event.getSceneY() - this.lastMouseY;
 
-                for (final DraggableElement dragNode : this.dragNodes) {
+                for (final DraggableElementContainer dragNode : this.dragNodes) {
                     if(dragNode.useRelativePos) {
                         final double initialTranslateX = dragNode.element.getGraphic().getTranslateX();
                         final double initialTranslateY = dragNode.element.getGraphic().getTranslateY();

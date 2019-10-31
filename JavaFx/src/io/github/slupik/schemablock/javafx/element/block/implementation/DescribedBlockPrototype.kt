@@ -31,6 +31,8 @@ abstract class DescribedBlockPrototype constructor(
         }
     override val graphic: Node
         get() = this
+    override val draggingMask: Node
+        get() = graphic
 
     protected abstract val resourcePath: String
     private lateinit var sizeController: ElementSizeController

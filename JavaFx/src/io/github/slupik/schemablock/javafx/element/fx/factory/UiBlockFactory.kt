@@ -3,7 +3,7 @@ package io.github.slupik.schemablock.javafx.element.fx.factory
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.block.implementation.*
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState
-import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableElement
+import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableElementContainer
 import io.github.slupik.schemablock.javafx.logic.drag.node.ElementDragController
 
 /**
@@ -14,7 +14,7 @@ object UiBlockFactory {
 
     fun createDraggable(type: UiElementType): DescribedBlockPrototype {
         val element = createStatic(type)
-        ElementDragController(DraggableElement(element, false)).addListener { newState, _ ->
+        ElementDragController(DraggableElementContainer(element, false)).addListener { newState, _ ->
             if (newState == DragEventState.DRAG_START) {
                 element.toFront()
             }

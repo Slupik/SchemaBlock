@@ -74,7 +74,7 @@ public class DefaultSheetWithElements {// implements SheetWithElements {
 //                startElement.setLayoutX(300);
 //            }
 //            startElement.setLayoutY(10);
-//            new ElementDragController(new DraggableElement(startElement, false)).
+//            new ElementDragController(new DraggableElementContainer(startElement, false)).
 //                    addListener((newState, draggableNode) -> {
 //                        if(newState == DragEventState.DRAG_START) {
 //                            startElement.toFront();
@@ -94,7 +94,7 @@ public class DefaultSheetWithElements {// implements SheetWithElements {
 //                end.setLayoutX(400);
 //            }
 //            end.setLayoutY(0);
-//            new ElementDragController(new DraggableElement(end, false)).
+//            new ElementDragController(new DraggableElementContainer(end, false)).
 //                    addListener((newState, draggableNode) -> {
 //                        if(newState == DragEventState.DRAG_START) {
 //                            end.toFront();
@@ -241,7 +241,7 @@ public class DefaultSheetWithElements {// implements SheetWithElements {
 ////                addElementWithoutPorts(uiElement);
 ////
 ////                //Make element draggable
-////                ElementDragController draggingController = new ElementDragController(new DraggableElement(uiElement, false));
+////                ElementDragController draggingController = new ElementDragController(new DraggableElementContainer(uiElement, false));
 ////                draggingController.addListener((dragEvent, draggableNode) -> {
 ////                    if(dragEvent == DragEventState.DRAG_START) {
 ////                        draggingController.getEventNode().toFront();
