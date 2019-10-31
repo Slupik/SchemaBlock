@@ -2,7 +2,7 @@ package io.github.slupik.schemablock.javafx.logic.execution;
 
 import io.github.slupik.schemablock.both.execution.ExecutionFlowController;
 import io.github.slupik.schemablock.both.execution.VariableNotFound;
-import io.github.slupik.schemablock.javafx.element.fx.sheet.ElementNotFound;
+import io.github.slupik.schemablock.javafx.element.fx.sheet.old.ElementNotFound;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.error.UnkownError;

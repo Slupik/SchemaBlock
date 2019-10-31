@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.javafx.view;
 
-import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetWithElements;
+import io.github.slupik.schemablock.javafx.element.fx.sheet.old.SheetWithElements;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 

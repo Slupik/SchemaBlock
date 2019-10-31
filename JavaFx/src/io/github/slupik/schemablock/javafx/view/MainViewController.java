@@ -2,8 +2,8 @@ package io.github.slupik.schemablock.javafx.view;
 
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.communication.UIIOCommunicator;
-import io.github.slupik.schemablock.javafx.element.fx.sheet.DefaultSheetWithElements;
-import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetWithElements;
+import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet;
+import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetFactory;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
 import io.github.slupik.schemablock.javafx.logic.execution.ExecutionController;
@@ -39,7 +39,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -116,7 +115,8 @@ public class MainViewController implements Initializable {
     @FXML
     private TableColumn<HeapValueFx, String> tcVarValue;
 
-    private SheetWithElements container;
+    private Sheet container;
+//    private SheetWithElements container;
     private GhostDragController ghost;
     private SchemaSaver saver;
     private SchemaLoader loader;
@@ -144,9 +144,11 @@ public class MainViewController implements Initializable {
         DefaultElementContainer elementContainer = new DefaultElementContainer(register, memory, elementParser);
         ExecutionController executionController = new ExecutionController(communicable, elementContainer, btnContinue);
         elementContainer.setExecutionFlowController(executionController);
-        container = new DefaultSheetWithElements(sheet, communicable, elementContainer, executor, heap);
+        container = SheetFactory.INSTANCE.make(sheet);
+//        container = new DefaultSheetWithElements(sheet, communicable, elementContainer, executor, heap);
 
-        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()), container.getChildrenHandler(), executor, heap);
+//        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()), container.getChildrenHandler());
+        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(), container);
 
         addIconsToMenu();
         bindIOView();
@@ -201,14 +203,16 @@ public class MainViewController implements Initializable {
             saver = new SchemaSaver(((Stage) mainContainer.getScene().getWindow()));
             loader = new SchemaLoader(((Stage) mainContainer.getScene().getWindow()));
             miSave.setOnAction(event -> {
-                String content = container.stringify();
-                saver.save(content);
+                //TODO repair
+//                String content = container.stringify();
+//                saver.save(content);
             });
             miLoad.setOnAction(event -> {
                 File file = loader.getFileToLoad();
                 if(file!=null) {
-                    loader.loadFile(container, file);
-                    saver.setDestFile(file);
+                    //TODO repair
+//                    loader.loadFile(container, file);
+//                    saver.setDestFile(file);
                 }
             });
         });
@@ -225,10 +229,10 @@ public class MainViewController implements Initializable {
     }
 
     private void addIconsToMenu() {
-        addDragDetection(new DragGhostIconUiElement(UiElementType.STOP, executor, heap));
-        addDragDetection(new DragGhostIconUiElement(UiElementType.CALCULATION, executor, heap));
-        addDragDetection(new DragGhostIconUiElement(UiElementType.IF, executor, heap));
-        addDragDetection(new DragGhostIconUiElement(UiElementType.IO, executor, heap));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.STOP));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.CALCULATION));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.IF));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.IO));
     }
 
     private void addDragDetection(DragGhostIcon dragIcon) {
@@ -237,22 +241,23 @@ public class MainViewController implements Initializable {
     }
 
     public void onCloseSheet() {
-        String data = container.stringify();
-        if(!saver.isSavedNewestVersion(data)){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
-            ButtonType btnOk = new ButtonType("Tak");
-            ButtonType btnNo = new ButtonType("Nie");
-            alert.getButtonTypes().setAll(btnOk, btnNo);
-
-            alert.setTitle("");
-            alert.setHeaderText("Czy zapisać zmiany?");
-            alert.setContentText("Wprowadzono zmiany, które mogą wymagać zapisania. Czy chcesz to zrobić?");
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == btnOk){
-                saver.save(data);
-            }
-        }
+        //TODO repair
+//        String data = container.stringify();
+//        if(!saver.isSavedNewestVersion(data)){
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//
+//            ButtonType btnOk = new ButtonType("Tak");
+//            ButtonType btnNo = new ButtonType("Nie");
+//            alert.getButtonTypes().setAll(btnOk, btnNo);
+//
+//            alert.setTitle("");
+//            alert.setHeaderText("Czy zapisać zmiany?");
+//            alert.setContentText("Wprowadzono zmiany, które mogą wymagać zapisania. Czy chcesz to zrobić?");
+//
+//            Optional<ButtonType> result = alert.showAndWait();
+//            if (result.isPresent() && result.get() == btnOk){
+//                saver.save(data);
+//            }
+//        }
     }
 }

@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.javafx.element.block.wrapper
 
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.block.Block
+import javafx.scene.Node
 import javafx.scene.layout.Pane
 
 /**
@@ -22,6 +23,8 @@ internal open class BlockWrapper constructor(
         get() = wrappee.elementId
     override val background: Pane
         get() = wrappee.background
+    override val graphic: Node
+        get() = wrappee.graphic
 
     override fun setup() {
         wrappee.setup()

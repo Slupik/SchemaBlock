@@ -1,12 +1,11 @@
 package io.github.slupik.schemablock.javafx.logic.drag.icon;
 
+import io.github.slupik.schemablock.javafx.element.Element;
+import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet;
 import io.github.slupik.schemablock.javafx.logic.drag.DragControllerBase;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
-import io.github.slupik.schemablock.model.ui.newparser.HeapController;
-import io.github.slupik.schemablock.newparser.executor.Executor;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
@@ -21,23 +20,21 @@ public class GhostDragController extends DragControllerBase<DragGhostIcon> {
     private final GhostDragElementFactory factory;
 
     private DragGhostIcon mDragOverIcon;
-    private final Executor executor;
-    private final HeapController heap;
-    private final DestContainerAfterDrop container;
+    private final Sheet sheet;
+//    private final DestContainerAfterDrop container;
 
     private EventHandler<DragEvent> mIconDragOverRoot = null;
     private EventHandler<DragEvent> mIconDragDropped = null;
     private EventHandler<DragEvent> mIconDragOverRightPane = null;
 
-    public GhostDragController(Pane draggableArea, Pane placeForElement, GhostDragElementFactory factory, DestContainerAfterDrop container, Executor executor, HeapController heap) {
+    public GhostDragController(Pane draggableArea, Pane placeForElement, GhostDragElementFactory factory, Sheet sheet) {
         this.draggableArea = draggableArea;
         this.placeForElement = placeForElement;
         this.factory = factory;
-        this.container = container;
+        this.sheet = sheet;
+//        this.container = container;
 
-        mDragOverIcon = factory.getDragIcon(executor, heap);
-        this.executor = executor;
-        this.heap = heap;
+        mDragOverIcon = factory.getDragIcon();
 
         mDragOverIcon.setVisible(false);
         mDragOverIcon.setOpacity(0.65);
@@ -140,13 +137,13 @@ public class GhostDragController extends DragControllerBase<DragGhostIcon> {
             if (container != null) {
                 if (container.getValue("scene_coords") != null) {
 
-                    Node droppedElement = factory.getNode(container, executor, heap);
-                    this.container.addNode(droppedElement);
+                    Element droppedElement = factory.getNode(container);
+                    this.sheet.addElement(droppedElement);
 
                     Point2D cursorPoint = container.getValue("scene_coords");
 
                     ElementRelocator.relocateToPoint(
-                            droppedElement,
+                            droppedElement.getGraphic(),
                             new Point2D(cursorPoint.getX(), cursorPoint.getY())
                     );
                     event.consume();

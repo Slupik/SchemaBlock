@@ -1,15 +1,15 @@
 package io.github.slupik.schemablock.javafx.element.block
 
+import io.github.slupik.schemablock.javafx.element.Element
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import javafx.scene.layout.Pane
 
 /**
  * All rights reserved & copyright ©
  */
-interface Block {
+interface Block: Element {
 
     val type: UiElementType
-    val elementId: String
     val background: Pane
     var description: String
 

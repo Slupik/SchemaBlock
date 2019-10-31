@@ -2,7 +2,6 @@ package io.github.slupik.schemablock.javafx.logic.drag.node;
 
 import io.github.slupik.schemablock.javafx.logic.drag.DragControllerBase;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
-import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -16,25 +15,25 @@ import java.util.List;
  * https://stackoverflow.com/questions/17312734/how-to-make-a-draggable-node-in-javafx-2-0
  * @author phill
  */
-public class NodeDragController extends DragControllerBase<DraggableNode> implements EventHandler<MouseEvent> {
+public class ElementDragController extends DragControllerBase<DraggableElement> implements EventHandler<MouseEvent> {
     private double lastMouseX = 0, lastMouseY = 0; // scene coords
 
     private boolean dragging = false;
 
-    private final DraggableNode eventNode;
-    private final List<DraggableNode> dragNodes = new ArrayList<>();
+    private final DraggableElement eventNode;
+    private final List<DraggableElement> dragNodes = new ArrayList<>();
 
-    public NodeDragController(final DraggableNode node) {
+    public ElementDragController(final DraggableElement node) {
         this(node, node);
     }
 
-    public NodeDragController(final DraggableNode eventNode, final DraggableNode... dragNodes) {
+    public ElementDragController(final DraggableElement eventNode, final DraggableElement... dragNodes) {
         this.eventNode = eventNode;
         this.dragNodes.addAll(Arrays.asList(dragNodes));
-        this.eventNode.node.addEventHandler(MouseEvent.ANY, this);
+        this.eventNode.element.getGraphic().addEventHandler(MouseEvent.ANY, this);
     }
 
-    public final boolean addDraggedNode(final DraggableNode node) {
+    public final boolean addDraggedNode(final DraggableElement node) {
         if (!this.dragNodes.contains(node)) {
             return this.dragNodes.add(node);
         }
@@ -42,21 +41,21 @@ public class NodeDragController extends DragControllerBase<DraggableNode> implem
     }
 
     public final void detatch() {
-        this.eventNode.node.removeEventFilter(MouseEvent.ANY, this);
+        this.eventNode.element.getGraphic().removeEventFilter(MouseEvent.ANY, this);
     }
 
-    public final List<DraggableNode> getDragNodes() {
+    public final List<DraggableElement> getDragNodes() {
         return new ArrayList<>(this.dragNodes);
     }
 
     public final Node getEventNode() {
-        return this.eventNode.node;
+        return this.eventNode.element.getGraphic();
     }
 
     @Override
     public final void handle(final MouseEvent event) {
         if (MouseEvent.MOUSE_PRESSED == event.getEventType()) {
-            if (this.eventNode.node.contains(event.getX(), event.getY())) {
+            if (this.eventNode.element.getGraphic().contains(event.getX(), event.getY())) {
                 this.lastMouseX = event.getSceneX();
                 this.lastMouseY = event.getSceneY();
                 event.consume();
@@ -70,40 +69,40 @@ public class NodeDragController extends DragControllerBase<DraggableNode> implem
                 final double deltaX = event.getSceneX() - this.lastMouseX;
                 final double deltaY = event.getSceneY() - this.lastMouseY;
 
-                for (final DraggableNode dragNode : this.dragNodes) {
+                for (final DraggableElement dragNode : this.dragNodes) {
                     if(dragNode.useRelativePos) {
-                        final double initialTranslateX = dragNode.node.getTranslateX();
-                        final double initialTranslateY = dragNode.node.getTranslateY();
-                        dragNode.node.setTranslateX(initialTranslateX + deltaX);
-                        dragNode.node.setTranslateY(initialTranslateY + deltaY);
+                        final double initialTranslateX = dragNode.element.getGraphic().getTranslateX();
+                        final double initialTranslateY = dragNode.element.getGraphic().getTranslateY();
+                        dragNode.element.getGraphic().setTranslateX(initialTranslateX + deltaX);
+                        dragNode.element.getGraphic().setTranslateY(initialTranslateY + deltaY);
                     } else {
-                        final double initialTranslateX = dragNode.node.getLayoutX();
-                        final double initialTranslateY = dragNode.node.getLayoutY();
+                        final double initialTranslateX = dragNode.element.getGraphic().getLayoutX();
+                        final double initialTranslateY = dragNode.element.getGraphic().getLayoutY();
                         final double newX = initialTranslateX + deltaX;
                         final double newY = initialTranslateY + deltaY;
 
                         //Set new position and prevent before place element out of bounds
-                        Pane parent = ((Pane) dragNode.node.getParent());
+                        Pane parent = ((Pane) dragNode.element.getGraphic().getParent());
                         if(newX<0) {
-                            dragNode.node.setLayoutX(0);
+                            dragNode.element.getGraphic().setLayoutX(0);
                         } else {
-                            if((newX+dragNode.node.getBoundsInLocal().getWidth())>parent.getWidth()){
-                                dragNode.node.setLayoutX((
-                                        parent.getWidth()-dragNode.node.getBoundsInLocal().getWidth()
+                            if((newX+dragNode.element.getGraphic().getBoundsInLocal().getWidth())>parent.getWidth()){
+                                dragNode.element.getGraphic().setLayoutX((
+                                        parent.getWidth()-dragNode.element.getGraphic().getBoundsInLocal().getWidth()
                                         ));
                             } else {
-                                dragNode.node.setLayoutX(newX);
+                                dragNode.element.getGraphic().setLayoutX(newX);
                             }
                         }
                         if(newY<0){
-                            dragNode.node.setLayoutY(0);
+                            dragNode.element.getGraphic().setLayoutY(0);
                         } else {
-                            if((newY+dragNode.node.getBoundsInLocal().getHeight())>parent.getHeight()) {
-                                dragNode.node.setLayoutY((
-                                        parent.getHeight()-dragNode.node.getBoundsInLocal().getHeight()
+                            if((newY+dragNode.element.getGraphic().getBoundsInLocal().getHeight())>parent.getHeight()) {
+                                dragNode.element.getGraphic().setLayoutY((
+                                        parent.getHeight()-dragNode.element.getGraphic().getBoundsInLocal().getHeight()
                                 ));
                             } else {
-                                dragNode.node.setLayoutY(newY);
+                                dragNode.element.getGraphic().setLayoutY(newY);
                             }
                         }
                     }

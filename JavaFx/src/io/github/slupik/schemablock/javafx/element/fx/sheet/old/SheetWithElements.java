@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.fx.sheet;
+package io.github.slupik.schemablock.javafx.element.fx.sheet.old;
 
 import io.github.slupik.schemablock.javafx.element.block.implementation.DescribedBlockPrototype;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.old.PortConnector;

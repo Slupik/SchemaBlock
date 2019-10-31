@@ -11,8 +11,8 @@ import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
 import io.github.slupik.schemablock.javafx.element.fx.port.connector.old.PortConnector;
 import io.github.slupik.schemablock.javafx.element.fx.port.group.PortGroup;
 import io.github.slupik.schemablock.javafx.element.fx.port.group.PortGroupImpl;
-import io.github.slupik.schemablock.javafx.element.fx.sheet.ElementNotFound;
-import io.github.slupik.schemablock.javafx.element.fx.sheet.VisibleUIContainer;
+import io.github.slupik.schemablock.javafx.element.fx.sheet.old.ElementNotFound;
+import io.github.slupik.schemablock.javafx.element.fx.sheet.old.VisibleUIContainer;
 
 import java.util.ArrayList;
 import java.util.HashMap;

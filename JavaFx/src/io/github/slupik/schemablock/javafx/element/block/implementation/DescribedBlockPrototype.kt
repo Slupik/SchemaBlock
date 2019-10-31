@@ -6,6 +6,7 @@ import io.github.slupik.schemablock.javafx.element.block.Block
 import io.github.slupik.schemablock.javafx.element.block.size.ElementSizeController
 import io.github.slupik.schemablock.javafx.element.block.size.ReactiveElementSizeController
 import javafx.fxml.FXMLLoader
+import javafx.scene.Node
 import javafx.scene.Parent
 import javafx.scene.control.Label
 import javafx.scene.layout.Pane
@@ -28,6 +29,8 @@ abstract class DescribedBlockPrototype constructor(
         set(value) {
             getDescriptionLabel().text = value
         }
+    override val graphic: Node
+        get() = this
 
     protected abstract val resourcePath: String
     private lateinit var sizeController: ElementSizeController

@@ -1,15 +1,13 @@
 package io.github.slupik.schemablock.javafx.logic.drag.icon;
 
-import io.github.slupik.schemablock.model.ui.newparser.HeapController;
-import io.github.slupik.schemablock.newparser.executor.Executor;
-import javafx.scene.Node;
+import io.github.slupik.schemablock.javafx.element.Element;
 
 /**
  * All rights reserved & copyright ©
  */
 public interface GhostDragElementFactory {
 
-    Node getNode(DragContainer container, Executor executor, HeapController heap);
+    Element getNode(DragContainer container);
 
-    DragGhostIcon getDragIcon(Executor executor, HeapController heap);
+    DragGhostIcon getDragIcon();
 }
