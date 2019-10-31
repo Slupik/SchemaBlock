@@ -3,7 +3,7 @@ package io.github.slupik.schemablock.javafx.element.fx.sheet;
 import io.github.slupik.schemablock.javafx.element.fx.element.DeletionHandler;
 import io.github.slupik.schemablock.javafx.element.fx.element.UiElementBase;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortElement;
-import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
+import io.github.slupik.schemablock.javafx.element.fx.port.connector.old.PortConnector;
 
 import java.util.List;
 

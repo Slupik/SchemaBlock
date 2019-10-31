@@ -1,7 +1,7 @@
 package io.github.slupik.schemablock.javafx.element.fx.sheet;
 
 import io.github.slupik.schemablock.javafx.element.block.implementation.DescribedBlockPrototype;
-import io.github.slupik.schemablock.javafx.element.fx.port.connector.PortConnector;
+import io.github.slupik.schemablock.javafx.element.fx.port.connector.old.PortConnector;
 import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DestContainerAfterDrop;
 import javafx.scene.Node;
