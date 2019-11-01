@@ -65,6 +65,8 @@ public class PortElement extends AnchorPane {
     public void setRelativePos(double percentOfWidth, double percentOfHeight){
         layoutXProperty().bind(base.layoutXProperty().add(base.widthProperty().multiply(percentOfWidth)));
         layoutYProperty().bind(base.layoutYProperty().add(base.heightProperty().multiply(percentOfHeight)));
+//        layoutXProperty().bind(base.widthProperty().multiply(percentOfWidth));
+//        layoutYProperty().bind(base.heightProperty().multiply(percentOfHeight));
         layoutXProperty().addListener(observable -> toFront());
         layoutYProperty().addListener(observable -> toFront());
     }

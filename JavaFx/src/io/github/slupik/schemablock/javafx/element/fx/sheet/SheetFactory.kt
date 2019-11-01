@@ -10,7 +10,10 @@ object SheetFactory {
     fun make(elementsContainer: Pane): Sheet {
         return BasicFeaturedSheet(
                 elementsContainer,
-                VisibleSheet(elementsContainer)
+                PortsAddingSheet(
+                        elementsContainer,
+                        VisibleSheet(elementsContainer)
+                )
         )
     }
 

@@ -20,7 +20,7 @@ public class DragGhostIconUiElement extends DragGhostIcon<UiElementType> {
 
     @Override
     protected void onSetData(UiElementType type) {
-        Pane element = UiBlockFactory.INSTANCE.createStatic(type);
+        Pane element = UiBlockFactory.INSTANCE.createIcon(type);
         getChildren().clear();
         getChildren().add(element);
     }

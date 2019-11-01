@@ -16,7 +16,7 @@ class GhostDragElementFactoryImpl implements GhostDragElementFactory {
     public Element getNode(DragContainer container) {
         UiElementType type = UiElementType.valueOf(container.getValue("type"));
 
-        return UiBlockFactory.INSTANCE.createDraggable(type);
+        return UiBlockFactory.INSTANCE.createUsableBlock(type);
     }
 
     @Override

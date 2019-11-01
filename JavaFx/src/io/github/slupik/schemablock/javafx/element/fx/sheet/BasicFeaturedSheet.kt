@@ -35,6 +35,6 @@ class BasicFeaturedSheet constructor(
     }
 
     private fun createStartElement(): StartUiBlock =
-            UiBlockFactory.createDraggable(UiElementType.START) as StartUiBlock
+            UiBlockFactory.createUsableBlock(UiElementType.START) as StartUiBlock
 
 }
