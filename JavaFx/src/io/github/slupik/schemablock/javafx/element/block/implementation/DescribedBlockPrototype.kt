@@ -29,7 +29,7 @@ abstract class DescribedBlockPrototype constructor(
         set(value) {
             getDescriptionLabel().text = value
         }
-    override val graphic: Node
+    override val graphic: Pane
         get() = this
     override val draggingMask: Node
         get() = graphic

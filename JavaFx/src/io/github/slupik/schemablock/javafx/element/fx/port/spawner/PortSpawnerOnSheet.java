@@ -8,7 +8,7 @@ import io.github.slupik.schemablock.javafx.element.block.implementation.Describe
 import io.github.slupik.schemablock.javafx.element.block.port.PortInfoProvider;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortElement;
 import io.github.slupik.schemablock.javafx.element.fx.port.PortInfo;
-import io.github.slupik.schemablock.javafx.element.fx.port.connector.old.PortConnector;
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.establishment.old.PortConnector;
 import io.github.slupik.schemablock.javafx.element.fx.port.group.PortGroup;
 import io.github.slupik.schemablock.javafx.element.fx.port.group.PortGroupImpl;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.old.ElementNotFound;

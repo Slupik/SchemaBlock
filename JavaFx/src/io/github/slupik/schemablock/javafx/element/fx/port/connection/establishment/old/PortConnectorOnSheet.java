@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.fx.port.connector.old;
+package io.github.slupik.schemablock.javafx.element.fx.port.connection.establishment.old;
 
 import com.google.gson.*;
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;

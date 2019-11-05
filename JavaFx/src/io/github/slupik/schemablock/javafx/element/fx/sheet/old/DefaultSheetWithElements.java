@@ -14,7 +14,7 @@ public class DefaultSheetWithElements {// implements SheetWithElements {
 //    private final VisibleUIContainer uiContainer;
 //    private final DeletionHandler deletionHandler;
 //
-//    private PortConnector connector;
+//    private PortConnectionEstablisher establishment;
 //    private PortSpawner spawner;
 //    private DestContainerAfterDrop childHandler;
 //
@@ -27,13 +27,13 @@ public class DefaultSheetWithElements {// implements SheetWithElements {
 //        uiContainer = new VisibleUIContainerImpl();
 //        startElement = ((StartUiBlock) createUiBlock(UiElementType.START));
 //        init();
-//        deletionHandler = new DeletionHandlerImpl(this, connector);
+//        deletionHandler = new DeletionHandlerImpl(this, establishment);
 //        setup();
 //    }
 //
 //    private void init() {
-//        connector = new PortConnectorOnSheet(sheet);
-//        spawner = new PortSpawnerOnSheet(uiContainer, connector);
+//        establishment = new PortConnectorOnSheet(sheet);
+//        spawner = new PortSpawnerOnSheet(uiContainer, establishment);
 //        childHandler = new DestContainerAfterDropImpl(sheet) {
 //            @Override
 //            public void addNode(Node node) {
@@ -148,10 +148,10 @@ public class DefaultSheetWithElements {// implements SheetWithElements {
 //
 //            deletionHandler.deleteIngoing(block.getElementId());
 //            deletionHandler.deleteOutgoing(block.getElementId());
-//            List<PortElement> ports = new ArrayList<>(connector.getPorts());
+//            List<PortElement> ports = new ArrayList<>(establishment.getPorts());
 //            for(PortElement port:ports) {
 //                if(port.getElement().getElementId().equals(block.getElementId())) {
-//                    connector.deletePort(port);
+//                    establishment.deletePort(port);
 //                    sheet.getChildren().remove(port);
 //                }
 //            }
@@ -174,8 +174,8 @@ public class DefaultSheetWithElements {// implements SheetWithElements {
 //    }
 //
 //    @Override
-//    public PortConnector getPortConnector() {
-//        return connector;
+//    public PortConnectionEstablisher getPortConnector() {
+//        return establishment;
 //    }
 //
 //    @Override
@@ -205,7 +205,7 @@ public class DefaultSheetWithElements {// implements SheetWithElements {
 //        data.add("logicElements", parser.parse(container.stringify()));
 //        data.add("sheet", sheetData);
 //        data.add("blocks", blocks);
-//        data.add("ports", parser.parse(connector.stringify()).getAsJsonArray());
+//        data.add("ports", parser.parse(establishment.stringify()).getAsJsonArray());
 //        return data.toString();
 //    }
 //
@@ -256,6 +256,6 @@ public class DefaultSheetWithElements {// implements SheetWithElements {
 //        JsonArray ports = json.get("ports").getAsJsonArray();
 //        spawner.restorePorts(ports.toString());
 //
-//        connector.restore(ports.toString());
+//        establishment.restore(ports.toString());
 //    }
 }

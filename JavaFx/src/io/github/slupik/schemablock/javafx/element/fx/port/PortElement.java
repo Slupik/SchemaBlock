@@ -3,7 +3,7 @@ package io.github.slupik.schemablock.javafx.element.fx.port;
 import com.google.gson.Gson;
 import io.github.slupik.schemablock.javafx.element.block.implementation.DescribedBlockPrototype;
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow;
-import io.github.slupik.schemablock.javafx.element.fx.port.connector.old.PortConnector;
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.establishment.old.PortConnector;
 import io.github.slupik.schemablock.javafx.element.fx.port.group.PortListener;
 import io.github.slupik.schemablock.model.utils.RandomString;
 import javafx.scene.control.Alert;
@@ -131,7 +131,7 @@ public class PortElement extends AnchorPane {
         if(connector.isSearchingInput() && allowForInput) {
             connector.setLineEnd(this, getLayoutX(), getLayoutY());
             //TODO repair
-//            connector.setInput(base.getLogicElement());
+//            establishment.setInput(base.getLogicElement());
             toFront();
         }
     }

@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.javafx.element
 
-import javafx.scene.Node
+import javafx.scene.layout.Pane
 
 /**
  * All rights reserved & copyright ©
@@ -8,6 +8,6 @@ import javafx.scene.Node
 interface Element {
 
     val elementId: String
-    val graphic: Node
+    val graphic: Pane
 
 }
