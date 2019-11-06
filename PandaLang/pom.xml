@@ -14,4 +14,17 @@
 
     <name>io.github.slupik PandaLang</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.panda-lang</groupId>
+            <artifactId>panda</artifactId>
+            <version>indev-19.11.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.slupik</groupId>
+            <artifactId>Entity</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
 </project>

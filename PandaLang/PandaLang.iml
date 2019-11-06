@@ -30,6 +30,17 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.panda-lang:panda:indev-19.11.1" level="project" />
+    <orderEntry type="library" name="Maven: org.panda-lang:panda-framework:indev-19.11.1" level="project" />
+    <orderEntry type="library" name="Maven: org.panda-lang:panda-utilities:indev-19.11.1" level="project" />
+    <orderEntry type="library" name="Maven: org.javassist:javassist:3.26.0-GA" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.29" level="project" />
+    <orderEntry type="library" name="Maven: org.tinylog:tinylog-api:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.tinylog:tinylog-impl:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.tinylog:slf4j-tinylog:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.hjson:hjson:3.0.0" level="project" />
+    <orderEntry type="library" name="Maven: info.picocli:picocli:4.0.4" level="project" />
+    <orderEntry type="module" module-name="Entity" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.3.50" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.3.50" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains:annotations:13.0" level="project" />
