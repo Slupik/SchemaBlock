@@ -7,7 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="0 Entity" exported="" />
+    <orderEntry type="module" module-name="0 Entity_intellij" exported="" />
     <orderEntry type="module" module-name="1 Model" exported="" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
   </component>
