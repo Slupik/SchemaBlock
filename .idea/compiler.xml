@@ -16,6 +16,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="UltimateDetail" />
         <module name="Entity" />
         <module name="WitLangParser" />
         <module name="JavaFx" />
@@ -25,13 +26,14 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Entity" target="1.5" />
-      <module name="JavaFx" target="1.5" />
-      <module name="PandaLang" target="1.5" />
-      <module name="SchemaBlock" target="1.5" />
-      <module name="WitLang" target="1.5" />
-      <module name="WitLangModel" target="1.5" />
-      <module name="WitLangParser" target="1.5" />
+      <module name="Entity" target="1.8" />
+      <module name="JavaFx" target="1.8" />
+      <module name="PandaLang" target="1.8" />
+      <module name="SchemaBlock" target="1.8" />
+      <module name="UltimateDetail" target="1.8" />
+      <module name="WitLang" target="1.8" />
+      <module name="WitLangModel" target="1.8" />
+      <module name="WitLangParser" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

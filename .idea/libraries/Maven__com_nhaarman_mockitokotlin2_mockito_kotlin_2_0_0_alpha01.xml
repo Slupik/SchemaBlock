@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-alpha01">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/nhaarman/mockitokotlin2/mockito-kotlin/2.0.0-alpha01/mockito-kotlin-2.0.0-alpha01.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/nhaarman/mockitokotlin2/mockito-kotlin/2.0.0-alpha01/mockito-kotlin-2.0.0-alpha01-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/nhaarman/mockitokotlin2/mockito-kotlin/2.0.0-alpha01/mockito-kotlin-2.0.0-alpha01-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
