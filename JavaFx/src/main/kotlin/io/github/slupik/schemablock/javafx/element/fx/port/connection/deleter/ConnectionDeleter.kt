@@ -9,7 +9,7 @@ import io.reactivex.Observable
  * All rights reserved & copyright ©
  */
 
-interface PortConnectionDeleter {
+interface ConnectionDeleter {
 
     val deletions: Observable<ConnectionStorageKey>
 

@@ -1,7 +1,13 @@
 package io.github.slupik.schemablock.javafx.view;
 
+import io.github.slupik.schemablock.javafx.dagger.DaggerJavaFxComponent;
+import io.github.slupik.schemablock.javafx.dagger.GraphicElementsModule;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
+import io.github.slupik.schemablock.javafx.element.block.implementation.StartUiBlock;
 import io.github.slupik.schemablock.javafx.element.fx.communication.UIIOCommunicator;
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsModifier;
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.StandardConnectionKey;
+import io.github.slupik.schemablock.javafx.element.fx.port.element.RoundedPort;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetFactory;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
@@ -37,6 +43,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -115,6 +122,9 @@ public class MainViewController implements Initializable {
     @FXML
     private TableColumn<HeapValueFx, String> tcVarValue;
 
+    @Inject
+    PortsConnectionsModifier test;
+
     private Sheet container;
 //    private SheetWithElements container;
     private GhostDragController ghost;
@@ -136,6 +146,19 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupDragging();
+        DaggerJavaFxComponent
+                .builder()
+                .addElementsModule(
+                        new GraphicElementsModule(sheet)
+                )
+                .build()
+                .inject(this);
+        test.add(
+                new StandardConnectionKey(
+                        "2432423"
+                ),
+                new RoundedPort(new StartUiBlock(), "234234")
+        );
     }
 
     private void setupDragging() {

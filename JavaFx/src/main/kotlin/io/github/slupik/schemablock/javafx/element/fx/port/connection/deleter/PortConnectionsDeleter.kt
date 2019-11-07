@@ -6,6 +6,7 @@ import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import javax.inject.Inject
 
 /**
  * All rights reserved & copyright ©
@@ -13,11 +14,11 @@ import io.reactivex.subjects.PublishSubject
 
 typealias TargetPort = Port
 
-class ConnectionsDeleter constructor(
+class PortConnectionsDeleter @Inject constructor(
         private val holder: PortsHolder,
         private val connectionsProvider: PortsConnectionProvider,
         private val modifier: PortsConnectionsModifier
-) : PortConnectionDeleter {
+) : ConnectionDeleter {
 
     private val deletionsPublisher: PublishSubject<ConnectionStorageKey> = PublishSubject.create()
     override val deletions: Observable<ConnectionStorageKey> = deletionsPublisher

@@ -7,7 +7,7 @@ import io.reactivex.Observable
  * All rights reserved & copyright ©
  */
 
-interface PortConnectionEstablisher {
+interface ConnectionEstablisher {
 
     val establishments: Observable<PortConnectionConfiguration>
 

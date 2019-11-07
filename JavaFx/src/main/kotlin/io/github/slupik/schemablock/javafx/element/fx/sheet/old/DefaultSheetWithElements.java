@@ -14,7 +14,7 @@ public class DefaultSheetWithElements {// implements SheetWithElements {
 //    private final VisibleUIContainer uiContainer;
 //    private final DeletionHandler deletionHandler;
 //
-//    private PortConnectionEstablisher establishment;
+//    private ConnectionEstablisher establishment;
 //    private PortSpawner spawner;
 //    private DestContainerAfterDrop childHandler;
 //
@@ -174,7 +174,7 @@ public class DefaultSheetWithElements {// implements SheetWithElements {
 //    }
 //
 //    @Override
-//    public PortConnectionEstablisher getPortConnector() {
+//    public ConnectionEstablisher getPortConnector() {
 //        return establishment;
 //    }
 //

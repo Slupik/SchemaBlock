@@ -18,7 +18,7 @@ class PortsAddingSheet constructor(
         wrapee: Sheet
 ): SheetWrapper(wrapee), Sheet {
         //TODO repair
-//    private val pconnector: PortConnectionEstablisher = IOAwareConnectionEstablisher(container, PortsConnectionsStorage())
+//    private val pconnector: ConnectionEstablisher = IOAwareConnectionEstablisher(container, PortsConnectionsStorage())
 
     private val connector: PortConnectorOnSheet = PortConnectorOnSheet(container)
 

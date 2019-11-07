@@ -2,23 +2,24 @@ package io.github.slupik.schemablock.javafx.element.fx.port.connection.establish
 
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.*
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.checker.ConnectionAvailabilityChecker
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.deleter.PortConnectionDeleter
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.deleter.ConnectionDeleter
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConditionalConnectionKey
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConnectionStorageKey
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsModifier
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.StandardConnectionKey
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import javax.inject.Inject
 
 /**
  * All rights reserved & copyright ©
  */
 
-class DeletingConnectionEstablisher constructor(
-        private val checker: ConnectionAvailabilityChecker,
-        private val deleter: PortConnectionDeleter,
-        private val connectionsModifier: PortsConnectionsModifier
-) : PortConnectionEstablisher {
+class DeletingConnectionEstablisher @Inject constructor(
+    private val checker: ConnectionAvailabilityChecker,
+    private val deleter: ConnectionDeleter,
+    private val connectionsModifier: PortsConnectionsModifier
+) : ConnectionEstablisher {
 
     private val establishmentsPublisher: PublishSubject<PortConnectionConfiguration> = PublishSubject.create()
     override val establishments: Observable<PortConnectionConfiguration> = establishmentsPublisher

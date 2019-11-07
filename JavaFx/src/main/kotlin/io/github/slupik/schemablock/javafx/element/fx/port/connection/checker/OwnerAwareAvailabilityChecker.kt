@@ -7,11 +7,12 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.*
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortAccessibility
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
+import javax.inject.Inject
 
 /**
  * All rights reserved & copyright ©
  */
-class OwnerAwareAvailabilityChecker constructor(
+class OwnerAwareAvailabilityChecker @Inject constructor(
         private val holder: PortsHolder,
         private val connectionsProvider: PortsConnectionProvider
 ) : ConnectionAvailabilityChecker {

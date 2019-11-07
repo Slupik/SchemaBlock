@@ -17,6 +17,13 @@
             <artifactId>JavaFx</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.dagger/dagger -->
+        <dependency>
+            <groupId>com.google.dagger</groupId>
+            <artifactId>dagger</artifactId>
+            <version>2.25.2</version>
+        </dependency>
+
     </dependencies>
 
 </project>

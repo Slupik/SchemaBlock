@@ -8,7 +8,7 @@ import io.reactivex.Observable
  */
 interface PortsHolder {
 
-    val ports: HashMap<Port, PortAccessibility>
+    val ports: Map<Port, PortAccessibility>
     val additions: Observable<Pair<Port, PortAccessibility>>
     val deletions: Observable<Pair<Port, PortAccessibility>>
 

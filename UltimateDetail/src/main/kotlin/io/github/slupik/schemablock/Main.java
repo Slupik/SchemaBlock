@@ -1,4 +1,4 @@
-package io.github.slupik;
+package io.github.slupik.schemablock;
 
 import io.github.slupik.schemablock.javafx.view.MainViewController;
 import javafx.application.Application;
