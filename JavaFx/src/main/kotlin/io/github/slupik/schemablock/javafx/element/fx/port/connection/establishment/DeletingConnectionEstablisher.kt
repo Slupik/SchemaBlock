@@ -43,63 +43,24 @@ class DeletingConnectionEstablisher @Inject constructor(
                 StandardOwnerClearance(configuration.source.owner.elementId)
             is ConditionalPortsConnection ->
                 ConditionalOwnerClearance(
-                        configuration.source.owner.elementId,
-                        configuration.value
+                    configuration.source.owner.elementId,
+                    configuration.value
                 )
         }
 
     private fun getConnectionKey(configuration: PortConnectionConfiguration): ConnectionStorageKey =
-            when (configuration) {
-                is StandardPortsConnection -> {
-                    StandardConnectionKey(
-                            configuration.source.elementId
-                    )
-                }
-                is ConditionalPortsConnection -> {
-                    ConditionalConnectionKey(
-                            configuration.source.elementId,
-                            configuration.value
-                    )
-                }
+        when (configuration) {
+            is StandardPortsConnection -> {
+                StandardConnectionKey(
+                    configuration.source.elementId
+                )
             }
-
-//    private var sourcePortOfConnection: Port? = null
-//    init {
-//        container.addEventFilter(MouseEvent.MOUSE_RELEASED) {
-//            sourcePortOfConnection = null
-//        }
-//    }
-//    private fun bindEvents(port: Port) {
-//        port.mask.addEventFilter(MouseEvent.MOUSE_ENTERED) {
-//            val portAccessibility = ports[port]
-//            if (portAccessibility != null) {
-//                if (sourcePortOfConnection == null) {
-//                    if (portAccessibility.source) {
-//                        port.markAsActive()
-//                    } else {
-//                        port.markAsDisabled()
-//                    }
-//                } else {
-//                    if (portAccessibility.target) {
-//                        port.markAsActive()
-//                    } else {
-//                        port.markAsDisabled()
-//                    }
-//                }
-//            }
-//        }
-//        port.mask.addEventFilter(MouseEvent.MOUSE_EXITED) {
-//            port.markAsNeutral()
-//        }
-//        port.mask.addEventFilter(MouseEvent.MOUSE_PRESSED) {
-//            sourcePortOfConnection = port
-//        }
-//        port.mask.addEventFilter(MouseEvent.MOUSE_RELEASED) {
-//            val source = sourcePortOfConnection
-//            if (source != null && isConnectionPossible(source, port)) {
-//                establishConnection(source, port)
-//            }
-//        }
-//    }
+            is ConditionalPortsConnection -> {
+                ConditionalConnectionKey(
+                    configuration.source.elementId,
+                    configuration.value
+                )
+            }
+        }
 
 }

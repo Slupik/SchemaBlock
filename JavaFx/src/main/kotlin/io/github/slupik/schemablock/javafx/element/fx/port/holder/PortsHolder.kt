@@ -23,4 +23,6 @@ interface PortsHolder {
     fun getPort(portId: String): Port? =
             ports.keys.firstOrNull { port -> portId == port.elementId }
 
+    fun getAccessibilityFor(port: Port): PortAccessibility?
+
 }

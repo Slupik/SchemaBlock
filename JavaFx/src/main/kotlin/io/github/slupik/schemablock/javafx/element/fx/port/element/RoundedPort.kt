@@ -38,7 +38,7 @@ class RoundedPort(
     }
 
     private fun setupCircle() {
-        circle.radius = 3.0
+        circle.radius = 4.0
         markAsNeutral()
     }
 

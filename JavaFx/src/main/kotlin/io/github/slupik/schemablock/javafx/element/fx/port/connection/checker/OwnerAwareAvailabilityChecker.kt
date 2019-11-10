@@ -29,7 +29,7 @@ class OwnerAwareAvailabilityChecker @Inject constructor(
                 .filterWithTheSameValue(configuration)
                 .filterConnectionsForPorts(otherPortsInGroup)
 
-        return existingConnections.isEmpty()
+        return existingConnections.isNotEmpty()
     }
 
     private fun Map<Port, PortAccessibility>.getPortsOfOwner(ownerId: String): Map<Port, PortAccessibility> =
@@ -65,7 +65,8 @@ class OwnerAwareAvailabilityChecker @Inject constructor(
         val source = holder.ports[configuration.source]
         val target = holder.ports[configuration.target]
 
-        return source.isSource() && target.isTarget()
+        return source.isSource() && target.isTarget() && configuration.source.elementId != configuration.target.elementId &&
+                configuration.source.owner.elementId != configuration.target.owner.elementId
     }
 
     private fun PortAccessibility?.isSource(): Boolean =

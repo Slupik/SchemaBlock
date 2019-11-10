@@ -3,12 +3,13 @@ package io.github.slupik.schemablock.javafx.element.fx.port.holder
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import javax.inject.Inject
 
 
 /**
  * All rights reserved & copyright ©
  */
-class SheetPortsHolder : PortsHolder {
+class SheetPortsHolder @Inject constructor() : PortsHolder {
 
     override val ports: HashMap<Port, PortAccessibility> = hashMapOf()
 
@@ -21,10 +22,12 @@ class SheetPortsHolder : PortsHolder {
     override fun addPort(port: Port, configuration: PortAccessibility) {
         deletePort(port.elementId)
         ports[port] = configuration
-        deletionsPublisher.onNext(Pair(
+        additionsPublisher.onNext(
+            Pair(
                 port,
                 configuration
-        ))
+            )
+        )
     }
 
     override fun deletePort(portId: String) {
@@ -32,11 +35,18 @@ class SheetPortsHolder : PortsHolder {
             it.elementId == portId
         }.forEach {
             ports.remove(it.key)
-            deletionsPublisher.onNext(Pair(
+            deletionsPublisher.onNext(
+                Pair(
                     it.key,
                     it.value
-            ))
+                )
+            )
         }
     }
+
+    override fun getAccessibilityFor(port: Port): PortAccessibility? =
+        ports[port] ?: ports.filter {
+            it.key.elementId == port.elementId
+        }.values.firstOrNull()
 
 }

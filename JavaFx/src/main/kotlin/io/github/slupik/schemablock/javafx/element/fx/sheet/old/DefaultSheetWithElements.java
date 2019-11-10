@@ -26,12 +26,12 @@ public class DefaultSheetWithElements {// implements SheetWithElements {
 //        this.heap = heap;
 //        uiContainer = new VisibleUIContainerImpl();
 //        startElement = ((StartUiBlock) createUiBlock(UiElementType.START));
-//        init();
+//        run();
 //        deletionHandler = new DeletionHandlerImpl(this, establishment);
 //        setup();
 //    }
 //
-//    private void init() {
+//    private void run() {
 //        establishment = new PortConnectorOnSheet(sheet);
 //        spawner = new PortSpawnerOnSheet(uiContainer, establishment);
 //        childHandler = new DestContainerAfterDropImpl(sheet) {

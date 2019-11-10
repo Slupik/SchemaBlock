@@ -3,11 +3,9 @@ package io.github.slupik.schemablock.javafx.view;
 import io.github.slupik.schemablock.javafx.dagger.DaggerJavaFxComponent;
 import io.github.slupik.schemablock.javafx.dagger.GraphicElementsModule;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
-import io.github.slupik.schemablock.javafx.element.block.implementation.StartUiBlock;
 import io.github.slupik.schemablock.javafx.element.fx.communication.UIIOCommunicator;
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsModifier;
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.StandardConnectionKey;
-import io.github.slupik.schemablock.javafx.element.fx.port.element.RoundedPort;
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.drawer.ConnectionDrawer;
+import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetFactory;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
@@ -123,7 +121,10 @@ public class MainViewController implements Initializable {
     private TableColumn<HeapValueFx, String> tcVarValue;
 
     @Inject
-    PortsConnectionsModifier test;
+    ConnectionDrawer drawer;
+
+    @Inject
+    PortsHolder holder;
 
     private Sheet container;
 //    private SheetWithElements container;
@@ -145,7 +146,6 @@ public class MainViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setupDragging();
         DaggerJavaFxComponent
                 .builder()
                 .addElementsModule(
@@ -153,12 +153,8 @@ public class MainViewController implements Initializable {
                 )
                 .build()
                 .inject(this);
-        test.add(
-                new StandardConnectionKey(
-                        "2432423"
-                ),
-                new RoundedPort(new StartUiBlock(), "234234")
-        );
+        drawer.run();
+        setupDragging();
     }
 
     private void setupDragging() {
@@ -167,7 +163,7 @@ public class MainViewController implements Initializable {
         DefaultElementContainer elementContainer = new DefaultElementContainer(register, memory, elementParser);
         ExecutionController executionController = new ExecutionController(communicable, elementContainer, btnContinue);
         elementContainer.setExecutionFlowController(executionController);
-        container = SheetFactory.INSTANCE.make(sheet);
+        container = SheetFactory.INSTANCE.make(holder, sheet);
 //        container = new DefaultSheetWithElements(sheet, communicable, elementContainer, executor, heap);
 
 //        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()), container.getChildrenHandler());
