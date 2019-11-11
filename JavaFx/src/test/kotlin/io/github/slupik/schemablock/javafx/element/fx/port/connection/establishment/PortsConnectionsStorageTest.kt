@@ -130,7 +130,7 @@ internal class PortsConnectionsStorageTest {
 //    }
 //
 //    private fun getRandomPort(): Port = RoundedPort(
-//                owner = EmptyBlock(),
+//                owner = MockedBlock(),
 //                elementId = RandomString.generate(4)
 //        )
 

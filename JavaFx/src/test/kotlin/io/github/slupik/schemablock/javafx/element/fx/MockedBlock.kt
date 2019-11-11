@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.fx.port.connection.establishment
+package io.github.slupik.schemablock.javafx.element.fx
 
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.block.Block
@@ -9,7 +9,9 @@ import org.apache.commons.lang3.RandomStringUtils
 /**
  * All rights reserved & copyright ©
  */
-class EmptyBlock: Block {
+class MockedBlock constructor(
+    override val elementId: String = RandomStringUtils.random(16)
+): Block {
 
     override val type: UiElementType = UiElementType.START
     override val background: Pane = Pane()
@@ -30,7 +32,6 @@ class EmptyBlock: Block {
     override fun markAsStop() {}
 
     override val draggingMask: Node = Pane()
-    override val elementId: String = RandomStringUtils.random(16)
     override val graphic: Pane = Pane()
 
 }

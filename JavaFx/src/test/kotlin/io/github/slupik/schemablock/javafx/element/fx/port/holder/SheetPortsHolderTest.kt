@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.holder
 
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.establishment.EmptyBlock
+import io.github.slupik.schemablock.javafx.element.fx.MockedBlock
 import io.github.slupik.schemablock.javafx.element.fx.port.element.RoundedPort
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -14,7 +14,7 @@ internal class SheetPortsHolderTest {
 
     @Test
     fun `add port`(){
-        val port = RoundedPort(EmptyBlock())
+        val port = RoundedPort(MockedBlock())
         assertEquals(0, sut.ports.size)
 
         sut.addPort(port, PortAccessibility.TWO_WAY)
@@ -26,11 +26,11 @@ internal class SheetPortsHolderTest {
         val exampleId = "example id"
         assertEquals(0, sut.ports.size)
 
-        val port = RoundedPort(EmptyBlock(), exampleId)
+        val port = RoundedPort(MockedBlock(), exampleId)
         sut.addPort(port, PortAccessibility.TWO_WAY)
         assertEquals(1, sut.ports.size)
 
-        val copy = RoundedPort(EmptyBlock(), exampleId)
+        val copy = RoundedPort(MockedBlock(), exampleId)
         sut.addPort(copy, PortAccessibility.TWO_WAY)
         assertEquals(1, sut.ports.size)
     }
@@ -40,7 +40,7 @@ internal class SheetPortsHolderTest {
         val exampleId = "example id"
         assertEquals(0, sut.ports.size)
 
-        val port = RoundedPort(EmptyBlock(), exampleId)
+        val port = RoundedPort(MockedBlock(), exampleId)
         sut.addPort(port, PortAccessibility.TWO_WAY)
         assertEquals(1, sut.ports.size)
 

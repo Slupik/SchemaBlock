@@ -4,6 +4,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import io.github.slupik.schemablock.javafx.element.fx.MockedBlock
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.BlockClearanceConfiguration
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.StandardPortsConnection
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.checker.ConnectionAvailabilityChecker
@@ -50,8 +51,8 @@ internal class DeletingConnectionEstablisherTest {
     fun `add possible standard connection and check is added`() {
         whenever(checker.isConnectionPossible(any())).thenReturn(true)
         val configuration = StandardPortsConnection(
-            RoundedPort(EmptyBlock()),
-            RoundedPort(EmptyBlock())
+            RoundedPort(MockedBlock()),
+            RoundedPort(MockedBlock())
         )
 
         sut.establishConnection(configuration)
@@ -65,8 +66,8 @@ internal class DeletingConnectionEstablisherTest {
         whenever(checker.isExistingSimilarConnections(any())).thenReturn(true)
         val configuration =
             StandardPortsConnection(
-                RoundedPort(EmptyBlock()),
-                RoundedPort(EmptyBlock())
+                RoundedPort(MockedBlock()),
+                RoundedPort(MockedBlock())
             )
 
         sut.establishConnection(configuration)

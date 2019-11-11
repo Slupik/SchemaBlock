@@ -19,10 +19,7 @@ class OwnerAwareAvailabilityChecker @Inject constructor(
 
     override fun isExistingSimilarConnections(configuration: PortConnectionConfiguration): Boolean {
         val ownerId = configuration.source.owner.elementId
-
-        val otherPortsInGroup = holder.ports
-                .getPortsOfOwner(ownerId)
-                .excludePort(configuration.source.elementId)
+        val otherPortsInGroup = holder.ports.getPortsOfOwner(ownerId)
 
         val existingConnections = connectionsProvider
                 .connections
@@ -34,9 +31,6 @@ class OwnerAwareAvailabilityChecker @Inject constructor(
 
     private fun Map<Port, PortAccessibility>.getPortsOfOwner(ownerId: String): Map<Port, PortAccessibility> =
             this.filterKeys { it.owner.elementId == ownerId }
-
-    private fun Map<Port, PortAccessibility>.excludePort(excludedId: String): Map<Port, PortAccessibility> =
-            this.filterKeys { it.elementId != excludedId }
 
     private fun Map<ConnectionStorageKey, TargetPort>.filterWithTheSameValue(configuration: PortConnectionConfiguration):
             Map<ConnectionStorageKey, TargetPort> =
@@ -65,7 +59,16 @@ class OwnerAwareAvailabilityChecker @Inject constructor(
         val source = holder.ports[configuration.source]
         val target = holder.ports[configuration.target]
 
-        return source.isSource() && target.isTarget() && configuration.source.elementId != configuration.target.elementId &&
+        when(configuration) {
+            is StandardPortsConnection -> {
+                if(source == PortAccessibility.CONDITIONAL_INPUT) return false
+            }
+            is ConditionalPortsConnection -> {
+                if(source != PortAccessibility.CONDITIONAL_INPUT) return false
+            }
+        }
+
+        return source.isSource() && target.isTarget() &&
                 configuration.source.owner.elementId != configuration.target.owner.elementId
     }
 

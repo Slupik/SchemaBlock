@@ -12,17 +12,17 @@
       <entry name="!?*.clj" />
     </wildcardResourcePatterns>
     <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
+      <profile name="Annotation profile for schemablock" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <sourceTestOutputDir name="target/generated-sources/apt-test" />
         <outputRelativeToContentRoot value="true" />
-        <module name="UltimateDetail" />
-        <module name="Entity" />
         <module name="WitLangParser" />
-        <module name="JavaFx" />
+        <module name="Entity" />
         <module name="WitLangModel" />
-        <module name="WitLang" />
         <module name="PandaLang" />
+        <module name="JavaFx" />
+        <module name="WitLang" />
+        <module name="UltimateDetail" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
