@@ -15,6 +15,7 @@ import io.github.slupik.schemablock.newparser.memory.element.Memoryable;
 import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
 import io.github.slupik.schemablock.newparser.memory.element.Variable;
 
+import javax.inject.Inject;
 import java.util.Queue;
 
 /**
@@ -29,6 +30,7 @@ public class ExecutorImpl implements Executor {
     private final Memory memory;
     private final Register register;
 
+    @Inject
     public ExecutorImpl(Compilator compilator, Memory memory, Register register) {
         this.compilator = compilator;
         this.memory = memory;

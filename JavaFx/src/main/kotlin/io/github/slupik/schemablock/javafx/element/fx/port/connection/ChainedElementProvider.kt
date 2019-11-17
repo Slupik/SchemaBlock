@@ -1,8 +1,5 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.connection
 
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConditionalConnectionKey
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConnectionStorageKey
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.StandardConnectionKey
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.TargetElementId
 
 /**
@@ -10,12 +7,10 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.Ta
  */
 interface ChainedElementProvider {
 
-    fun getNextElement(sourceBlockId: String): TargetElementId? =
-            getNextElement(StandardConnectionKey(sourceBlockId))
+    fun getStartElementId(): TargetElementId?
 
-    fun getNextElement(sourceBlockId: String, result: Boolean): TargetElementId? =
-            getNextElement(ConditionalConnectionKey(sourceBlockId, result))
+    fun getNextElement(sourceBlockId: String): TargetElementId?
 
-    fun getNextElement(key: ConnectionStorageKey): TargetElementId?
+    fun getNextElement(sourceBlockId: String, result: Boolean): TargetElementId?
 
 }

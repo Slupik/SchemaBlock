@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.sheet
 
+import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
 import javafx.scene.layout.Pane
 
@@ -8,13 +9,16 @@ import javafx.scene.layout.Pane
  */
 object SheetFactory {
 
-    fun make(holder: PortsHolder, elementsContainer: Pane): Sheet {
+    fun make(portsHolder: PortsHolder, blocksHolder: BlocksHolder, elementsContainer: Pane): Sheet {
         return BasicFeaturedSheet(
             elementsContainer,
             PortsAddingSheet(
                 elementsContainer,
-                holder,
-                VisibleSheet(elementsContainer)
+                portsHolder,
+                ElementsSyncingSheet(
+                    VisibleSheet(elementsContainer),
+                    blocksHolder
+                )
             )
         )
     }

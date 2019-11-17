@@ -13,4 +13,5 @@ public interface HeapController {
     void setVariableValue(String name, Value value) throws AlgorithmException;
 
     ValueType getVariableType(String name) throws VariableNotFound;
+
 }

@@ -4,6 +4,8 @@ import dagger.Binds
 import dagger.Module
 import io.github.slupik.schemablock.javafx.element.fx.arrow.ArrowDrawer
 import io.github.slupik.schemablock.javafx.element.fx.arrow.SimpleArrowDrawer
+import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder
+import io.github.slupik.schemablock.javafx.element.fx.element.holder.SheetBlocksHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.ChainedElementProvider
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.checker.ConnectionAvailabilityChecker
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.checker.OwnerAwareAvailabilityChecker
@@ -20,6 +22,7 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.Po
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsStorage
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.SheetPortsHolder
+import javax.inject.Singleton
 
 /**
  * All rights reserved & copyright ©
@@ -39,24 +42,35 @@ abstract class BlocksBindingsModule {
     abstract fun provideChainedElementProvider(storage: PortsConnectionsStorage): ChainedElementProvider
 
     @Binds
+    @Singleton
     abstract fun provideConnectionEstablisher(establisher: DeletingConnectionEstablisher): ConnectionEstablisher
 
     @Binds
+    @Singleton
     abstract fun provideAvailabilityChecker(checker: OwnerAwareAvailabilityChecker): ConnectionAvailabilityChecker
 
     @Binds
+    @Singleton
     abstract fun provideConnectionDeleter(deleter: PortConnectionsDeleter): ConnectionDeleter
 
     @Binds
+    @Singleton
     abstract fun providePortsHolder(holder: SheetPortsHolder): PortsHolder
 
     @Binds
+    @Singleton
     abstract fun provideConnectionDrawer(drawer: ArrowConnectionDrawer): ConnectionDrawer
 
     @Binds
+    @Singleton
     abstract fun provideArrowDrawer(drawer: SimpleArrowDrawer): ArrowDrawer
 
     @Binds
+    @Singleton
     abstract fun provideConnectionEventsObservable(drawer: PortConnectionEventsObservable): ConnectionEventsObservable
+
+    @Binds
+    @Singleton
+    abstract fun provideBlocksHolder(holder: SheetBlocksHolder): BlocksHolder
 
 }

@@ -10,6 +10,7 @@ import io.github.slupik.schemablock.newparser.compilator.implementation.compilat
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound;
 import io.github.slupik.schemablock.newparser.utils.ValueTooBig;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +20,10 @@ import java.util.Queue;
  * All rights reserved & copyright ©
  */
 public class DefaultCompilator implements Compilator {
+
+    @Inject
+    public DefaultCompilator() {
+    }
 
     @Override
     public Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig, SemicolonNotFound {
@@ -32,20 +37,20 @@ public class DefaultCompilator implements Compilator {
         List<Token> tokenized = new Tokenizer(code).getTokenized();
         List<Token> cleared = new BracketsRemover().getCleared(tokenized);
 
-        if(forResult) {
-            for(int i=cleared.size()-1;i>=0;i--) {
-                if(cleared.get(i).getData().equals(";")) {
+        if (forResult) {
+            for (int i = cleared.size() - 1; i >= 0; i--) {
+                if (cleared.get(i).getData().equals(";")) {
                     cleared.remove(i);
                 } else {
                     break;
                 }
             }
             List<Token> rpn = ConvertInfixToRPN.convertInfixToRPN(cleared);
-            commands.addAll(getCompiledLine(rpn, cleared.get(cleared.size()-1), false));
+            commands.addAll(getCompiledLine(rpn, cleared.get(cleared.size() - 1), false));
         } else {
             List<Token> buffer = new ArrayList<>();
-            for(Token token:cleared) {
-                if(token.getData().equals(";")) {
+            for (Token token : cleared) {
+                if (token.getData().equals(";")) {
                     List<Token> rpn = ConvertInfixToRPN.convertInfixToRPN(buffer);
                     commands.addAll(getCompiledLine(rpn, token));
                     buffer.clear();
@@ -53,9 +58,9 @@ public class DefaultCompilator implements Compilator {
                     buffer.add(token);
                 }
             }
-            if(buffer.size()>0) {
-                Token lastToken = buffer.get(buffer.size()-1);
-                throw new SemicolonNotFound(lastToken.getLine(), lastToken.getPos()+1);
+            if (buffer.size() > 0) {
+                Token lastToken = buffer.get(buffer.size() - 1);
+                throw new SemicolonNotFound(lastToken.getLine(), lastToken.getPos() + 1);
             }
         }
         return commands;
@@ -67,7 +72,7 @@ public class DefaultCompilator implements Compilator {
 
     private List<ByteCommand> getCompiledLine(List<Token> parts, Token end, boolean clearRegister) throws NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig {
         List<ByteCommand> compiled = new ArrayList<>(LineCompilator.getCompiledLine(parts));
-        if(clearRegister) {
+        if (clearRegister) {
             compiled.add(new ByteCommandClearImpl(end.getLine(), end.getPos(), false));
         }
         return compiled;

@@ -8,3 +8,7 @@ import javax.inject.Qualifier
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class Sheet
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class HeapSpy

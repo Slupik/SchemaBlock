@@ -1,13 +1,11 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.connection.establishment
 
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsStorage
-
 /**
  * All rights reserved & copyright ©
  */
 internal class PortsConnectionsStorageTest {
 
-    private val sut: PortsConnectionsStorage = PortsConnectionsStorage()
+//    private val sut: PortsConnectionsStorage = PortsConnectionsStorage()
 
     //TODO repair
 //    @Test

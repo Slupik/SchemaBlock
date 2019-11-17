@@ -1,38 +1,31 @@
 package io.github.slupik.schemablock.javafx.view;
 
 import io.github.slupik.schemablock.javafx.dagger.DaggerJavaFxComponent;
+import io.github.slupik.schemablock.javafx.dagger.ExecutionElementsModule;
 import io.github.slupik.schemablock.javafx.dagger.GraphicElementsModule;
+import io.github.slupik.schemablock.javafx.dagger.HeapControllerCallbackModule;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.communication.UIIOCommunicator;
+import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder;
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.drawer.ConnectionDrawer;
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetFactory;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
-import io.github.slupik.schemablock.javafx.logic.execution.ExecutionController;
 import io.github.slupik.schemablock.javafx.logic.heap.HeapValueFx;
-import io.github.slupik.schemablock.javafx.logic.heap.NewHeapSpy;
 import io.github.slupik.schemablock.javafx.logic.persistence.SchemaSaver;
 import io.github.slupik.schemablock.javafx.view.resize.BlocksAwareSizeProvider;
 import io.github.slupik.schemablock.javafx.view.resize.ResizingTool;
-import io.github.slupik.schemablock.model.ui.implementation.container.DefaultElementContainer;
+import io.github.slupik.schemablock.logic.executor.diagram.DiagramExecutor;
+import io.github.slupik.schemablock.logic.executor.diagram.ExecutionEvent;
+import io.github.slupik.schemablock.logic.executor.diagram.exception.NextBlockNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.container.ExecutionCallback;
-import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
-import io.github.slupik.schemablock.model.ui.parser.ElementParser;
-import io.github.slupik.schemablock.newparser.compilator.Compilator;
-import io.github.slupik.schemablock.newparser.compilator.implementation.DefaultCompilator;
-import io.github.slupik.schemablock.newparser.executor.Executor;
-import io.github.slupik.schemablock.newparser.executor.implementation.ExecutorImpl;
-import io.github.slupik.schemablock.newparser.memory.Memory;
-import io.github.slupik.schemablock.newparser.memory.MemoryImpl;
-import io.github.slupik.schemablock.newparser.memory.RegisterImpl;
+import io.reactivex.Observable;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -126,30 +119,48 @@ public class MainViewController implements Initializable {
     @Inject
     PortsHolder holder;
 
+    @Inject
+    DiagramExecutor executor;
+
+    @Inject
+    BlocksHolder blocksHolder;
+//    @Inject
+//    @Async
+//    DiagramExecutor executor;
+
     private Sheet container;
-//    private SheetWithElements container;
+    //    private SheetWithElements container;
     private GhostDragController ghost;
     private SchemaSaver saver;
     private SchemaLoader loader;
 
-    private Compilator compilator = new DefaultCompilator();
-    private Memory memory = new MemoryImpl();
-    private RegisterImpl register = new RegisterImpl();
-    private NewHeapSpy heap = new NewHeapSpy(memory, new Runnable(){
-        @Override
-        public void run() {
-            tvVariables.refresh();
-        }
-    });
-    private Executor executor = new ExecutorImpl(compilator, heap, register);
-    private ElementParser elementParser = new ElementParser(executor, heap);
+//    private Compilator compilator = new DefaultCompilator();
+//    private Memory memory = new MemoryImpl();
+//    private RegisterImpl register = new RegisterImpl();
+//    private NewHeapSpy heap = new NewHeapSpy(memory, new Runnable(){
+//        @Override
+//        public void run() {
+//            tvVariables.refresh();
+//        }
+//    });
+//    private Executor executor = new ExecutorImpl(compilator, heap, register);
+//    private ElementParser elementParser = new ElementParser(executor, heap);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        UIIOCommunicator communicable = new UIIOCommunicator(tfInput, outputView, btnEnter);
         DaggerJavaFxComponent
                 .builder()
                 .addElementsModule(
                         new GraphicElementsModule(sheet)
+                )
+                .addElementsModule(
+                        new HeapControllerCallbackModule(
+                                () -> tvVariables.refresh()
+                        )
+                )
+                .addElementsModule(
+                        new ExecutionElementsModule(communicable)
                 )
                 .build()
                 .inject(this);
@@ -158,12 +169,11 @@ public class MainViewController implements Initializable {
     }
 
     private void setupDragging() {
-        IOCommunicable communicable = new UIIOCommunicator(tfInput, outputView, btnEnter);
 
-        DefaultElementContainer elementContainer = new DefaultElementContainer(register, memory, elementParser);
-        ExecutionController executionController = new ExecutionController(communicable, elementContainer, btnContinue);
-        elementContainer.setExecutionFlowController(executionController);
-        container = SheetFactory.INSTANCE.make(holder, sheet);
+//        DefaultElementContainer elementContainer = new DefaultElementContainer(register, memory, elementParser);
+//        ExecutionController executionController = new ExecutionController(communicable, elementContainer, btnContinue);
+//        elementContainer.setExecutionFlowController(executionController);
+        container = SheetFactory.INSTANCE.make(holder, blocksHolder, sheet);
 //        container = new DefaultSheetWithElements(sheet, communicable, elementContainer, executor, heap);
 
 //        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()), container.getChildrenHandler());
@@ -188,13 +198,29 @@ public class MainViewController implements Initializable {
                         btnDebug.setDisable(false);
                     }
                 };
-        btnRun.setOnAction((event)-> {
-            heap.clear();
-            executionController.execute(false, callback);
+        btnRun.setOnAction((event) -> {
+            Observable<ExecutionEvent> observable = executor.run();
+            observable.subscribe(
+                    executionEvent -> {
+                        System.out.println("executionEvent = " + executionEvent);
+                    },
+                    throwable -> {
+                        System.out.println("throwable = " + throwable);
+                        if(throwable instanceof NextBlockNotFound) {
+                            System.out.println("type "+ ((NextBlockNotFound) throwable).getCurrentBlock());
+                        }
+                    },
+                    () -> {
+                        System.out.println("COMPLETE");
+                    }
+            ).dispose();
+//            heap.clear();
+//            executor.run();
+//            executionController.execute(false, callback);
         });
-        btnDebug.setOnAction((event)-> {
-            heap.clear();
-            executionController.execute(true, callback);
+        btnDebug.setOnAction((event) -> {
+//            heap.clear();
+//            executionController.execute(true, callback);
         });
     }
 
@@ -204,21 +230,21 @@ public class MainViewController implements Initializable {
     }
 
     private void bindTable() {
-        ObservableList<HeapValueFx> valueList = heap.getVariableList();
-        tvVariables.setItems(valueList);
-        tcVarType.setCellValueFactory(
-                new PropertyValueFactory<>("type")
-        );
-        tcVarName.setCellValueFactory(
-                new PropertyValueFactory<>("name")
-        );
-        tcVarValue.setCellValueFactory(
-                new PropertyValueFactory<>("value")
-        );
+//        ObservableList<HeapValueFx> valueList = heap.getVariableList();
+//        tvVariables.setItems(valueList);
+//        tcVarType.setCellValueFactory(
+//                new PropertyValueFactory<>("type")
+//        );
+//        tcVarName.setCellValueFactory(
+//                new PropertyValueFactory<>("name")
+//        );
+//        tcVarValue.setCellValueFactory(
+//                new PropertyValueFactory<>("value")
+//        );
     }
 
     private void setupMenu() {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             saver = new SchemaSaver(((Stage) mainContainer.getScene().getWindow()));
             loader = new SchemaLoader(((Stage) mainContainer.getScene().getWindow()));
             miSave.setOnAction(event -> {
@@ -228,7 +254,7 @@ public class MainViewController implements Initializable {
             });
             miLoad.setOnAction(event -> {
                 File file = loader.getFileToLoad();
-                if(file!=null) {
+                if (file != null) {
                     //TODO repair
 //                    loader.loadFile(container, file);
 //                    saver.setDestFile(file);
@@ -244,7 +270,7 @@ public class MainViewController implements Initializable {
         outputView.prefWidthProperty().bind(vbIOContainer.widthProperty());
         outputView.prefHeightProperty().bind(vbIOContainer.heightProperty().subtract(hbInputContainer.heightProperty()));
 
-        Platform.runLater(()-> tfInput.prefWidthProperty().bind(hbInputContainer.widthProperty().subtract(btnEnter.widthProperty()).subtract(16)));
+        Platform.runLater(() -> tfInput.prefWidthProperty().bind(hbInputContainer.widthProperty().subtract(btnEnter.widthProperty()).subtract(16)));
     }
 
     private void addIconsToMenu() {

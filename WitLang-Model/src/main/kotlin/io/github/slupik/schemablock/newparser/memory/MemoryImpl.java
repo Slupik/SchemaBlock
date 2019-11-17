@@ -4,6 +4,7 @@ import io.github.slupik.schemablock.execution.VariableNotFound;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.newparser.memory.element.Variable;
 
+import javax.inject.Inject;
 import java.util.HashMap;
 
 /**
@@ -12,6 +13,10 @@ import java.util.HashMap;
 public class MemoryImpl implements Memory {
 
     private final HashMap<String, Variable> data = new HashMap<>();
+
+    @Inject
+    public MemoryImpl(){
+    }
 
     @Override
     public void register(Variable variable) throws AlgorithmException {
