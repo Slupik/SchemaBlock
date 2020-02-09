@@ -21,14 +21,16 @@ import io.github.slupik.schemablock.javafx.view.resize.ResizingTool;
 import io.github.slupik.schemablock.logic.executor.diagram.DiagramExecutor;
 import io.github.slupik.schemablock.logic.executor.diagram.ExecutionEvent;
 import io.github.slupik.schemablock.logic.executor.diagram.exception.NextBlockNotFound;
-import io.github.slupik.schemablock.model.ui.implementation.container.ExecutionCallback;
 import io.github.slupik.schemablock.model.ui.newparser.HeapController;
 import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.subjects.PublishSubject;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -129,32 +131,18 @@ public class MainViewController implements Initializable {
     BlocksHolder blocksHolder;
 
     @Inject
-    NewHeapSpy heapSpy;
+    NewHeapSpy memory;
 
     @Inject
     HeapController heapController;
 
-//    @Inject
-//    @Async
-//    DiagramExecutor executor;
-
     private Sheet container;
-    //    private SheetWithElements container;
     private GhostDragController ghost;
     private SchemaSaver saver;
     private SchemaLoader loader;
 
-//    private Compilator compilator = new DefaultCompilator();
-//    private Memory memory = new MemoryImpl();
-//    private RegisterImpl register = new RegisterImpl();
-//    private NewHeapSpy heap = new NewHeapSpy(memory, new Runnable(){
-//        @Override
-//        public void run() {
-//            tvVariables.refresh();
-//        }
-//    });
-//    private Executor executor = new ExecutorImpl(compilator, heap, register);
-//    private ElementParser elementParser = new ElementParser(executor, heap);
+    private Disposable executionDisposable = null;
+    private Disposable continuationTriggerDisposable = null;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -176,62 +164,61 @@ public class MainViewController implements Initializable {
                 .inject(this);
         drawer.run();
         setupDragging();
-    }
-
-    private void setupDragging() {
-
-//        DefaultElementContainer elementContainer = new DefaultElementContainer(register, memory, elementParser);
-//        ExecutionController executionController = new ExecutionController(communicable, elementContainer, btnContinue);
-//        elementContainer.setExecutionFlowController(executionController);
-        container = SheetFactory.INSTANCE.make(holder, blocksHolder, sheet);
-//        container = new DefaultSheetWithElements(sheet, communicable, elementContainer, executor, heap);
-
-//        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(container.getPortSpawner()), container.getChildrenHandler());
-        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(), container);
-
-        addIconsToMenu();
         bindIOView();
         setupMenu();
         bindTable();
         bindResizer();
-        ExecutionCallback callback =
-                new ExecutionCallback() {
-                    @Override
-                    public void onStart() {
-                        btnRun.setDisable(true);
-                        btnDebug.setDisable(true);
-                    }
-
-                    @Override
-                    public void onStop() {
-                        btnRun.setDisable(false);
-                        btnDebug.setDisable(false);
-                    }
-                };
         btnRun.setOnAction((event) -> {
             Observable<ExecutionEvent> observable = executor.run();
-            observable.subscribe(
-                    executionEvent -> {
-                        System.out.println("executionEvent = " + executionEvent);
-                    },
-                    throwable -> {
-                        System.out.println("throwable = " + throwable);
-                        if(throwable instanceof NextBlockNotFound) {
-                            System.out.println("type "+ ((NextBlockNotFound) throwable).getCurrentBlock());
-                        }
-                    },
-                    () -> {
-                        System.out.println("COMPLETE");
-                    }
-            ).dispose();
-//            heap.clear();
-//            executor.run();
-//            executionController.execute(false, callback);
+            handleExecutionStates(observable);
         });
+        Observable<Boolean> continuationTrigger = getContinuationTrigger();
         btnDebug.setOnAction((event) -> {
-//            heap.clear();
-//            executionController.execute(true, callback);
+            Observable<ExecutionEvent> observable = executor.debug(execution ->
+                    continuationTriggerDisposable = continuationTrigger.subscribe(aBoolean -> execution.invoke())
+            );
+            handleExecutionStates(observable);
         });
+    }
+
+    private void handleExecutionStates(Observable<ExecutionEvent> observable) {
+        setUiStateToExecuting();
+        executionDisposable = observable.subscribe(
+                executionEvent ->
+                        System.out.println("executionEvent = " + executionEvent),
+                throwable -> {
+                    System.out.println("throwable = " + throwable);
+                    if (throwable instanceof NextBlockNotFound) {
+                        System.out.println("type " + ((NextBlockNotFound) throwable).getCurrentBlock());
+                    }
+                },
+                this::setUiStateForEdition
+        );
+    }
+
+    private Observable<Boolean> getContinuationTrigger() {
+        PublishSubject<Boolean> continuationTrigger = PublishSubject.create();
+        btnContinue.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->
+                continuationTrigger.onNext(true));
+        return continuationTrigger;
+    }
+
+    private void setUiStateToExecuting() {
+        btnRun.setDisable(true);
+        btnDebug.setDisable(true);
+        memory.clear();
+    }
+
+    private void setUiStateForEdition() {
+        btnRun.setDisable(false);
+        btnDebug.setDisable(false);
+    }
+
+    private void setupDragging() {
+        container = SheetFactory.INSTANCE.make(holder, blocksHolder, sheet);
+        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(), container);
+
+        addIconsToMenu();
     }
 
     private void bindResizer() {
@@ -240,7 +227,7 @@ public class MainViewController implements Initializable {
     }
 
     private void bindTable() {
-        tvVariables.setItems(heapSpy.getVariableList());
+        tvVariables.setItems(memory.getVariableList());
         tcVarType.setCellValueFactory(
                 new PropertyValueFactory<>("type")
         );
