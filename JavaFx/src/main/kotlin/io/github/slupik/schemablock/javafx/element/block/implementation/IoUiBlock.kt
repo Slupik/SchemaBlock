@@ -29,9 +29,13 @@ class IoUiBlock : EditableBlockPrototype, IOBlock {
 
     private var shape: Parallelogram = Parallelogram()
 
+    private val _operations: MutableList<IoOperation> = mutableListOf()
     override var operations: List<IoOperation>
-        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
-        set(value) {}
+        get() = _operations
+        set(value) {
+            _operations.clear()
+            _operations.addAll(value)
+        }
 
     constructor(id: String) : super(UiElementType.IO, id)
 
@@ -49,5 +53,9 @@ class IoUiBlock : EditableBlockPrototype, IOBlock {
 
     override fun createBackgroundElement(): CustomShapeBase =
             shape
+
+    fun addOperation(operation: IoOperation) {
+        _operations.add(operation)
+    }
 
 }
