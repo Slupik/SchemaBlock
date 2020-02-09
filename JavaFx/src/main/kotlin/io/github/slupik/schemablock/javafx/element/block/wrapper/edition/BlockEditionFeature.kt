@@ -7,7 +7,6 @@ import io.github.slupik.schemablock.javafx.element.block.OperationsBlock
 import io.github.slupik.schemablock.javafx.element.block.settings.CodeAndDescription
 import io.github.slupik.schemablock.javafx.element.block.settings.DescriptionAndIO
 import io.github.slupik.schemablock.javafx.element.block.settings.UiBlockSettings
-import io.github.slupik.schemablock.javafx.element.block.wrapper.BlockWrapper
 import javafx.scene.control.Dialog
 import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
@@ -16,15 +15,17 @@ import java.util.*
 /**
  * All rights reserved & copyright ©
  */
-internal class BlockEditionWrapper(wrappee: Block) : BlockWrapper(wrappee) {
+internal class BlockEditionFeature(
+    private val wrappee: Block
+) {
 
     init {
         observeDoubleClicks()
     }
 
     private fun observeDoubleClicks() {
-        background.addEventHandler(MouseEvent.MOUSE_CLICKED) { event ->
-            if (background.contains(event.x, event.y)) {
+        wrappee.draggingMask.addEventHandler(MouseEvent.MOUSE_CLICKED) { event ->
+            if (wrappee.background.contains(event.x, event.y)) {
                 if (event.button == MouseButton.PRIMARY) {
                     if (event.clickCount == 2) {
                         onDoubleClick()

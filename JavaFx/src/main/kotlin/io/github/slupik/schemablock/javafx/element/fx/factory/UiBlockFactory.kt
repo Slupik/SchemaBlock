@@ -3,6 +3,7 @@ package io.github.slupik.schemablock.javafx.element.fx.factory
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.block.Block
 import io.github.slupik.schemablock.javafx.element.block.implementation.*
+import io.github.slupik.schemablock.javafx.element.block.wrapper.edition.BlockEditionFeature
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState
 import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableElementContainer
 import io.github.slupik.schemablock.javafx.logic.drag.node.ElementDragController
@@ -34,6 +35,7 @@ object UiBlockFactory {
             UiElementType.IO -> IoUiBlock()
         }
         element.setup()
+        BlockEditionFeature(element)
         return element
     }
 
