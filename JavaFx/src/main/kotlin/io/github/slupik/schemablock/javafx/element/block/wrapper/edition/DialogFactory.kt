@@ -10,9 +10,11 @@ import javafx.geometry.Orientation
 import javafx.geometry.Pos
 import javafx.scene.Node
 import javafx.scene.control.*
+import javafx.scene.control.ButtonType
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import java.util.*
+
 
 /**
  * All rights reserved & copyright ©
@@ -58,15 +60,13 @@ object DialogFactory {
 
         Platform.runLater { title.requestFocus() }
 
-
         dialog.setResultConverter { dialogButton ->
             if (dialogButton == saveButtonType) {
                 CodeAndDescription(
-                        title.text,
-                        content.text
+                    title.text,
+                    content.text
                 )
-            }
-            null
+            } else null
         }
 
         return dialog
@@ -112,11 +112,10 @@ object DialogFactory {
         dialog.setResultConverter { dialogButton ->
             if (dialogButton == saveButtonType) {
                 CodeAndDescription(
-                        title.text,
-                        content.text
+                    title.text,
+                    content.text
                 )
-            }
-            null
+            } else null
         }
 
         return dialog
@@ -199,13 +198,12 @@ object DialogFactory {
         dialog.setResultConverter { dialogButton ->
             if (dialogButton == saveButtonType) {
                 DescriptionAndIO(
-                        title.text,
-                        options.map {
-                            it.asField
-                        }
+                    title.text,
+                    options.map {
+                        it.asField
+                    }
                 )
-            }
-            null
+            } else null
         }
 
         optionsContainer.children.addListener(object : ListChangeListener<Node> {

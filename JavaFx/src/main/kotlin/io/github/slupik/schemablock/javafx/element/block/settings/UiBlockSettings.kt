@@ -7,8 +7,8 @@ package io.github.slupik.schemablock.javafx.element.block.settings
 sealed class UiBlockSettings
 
 data class CodeAndDescription(
-        val code: String,
-        val description: String
+        val description: String,
+        val code: String
 ) : UiBlockSettings()
 
 data class DescriptionAndIO(
