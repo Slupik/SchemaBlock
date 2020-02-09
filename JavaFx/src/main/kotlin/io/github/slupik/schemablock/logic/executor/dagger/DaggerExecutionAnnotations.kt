@@ -16,3 +16,7 @@ annotation class Continuous
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class Async
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class AtomicMemory

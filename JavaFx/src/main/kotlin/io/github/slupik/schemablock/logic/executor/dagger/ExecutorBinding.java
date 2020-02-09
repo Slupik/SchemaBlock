@@ -53,7 +53,12 @@ public abstract class ExecutorBinding {
 
     @Binds
     @Singleton
+    @AtomicMemory
     public abstract Memory memory(MemoryImpl memory);
+
+    @Binds
+    @Singleton
+    public abstract Memory spyAsMemory(NewHeapSpy memory);
 
     @Binds
     @Singleton

@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.javafx.logic.heap;
 
 import io.github.slupik.schemablock.execution.VariableNotFound;
 import io.github.slupik.schemablock.javafx.dagger.HeapSpy;
+import io.github.slupik.schemablock.logic.executor.dagger.AtomicMemory;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.newparser.HeapController;
 import io.github.slupik.schemablock.newparser.memory.Memory;
@@ -12,11 +13,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.ArrayList;
 
 /**
  * All rights reserved & copyright ©
  */
+@Singleton
 public class NewHeapSpy implements HeapController, Memory {
 
     private final ObservableList<HeapValueFx> list = FXCollections.observableList(new ArrayList<>());
@@ -24,7 +27,7 @@ public class NewHeapSpy implements HeapController, Memory {
     private final Runnable callbackAfterItemChange;
 
     @Inject
-    public NewHeapSpy(Memory memory, @HeapSpy Runnable callbackAfterItemChange) {
+    public NewHeapSpy(@AtomicMemory Memory memory, @HeapSpy Runnable callbackAfterItemChange) {
         this.memory = memory;
         this.callbackAfterItemChange = callbackAfterItemChange;
     }

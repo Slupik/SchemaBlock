@@ -14,6 +14,7 @@ import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetFactory;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
 import io.github.slupik.schemablock.javafx.logic.heap.HeapValueFx;
+import io.github.slupik.schemablock.javafx.logic.heap.NewHeapSpy;
 import io.github.slupik.schemablock.javafx.logic.persistence.SchemaSaver;
 import io.github.slupik.schemablock.javafx.view.resize.BlocksAwareSizeProvider;
 import io.github.slupik.schemablock.javafx.view.resize.ResizingTool;
@@ -21,11 +22,13 @@ import io.github.slupik.schemablock.logic.executor.diagram.DiagramExecutor;
 import io.github.slupik.schemablock.logic.executor.diagram.ExecutionEvent;
 import io.github.slupik.schemablock.logic.executor.diagram.exception.NextBlockNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.container.ExecutionCallback;
+import io.github.slupik.schemablock.model.ui.newparser.HeapController;
 import io.reactivex.Observable;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -124,6 +127,13 @@ public class MainViewController implements Initializable {
 
     @Inject
     BlocksHolder blocksHolder;
+
+    @Inject
+    NewHeapSpy heapSpy;
+
+    @Inject
+    HeapController heapController;
+
 //    @Inject
 //    @Async
 //    DiagramExecutor executor;
@@ -230,17 +240,16 @@ public class MainViewController implements Initializable {
     }
 
     private void bindTable() {
-//        ObservableList<HeapValueFx> valueList = heap.getVariableList();
-//        tvVariables.setItems(valueList);
-//        tcVarType.setCellValueFactory(
-//                new PropertyValueFactory<>("type")
-//        );
-//        tcVarName.setCellValueFactory(
-//                new PropertyValueFactory<>("name")
-//        );
-//        tcVarValue.setCellValueFactory(
-//                new PropertyValueFactory<>("value")
-//        );
+        tvVariables.setItems(heapSpy.getVariableList());
+        tcVarType.setCellValueFactory(
+                new PropertyValueFactory<>("type")
+        );
+        tcVarName.setCellValueFactory(
+                new PropertyValueFactory<>("name")
+        );
+        tcVarValue.setCellValueFactory(
+                new PropertyValueFactory<>("value")
+        );
     }
 
     private void setupMenu() {
