@@ -31,7 +31,9 @@ class OneTimeDiagramExecutor @Inject constructor(
     override fun debug(controller: DiagramExecutionController): Observable<ExecutionEvent> {
         val startingId = getStartBlock()
         if (startingId != null) {
-            executeBlock(publisher, controller, startingId)
+            Thread {
+                executeBlock(publisher, controller, startingId)
+            }.start()
         } else {
             onStartBlockNotFound()
         }
