@@ -13,7 +13,7 @@ class SimpleArrowDrawer @Inject constructor(
     @Sheet private val sheet: Pane
 ): ArrowDrawer {
 
-    override fun drawMovableArrow(observableCoords: Observable<Pair<Point, Point>>, desc: String) {
+    override fun drawMovableArrow(observableCoords: Observable<Pair<Point, Point>>, desc: String): Arrow {
         val arrow = Arrow()
         arrow.setDesc(desc)
         sheet.children.add(arrow)
@@ -32,14 +32,16 @@ class SimpleArrowDrawer @Inject constructor(
                 sheet.children.remove(arrow)
             }
         )
+        return arrow
     }
 
-    override fun draw(from: Point, to: Point, desc: String) {
+    override fun draw(from: Point, to: Point, desc: String): Arrow {
         val arrow = Arrow()
         arrow.setDesc(desc)
         sheet.children.add(arrow)
         arrow.setStart(from.x, from.y)
         arrow.setEnd(to.x, to.y)
+        return arrow
     }
 
 }

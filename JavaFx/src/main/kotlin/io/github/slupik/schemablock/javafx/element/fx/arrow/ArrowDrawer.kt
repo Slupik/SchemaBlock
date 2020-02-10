@@ -7,14 +7,12 @@ import io.reactivex.Observable
  */
 interface ArrowDrawer {
 
-    fun drawMovableArrow(observableCoords: Observable<Pair<Point, Point>>) {
+    fun drawMovableArrow(observableCoords: Observable<Pair<Point, Point>>): Arrow =
         drawMovableArrow(observableCoords, "")
-    }
-    fun drawMovableArrow(observableCoords: Observable<Pair<Point, Point>>, desc: String)
+    fun drawMovableArrow(observableCoords: Observable<Pair<Point, Point>>, desc: String): Arrow
 
-    fun draw(from: Point, to: Point) {
+    fun draw(from: Point, to: Point): Arrow =
         draw(from, to, "")
-    }
-    fun draw(from: Point, to: Point, desc: String)
+    fun draw(from: Point, to: Point, desc: String): Arrow
 
 }

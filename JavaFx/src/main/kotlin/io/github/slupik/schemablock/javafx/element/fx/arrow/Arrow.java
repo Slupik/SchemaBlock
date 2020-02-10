@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.javafx.element.fx.arrow;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 /**
@@ -109,4 +110,9 @@ public class Arrow extends AnchorPane {
     public void setDesc(String desc) {
         this.desc.setText(desc);
     }
+
+    public void delete() {
+        ((Pane) getParent()).getChildren().remove(this);
+    }
+
 }

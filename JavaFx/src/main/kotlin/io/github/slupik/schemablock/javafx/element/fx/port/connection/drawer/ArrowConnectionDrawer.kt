@@ -1,13 +1,16 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.connection.drawer
 
 import io.github.slupik.schemablock.javafx.dagger.Sheet
+import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow
 import io.github.slupik.schemablock.javafx.element.fx.arrow.ArrowDrawer
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Point
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.ConditionalPortsConnection
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.PortConnectionConfiguration
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.StandardPortsConnection
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.deleter.ConnectionDeleter
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.establishment.ConnectionEstablisher
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.event.*
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConnectionStorageKey
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortAccessibility
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
@@ -22,11 +25,13 @@ import javax.inject.Inject
 class ArrowConnectionDrawer @Inject constructor(
     private val portsHolder: PortsHolder,
     private val establisher: ConnectionEstablisher,
+    private val deleter: ConnectionDeleter,
     private val arrowDrawer: ArrowDrawer,
     private val observableConnectionEvents: ConnectionEventsObservable,
     @Sheet private val container: Pane
 ) : ConnectionDrawer {
 
+    private val arrows = hashMapOf<PortConnectionConfiguration, Arrow>()
     private var arrowSource: Port? = null
     private var arrowCoords: PublishSubject<Pair<Point, Point>>? = null
 
@@ -69,6 +74,9 @@ class ArrowConnectionDrawer @Inject constructor(
         establisher.establishments.subscribe {
             drawConnection(it)
         }
+        deleter.deletions.subscribe {
+            eraseConnection(it)
+        }
         container.addEventFilter(MouseEvent.MOUSE_DRAGGED) {
             val source = arrowSource
             val coords = arrowCoords
@@ -83,8 +91,22 @@ class ArrowConnectionDrawer @Inject constructor(
         }
     }
 
+    private fun eraseConnection(key: ConnectionStorageKey) {
+        arrows.filterKeys {
+            it.source.elementId == key.sourcePortId
+        }.forEach { (key, arrow) ->
+            arrow.delete()
+            arrows.remove(key)
+        }
+    }
+
     private fun drawConnection(configuration: PortConnectionConfiguration?) {
-        configuration?.let { MovableArrowDrawer.create(drawer = arrowDrawer, configuration = it) }
+        configuration?.let {
+            arrows.put(
+                it,
+                MovableArrowDrawer.create(drawer = arrowDrawer, configuration = it)
+            )
+        }
     }
 
     private fun onStartSearching(
