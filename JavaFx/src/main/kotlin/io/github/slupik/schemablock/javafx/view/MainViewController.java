@@ -13,6 +13,7 @@ import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetFactory;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
+import io.github.slupik.schemablock.javafx.logic.execution.BlocksColorizer;
 import io.github.slupik.schemablock.javafx.logic.heap.HeapValueFx;
 import io.github.slupik.schemablock.javafx.logic.heap.NewHeapSpy;
 import io.github.slupik.schemablock.javafx.logic.persistence.SchemaSaver;
@@ -23,6 +24,7 @@ import io.github.slupik.schemablock.logic.executor.diagram.ExecutionEvent;
 import io.github.slupik.schemablock.logic.executor.diagram.exception.NextBlockNotFound;
 import io.github.slupik.schemablock.model.ui.newparser.HeapController;
 import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.PublishSubject;
 import javafx.application.Platform;
@@ -136,13 +138,16 @@ public class MainViewController implements Initializable {
     @Inject
     HeapController heapController;
 
+    @Inject
+    BlocksColorizer blocksColorizer;
+
     private Sheet container;
     private GhostDragController ghost;
     private SchemaSaver saver;
     private SchemaLoader loader;
 
-    private Disposable executionDisposable = null;
-    private Disposable continuationTriggerDisposable = null;
+    private CompositeDisposable composite = new CompositeDisposable();
+    private Disposable continuationDispose = null;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -174,26 +179,42 @@ public class MainViewController implements Initializable {
         });
         Observable<Boolean> continuationTrigger = getContinuationTrigger();
         btnDebug.setOnAction((event) -> {
-            Observable<ExecutionEvent> observable = executor.debug(execution ->
-                    continuationTriggerDisposable = continuationTrigger.subscribe(aBoolean -> execution.invoke())
+            Observable<ExecutionEvent> observable = executor.debug(execution -> {
+                        if (continuationDispose != null) {
+                            continuationDispose.dispose();
+                        }
+                        continuationDispose = continuationTrigger.subscribe(
+                                aBoolean -> execution.invoke(),
+                                Throwable::printStackTrace
+                        );
+                    }
             );
             handleExecutionStates(observable);
         });
     }
 
     private void handleExecutionStates(Observable<ExecutionEvent> observable) {
+        memory.clear();
         setUiStateToExecuting();
-        executionDisposable = observable.subscribe(
-                executionEvent ->
-                        System.out.println("executionEvent = " + executionEvent),
+        blocksColorizer.inject(observable);
+        Disposable disp = observable.subscribe(
+                executionEvent -> {
+                    System.out.println("executionEvent = " + executionEvent);
+                },
                 throwable -> {
                     System.out.println("throwable = " + throwable);
                     if (throwable instanceof NextBlockNotFound) {
                         System.out.println("type " + ((NextBlockNotFound) throwable).getCurrentBlock());
                     }
                 },
-                this::setUiStateForEdition
+                () -> {
+                    setUiStateForEdition();
+                    if (continuationDispose != null) {
+                        continuationDispose.dispose();
+                    }
+                }
         );
+        composite.add(disp);
     }
 
     private Observable<Boolean> getContinuationTrigger() {
@@ -206,7 +227,6 @@ public class MainViewController implements Initializable {
     private void setUiStateToExecuting() {
         btnRun.setDisable(true);
         btnDebug.setDisable(true);
-        memory.clear();
     }
 
     private void setUiStateForEdition() {

@@ -8,6 +8,12 @@ import io.github.slupik.schemablock.logic.executor.block.ExecutionResult
  */
 sealed class ExecutionEvent
 
+object ExecutionStart: ExecutionEvent()
+
+data class ErrorEvent(
+    val error: Throwable
+) : ExecutionEvent()
+
 data class PreExecutionEvent(
     val executingBlock: Block
 ) : ExecutionEvent()
@@ -16,3 +22,5 @@ data class PostExecutionEvent(
     val executedBlock: Block,
     val result: ExecutionResult
 ) : ExecutionEvent()
+
+object ExecutionEnd: ExecutionEvent()

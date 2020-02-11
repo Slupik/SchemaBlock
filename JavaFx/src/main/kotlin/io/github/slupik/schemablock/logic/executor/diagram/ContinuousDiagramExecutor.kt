@@ -9,8 +9,6 @@ import javax.inject.Provider
  * All rights reserved & copyright ©
  */
 class ContinuousDiagramExecutor @Inject constructor(
-//    private val blockElementsModule: BlockElementsModule,
-//    private val executionElementsModule: ExecutionElementsModule,
     @OneTime private val executorProvider: Provider<DiagramExecutor>
 ) : DiagramExecutor {
 
@@ -24,20 +22,5 @@ class ContinuousDiagramExecutor @Inject constructor(
 
     private fun createOneTimeExecutor(): DiagramExecutor =
         executorProvider.get()
-//        DaggerExecutorComponent
-//            .builder()
-//            .addElementsModule(
-//                blockElementsModule
-//            )
-//            .addElementsModule(
-//                DiagramExecutorElementsModule(
-//                    PublishSubject.create<ExecutionEvent>()
-//                )
-//            )
-//            .addElementsModule(
-//                executionElementsModule
-//            )
-//            .build()
-//            .oneTimeExecutor
 
 }

@@ -2,14 +2,14 @@ package io.github.slupik.schemablock.javafx.dagger;
 
 import dagger.Component;
 import io.github.slupik.schemablock.javafx.view.MainViewController;
-import io.github.slupik.schemablock.logic.executor.dagger.ExecutorModel;
+import io.github.slupik.schemablock.logic.executor.dagger.ExecutorBinding;
 
 import javax.inject.Singleton;
 
 /**
  * All rights reserved & copyright ©
  */
-@Component(modules = {BlocksBindingsModule.class, GraphicElementsModule.class, BlocksProvidingModule.class, ExecutorModel.class})
+@Component(modules = {BlocksBindingsModule.class, GraphicElementsModule.class, BlocksProvidingModule.class, ExecutorBinding.class})
 @Singleton
 public interface JavaFxComponent {
 

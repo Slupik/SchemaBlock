@@ -10,7 +10,7 @@ import io.github.slupik.schemablock.logic.executor.block.BlockExecutor;
 import io.github.slupik.schemablock.logic.executor.block.StatelessBlockExecutor;
 import io.github.slupik.schemablock.logic.executor.diagram.ContinuousDiagramExecutor;
 import io.github.slupik.schemablock.logic.executor.diagram.DiagramExecutor;
-import io.github.slupik.schemablock.logic.executor.diagram.OneTimeDiagramExecutor;
+import io.github.slupik.schemablock.logic.executor.diagram.AsyncDiagramExecutor;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
 import io.github.slupik.schemablock.model.ui.newparser.HeapController;
 import io.github.slupik.schemablock.newparser.compilator.Compilator;
@@ -30,18 +30,13 @@ import javax.inject.Singleton;
 @Module(includes = {HeapControllerCallbackModule.class, ExecutionElementsModule.class})
 public abstract class ExecutorBinding {
 
-    @OneTime
-    @Binds
-    public abstract DiagramExecutor oneTimeDiagramExecutor(OneTimeDiagramExecutor executor);
-
-//    @Async
-//    @Binds
-//    public abstract DiagramExecutor asyncDiagramExecutor(AsyncDiagramExecutor executor);
-
-    @Continuous
     @Binds
     @Singleton
     public abstract DiagramExecutor continuousDiagramExecutor(ContinuousDiagramExecutor executor);
+
+    @OneTime
+    @Binds
+    public abstract DiagramExecutor oneTimeDiagramExecutor(AsyncDiagramExecutor executor);
 
     @Binds
     @Singleton

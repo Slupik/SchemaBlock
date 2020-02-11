@@ -22,6 +22,8 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.Po
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsStorage
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.SheetPortsHolder
+import io.github.slupik.schemablock.javafx.logic.execution.BlocksColorizer
+import io.github.slupik.schemablock.javafx.logic.execution.DefaultBlocksColorizer
 import javax.inject.Singleton
 
 /**
@@ -72,5 +74,9 @@ abstract class BlocksBindingsModule {
     @Binds
     @Singleton
     abstract fun provideBlocksHolder(holder: SheetBlocksHolder): BlocksHolder
+
+    @Binds
+    @Singleton
+    abstract fun provideBlocksColorizer(colorizer: DefaultBlocksColorizer): BlocksColorizer
 
 }
