@@ -7,7 +7,7 @@ import javafx.scene.Node
 /**
  * All rights reserved & copyright ©
  */
-interface Port: Element {
+interface Port : Element {
 
     val owner: Block
     val mask: Node
@@ -17,4 +17,7 @@ interface Port: Element {
     fun markAsDisabled()
 
     fun setRelativePos(percentOfWidth: Double, percentOfHeight: Double)
+    fun getRelativeX(): Double
+    fun getRelativeY(): Double
+
 }

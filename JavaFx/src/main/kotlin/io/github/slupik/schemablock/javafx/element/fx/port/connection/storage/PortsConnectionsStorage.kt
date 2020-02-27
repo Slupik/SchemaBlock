@@ -30,10 +30,7 @@ class PortsConnectionsStorage @Inject constructor(
     override fun getNextElement(sourceBlockId: String): TargetElementId? =
         getConnectionsForBlock(sourceBlockId)
             ?.filter { connection ->
-                when(connection.key) {
-                    is StandardConnectionKey -> true
-                    else -> false
-                }
+                connection.key is StandardConnectionKey
             }
             ?.values
             ?.firstOrNull()
