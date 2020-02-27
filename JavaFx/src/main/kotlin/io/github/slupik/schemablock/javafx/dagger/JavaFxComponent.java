@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 /**
  * All rights reserved & copyright ©
  */
-@Component(modules = {BlocksBindingsModule.class, GraphicElementsModule.class, BlocksProvidingModule.class, ExecutorBinding.class})
+@Component(modules = {BlocksBindingsModule.class, GraphicElementsModule.class, BlocksProvidingModule.class, ExecutorBinding.class, GsonModule.class})
 @Singleton
 public interface JavaFxComponent {
 

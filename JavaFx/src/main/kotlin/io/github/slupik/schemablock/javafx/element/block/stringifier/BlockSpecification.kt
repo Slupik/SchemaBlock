@@ -5,54 +5,30 @@ import io.github.slupik.schemablock.javafx.element.UiElementType
 /**
  * All rights reserved & copyright ©
  */
-sealed class BlockSpecification(
-    open val type: UiElementType,
-    open val id: String,
-    open val description: String,
-    open val layoutX: Double,
-    open val layoutY: Double
-)
+sealed class BlockSpecification
 
 data class CodeAwareBlockSpecification(
-    override val type: UiElementType,
-    override val id: String,
-    override val description: String,
-    override val layoutX: Double,
-    override val layoutY: Double,
+    val type: UiElementType,
+    val id: String,
+    val description: String,
+    val layoutX: Double,
+    val layoutY: Double,
     val content: String
-) : BlockSpecification(
-    type = type,
-    id = id,
-    description = description,
-    layoutX = layoutX,
-    layoutY = layoutY
-)
+) : BlockSpecification()
 
 data class IoBlockSpecification(
-    override val type: UiElementType,
-    override val id: String,
-    override val description: String,
-    override val layoutX: Double,
-    override val layoutY: Double,
+    val type: UiElementType,
+    val id: String,
+    val description: String,
+    val layoutX: Double,
+    val layoutY: Double,
     val operations: List<IoOperationSpecification>
-    ) : BlockSpecification(
-    type = type,
-    id = id,
-    description = description,
-    layoutX = layoutX,
-    layoutY = layoutY
-)
+    ) : BlockSpecification()
 
 data class FunctionalBlockSpecification(
-    override val type: UiElementType,
-    override val id: String,
-    override val description: String,
-    override val layoutX: Double,
-    override val layoutY: Double
-) : BlockSpecification(
-    type = type,
-    id = id,
-    description = description,
-    layoutX = layoutX,
-    layoutY = layoutY
-)
+    val type: UiElementType,
+    val id: String,
+    val description: String,
+    val layoutX: Double,
+    val layoutY: Double
+) : BlockSpecification()

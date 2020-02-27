@@ -2,6 +2,8 @@ package io.github.slupik.schemablock.javafx.dagger
 
 import dagger.Binds
 import dagger.Module
+import io.github.slupik.schemablock.javafx.element.block.stringifier.BlockJsonStringifier
+import io.github.slupik.schemablock.javafx.element.block.stringifier.BlockStringifier
 import io.github.slupik.schemablock.javafx.element.fx.arrow.ArrowDrawer
 import io.github.slupik.schemablock.javafx.element.fx.arrow.SimpleArrowDrawer
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder
@@ -20,8 +22,18 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.event.Port
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionProvider
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsModifier
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsStorage
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.stringifier.PortConnectionJsonStringifier
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.stringifier.PortConnectionStringifier
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.SheetPortsHolder
+import io.github.slupik.schemablock.javafx.element.fx.port.stringifier.PortJsonStringifier
+import io.github.slupik.schemablock.javafx.element.fx.port.stringifier.PortStringifier
+import io.github.slupik.schemablock.javafx.element.fx.schema.Schema
+import io.github.slupik.schemablock.javafx.element.fx.schema.VisibleSchema
+import io.github.slupik.schemablock.javafx.element.fx.schema.stringifier.SchemaJsonStringifier
+import io.github.slupik.schemablock.javafx.element.fx.schema.stringifier.SchemaStringifier
+import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet
+import io.github.slupik.schemablock.javafx.element.fx.sheet.VisibleSheet
 import io.github.slupik.schemablock.javafx.logic.execution.BlocksColorizer
 import io.github.slupik.schemablock.javafx.logic.execution.DefaultBlocksColorizer
 import javax.inject.Singleton
@@ -78,5 +90,23 @@ abstract class BlocksBindingsModule {
     @Binds
     @Singleton
     abstract fun provideBlocksColorizer(colorizer: DefaultBlocksColorizer): BlocksColorizer
+
+    @Binds
+    abstract fun providePortsStringifier(converter: PortJsonStringifier): PortStringifier
+
+    @Binds
+    abstract fun provideBlocksStringifier(converter: BlockJsonStringifier): BlockStringifier
+
+    @Binds
+    abstract fun providePortConnectionStringifier(converter: PortConnectionJsonStringifier): PortConnectionStringifier
+
+    @Binds
+    abstract fun provideSchemaStringifier(converter: SchemaJsonStringifier): SchemaStringifier
+
+    @Binds
+    abstract fun provideSchema(schema: VisibleSchema): Schema
+
+    @Binds
+    abstract fun provideSheet(sheet: VisibleSheet): Sheet
 
 }

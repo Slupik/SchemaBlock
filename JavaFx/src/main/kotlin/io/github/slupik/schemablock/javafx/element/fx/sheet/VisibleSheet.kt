@@ -2,12 +2,14 @@ package io.github.slupik.schemablock.javafx.element.fx.sheet
 
 import io.github.slupik.schemablock.javafx.element.Element
 import javafx.scene.layout.Pane
+import javax.inject.Inject
+import io.github.slupik.schemablock.javafx.dagger.Sheet as UiSheet
 
 /**
  * All rights reserved & copyright ©
  */
-class VisibleSheet constructor(
-    val container: Pane
+class VisibleSheet @Inject constructor(
+    @UiSheet val container: Pane
 ) : Sheet {
 
     private val elements = mutableListOf<Element>()
@@ -32,5 +34,8 @@ class VisibleSheet constructor(
                 elements.remove(it)
             }
     }
+
+    override fun getElements(): List<Element> =
+        elements
 
 }

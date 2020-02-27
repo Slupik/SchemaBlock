@@ -16,39 +16,43 @@ class BlockJsonStringifier @Inject constructor(
 ) : BlockStringifier {
 
     override fun stringify(block: Block): String =
-        jsonConverter.toJson(
-            when (block) {
-                is OperationsBlock, is ConditionBlock -> {
+        when (block) {
+            is OperationsBlock, is ConditionBlock -> {
+                jsonConverter.toJson(
                     CodeAwareBlockSpecification(
                         type = block.type,
                         id = block.elementId,
                         description = block.description,
-                        layoutX = block.background.layoutX,
-                        layoutY = block.background.layoutY,
+                        layoutX = block.graphic.layoutX,
+                        layoutY = block.graphic.layoutY,
                         content = getCode(block)
                     )
-                }
-                is IOBlock -> {
+                )
+            }
+            is IOBlock -> {
+                jsonConverter.toJson(
                     IoBlockSpecification(
                         type = block.type,
                         id = block.elementId,
                         description = block.description,
-                        layoutX = block.background.layoutX,
-                        layoutY = block.background.layoutY,
+                        layoutX = block.graphic.layoutX,
+                        layoutY = block.graphic.layoutY,
                         operations = getOperations(block.operations)
                     )
-                }
-                else -> {
+                )
+            }
+            else -> {
+                jsonConverter.toJson(
                     FunctionalBlockSpecification(
                         type = block.type,
                         id = block.elementId,
                         description = block.description,
-                        layoutX = block.background.layoutX,
-                        layoutY = block.background.layoutY
+                        layoutX = block.graphic.layoutX,
+                        layoutY = block.graphic.layoutY
                     )
-                }
+                )
             }
-        )
+        }
 
     private fun getCode(block: Block): String =
         when (block) {

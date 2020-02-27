@@ -9,6 +9,8 @@ import io.github.slupik.schemablock.javafx.element.fx.communication.UIIOCommunic
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder;
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.drawer.ConnectionDrawer;
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder;
+import io.github.slupik.schemablock.javafx.element.fx.schema.Schema;
+import io.github.slupik.schemablock.javafx.element.fx.schema.stringifier.SchemaStringifier;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetFactory;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
@@ -141,6 +143,12 @@ public class MainViewController implements Initializable {
     @Inject
     BlocksColorizer blocksColorizer;
 
+    @Inject
+    Schema schema;
+
+    @Inject
+    SchemaStringifier schemaStringifier;
+
     private Sheet container;
     private GhostDragController ghost;
     private SchemaSaver saver;
@@ -264,9 +272,8 @@ public class MainViewController implements Initializable {
             saver = new SchemaSaver(((Stage) mainContainer.getScene().getWindow()));
             loader = new SchemaLoader(((Stage) mainContainer.getScene().getWindow()));
             miSave.setOnAction(event -> {
-                //TODO repair
-//                String content = container.stringify();
-//                saver.save(content);
+                String output = schemaStringifier.stringify(schema);
+                saver.save(output);
             });
             miLoad.setOnAction(event -> {
                 File file = loader.getFileToLoad();

@@ -13,4 +13,6 @@ interface Sheet {
         removeElement(element.elementId)
     fun removeElement(elementId: String)
 
+    fun getElements(): List<Element>
+
 }

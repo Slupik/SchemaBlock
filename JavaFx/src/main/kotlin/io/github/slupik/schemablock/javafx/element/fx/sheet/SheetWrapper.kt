@@ -16,5 +16,8 @@ abstract class SheetWrapper constructor(
     override fun removeElement(elementId: String) {
         wrapee.removeElement(elementId)
     }
-    
+
+    override fun getElements(): List<Element> =
+        wrapee.getElements()
+
 }

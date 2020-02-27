@@ -33,4 +33,8 @@ class MockedPort constructor(
     override fun setRelativePos(percentOfWidth: Double, percentOfHeight: Double) {
     }
 
+    override fun getRelativeX(): Double = 0.0
+
+    override fun getRelativeY(): Double = 0.0
+
 }
