@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.fx.port.spawner;
+package io.github.slupik.schemablock.javafx.element.fx.port.spawner.old;
 
 import io.github.slupik.schemablock.javafx.element.block.implementation.DescribedBlockPrototype;
 

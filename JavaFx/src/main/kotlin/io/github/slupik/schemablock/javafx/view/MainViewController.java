@@ -9,6 +9,7 @@ import io.github.slupik.schemablock.javafx.element.fx.communication.UIIOCommunic
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder;
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.drawer.ConnectionDrawer;
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder;
+import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner;
 import io.github.slupik.schemablock.javafx.element.fx.schema.Schema;
 import io.github.slupik.schemablock.javafx.element.fx.schema.restorer.SchemaRestorer;
 import io.github.slupik.schemablock.javafx.element.fx.schema.stringifier.SchemaStringifier;
@@ -155,6 +156,9 @@ public class MainViewController implements Initializable {
     @Inject
     Sheet container;
 
+    @Inject
+    PortSpawner portSpawner;
+
     private GhostDragController ghost;
     private SchemaSaver saver;
     private SchemaLoader loader;
@@ -248,7 +252,7 @@ public class MainViewController implements Initializable {
     }
 
     private void setupDragging() {
-        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(), container);
+        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(), container, portSpawner);
 
         addIconsToMenu();
     }

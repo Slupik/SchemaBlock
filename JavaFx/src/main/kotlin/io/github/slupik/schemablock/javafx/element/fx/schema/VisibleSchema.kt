@@ -10,6 +10,7 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.Ta
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortAccessibility
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
+import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner
 import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet
 import javax.inject.Inject
 
@@ -20,7 +21,8 @@ class VisibleSchema @Inject constructor(
     private val sheet: Sheet,
     private val blocksHolder: BlocksHolder,
     private val portsHolder: PortsHolder,
-    private val portsConnectionProvider: PortsConnectionProvider
+    private val portsConnectionProvider: PortsConnectionProvider,
+    private val portSpawner: PortSpawner
 ): Schema {
 
     override fun getElements(): List<Element> =
@@ -37,6 +39,7 @@ class VisibleSchema @Inject constructor(
 
     override fun addBlock(block: Block) {
         sheet.addElement(block)
+        portSpawner.spawnFor(block)
     }
 
     override fun addPort(port: Port) {

@@ -16,20 +16,14 @@ class ElementsSyncingSheet @Inject constructor(
     override fun addElement(element: Element) {
         super.addElement(element)
         if(element is Block) {
-            println("ADD: IT'S A BLOCK: $element")
             blocksHolder.addBlock(element)
-        } else {
-            println("ADD: IT'S NOT A BLOCK: $element")
         }
     }
 
     override fun removeElement(element: Element) {
         super.addElement(element)
         if(element is Block) {
-            println("REMOVE: IT'S A BLOCK: $element")
             blocksHolder.deleteBlock(element)
-        } else {
-            println("REMOVE: IT'S NOT A BLOCK: $element")
         }
     }
 

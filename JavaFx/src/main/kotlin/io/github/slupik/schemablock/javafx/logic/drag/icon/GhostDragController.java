@@ -1,6 +1,8 @@
 package io.github.slupik.schemablock.javafx.logic.drag.icon;
 
 import io.github.slupik.schemablock.javafx.element.Element;
+import io.github.slupik.schemablock.javafx.element.block.Block;
+import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet;
 import io.github.slupik.schemablock.javafx.logic.drag.DragControllerBase;
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState;
@@ -20,6 +22,7 @@ public class GhostDragController extends DragControllerBase<DragGhostIcon> {
     private final GhostDragElementFactory factory;
 
     private DragGhostIcon mDragOverIcon;
+    private final PortSpawner portSpawner;
     private final Sheet sheet;
 //    private final DestContainerAfterDrop container;
 
@@ -27,11 +30,12 @@ public class GhostDragController extends DragControllerBase<DragGhostIcon> {
     private EventHandler<DragEvent> mIconDragDropped = null;
     private EventHandler<DragEvent> mIconDragOverRightPane = null;
 
-    public GhostDragController(Pane draggableArea, Pane placeForElement, GhostDragElementFactory factory, Sheet sheet) {
+    public GhostDragController(Pane draggableArea, Pane placeForElement, GhostDragElementFactory factory, Sheet sheet, PortSpawner portSpawner) {
         this.draggableArea = draggableArea;
         this.placeForElement = placeForElement;
         this.factory = factory;
         this.sheet = sheet;
+        this.portSpawner = portSpawner;
 //        this.container = container;
 
         mDragOverIcon = factory.getDragIcon();
@@ -139,6 +143,9 @@ public class GhostDragController extends DragControllerBase<DragGhostIcon> {
 
                     Element droppedElement = factory.getNode(container);
                     this.sheet.addElement(droppedElement);
+                    if(droppedElement instanceof Block) {
+                        portSpawner.spawnFor(((Block) droppedElement));
+                    }
 
                     Point2D cursorPoint = container.getValue("scene_coords");
 
