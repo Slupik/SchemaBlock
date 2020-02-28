@@ -2,6 +2,8 @@ package io.github.slupik.schemablock.javafx.dagger
 
 import dagger.Binds
 import dagger.Module
+import io.github.slupik.schemablock.javafx.element.block.restorer.BlockJsonRestorer
+import io.github.slupik.schemablock.javafx.element.block.restorer.BlockRestorer
 import io.github.slupik.schemablock.javafx.element.block.stringifier.BlockJsonStringifier
 import io.github.slupik.schemablock.javafx.element.block.stringifier.BlockStringifier
 import io.github.slupik.schemablock.javafx.element.fx.arrow.ArrowDrawer
@@ -30,10 +32,10 @@ import io.github.slupik.schemablock.javafx.element.fx.port.stringifier.PortJsonS
 import io.github.slupik.schemablock.javafx.element.fx.port.stringifier.PortStringifier
 import io.github.slupik.schemablock.javafx.element.fx.schema.Schema
 import io.github.slupik.schemablock.javafx.element.fx.schema.VisibleSchema
+import io.github.slupik.schemablock.javafx.element.fx.schema.restorer.SchemaJsonRestorer
+import io.github.slupik.schemablock.javafx.element.fx.schema.restorer.SchemaRestorer
 import io.github.slupik.schemablock.javafx.element.fx.schema.stringifier.SchemaJsonStringifier
 import io.github.slupik.schemablock.javafx.element.fx.schema.stringifier.SchemaStringifier
-import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet
-import io.github.slupik.schemablock.javafx.element.fx.sheet.VisibleSheet
 import io.github.slupik.schemablock.javafx.logic.execution.BlocksColorizer
 import io.github.slupik.schemablock.javafx.logic.execution.DefaultBlocksColorizer
 import javax.inject.Singleton
@@ -107,6 +109,9 @@ abstract class BlocksBindingsModule {
     abstract fun provideSchema(schema: VisibleSchema): Schema
 
     @Binds
-    abstract fun provideSheet(sheet: VisibleSheet): Sheet
+    abstract fun provideSchemaRestorer(restorer: SchemaJsonRestorer): SchemaRestorer
+
+    @Binds
+    abstract fun provideBlockRestorer(restorer: BlockJsonRestorer): BlockRestorer
 
 }

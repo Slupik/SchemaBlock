@@ -10,9 +10,9 @@ import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolde
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.drawer.ConnectionDrawer;
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder;
 import io.github.slupik.schemablock.javafx.element.fx.schema.Schema;
+import io.github.slupik.schemablock.javafx.element.fx.schema.restorer.SchemaRestorer;
 import io.github.slupik.schemablock.javafx.element.fx.schema.stringifier.SchemaStringifier;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet;
-import io.github.slupik.schemablock.javafx.element.fx.sheet.SheetFactory;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
 import io.github.slupik.schemablock.javafx.logic.execution.BlocksColorizer;
@@ -149,7 +149,12 @@ public class MainViewController implements Initializable {
     @Inject
     SchemaStringifier schemaStringifier;
 
-    private Sheet container;
+    @Inject
+    SchemaRestorer schemaRestorer;
+
+    @Inject
+    Sheet container;
+
     private GhostDragController ghost;
     private SchemaSaver saver;
     private SchemaLoader loader;
@@ -243,7 +248,6 @@ public class MainViewController implements Initializable {
     }
 
     private void setupDragging() {
-        container = SheetFactory.INSTANCE.make(holder, blocksHolder, sheet);
         ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(), container);
 
         addIconsToMenu();
@@ -278,9 +282,8 @@ public class MainViewController implements Initializable {
             miLoad.setOnAction(event -> {
                 File file = loader.getFileToLoad();
                 if (file != null) {
-                    //TODO repair
-//                    loader.loadFile(container, file);
-//                    saver.setDestFile(file);
+                    loader.loadFile(schema, schemaRestorer, file);
+                    saver.setDestFile(file);
                 }
             });
         });

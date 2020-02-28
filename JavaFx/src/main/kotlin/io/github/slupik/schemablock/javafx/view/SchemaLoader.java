@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.javafx.view;
 
-import io.github.slupik.schemablock.javafx.element.fx.sheet.old.SheetWithElements;
+import io.github.slupik.schemablock.javafx.element.fx.schema.Schema;
+import io.github.slupik.schemablock.javafx.element.fx.schema.restorer.SchemaRestorer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -31,9 +32,10 @@ public class SchemaLoader {
         return fileChooser.showOpenDialog(stage);
     }
 
-    public void loadFile(SheetWithElements sheet, File file) {
+    //TODO this function doesn't need so many parameters
+    public void loadFile(Schema schema, SchemaRestorer sheet, File file) {
         String content = getContent(file);
-        sheet.restore(content);
+        sheet.load(schema, content);
     }
 
     private String getContent(File file) {

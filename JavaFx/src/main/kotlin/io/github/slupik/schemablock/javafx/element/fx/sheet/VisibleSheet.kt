@@ -3,7 +3,7 @@ package io.github.slupik.schemablock.javafx.element.fx.sheet
 import io.github.slupik.schemablock.javafx.element.Element
 import javafx.scene.layout.Pane
 import javax.inject.Inject
-import io.github.slupik.schemablock.javafx.dagger.Sheet as UiSheet
+import io.github.slupik.schemablock.javafx.dagger.JavaFxSheet as UiSheet
 
 /**
  * All rights reserved & copyright ©

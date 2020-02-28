@@ -23,7 +23,7 @@ data class IoBlockSpecification(
     val layoutX: Double,
     val layoutY: Double,
     val operations: List<IoOperationSpecification>
-    ) : BlockSpecification()
+) : BlockSpecification()
 
 data class FunctionalBlockSpecification(
     val type: UiElementType,

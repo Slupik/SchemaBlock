@@ -7,7 +7,7 @@ import javax.inject.Qualifier
  */
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class Sheet
+annotation class JavaFxSheet
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)

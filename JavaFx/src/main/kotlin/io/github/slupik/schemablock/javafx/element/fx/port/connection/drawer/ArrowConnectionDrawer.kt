@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.connection.drawer
 
-import io.github.slupik.schemablock.javafx.dagger.Sheet
+import io.github.slupik.schemablock.javafx.dagger.JavaFxSheet
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Arrow
 import io.github.slupik.schemablock.javafx.element.fx.arrow.ArrowDrawer
 import io.github.slupik.schemablock.javafx.element.fx.arrow.Point
@@ -28,7 +28,7 @@ class ArrowConnectionDrawer @Inject constructor(
     private val deleter: ConnectionDeleter,
     private val arrowDrawer: ArrowDrawer,
     private val observableConnectionEvents: ConnectionEventsObservable,
-    @Sheet private val container: Pane
+    @JavaFxSheet private val container: Pane
 ) : ConnectionDrawer {
 
     private val arrows = hashMapOf<PortConnectionConfiguration, Arrow>()

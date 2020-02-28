@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.connection.event
 
-import io.github.slupik.schemablock.javafx.dagger.Sheet
+import io.github.slupik.schemablock.javafx.dagger.JavaFxSheet
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
 import io.reactivex.Observable
@@ -14,7 +14,7 @@ import javax.inject.Inject
  * All rights reserved & copyright ©
  */
 class PortConnectionEventsObservable @Inject constructor(
-    @Sheet private val sheet: Pane,
+    @JavaFxSheet private val sheet: Pane,
     private val holder: PortsHolder
 ) : ConnectionEventsObservable {
 

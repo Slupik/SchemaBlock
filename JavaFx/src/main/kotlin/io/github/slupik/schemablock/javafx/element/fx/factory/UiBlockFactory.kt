@@ -14,8 +14,16 @@ import io.github.slupik.schemablock.javafx.logic.drag.node.ElementDragController
 
 object UiBlockFactory {
 
+    /*
+        This function must exists (default arguments cannot be used) because of java compatibility
+     */
     fun createUsableBlock(type: UiElementType): DescribedBlockPrototype {
-        val element = createIcon(type)
+        return createUsableBlock(type, null)
+    }
+
+    fun createUsableBlock(type: UiElementType, id: String?): DescribedBlockPrototype {
+        val element = createBase(type, id)
+        element.setElementSize(50.0, 31.0)
         element.makeDraggable()
         return element
     }
@@ -26,13 +34,23 @@ object UiBlockFactory {
         return element
     }
 
-    private fun createBase(type: UiElementType): DescribedBlockPrototype {
-        val element: DescribedBlockPrototype = when (type) {
-            UiElementType.CALCULATION -> OperationsUiBlock()
-            UiElementType.IF -> ConditionalUiBlock()
-            UiElementType.START -> StartUiBlock()
-            UiElementType.STOP -> StopUiBlock()
-            UiElementType.IO -> IoUiBlock()
+    private fun createBase(type: UiElementType, id: String? = null): DescribedBlockPrototype {
+        val element: DescribedBlockPrototype = if(null == id) {
+            when (type) {
+                UiElementType.CALCULATION -> OperationsUiBlock()
+                UiElementType.IF -> ConditionalUiBlock()
+                UiElementType.START -> StartUiBlock()
+                UiElementType.STOP -> StopUiBlock()
+                UiElementType.IO -> IoUiBlock()
+            }
+        } else {
+            when (type) {
+                UiElementType.CALCULATION -> OperationsUiBlock(id)
+                UiElementType.IF -> ConditionalUiBlock(id)
+                UiElementType.START -> StartUiBlock(id)
+                UiElementType.STOP -> StopUiBlock(id)
+                UiElementType.IO -> IoUiBlock(id)
+            }
         }
         element.setup()
         BlockEditionFeature(element)

@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.arrow
 
-import io.github.slupik.schemablock.javafx.dagger.Sheet
+import io.github.slupik.schemablock.javafx.dagger.JavaFxSheet
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.subscribeBy
 import javafx.scene.layout.Pane
@@ -10,7 +10,7 @@ import javax.inject.Inject
  * All rights reserved & copyright ©
  */
 class SimpleArrowDrawer @Inject constructor(
-    @Sheet private val sheet: Pane
+    @JavaFxSheet private val sheet: Pane
 ): ArrowDrawer {
 
     override fun drawMovableArrow(observableCoords: Observable<Pair<Point, Point>>, desc: String): Arrow {
