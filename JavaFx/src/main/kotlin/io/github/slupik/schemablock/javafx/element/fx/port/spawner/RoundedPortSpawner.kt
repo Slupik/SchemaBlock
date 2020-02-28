@@ -1,6 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.spawner
 
-import io.github.slupik.schemablock.javafx.dagger.JavaFxSheet
+import io.github.slupik.schemablock.javafx.dagger.LogicalSheet
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.block.Block
 import io.github.slupik.schemablock.javafx.element.block.port.PortInfoProvider
@@ -9,14 +9,14 @@ import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.github.slupik.schemablock.javafx.element.fx.port.element.RoundedPort
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortAccessibility
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
-import javafx.scene.layout.Pane
+import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet
 import javax.inject.Inject
 
 /**
  * All rights reserved & copyright ©
  */
 class RoundedPortSpawner @Inject constructor(
-    @JavaFxSheet private val container: Pane,
+    @LogicalSheet private val sheet: Sheet,
     private val holder: PortsHolder
 ) : PortSpawner {
 
@@ -36,7 +36,7 @@ class RoundedPortSpawner @Inject constructor(
             accessibility
         )
         port.setRelativePos(info.percentOfWidth, info.percentOfHeight)
-        container.children.add(port.graphic)
+        sheet.addElement(port)
         return port
     }
 

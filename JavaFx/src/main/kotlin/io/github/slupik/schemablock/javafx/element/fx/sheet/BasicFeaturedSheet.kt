@@ -3,16 +3,16 @@ package io.github.slupik.schemablock.javafx.element.fx.sheet
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.block.implementation.StartUiBlock
 import io.github.slupik.schemablock.javafx.element.fx.factory.UiBlockFactory
-import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner
 import javafx.application.Platform
 import javafx.scene.layout.Pane
 
 /**
  * All rights reserved & copyright ©
  */
+//TODO spawn blocks not on sheet
 class BasicFeaturedSheet constructor(
         private val container: Pane,
-        portSpawner: PortSpawner,
+//        portSpawner: PortSpawner,
         wrapee: Sheet
 ): SheetWrapper(wrapee), Sheet {
 
@@ -21,7 +21,7 @@ class BasicFeaturedSheet constructor(
         addElement(startBlock)
         Platform.runLater{
             setupStartBlock(startBlock)
-            portSpawner.spawnFor(startBlock)
+//            portSpawner.spawnFor(startBlock)
         }
     }
 

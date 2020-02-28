@@ -4,7 +4,6 @@ import dagger.Module;
 import dagger.Provides;
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder;
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.SheetPortsHolder;
-import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.BasicFeaturedSheet;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.ElementsSyncingSheet;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet;
@@ -28,10 +27,9 @@ public class BlocksProvidingModule {
     @Provides
     @LogicalSheet
     @Singleton
-    Sheet provideSheet(BlocksHolder blocksHolder, PortSpawner portSpawner, @JavaFxSheet Pane elementsContainer) {
+    Sheet provideSheet(BlocksHolder blocksHolder, @JavaFxSheet Pane elementsContainer) {
         return new BasicFeaturedSheet(
                 elementsContainer,
-                portSpawner,
                 new ElementsSyncingSheet(
                         new VisibleSheet(elementsContainer),
                         blocksHolder

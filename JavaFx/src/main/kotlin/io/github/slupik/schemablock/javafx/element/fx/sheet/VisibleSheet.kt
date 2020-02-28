@@ -22,8 +22,10 @@ class VisibleSheet @Inject constructor(
     override fun removeElement(elementId: String) {
         container
             .children
-            .filter {
-                it is Element && it.elementId == elementId
+            .filter { child ->
+                elements.firstOrNull {
+                    it.elementId == elementId && it.graphic == child
+                } != null
             }.forEach {
                 container.children.remove(it)
             }

@@ -52,6 +52,10 @@ class VisibleSchema @Inject constructor(
         blocksHolder.blocks.copy().forEach {
             sheet.removeElement(it)
         }
+        portsHolder.ports.keys.toList().copy().forEach {
+            portsHolder.deletePort(it)
+            sheet.removeElement(it)
+        }
     }
 
 }
