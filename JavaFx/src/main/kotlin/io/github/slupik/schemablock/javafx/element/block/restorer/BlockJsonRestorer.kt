@@ -29,7 +29,6 @@ class BlockJsonRestorer @Inject constructor(
             val block = createBlock(specification)
             schema.addBlock(block)
             setupPosition(block, specification)
-            portSpawner.spawnFor(block)
         }
     }
 

@@ -28,6 +28,8 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.stringifie
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.stringifier.PortConnectionStringifier
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.SheetPortsHolder
+import io.github.slupik.schemablock.javafx.element.fx.port.restorer.PortJsonRestorer
+import io.github.slupik.schemablock.javafx.element.fx.port.restorer.PortRestorer
 import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner
 import io.github.slupik.schemablock.javafx.element.fx.port.spawner.RoundedPortSpawner
 import io.github.slupik.schemablock.javafx.element.fx.port.stringifier.PortJsonStringifier
@@ -118,5 +120,8 @@ abstract class BlocksBindingsModule {
 
     @Binds
     abstract fun providePortSpawner(restorer: RoundedPortSpawner): PortSpawner
+
+    @Binds
+    abstract fun providePortRestorer(restorer: PortJsonRestorer): PortRestorer
 
 }

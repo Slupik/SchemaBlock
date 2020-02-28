@@ -41,7 +41,7 @@ class VisibleSchema @Inject constructor(
     }
 
     override fun addPort(port: Port) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        sheet.addElement(port)
     }
 
     override fun establishConnection(configuration: PortConnectionConfiguration) {

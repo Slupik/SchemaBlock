@@ -6,9 +6,9 @@ import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortAccessibil
  * All rights reserved & copyright ©
  */
 data class PortSpecification(
-    private val elementId: String,
-    private val ownerId: String,
-    private val accessibility: PortAccessibility,
-    private val relativeX: Double,
-    private val relativeY: Double
+    val elementId: String,
+    val ownerId: String,
+    val accessibility: PortAccessibility,
+    val relativeX: Double,
+    val relativeY: Double
 )
