@@ -40,6 +40,8 @@ import io.github.slupik.schemablock.javafx.element.fx.schema.restorer.SchemaJson
 import io.github.slupik.schemablock.javafx.element.fx.schema.restorer.SchemaRestorer
 import io.github.slupik.schemablock.javafx.element.fx.schema.stringifier.SchemaJsonStringifier
 import io.github.slupik.schemablock.javafx.element.fx.schema.stringifier.SchemaStringifier
+import io.github.slupik.schemablock.javafx.element.fx.sheet.spawner.ElementsSpawner
+import io.github.slupik.schemablock.javafx.element.fx.sheet.spawner.StartElementSpawner
 import io.github.slupik.schemablock.javafx.logic.execution.BlocksColorizer
 import io.github.slupik.schemablock.javafx.logic.execution.DefaultBlocksColorizer
 import javax.inject.Singleton
@@ -123,5 +125,8 @@ abstract class BlocksBindingsModule {
 
     @Binds
     abstract fun providePortRestorer(restorer: PortJsonRestorer): PortRestorer
+
+    @Binds
+    abstract fun provideElementsSpawner(restorer: StartElementSpawner): ElementsSpawner
 
 }

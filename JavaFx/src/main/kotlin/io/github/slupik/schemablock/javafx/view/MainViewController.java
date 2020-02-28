@@ -11,6 +11,7 @@ import io.github.slupik.schemablock.javafx.element.fx.schema.Schema;
 import io.github.slupik.schemablock.javafx.element.fx.schema.restorer.SchemaRestorer;
 import io.github.slupik.schemablock.javafx.element.fx.schema.stringifier.SchemaStringifier;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet;
+import io.github.slupik.schemablock.javafx.element.fx.sheet.spawner.ElementsSpawner;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.DragGhostIcon;
 import io.github.slupik.schemablock.javafx.logic.drag.icon.GhostDragController;
 import io.github.slupik.schemablock.javafx.logic.execution.BlocksColorizer;
@@ -157,6 +158,9 @@ public class MainViewController implements Initializable {
     @Inject
     PortSpawner portSpawner;
 
+    @Inject
+    ElementsSpawner elementsSpawner;
+
     private GhostDragController ghost;
     private SchemaSaver saver;
     private SchemaLoader loader;
@@ -206,6 +210,7 @@ public class MainViewController implements Initializable {
             );
             handleExecutionStates(observable);
         });
+        elementsSpawner.spawn();
     }
 
     private void handleExecutionStates(Observable<ExecutionEvent> observable) {

@@ -1,27 +1,31 @@
-package io.github.slupik.schemablock.javafx.element.fx.sheet
+package io.github.slupik.schemablock.javafx.element.fx.sheet.spawner
 
+import io.github.slupik.schemablock.javafx.dagger.JavaFxSheet
+import io.github.slupik.schemablock.javafx.dagger.LogicalSheet
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.block.implementation.StartUiBlock
 import io.github.slupik.schemablock.javafx.element.fx.factory.UiBlockFactory
+import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner
+import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet
 import javafx.application.Platform
 import javafx.scene.layout.Pane
+import javax.inject.Inject
 
 /**
  * All rights reserved & copyright ©
  */
-//TODO spawn blocks not on sheet
-class BasicFeaturedSheet constructor(
-        private val container: Pane,
-//        portSpawner: PortSpawner,
-        wrapee: Sheet
-): SheetWrapper(wrapee), Sheet {
+class StartElementSpawner @Inject constructor(
+    @LogicalSheet private val sheet: Sheet,
+    @JavaFxSheet private val container: Pane,
+    private val portSpawner: PortSpawner
+) : ElementsSpawner {
 
-    init {
+    override fun spawn() {
         val startBlock = createStartElement()
-        addElement(startBlock)
-        Platform.runLater{
+        sheet.addElement(startBlock)
+        Platform.runLater {
             setupStartBlock(startBlock)
-//            portSpawner.spawnFor(startBlock)
+            portSpawner.spawnFor(startBlock)
         }
     }
 
@@ -38,6 +42,6 @@ class BasicFeaturedSheet constructor(
     }
 
     private fun createStartElement(): StartUiBlock =
-            UiBlockFactory.createUsableBlock(UiElementType.START) as StartUiBlock
+        UiBlockFactory.createUsableBlock(UiElementType.START) as StartUiBlock
 
 }
