@@ -23,15 +23,21 @@ class SchemaJsonRestorer @Inject constructor(
 
         schema.clearAll()
 
-        val blocksAsStrings =
         specification.blocks
             .convertToStringList(jsonConverter)
-        blockRestorer.restore(schema, blocksAsStrings)
+            .restoreBlocks(blockRestorer, schema)
 
 //        val stringifiedPorts: List<String> = jsonConverter.fromJson(specification.ports, listType)
 //        val stringifiedConnections: List<String> = jsonConverter.fromJson(specification.connections, listType)
     }
 
+}
+
+private fun List<String>.restoreBlocks(
+    blockRestorer: BlockRestorer,
+    schema: Schema
+) {
+    blockRestorer.restore(schema, this)
 }
 
 private fun String.convertToStringList(jsonConverter: Gson): List<String> {

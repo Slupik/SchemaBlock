@@ -10,6 +10,7 @@ import io.github.slupik.schemablock.javafx.element.block.stringifier.CodeAwareBl
 import io.github.slupik.schemablock.javafx.element.block.stringifier.FunctionalBlockSpecification
 import io.github.slupik.schemablock.javafx.element.block.stringifier.IoBlockSpecification
 import io.github.slupik.schemablock.javafx.element.fx.factory.UiBlockFactory
+import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner
 import io.github.slupik.schemablock.javafx.element.fx.schema.Schema
 import io.github.slupik.schemablock.javafx.element.fx.schema.restorer.BlockTypeContainer
 import javax.inject.Inject
@@ -18,7 +19,8 @@ import javax.inject.Inject
  * All rights reserved & copyright ©
  */
 class BlockJsonRestorer @Inject constructor(
-    private val jsonConverter: Gson
+    private val jsonConverter: Gson,
+    private val portSpawner: PortSpawner
 ) : BlockRestorer {
 
     override fun restore(schema: Schema, blocksToRestore: List<String>) {
@@ -27,7 +29,7 @@ class BlockJsonRestorer @Inject constructor(
             val block = createBlock(specification)
             schema.addBlock(block)
             setupPosition(block, specification)
-            println(block)
+            portSpawner.spawnFor(block)
         }
     }
 

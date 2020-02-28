@@ -21,9 +21,18 @@ class ElementsSyncingSheet @Inject constructor(
     }
 
     override fun removeElement(element: Element) {
-        super.addElement(element)
+        super<SheetWrapper>.removeElement(element)
         if(element is Block) {
             blocksHolder.deleteBlock(element)
+        }
+    }
+
+    override fun removeElement(elementId: String) {
+        super<SheetWrapper>.removeElement(elementId)
+        blocksHolder.blocks.filter {
+            it.elementId == elementId
+        }.forEach {
+            blocksHolder.deleteBlock(it)
         }
     }
 

@@ -1,9 +1,6 @@
 package io.github.slupik.schemablock.javafx.view;
 
-import io.github.slupik.schemablock.javafx.dagger.DaggerJavaFxComponent;
-import io.github.slupik.schemablock.javafx.dagger.ExecutionElementsModule;
-import io.github.slupik.schemablock.javafx.dagger.GraphicElementsModule;
-import io.github.slupik.schemablock.javafx.dagger.HeapControllerCallbackModule;
+import io.github.slupik.schemablock.javafx.dagger.*;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.communication.UIIOCommunicator;
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder;
@@ -154,6 +151,7 @@ public class MainViewController implements Initializable {
     SchemaRestorer schemaRestorer;
 
     @Inject
+    @LogicalSheet
     Sheet container;
 
     @Inject

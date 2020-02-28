@@ -12,3 +12,7 @@ annotation class JavaFxSheet
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class HeapSpy
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class LogicalSheet

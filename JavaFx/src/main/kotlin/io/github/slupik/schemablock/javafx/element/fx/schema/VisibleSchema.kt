@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.schema
 
+import io.github.slupik.schemablock.javafx.dagger.LogicalSheet
 import io.github.slupik.schemablock.javafx.element.Element
 import io.github.slupik.schemablock.javafx.element.block.Block
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder
@@ -10,7 +11,6 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.Ta
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortAccessibility
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
-import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner
 import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet
 import javax.inject.Inject
 
@@ -18,11 +18,10 @@ import javax.inject.Inject
  * All rights reserved & copyright ©
  */
 class VisibleSchema @Inject constructor(
-    private val sheet: Sheet,
+    @LogicalSheet private val sheet: Sheet,
     private val blocksHolder: BlocksHolder,
     private val portsHolder: PortsHolder,
-    private val portsConnectionProvider: PortsConnectionProvider,
-    private val portSpawner: PortSpawner
+    private val portsConnectionProvider: PortsConnectionProvider
 ): Schema {
 
     override fun getElements(): List<Element> =
@@ -39,7 +38,6 @@ class VisibleSchema @Inject constructor(
 
     override fun addBlock(block: Block) {
         sheet.addElement(block)
-        portSpawner.spawnFor(block)
     }
 
     override fun addPort(port: Port) {
