@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.javafx.element.fx.sheet.old;
+package io.github.slupik.schemablock.javafx.element.fx.sheet;
 
 import io.github.slupik.schemablock.model.ui.error.AlgorithmErrorType;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
