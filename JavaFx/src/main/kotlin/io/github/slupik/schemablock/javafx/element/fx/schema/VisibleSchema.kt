@@ -5,6 +5,7 @@ import io.github.slupik.schemablock.javafx.element.Element
 import io.github.slupik.schemablock.javafx.element.block.Block
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.PortConnectionConfiguration
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.establishment.ConnectionEstablisher
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConnectionStorageKey
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionProvider
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.TargetPort
@@ -21,7 +22,8 @@ class VisibleSchema @Inject constructor(
     @LogicalSheet private val sheet: Sheet,
     private val blocksHolder: BlocksHolder,
     private val portsHolder: PortsHolder,
-    private val portsConnectionProvider: PortsConnectionProvider
+    private val portsConnectionProvider: PortsConnectionProvider,
+    private val connectionEstablisher: ConnectionEstablisher
 ): Schema {
 
     override fun getElements(): List<Element> =
@@ -45,7 +47,7 @@ class VisibleSchema @Inject constructor(
     }
 
     override fun establishConnection(configuration: PortConnectionConfiguration) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        connectionEstablisher.establishConnection(configuration)
     }
 
     override fun clearAll() {

@@ -6,12 +6,14 @@ package io.github.slupik.schemablock.javafx.element.fx.port.connection.stringifi
 sealed class ConnectionSpecification
 
 data class StandardConnectionSpecification(
-    private val sourcePortId: String,
-    private val targetPortId: String
+    val type: Int = 0,
+    val sourcePortId: String,
+    val targetPortId: String
 ) : ConnectionSpecification()
 
 data class ConditionalConnectionSpecification(
-    private val sourcePortId: String,
-    private val targetPortId: String,
-    private val condition: Boolean
+    val type: Int = 1,
+    val sourcePortId: String,
+    val targetPortId: String,
+    val condition: Boolean
 ) : ConnectionSpecification()

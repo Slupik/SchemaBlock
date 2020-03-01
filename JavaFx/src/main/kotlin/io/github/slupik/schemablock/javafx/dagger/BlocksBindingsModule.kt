@@ -21,6 +21,8 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.establishm
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.establishment.DeletingConnectionEstablisher
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.event.ConnectionEventsObservable
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.event.PortConnectionEventsObservable
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.restorer.ConnectionsJsonRestorer
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.restorer.ConnectionsRestorer
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionProvider
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsModifier
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsStorage
@@ -127,6 +129,9 @@ abstract class BlocksBindingsModule {
     abstract fun providePortRestorer(restorer: PortJsonRestorer): PortRestorer
 
     @Binds
-    abstract fun provideElementsSpawner(restorer: StartElementSpawner): ElementsSpawner
+    abstract fun provideElementsSpawner(spawner: StartElementSpawner): ElementsSpawner
+
+    @Binds
+    abstract fun provideConnectionsRestorer(restorer: ConnectionsJsonRestorer): ConnectionsRestorer
 
 }

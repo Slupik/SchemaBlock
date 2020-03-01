@@ -10,26 +10,23 @@ import io.github.slupik.schemablock.javafx.element.block.stringifier.CodeAwareBl
 import io.github.slupik.schemablock.javafx.element.block.stringifier.FunctionalBlockSpecification
 import io.github.slupik.schemablock.javafx.element.block.stringifier.IoBlockSpecification
 import io.github.slupik.schemablock.javafx.element.fx.factory.UiBlockFactory
-import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner
 import io.github.slupik.schemablock.javafx.element.fx.schema.Schema
-import io.github.slupik.schemablock.javafx.element.fx.schema.restorer.BlockTypeContainer
 import javax.inject.Inject
 
 /**
  * All rights reserved & copyright ©
  */
 class BlockJsonRestorer @Inject constructor(
-    private val jsonConverter: Gson,
-    private val portSpawner: PortSpawner
+    private val jsonConverter: Gson
 ) : BlockRestorer {
 
     override fun restore(schema: Schema, blocksToRestore: List<String>) {
-        val specifications = blocksToRestore.convertToSpecification(jsonConverter)
-        specifications.forEach { specification ->
-            val block = createBlock(specification)
-            schema.addBlock(block)
-            setupPosition(block, specification)
-        }
+        blocksToRestore.convertToSpecification(jsonConverter)
+            .forEach { specification ->
+                val block = createBlock(specification)
+                schema.addBlock(block)
+                setupPosition(block, specification)
+            }
     }
 
     private fun setupPosition(block: Block, specification: BlockSpecification) {
@@ -130,3 +127,7 @@ private fun List<String>.convertToSpecification(jsonConverter: Gson): List<Block
         }
     }
 }
+
+private data class BlockTypeContainer(
+    val type: UiElementType
+)
