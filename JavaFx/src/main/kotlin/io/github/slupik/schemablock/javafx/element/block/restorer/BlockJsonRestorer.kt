@@ -17,7 +17,8 @@ import javax.inject.Inject
  * All rights reserved & copyright ©
  */
 class BlockJsonRestorer @Inject constructor(
-    private val jsonConverter: Gson
+    private val jsonConverter: Gson,
+    private val factory: UiBlockFactory
 ) : BlockRestorer {
 
     override fun restore(schema: Schema, blocksToRestore: List<String>) {
@@ -84,27 +85,27 @@ class BlockJsonRestorer @Inject constructor(
         }
 
     private fun createConditionalBlock(specification: CodeAwareBlockSpecification): ConditionalUiBlock =
-        (UiBlockFactory.createUsableBlock(specification.type, specification.id) as ConditionalUiBlock)
+        (factory.createUsableBlock(specification.type, specification.id) as ConditionalUiBlock)
             .apply {
                 description = specification.description
                 code = specification.content
             }
 
     private fun createOperationsBlock(specification: CodeAwareBlockSpecification): OperationsUiBlock =
-        (UiBlockFactory.createUsableBlock(specification.type, specification.id) as OperationsUiBlock)
+        (factory.createUsableBlock(specification.type, specification.id) as OperationsUiBlock)
             .apply {
                 description = specification.description
                 code = specification.content
             }
 
     private fun createStopBlock(specification: FunctionalBlockSpecification): StopUiBlock =
-        (UiBlockFactory.createUsableBlock(specification.type, specification.id) as StopUiBlock)
+        (factory.createUsableBlock(specification.type, specification.id) as StopUiBlock)
             .apply {
                 description = specification.description
             }
 
     private fun createStartBlock(specification: FunctionalBlockSpecification): StartUiBlock =
-        (UiBlockFactory.createUsableBlock(specification.type, specification.id) as StartUiBlock)
+        (factory.createUsableBlock(specification.type, specification.id) as StartUiBlock)
             .apply {
                 description = specification.description
             }

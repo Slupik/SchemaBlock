@@ -17,7 +17,8 @@ import javax.inject.Inject
 class StartElementSpawner @Inject constructor(
     @LogicalSheet private val sheet: Sheet,
     @JavaFxSheet private val container: Pane,
-    private val portSpawner: PortSpawner
+    private val portSpawner: PortSpawner,
+    private val factory: UiBlockFactory
 ) : ElementsSpawner {
 
     override fun spawn() {
@@ -42,6 +43,6 @@ class StartElementSpawner @Inject constructor(
     }
 
     private fun createStartElement(): StartUiBlock =
-        UiBlockFactory.createUsableBlock(UiElementType.START) as StartUiBlock
+        factory.createUsableBlock(UiElementType.START) as StartUiBlock
 
 }

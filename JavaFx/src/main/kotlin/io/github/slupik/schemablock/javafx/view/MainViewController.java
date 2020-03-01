@@ -4,6 +4,7 @@ import io.github.slupik.schemablock.javafx.dagger.*;
 import io.github.slupik.schemablock.javafx.element.UiElementType;
 import io.github.slupik.schemablock.javafx.element.fx.communication.UIIOCommunicator;
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder;
+import io.github.slupik.schemablock.javafx.element.fx.factory.UiBlockFactory;
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.drawer.ConnectionDrawer;
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder;
 import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner;
@@ -161,6 +162,9 @@ public class MainViewController implements Initializable {
     @Inject
     ElementsSpawner elementsSpawner;
 
+    @Inject
+    UiBlockFactory factory;
+
     private GhostDragController ghost;
     private SchemaSaver saver;
     private SchemaLoader loader;
@@ -255,7 +259,7 @@ public class MainViewController implements Initializable {
     }
 
     private void setupDragging() {
-        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(), container, portSpawner);
+        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(factory), container, portSpawner);
 
         addIconsToMenu();
     }
@@ -307,10 +311,10 @@ public class MainViewController implements Initializable {
     }
 
     private void addIconsToMenu() {
-        addDragDetection(new DragGhostIconUiElement(UiElementType.STOP));
-        addDragDetection(new DragGhostIconUiElement(UiElementType.CALCULATION));
-        addDragDetection(new DragGhostIconUiElement(UiElementType.IF));
-        addDragDetection(new DragGhostIconUiElement(UiElementType.IO));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.STOP, factory));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.CALCULATION, factory));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.IF, factory));
+        addDragDetection(new DragGhostIconUiElement(UiElementType.IO, factory));
     }
 
     private void addDragDetection(DragGhostIcon dragIcon) {

@@ -2,6 +2,8 @@ package io.github.slupik.schemablock.javafx.dagger
 
 import dagger.Binds
 import dagger.Module
+import io.github.slupik.schemablock.javafx.element.block.contextmenu.BlockContextMenuProvider
+import io.github.slupik.schemablock.javafx.element.block.contextmenu.DefaultContextMenuProvider
 import io.github.slupik.schemablock.javafx.element.block.restorer.BlockJsonRestorer
 import io.github.slupik.schemablock.javafx.element.block.restorer.BlockRestorer
 import io.github.slupik.schemablock.javafx.element.block.stringifier.BlockJsonStringifier
@@ -133,5 +135,8 @@ abstract class BlocksBindingsModule {
 
     @Binds
     abstract fun provideConnectionsRestorer(restorer: ConnectionsJsonRestorer): ConnectionsRestorer
+
+    @Binds
+    abstract fun provideBlockContextMenuProvider(provider: DefaultContextMenuProvider): BlockContextMenuProvider
 
 }

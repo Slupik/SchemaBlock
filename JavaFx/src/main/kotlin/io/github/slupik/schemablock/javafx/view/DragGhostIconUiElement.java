@@ -10,17 +10,20 @@ import javafx.scene.layout.Pane;
  */
 public class DragGhostIconUiElement extends DragGhostIcon<UiElementType> {
 
-    DragGhostIconUiElement(UiElementType type) {
+    private final UiBlockFactory factory;
+
+    DragGhostIconUiElement(UiElementType type, UiBlockFactory factory) {
+        this.factory = factory;
         setData(type);
     }
 
-    DragGhostIconUiElement() {
-
+    DragGhostIconUiElement(UiBlockFactory factory) {
+        this.factory = factory;
     }
 
     @Override
     protected void onSetData(UiElementType type) {
-        Pane element = UiBlockFactory.INSTANCE.createIcon(type);
+        Pane element = factory.createIcon(type);
         getChildren().clear();
         getChildren().add(element);
     }
