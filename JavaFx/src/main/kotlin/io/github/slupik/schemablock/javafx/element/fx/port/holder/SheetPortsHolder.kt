@@ -1,6 +1,8 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.holder
 
+import io.github.slupik.schemablock.javafx.dagger.LogicalSheet
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
+import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
@@ -9,7 +11,9 @@ import javax.inject.Inject
 /**
  * All rights reserved & copyright ©
  */
-class SheetPortsHolder @Inject constructor() : PortsHolder {
+class SheetPortsHolder @Inject constructor(
+    @LogicalSheet private val sheet: Sheet
+) : PortsHolder {
 
     override val ports: HashMap<Port, PortAccessibility> = hashMapOf()
 
@@ -42,6 +46,7 @@ class SheetPortsHolder @Inject constructor() : PortsHolder {
                 )
             )
         }
+        sheet.removeElement(portId)
     }
 
     override fun getAccessibilityFor(port: Port): PortAccessibility? =

@@ -2,7 +2,12 @@ package io.github.slupik.schemablock.javafx.element.fx.port.holder
 
 import io.github.slupik.schemablock.javafx.element.fx.MockedBlock
 import io.github.slupik.schemablock.javafx.element.fx.port.element.RoundedPort
+import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.InjectMocks
+import org.mockito.Mock
+import org.mockito.MockitoAnnotations
 import kotlin.test.assertEquals
 
 /**
@@ -10,7 +15,16 @@ import kotlin.test.assertEquals
  */
 internal class SheetPortsHolderTest {
 
-    private val sut: SheetPortsHolder = SheetPortsHolder()
+    @InjectMocks
+    lateinit var sut: SheetPortsHolder
+
+    @Mock
+    lateinit var sheet: Sheet
+
+    @BeforeEach
+    fun init() {
+        MockitoAnnotations.initMocks(this)
+    }
 
     @Test
     fun `add port`(){
