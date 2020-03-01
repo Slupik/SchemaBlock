@@ -22,7 +22,7 @@ This program is built to solve the problems of education of programmers.
 ### Features
 
 - Visual blocks with code
-- Different types of available blocks: conditional, executor, I/O, start, stop
+- Different types of available blocks: conditional, holder, I/O, start, stop
 - Statically typed
 - Easy conversion between types
 - Types based on Java

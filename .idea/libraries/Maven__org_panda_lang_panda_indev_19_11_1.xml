@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.panda-lang:panda:indev-19.11.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/panda-lang/panda/indev-19.11.1/panda-indev-19.11.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/panda-lang/panda/indev-19.11.1/panda-indev-19.11.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/panda-lang/panda/indev-19.11.1/panda-indev-19.11.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
