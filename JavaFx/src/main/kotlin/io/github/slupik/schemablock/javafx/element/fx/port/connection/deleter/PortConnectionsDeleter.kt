@@ -73,9 +73,11 @@ class PortConnectionsDeleter @Inject constructor(
     private fun Map<ConnectionStorageKey, TargetPort>.filterConnectionsWithWrongValues(configuration: BlockClearanceConfiguration):
             Map<ConnectionStorageKey, TargetPort> =
             this.filterKeys {
-                (it is ConditionalConnectionKey && configuration is ConditionalOwnerClearance
-                        && it.value == configuration.value)
-                        .not()
+                if(it is ConditionalConnectionKey && configuration is ConditionalOwnerClearance) {
+                    it.value == configuration.value
+                } else {
+                    false
+                }
             }
 
     private fun Map<ConnectionStorageKey, TargetPort>.deleteAll() {
