@@ -4,6 +4,7 @@ import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.block.Block
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortConnectionsHolder
+import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
 import javafx.scene.control.ContextMenu
 import javafx.scene.control.MenuItem
 import javax.inject.Inject
@@ -13,6 +14,7 @@ import javax.inject.Inject
  */
 class DefaultContextMenuProvider @Inject constructor(
     private val blocksHolder: BlocksHolder,
+    private val portsHolder: PortsHolder,
     private val connectionsHolder: PortConnectionsHolder
 ) : BlockContextMenuProvider {
 
@@ -22,6 +24,7 @@ class DefaultContextMenuProvider @Inject constructor(
             contextMenu.items.add(getDeletionItem(block))
         }
         contextMenu.items.addAll(getClearIncomingConnectionsItem(block))
+        contextMenu.items.addAll(getClearOutgoingConnectionsItem(block))
         return contextMenu
     }
 
@@ -41,6 +44,15 @@ class DefaultContextMenuProvider @Inject constructor(
             clearIncomingLogic.invokeAction()
         }
         return clearIncomingItem
+    }
+
+    private fun getClearOutgoingConnectionsItem(block: Block): MenuItem {
+        val clearOutgoingItem = MenuItem("Clear outgoing")
+        val clearOutgoingLogic = ClearOutgoingConnectionsOption(block, portsHolder, connectionsHolder)
+        clearOutgoingItem.setOnAction {
+            clearOutgoingLogic.invokeAction()
+        }
+        return clearOutgoingItem
     }
 
 }
