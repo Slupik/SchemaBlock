@@ -259,7 +259,7 @@ public class MainViewController implements Initializable {
     }
 
     private void setupDragging() {
-        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(factory), container, portSpawner);
+        ghost = new GhostDragController(mainContainer, sheet, new GhostDragElementFactoryImpl(factory), blocksHolder, portSpawner);
 
         addIconsToMenu();
     }

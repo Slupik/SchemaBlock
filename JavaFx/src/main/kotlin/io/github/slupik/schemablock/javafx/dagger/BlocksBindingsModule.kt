@@ -13,6 +13,7 @@ import io.github.slupik.schemablock.javafx.element.fx.arrow.SimpleArrowDrawer
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.SheetBlocksHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.ChainedElementProvider
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.ChainedSheetElementProvider
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.checker.ConnectionAvailabilityChecker
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.checker.OwnerAwareAvailabilityChecker
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.deleter.ConnectionDeleter
@@ -25,9 +26,8 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.event.Conn
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.event.PortConnectionEventsObservable
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.restorer.ConnectionsJsonRestorer
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.restorer.ConnectionsRestorer
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionProvider
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsModifier
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsStorage
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortConnectionsHolder
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.SheetPortConnectionsHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.stringifier.PortConnectionJsonStringifier
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.stringifier.PortConnectionStringifier
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
@@ -57,15 +57,6 @@ import javax.inject.Singleton
     includes = [GraphicElementsModule::class, BlocksProvidingModule::class]
 )
 abstract class BlocksBindingsModule {
-
-    @Binds
-    abstract fun provideConnectionsModifier(storage: PortsConnectionsStorage): PortsConnectionsModifier
-
-    @Binds
-    abstract fun provideConnectionsProvider(storage: PortsConnectionsStorage): PortsConnectionProvider
-
-    @Binds
-    abstract fun provideChainedElementProvider(storage: PortsConnectionsStorage): ChainedElementProvider
 
     @Binds
     @Singleton
@@ -138,5 +129,12 @@ abstract class BlocksBindingsModule {
 
     @Binds
     abstract fun provideBlockContextMenuProvider(provider: DefaultContextMenuProvider): BlockContextMenuProvider
+
+    @Binds
+    @Singleton
+    abstract fun providePortConnectionsHolder(holder: SheetPortConnectionsHolder): PortConnectionsHolder
+
+    @Binds
+    abstract fun provideChainedElementProvider(provider: ChainedSheetElementProvider): ChainedElementProvider
 
 }

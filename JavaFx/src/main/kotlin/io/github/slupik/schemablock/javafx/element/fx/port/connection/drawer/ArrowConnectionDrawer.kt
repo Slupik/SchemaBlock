@@ -11,6 +11,7 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.deleter.Co
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.establishment.ConnectionEstablisher
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.event.*
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConnectionStorageKey
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortConnectionsHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortAccessibility
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
@@ -26,6 +27,7 @@ class ArrowConnectionDrawer @Inject constructor(
     private val portsHolder: PortsHolder,
     private val establisher: ConnectionEstablisher,
     private val deleter: ConnectionDeleter,
+    private val connectionsHolder: PortConnectionsHolder,
     private val arrowDrawer: ArrowDrawer,
     private val observableConnectionEvents: ConnectionEventsObservable,
     @JavaFxSheet private val container: Pane
@@ -74,8 +76,8 @@ class ArrowConnectionDrawer @Inject constructor(
         establisher.establishments.subscribe {
             drawConnection(it)
         }
-        deleter.deletions.subscribe {
-            eraseConnection(it)
+        connectionsHolder.deletions.subscribe {
+            eraseConnection(it.first)
         }
         container.addEventFilter(MouseEvent.MOUSE_DRAGGED) {
             val source = arrowSource

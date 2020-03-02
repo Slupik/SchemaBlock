@@ -5,7 +5,7 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.checker.Co
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.deleter.ConnectionDeleter
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConditionalConnectionKey
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConnectionStorageKey
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsModifier
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortConnectionsHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.StandardConnectionKey
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class DeletingConnectionEstablisher @Inject constructor(
     private val checker: ConnectionAvailabilityChecker,
     private val deleter: ConnectionDeleter,
-    private val connectionsModifier: PortsConnectionsModifier
+    private val connectionsHolder: PortConnectionsHolder
 ) : ConnectionEstablisher {
 
     private val establishmentsPublisher: PublishSubject<PortConnectionConfiguration> = PublishSubject.create()
@@ -32,7 +32,7 @@ class DeletingConnectionEstablisher @Inject constructor(
 
             val key = getConnectionKey(configuration)
 
-            connectionsModifier.add(key, configuration.target)
+            connectionsHolder.add(key, configuration.target)
             establishmentsPublisher.onNext(configuration)
         }
     }

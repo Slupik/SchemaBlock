@@ -9,6 +9,7 @@ import io.reactivex.Observable
 
 interface ConnectionEstablisher {
 
+    //TODO delete
     val establishments: Observable<PortConnectionConfiguration>
 
     fun establishConnection(configuration: PortConnectionConfiguration)

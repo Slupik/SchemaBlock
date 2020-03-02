@@ -1,12 +1,11 @@
 package io.github.slupik.schemablock.javafx.element.fx.sheet.spawner
 
 import io.github.slupik.schemablock.javafx.dagger.JavaFxSheet
-import io.github.slupik.schemablock.javafx.dagger.LogicalSheet
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.block.implementation.StartUiBlock
+import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder
 import io.github.slupik.schemablock.javafx.element.fx.factory.UiBlockFactory
 import io.github.slupik.schemablock.javafx.element.fx.port.spawner.PortSpawner
-import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet
 import javafx.application.Platform
 import javafx.scene.layout.Pane
 import javax.inject.Inject
@@ -15,15 +14,15 @@ import javax.inject.Inject
  * All rights reserved & copyright ©
  */
 class StartElementSpawner @Inject constructor(
-    @LogicalSheet private val sheet: Sheet,
     @JavaFxSheet private val container: Pane,
+    private val blocksHolder: BlocksHolder,
     private val portSpawner: PortSpawner,
     private val factory: UiBlockFactory
 ) : ElementsSpawner {
 
     override fun spawn() {
         val startBlock = createStartElement()
-        sheet.addElement(startBlock)
+        blocksHolder.addBlock(startBlock)
         Platform.runLater {
             setupStartBlock(startBlock)
             portSpawner.spawnFor(startBlock)

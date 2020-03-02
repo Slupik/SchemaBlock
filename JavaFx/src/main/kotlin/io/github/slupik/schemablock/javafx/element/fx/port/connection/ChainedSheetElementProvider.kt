@@ -1,31 +1,30 @@
-package io.github.slupik.schemablock.javafx.element.fx.port.connection.storage
+package io.github.slupik.schemablock.javafx.element.fx.port.connection
 
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.ChainedElementProvider
-import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.*
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * All rights reserved & copyright ©
  */
-
-typealias TargetElementId = String
-
-@Singleton
-class PortsConnectionsStorage @Inject constructor(
+class ChainedSheetElementProvider @Inject constructor(
+    private val connectionsHolder: PortConnectionsHolder,
     private val blocksHolder: BlocksHolder,
     private val portsHolder: PortsHolder
-) : PortsConnectionsModifier, ChainedElementProvider, PortsConnectionProvider {
+) : ChainedElementProvider {
 
-    override val connections: MutableMap<ConnectionStorageKey, TargetPort> = mutableMapOf()
-
-    override fun getStartElementId(): TargetElementId? =
-        blocksHolder.blocks.firstOrNull {
+    override fun getStartElementId(): TargetElementId? {
+        println("getStartElementId ${blocksHolder.blocks.size}")
+        blocksHolder.blocks.forEach {
+            println("block $it")
+        }
+        return blocksHolder.blocks.firstOrNull {
+            println(it)
             it.type == UiElementType.START
         }?.elementId
+    }
 
     override fun getNextElement(sourceBlockId: String): TargetElementId? =
         getConnectionsForBlock(sourceBlockId)
@@ -57,7 +56,7 @@ class PortsConnectionsStorage @Inject constructor(
                 port.owner.elementId == block.elementId
             }
 
-            connections.filter { connection ->
+            connectionsHolder.connections.filter { connection ->
                 ports.any {
                     it.elementId == connection.key.sourcePortId
                 }
@@ -65,14 +64,6 @@ class PortsConnectionsStorage @Inject constructor(
         } else {
             null
         }
-    }
-
-    override fun add(key: ConnectionStorageKey, target: Port) {
-        connections[key] = target
-    }
-
-    override fun remove(key: ConnectionStorageKey) {
-        connections.remove(key)
     }
 
 }

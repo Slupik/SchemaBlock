@@ -9,7 +9,7 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.BlockClear
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.StandardPortsConnection
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.checker.ConnectionAvailabilityChecker
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.deleter.ConnectionDeleter
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsModifier
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortConnectionsHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.element.RoundedPort
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
@@ -30,7 +30,7 @@ internal class DeletingConnectionEstablisherTest {
     private val deleter: ConnectionDeleter = Mockito.mock(ConnectionDeleter::class.java)
 
     @Mock
-    private val connectionsModifier: PortsConnectionsModifier = Mockito.mock(PortsConnectionsModifier::class.java)
+    private val connectionsModifier: PortConnectionsHolder = Mockito.mock(PortConnectionsHolder::class.java)
 
     private lateinit var sut: DeletingConnectionEstablisher
 

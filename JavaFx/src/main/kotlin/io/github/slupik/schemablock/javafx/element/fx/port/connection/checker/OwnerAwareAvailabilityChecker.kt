@@ -14,14 +14,14 @@ import javax.inject.Inject
  */
 class OwnerAwareAvailabilityChecker @Inject constructor(
         private val holder: PortsHolder,
-        private val connectionsProvider: PortsConnectionProvider
+        private val connectionsHolder: PortConnectionsHolder
 ) : ConnectionAvailabilityChecker {
 
     override fun isExistingSimilarConnections(configuration: PortConnectionConfiguration): Boolean {
         val ownerId = configuration.source.owner.elementId
         val otherPortsInGroup = holder.ports.getPortsOfOwner(ownerId)
 
-        val existingConnections = connectionsProvider
+        val existingConnections = connectionsHolder
                 .connections
                 .filterWithTheSameValue(configuration)
                 .filterConnectionsForPorts(otherPortsInGroup)

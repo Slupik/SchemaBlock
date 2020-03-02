@@ -26,6 +26,9 @@ class SheetBlocksHolder @Inject constructor(
 
     override fun addBlock(element: Block) {
         deleteBlock(element.elementId)
+        sheet.removeElement(element)
+
+        sheet.addElement(element)
         blocks.add(element)
         additionsPublisher.onNext(element)
     }

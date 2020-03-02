@@ -1,10 +1,12 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.connection
 
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.TargetElementId
 
 /**
  * All rights reserved & copyright ©
  */
+
+typealias TargetElementId = String
+
 interface ChainedElementProvider {
 
     fun getStartElementId(): TargetElementId?
