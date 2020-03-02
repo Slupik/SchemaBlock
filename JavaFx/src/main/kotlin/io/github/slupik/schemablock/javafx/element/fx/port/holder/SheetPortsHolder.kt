@@ -1,6 +1,9 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.holder
 
+import dagger.Lazy
 import io.github.slupik.schemablock.javafx.dagger.LogicalSheet
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.PortClearance
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.deleter.PortConnectionsDeleter
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet
 import io.reactivex.Observable
@@ -12,7 +15,8 @@ import javax.inject.Inject
  * All rights reserved & copyright ©
  */
 class SheetPortsHolder @Inject constructor(
-    @LogicalSheet private val sheet: Sheet
+    @LogicalSheet private val sheet: Sheet,
+    private val portConnectionsDeleterProvider: Lazy<PortConnectionsDeleter>
 ) : PortsHolder {
 
     override val ports: HashMap<Port, PortAccessibility> = hashMapOf()
@@ -46,6 +50,8 @@ class SheetPortsHolder @Inject constructor(
                 )
             )
         }
+        //TODO arrows aren't cleared
+        portConnectionsDeleterProvider.get().clearConnections(PortClearance(portId))
         sheet.removeElement(portId)
     }
 

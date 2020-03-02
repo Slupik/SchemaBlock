@@ -42,15 +42,23 @@ class PortConnectionsDeleter @Inject constructor(
     }
 
     override fun clearConnections(configuration: BlockClearanceConfiguration) {
-        connectionsProvider.connections
+        if(configuration is PortClearance) {
+            connectionsProvider.connections
+                .filter {
+                    it.key.sourcePortId == configuration.ownerId ||
+                            it.value.elementId == configuration.ownerId
+                }.deleteAll()
+        } else {
+            connectionsProvider.connections
                 .filterConnectionsWithWrongValues(configuration)
                 .filterConnectionsWithTheSameOwner(holder, configuration.ownerId)
                 .deleteAll()
+        }
     }
 
-    override fun clearConnections(ownerId: String) {
+    override fun clearConnections(blockId: String) {
         connectionsProvider.connections
-                .filterConnectionsWithTheSameOwner(holder, ownerId)
+                .filterConnectionsWithTheSameOwner(holder, blockId)
                 .deleteAll()
     }
 

@@ -4,14 +4,18 @@ package io.github.slupik.schemablock.javafx.element.fx.port.connection
  * All rights reserved & copyright ©
  */
 sealed class BlockClearanceConfiguration(
-        open val ownerId: String
+    open val ownerId: String
 )
 
+data class PortClearance(
+    override val ownerId: String
+) : BlockClearanceConfiguration(ownerId)
+
 data class StandardOwnerClearance(
-        override val ownerId: String
+    override val ownerId: String
 ) : BlockClearanceConfiguration(ownerId)
 
 data class ConditionalOwnerClearance(
-        override val ownerId: String,
-        val value: Boolean
+    override val ownerId: String,
+    val value: Boolean
 ) : BlockClearanceConfiguration(ownerId)

@@ -15,6 +15,6 @@ interface ConnectionDeleter {
 
     fun deleteConnection(configuration: PortDisconnectionConfiguration)
     fun clearConnections(configuration: BlockClearanceConfiguration)
-    fun clearConnections(ownerId: String)
+    fun clearConnections(blockId: String)
 
 }
