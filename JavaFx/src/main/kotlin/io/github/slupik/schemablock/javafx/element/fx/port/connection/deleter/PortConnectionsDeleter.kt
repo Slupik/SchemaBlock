@@ -83,7 +83,6 @@ class PortConnectionsDeleter @Inject constructor(
     }
 
     private fun deleteConnection(key: ConnectionStorageKey) {
-        println("deleteConnection: $key")
         connectionsHolder.remove(key)
     }
 
