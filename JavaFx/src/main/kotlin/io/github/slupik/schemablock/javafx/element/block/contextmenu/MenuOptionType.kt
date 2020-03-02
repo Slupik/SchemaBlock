@@ -5,5 +5,6 @@ package io.github.slupik.schemablock.javafx.element.block.contextmenu
  */
 enum class MenuOptionType {
     DELETE,
-    EDIT
+    EDIT,
+    CLEAR_INCOMING
 }
