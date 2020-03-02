@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.block.contextmenu
 
+import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.block.Block
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder
 import javafx.scene.control.ContextMenu
@@ -15,7 +16,9 @@ class DefaultContextMenuProvider @Inject constructor(
 
     override fun getFor(block: Block): ContextMenu {
         val contextMenu = ContextMenu()
-        contextMenu.items.add(getDeletionItem(block))
+        if(UiElementType.START != block.type) {
+            contextMenu.items.add(getDeletionItem(block))
+        }
         return contextMenu
     }
 
