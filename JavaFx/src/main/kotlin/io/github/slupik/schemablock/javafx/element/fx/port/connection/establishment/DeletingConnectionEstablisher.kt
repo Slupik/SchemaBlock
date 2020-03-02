@@ -3,12 +3,7 @@ package io.github.slupik.schemablock.javafx.element.fx.port.connection.establish
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.*
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.checker.ConnectionAvailabilityChecker
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.deleter.ConnectionDeleter
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConditionalConnectionKey
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConnectionStorageKey
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortConnectionsHolder
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.StandardConnectionKey
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 /**
@@ -21,19 +16,13 @@ class DeletingConnectionEstablisher @Inject constructor(
     private val connectionsHolder: PortConnectionsHolder
 ) : ConnectionEstablisher {
 
-    private val establishmentsPublisher: PublishSubject<PortConnectionConfiguration> = PublishSubject.create()
-    override val establishments: Observable<PortConnectionConfiguration> = establishmentsPublisher
-
     override fun establishConnection(configuration: PortConnectionConfiguration) {
         if (checker.isConnectionPossible(configuration)) {
             if (checker.isExistingSimilarConnections(configuration)) {
                 deleter.clearConnections(getKeyForClearingBlock(configuration))
             }
 
-            val key = getConnectionKey(configuration)
-
-            connectionsHolder.add(key, configuration.target)
-            establishmentsPublisher.onNext(configuration)
+            connectionsHolder.add(configuration)
         }
     }
 
@@ -46,21 +35,6 @@ class DeletingConnectionEstablisher @Inject constructor(
                     configuration.source.owner.elementId,
                     configuration.value
                 )
-        }
-
-    private fun getConnectionKey(configuration: PortConnectionConfiguration): ConnectionStorageKey =
-        when (configuration) {
-            is StandardPortsConnection -> {
-                StandardConnectionKey(
-                    configuration.source.elementId
-                )
-            }
-            is ConditionalPortsConnection -> {
-                ConditionalConnectionKey(
-                    configuration.source.elementId,
-                    configuration.value
-                )
-            }
         }
 
 }

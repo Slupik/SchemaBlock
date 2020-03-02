@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.connection.storage
 
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.PortConnectionConfiguration
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.reactivex.Observable
 
@@ -14,9 +15,9 @@ interface PortConnectionsHolder {
     val connections: Map<ConnectionStorageKey, TargetPort>
 
     val deletions: Observable<Pair<ConnectionStorageKey, TargetPort>>
-    val additions: Observable<Pair<ConnectionStorageKey, TargetPort>>
+    val establishments: Observable<PortConnectionConfiguration>
 
-    fun add(key: ConnectionStorageKey, target: Port)
+    fun add(configuration: PortConnectionConfiguration)
     fun remove(key: ConnectionStorageKey)
 
 }

@@ -3,7 +3,6 @@ package io.github.slupik.schemablock.javafx.element.fx.port.restorer
 import com.google.gson.Gson
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.element.RoundedPort
-import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.stringifier.PortSpecification
 import io.github.slupik.schemablock.javafx.element.fx.schema.Schema
 import javax.inject.Inject
@@ -13,8 +12,7 @@ import javax.inject.Inject
  */
 class PortJsonRestorer @Inject constructor(
     private val jsonConverter: Gson,
-    private val blocksHolder: BlocksHolder,
-    private val portsHolder: PortsHolder
+    private val blocksHolder: BlocksHolder
 ) : PortRestorer {
 
     override fun restore(schema: Schema, portsToRestore: List<String>) {
@@ -23,8 +21,7 @@ class PortJsonRestorer @Inject constructor(
         }.forEach { specification ->
             val port = createPort(specification)
             port?.let {
-                schema.addPort(it)
-                portsHolder.addPort(it, specification.accessibility)
+                schema.addPort(it, specification.accessibility)
             }
         }
     }

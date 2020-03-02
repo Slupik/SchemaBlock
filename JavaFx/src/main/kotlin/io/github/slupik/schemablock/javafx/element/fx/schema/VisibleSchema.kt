@@ -42,8 +42,8 @@ class VisibleSchema @Inject constructor(
         blocksHolder.addBlock(block)
     }
 
-    override fun addPort(port: Port) {
-        sheet.addElement(port)
+    override fun addPort(port: Port, configuration: PortAccessibility) {
+        portsHolder.addPort(port, configuration)
     }
 
     override fun establishConnection(configuration: PortConnectionConfiguration) {
@@ -52,11 +52,10 @@ class VisibleSchema @Inject constructor(
 
     override fun clearAll() {
         blocksHolder.blocks.copy().forEach {
-            sheet.removeElement(it)
+            blocksHolder.deleteBlock(it)
         }
         portsHolder.ports.keys.toList().copy().forEach {
             portsHolder.deletePort(it)
-            sheet.removeElement(it)
         }
     }
 

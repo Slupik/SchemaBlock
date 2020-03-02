@@ -57,7 +57,7 @@ internal class DeletingConnectionEstablisherTest {
 
         sut.establishConnection(configuration)
 
-        verify(connectionsModifier, times(1)).add(any(), any())
+        verify(connectionsModifier, times(1)).add(any())
     }
 
     @Test
@@ -73,7 +73,7 @@ internal class DeletingConnectionEstablisherTest {
         sut.establishConnection(configuration)
 
         verify(deleter, times(1)).clearConnections(any<BlockClearanceConfiguration>())
-        verify(connectionsModifier, times(1)).add(any(), any())
+        verify(connectionsModifier, times(1)).add(any())
     }
 
 }

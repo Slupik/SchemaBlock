@@ -27,6 +27,7 @@ class SheetPortsHolder @Inject constructor(
 
     override fun addPort(port: Port, configuration: PortAccessibility) {
         deletePort(port.elementId)
+
         ports[port] = configuration
         additionsPublisher.onNext(
             Pair(
@@ -34,6 +35,7 @@ class SheetPortsHolder @Inject constructor(
                 configuration
             )
         )
+        sheet.addElement(port)
     }
 
     override fun deletePort(portId: String) {
@@ -48,7 +50,9 @@ class SheetPortsHolder @Inject constructor(
                 )
             )
         }
+
         clearConnections(portId)
+
         sheet.removeElement(portId)
     }
 
