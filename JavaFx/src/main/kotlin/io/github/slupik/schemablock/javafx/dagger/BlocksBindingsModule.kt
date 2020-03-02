@@ -8,6 +8,8 @@ import io.github.slupik.schemablock.javafx.element.block.restorer.BlockJsonResto
 import io.github.slupik.schemablock.javafx.element.block.restorer.BlockRestorer
 import io.github.slupik.schemablock.javafx.element.block.stringifier.BlockJsonStringifier
 import io.github.slupik.schemablock.javafx.element.block.stringifier.BlockStringifier
+import io.github.slupik.schemablock.javafx.element.block.wrapper.edition.BlockEdition
+import io.github.slupik.schemablock.javafx.element.block.wrapper.edition.BlockEditionWithDialog
 import io.github.slupik.schemablock.javafx.element.fx.arrow.ArrowDrawer
 import io.github.slupik.schemablock.javafx.element.fx.arrow.SimpleArrowDrawer
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder
@@ -136,5 +138,8 @@ abstract class BlocksBindingsModule {
 
     @Binds
     abstract fun provideChainedElementProvider(provider: ChainedSheetElementProvider): ChainedElementProvider
+
+    @Binds
+    abstract fun provideBlockEdition(provider: BlockEditionWithDialog): BlockEdition
 
 }

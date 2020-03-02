@@ -4,11 +4,13 @@ import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.block.Block
 import io.github.slupik.schemablock.javafx.element.block.contextmenu.BlockContextMenuProvider
 import io.github.slupik.schemablock.javafx.element.block.implementation.*
-import io.github.slupik.schemablock.javafx.element.block.wrapper.edition.BlockEditionFeature
+import io.github.slupik.schemablock.javafx.element.block.wrapper.edition.BlockEdition
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState
 import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableElementContainer
 import io.github.slupik.schemablock.javafx.logic.drag.node.ElementDragController
 import javafx.scene.control.ContextMenu
+import javafx.scene.input.MouseButton
+import javafx.scene.input.MouseEvent
 import javafx.scene.layout.Pane
 import javax.inject.Inject
 
@@ -17,7 +19,8 @@ import javax.inject.Inject
  */
 
 class UiBlockFactory @Inject constructor(
-    private val contextMenuProvider: BlockContextMenuProvider
+    private val contextMenuProvider: BlockContextMenuProvider,
+    private val blockEdition: BlockEdition
 ) {
 
     /*
@@ -60,8 +63,20 @@ class UiBlockFactory @Inject constructor(
             }
         }
         element.setup()
-        BlockEditionFeature(element)
+        element.makeEditable()
         return element
+    }
+
+    private fun DescribedBlockPrototype.makeEditable() {
+        this.draggingMask.addEventHandler(MouseEvent.MOUSE_CLICKED) { event ->
+            if (this.background.contains(event.x, event.y)) {
+                if (event.button == MouseButton.PRIMARY) {
+                    if (event.clickCount == 2) {
+                        blockEdition.openFor(this)
+                    }
+                }
+            }
+        }
     }
 
 }

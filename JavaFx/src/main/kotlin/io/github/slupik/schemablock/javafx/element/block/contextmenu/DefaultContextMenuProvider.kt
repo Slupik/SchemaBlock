@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.javafx.element.block.contextmenu
 
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.block.Block
+import io.github.slupik.schemablock.javafx.element.block.wrapper.edition.BlockEdition
 import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortConnectionsHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
@@ -15,11 +16,15 @@ import javax.inject.Inject
 class DefaultContextMenuProvider @Inject constructor(
     private val blocksHolder: BlocksHolder,
     private val portsHolder: PortsHolder,
-    private val connectionsHolder: PortConnectionsHolder
+    private val connectionsHolder: PortConnectionsHolder,
+    private val blockEdition: BlockEdition
 ) : BlockContextMenuProvider {
 
     override fun getFor(block: Block): ContextMenu {
         val contextMenu = ContextMenu()
+        if(UiElementType.START != block.type && UiElementType.STOP != block.type) {
+            contextMenu.items.addAll(getBlockEditionItem(block))
+        }
         if(UiElementType.START != block.type) {
             contextMenu.items.add(getDeletionItem(block))
         }
@@ -53,6 +58,15 @@ class DefaultContextMenuProvider @Inject constructor(
             clearOutgoingLogic.invokeAction()
         }
         return clearOutgoingItem
+    }
+
+    private fun getBlockEditionItem(block: Block): MenuItem {
+        val blockEditionItem = MenuItem("Edit")
+        val blockEditionLogic = BlockEditionOption(block, blockEdition)
+        blockEditionItem.setOnAction {
+            blockEditionLogic.invokeAction()
+        }
+        return blockEditionItem
     }
 
 }
