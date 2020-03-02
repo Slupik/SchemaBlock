@@ -18,6 +18,8 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.ChainedEle
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.ChainedSheetElementProvider
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.checker.ConnectionAvailabilityChecker
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.checker.OwnerAwareAvailabilityChecker
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.conditional.ConditionalConnectionUtils
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.conditional.DialogAwareConditionalConnectionUtils
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.deleter.ConnectionDeleter
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.deleter.PortConnectionsDeleter
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.drawer.ArrowConnectionDrawer
@@ -141,5 +143,8 @@ abstract class BlocksBindingsModule {
 
     @Binds
     abstract fun provideBlockEdition(provider: BlockEditionWithDialog): BlockEdition
+
+    @Binds
+    abstract fun provideConditionalConnectionsUtils(utils: DialogAwareConditionalConnectionUtils): ConditionalConnectionUtils
 
 }

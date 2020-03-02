@@ -7,6 +7,7 @@ import io.github.slupik.schemablock.javafx.element.fx.arrow.Point
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.ConditionalPortsConnection
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.PortConnectionConfiguration
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.StandardPortsConnection
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.conditional.ConditionalConnectionUtils
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.establishment.ConnectionEstablisher
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.event.*
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConnectionStorageKey
@@ -14,7 +15,9 @@ import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.Po
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortAccessibility
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.PublishSubject
+import javafx.scene.control.ButtonBar
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.Pane
 import javax.inject.Inject
@@ -28,7 +31,8 @@ class ArrowConnectionDrawer @Inject constructor(
     private val connectionsHolder: PortConnectionsHolder,
     private val arrowDrawer: ArrowDrawer,
     private val observableConnectionEvents: ConnectionEventsObservable,
-    @JavaFxSheet private val container: Pane
+    @JavaFxSheet private val container: Pane,
+    private val conditionalConnectionUtils: ConditionalConnectionUtils
 ) : ConnectionDrawer {
 
     private val arrows = hashMapOf<PortConnectionConfiguration, Arrow>()
@@ -154,23 +158,32 @@ class ArrowConnectionDrawer @Inject constructor(
     private fun onTryConnection(source: Port, target: Port, sourceAccessibility: PortAccessibility) {
         source.markAsNeutral()
         target.markAsNeutral()
+        onStopSearching(source)
 
-        val configuration =
-            if (sourceAccessibility == PortAccessibility.CONDITIONAL_INPUT) {
-                ConditionalPortsConnection(
-                    source,
-                    target,
-                    true
-                )
-            } else {
+        if (sourceAccessibility == PortAccessibility.CONDITIONAL_INPUT) {
+            conditionalConnectionUtils.getValue().subscribeBy(onSuccess = {
+                it.ifPresent {type ->
+                    val value = when(type.buttonData) {
+                        ButtonBar.ButtonData.YES -> true
+                        else -> false
+                    }
+                    establisher.establishConnection(
+                        configuration = ConditionalPortsConnection(
+                            source,
+                            target,
+                            value
+                        )
+                    )
+                }
+            })
+        } else {
+            establisher.establishConnection(
                 StandardPortsConnection(
                     source,
                     target
                 )
-            }
-
-        onStopSearching(source)
-        establisher.establishConnection(configuration)
+            )
+        }
     }
 
 }
