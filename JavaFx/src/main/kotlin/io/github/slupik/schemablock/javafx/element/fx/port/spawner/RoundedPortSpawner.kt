@@ -36,7 +36,6 @@ class RoundedPortSpawner @Inject constructor(
             accessibility
         )
         port.setRelativePos(info.percentOfWidth, info.percentOfHeight)
-        sheet.addElement(port)
         return port
     }
 

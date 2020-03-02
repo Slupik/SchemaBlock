@@ -2,17 +2,23 @@ package io.github.slupik.schemablock.javafx.element.fx.factory
 
 import io.github.slupik.schemablock.javafx.element.UiElementType
 import io.github.slupik.schemablock.javafx.element.block.Block
+import io.github.slupik.schemablock.javafx.element.block.contextmenu.BlockContextMenuProvider
 import io.github.slupik.schemablock.javafx.element.block.implementation.*
 import io.github.slupik.schemablock.javafx.element.block.wrapper.edition.BlockEditionFeature
 import io.github.slupik.schemablock.javafx.logic.drag.DragEventState
 import io.github.slupik.schemablock.javafx.logic.drag.node.DraggableElementContainer
 import io.github.slupik.schemablock.javafx.logic.drag.node.ElementDragController
+import javafx.scene.control.ContextMenu
+import javafx.scene.layout.Pane
+import javax.inject.Inject
 
 /**
  * All rights reserved & copyright ©
  */
 
-object UiBlockFactory {
+class UiBlockFactory @Inject constructor(
+    private val contextMenuProvider: BlockContextMenuProvider
+) {
 
     /*
         This function must exists (default arguments cannot be used) because of java compatibility
@@ -25,6 +31,7 @@ object UiBlockFactory {
         val element = createBase(type, id)
         element.setElementSize(50.0, 31.0)
         element.makeDraggable()
+        element.setContextMenu(contextMenuProvider.getFor(element))
         return element
     }
 
@@ -35,7 +42,7 @@ object UiBlockFactory {
     }
 
     private fun createBase(type: UiElementType, id: String? = null): DescribedBlockPrototype {
-        val element: DescribedBlockPrototype = if(null == id) {
+        val element: DescribedBlockPrototype = if (null == id) {
             when (type) {
                 UiElementType.CALCULATION -> OperationsUiBlock()
                 UiElementType.IF -> ConditionalUiBlock()
@@ -57,6 +64,14 @@ object UiBlockFactory {
         return element
     }
 
+}
+
+private fun Pane.setContextMenu(contextMenu: ContextMenu) {
+    this.setOnMousePressed { event ->
+        if (event.isSecondaryButtonDown) {
+            contextMenu.show(this, event.screenX, event.screenY)
+        }
+    }
 }
 
 private fun Block.makeDraggable() {

@@ -5,7 +5,7 @@ import io.github.slupik.schemablock.javafx.element.block.Block
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.ConditionalPortsConnection
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.StandardPortsConnection
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConditionalConnectionKey
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionProvider
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortConnectionsHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.StandardConnectionKey
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortAccessibility
@@ -28,7 +28,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
     private val holder: PortsHolder = Mockito.mock(PortsHolder::class.java)
 
     @Mock
-    private val provider: PortsConnectionProvider = Mockito.mock(PortsConnectionProvider::class.java)
+    private val connHolder: PortConnectionsHolder = Mockito.mock(PortConnectionsHolder::class.java)
 
     private lateinit var sut: OwnerAwareAvailabilityChecker
 
@@ -42,7 +42,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
 
     @BeforeEach
     fun initSut() {
-        sut = OwnerAwareAvailabilityChecker(holder, provider)
+        sut = OwnerAwareAvailabilityChecker(holder, connHolder)
     }
 
     @Test
@@ -63,7 +63,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         )
         whenever(holder.ports).thenReturn(ports)
 
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf()
         )
 
@@ -106,7 +106,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         whenever(holder.ports).thenReturn(ports)
 
         val connection = Pair(StandardConnectionKey(source.elementId), existingTarget)
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf(connection)
         )
 
@@ -150,7 +150,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         whenever(holder.ports).thenReturn(ports)
 
         val connection = Pair(StandardConnectionKey(existingSource.elementId), existingTarget)
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf(connection)
         )
 
@@ -185,7 +185,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         )
         whenever(holder.ports).thenReturn(ports)
 
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf()
         )
 
@@ -211,7 +211,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         )
         whenever(holder.ports).thenReturn(ports)
 
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf()
         )
 
@@ -243,7 +243,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         )
         whenever(holder.ports).thenReturn(ports)
 
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf()
         )
 
@@ -275,7 +275,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         )
         whenever(holder.ports).thenReturn(ports)
 
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf()
         )
 
@@ -307,7 +307,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         )
         whenever(holder.ports).thenReturn(ports)
 
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf()
         )
 
@@ -339,7 +339,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         )
         whenever(holder.ports).thenReturn(ports)
 
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf()
         )
 
@@ -371,7 +371,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         )
         whenever(holder.ports).thenReturn(ports)
 
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf()
         )
 
@@ -403,7 +403,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         )
         whenever(holder.ports).thenReturn(ports)
 
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf()
         )
 
@@ -444,7 +444,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         )
         whenever(holder.ports).thenReturn(ports)
 
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf()
         )
 
@@ -476,7 +476,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         )
         whenever(holder.ports).thenReturn(ports)
 
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf()
         )
 
@@ -509,7 +509,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
         )
         whenever(holder.ports).thenReturn(ports)
 
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf()
         )
 
@@ -552,7 +552,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
             ),
             target
         )
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf(connection)
         )
 
@@ -595,7 +595,7 @@ internal class OwnerAwareAvailabilityCheckerTest {
             ),
             target
         )
-        whenever(provider.connections).thenReturn(
+        whenever(connHolder.connections).thenReturn(
             mapOf(connection)
         )
 

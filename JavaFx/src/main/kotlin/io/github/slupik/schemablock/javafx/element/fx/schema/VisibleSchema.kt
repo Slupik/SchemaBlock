@@ -7,7 +7,7 @@ import io.github.slupik.schemablock.javafx.element.fx.element.holder.BlocksHolde
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.PortConnectionConfiguration
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.establishment.ConnectionEstablisher
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConnectionStorageKey
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionProvider
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortConnectionsHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.TargetPort
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortAccessibility
@@ -22,7 +22,7 @@ class VisibleSchema @Inject constructor(
     @LogicalSheet private val sheet: Sheet,
     private val blocksHolder: BlocksHolder,
     private val portsHolder: PortsHolder,
-    private val portsConnectionProvider: PortsConnectionProvider,
+    private val connectionsHolder: PortConnectionsHolder,
     private val connectionEstablisher: ConnectionEstablisher
 ): Schema {
 
@@ -36,14 +36,14 @@ class VisibleSchema @Inject constructor(
         portsHolder.ports
 
     override fun getConnections(): Map<ConnectionStorageKey, TargetPort> =
-        portsConnectionProvider.connections
+        connectionsHolder.connections
 
     override fun addBlock(block: Block) {
-        sheet.addElement(block)
+        blocksHolder.addBlock(block)
     }
 
-    override fun addPort(port: Port) {
-        sheet.addElement(port)
+    override fun addPort(port: Port, configuration: PortAccessibility) {
+        portsHolder.addPort(port, configuration)
     }
 
     override fun establishConnection(configuration: PortConnectionConfiguration) {
@@ -52,11 +52,10 @@ class VisibleSchema @Inject constructor(
 
     override fun clearAll() {
         blocksHolder.blocks.copy().forEach {
-            sheet.removeElement(it)
+            blocksHolder.deleteBlock(it)
         }
         portsHolder.ports.keys.toList().copy().forEach {
             portsHolder.deletePort(it)
-            sheet.removeElement(it)
         }
     }
 

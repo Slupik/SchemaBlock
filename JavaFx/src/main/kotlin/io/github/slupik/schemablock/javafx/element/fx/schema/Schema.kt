@@ -19,7 +19,7 @@ interface Schema {
     fun getConnections(): Map<ConnectionStorageKey, TargetPort>
 
     fun addBlock(block: Block)
-    fun addPort(port: Port)
+    fun addPort(port: Port, configuration: PortAccessibility)
     fun establishConnection(configuration: PortConnectionConfiguration)
 
     fun clearAll()

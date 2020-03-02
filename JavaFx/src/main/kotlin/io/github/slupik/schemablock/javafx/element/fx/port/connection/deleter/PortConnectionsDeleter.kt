@@ -1,11 +1,12 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.connection.deleter
 
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.*
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.*
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConditionalConnectionKey
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConnectionStorageKey
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortConnectionsHolder
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.StandardConnectionKey
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
 import io.github.slupik.schemablock.javafx.element.fx.port.holder.PortsHolder
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
 /**
@@ -16,12 +17,8 @@ typealias TargetPort = Port
 
 class PortConnectionsDeleter @Inject constructor(
         private val holder: PortsHolder,
-        private val connectionsProvider: PortsConnectionProvider,
-        private val modifier: PortsConnectionsModifier
+        private val connectionsHolder: PortConnectionsHolder
 ) : ConnectionDeleter {
-
-    private val deletionsPublisher: PublishSubject<ConnectionStorageKey> = PublishSubject.create()
-    override val deletions: Observable<ConnectionStorageKey> = deletionsPublisher
 
     override fun deleteConnection(configuration: PortDisconnectionConfiguration) {
         val key =
@@ -42,15 +39,23 @@ class PortConnectionsDeleter @Inject constructor(
     }
 
     override fun clearConnections(configuration: BlockClearanceConfiguration) {
-        connectionsProvider.connections
+        if(configuration is PortClearance) {
+            connectionsHolder.connections
+                .filter {
+                    it.key.sourcePortId == configuration.ownerId ||
+                            it.value.elementId == configuration.ownerId
+                }.deleteAll()
+        } else {
+            connectionsHolder.connections
                 .filterConnectionsWithWrongValues(configuration)
                 .filterConnectionsWithTheSameOwner(holder, configuration.ownerId)
                 .deleteAll()
+        }
     }
 
-    override fun clearConnections(ownerId: String) {
-        connectionsProvider.connections
-                .filterConnectionsWithTheSameOwner(holder, ownerId)
+    override fun clearConnections(blockId: String) {
+        connectionsHolder.connections
+                .filterConnectionsWithTheSameOwner(holder, blockId)
                 .deleteAll()
     }
 
@@ -78,8 +83,8 @@ class PortConnectionsDeleter @Inject constructor(
     }
 
     private fun deleteConnection(key: ConnectionStorageKey) {
-        modifier.remove(key)
-        deletionsPublisher.onNext(key)
+        println("deleteConnection: $key")
+        connectionsHolder.remove(key)
     }
 
 }

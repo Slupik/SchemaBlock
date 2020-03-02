@@ -1,6 +1,9 @@
 package io.github.slupik.schemablock.javafx.element.fx.port.holder
 
+import io.github.slupik.schemablock.javafx.dagger.LogicalSheet
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortConnectionsHolder
 import io.github.slupik.schemablock.javafx.element.fx.port.element.Port
+import io.github.slupik.schemablock.javafx.element.fx.sheet.Sheet
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
@@ -9,7 +12,10 @@ import javax.inject.Inject
 /**
  * All rights reserved & copyright ©
  */
-class SheetPortsHolder @Inject constructor() : PortsHolder {
+class SheetPortsHolder @Inject constructor(
+    @LogicalSheet private val sheet: Sheet,
+    private val connectionsHolder: PortConnectionsHolder
+) : PortsHolder {
 
     override val ports: HashMap<Port, PortAccessibility> = hashMapOf()
 
@@ -21,6 +27,7 @@ class SheetPortsHolder @Inject constructor() : PortsHolder {
 
     override fun addPort(port: Port, configuration: PortAccessibility) {
         deletePort(port.elementId)
+
         ports[port] = configuration
         additionsPublisher.onNext(
             Pair(
@@ -28,6 +35,7 @@ class SheetPortsHolder @Inject constructor() : PortsHolder {
                 configuration
             )
         )
+        sheet.addElement(port)
     }
 
     override fun deletePort(portId: String) {
@@ -41,6 +49,19 @@ class SheetPortsHolder @Inject constructor() : PortsHolder {
                     it.value
                 )
             )
+        }
+
+        clearConnections(portId)
+
+        sheet.removeElement(portId)
+    }
+
+    private fun clearConnections(portId: String) {
+        connectionsHolder.connections.filter {
+            it.key.sourcePortId == portId ||
+                    it.value.elementId == portId
+        }.forEach {
+            connectionsHolder.remove(it.key)
         }
     }
 

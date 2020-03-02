@@ -3,12 +3,7 @@ package io.github.slupik.schemablock.javafx.element.fx.port.connection.establish
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.*
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.checker.ConnectionAvailabilityChecker
 import io.github.slupik.schemablock.javafx.element.fx.port.connection.deleter.ConnectionDeleter
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConditionalConnectionKey
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.ConnectionStorageKey
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortsConnectionsModifier
-import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.StandardConnectionKey
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import io.github.slupik.schemablock.javafx.element.fx.port.connection.storage.PortConnectionsHolder
 import javax.inject.Inject
 
 /**
@@ -18,11 +13,8 @@ import javax.inject.Inject
 class DeletingConnectionEstablisher @Inject constructor(
     private val checker: ConnectionAvailabilityChecker,
     private val deleter: ConnectionDeleter,
-    private val connectionsModifier: PortsConnectionsModifier
+    private val connectionsHolder: PortConnectionsHolder
 ) : ConnectionEstablisher {
-
-    private val establishmentsPublisher: PublishSubject<PortConnectionConfiguration> = PublishSubject.create()
-    override val establishments: Observable<PortConnectionConfiguration> = establishmentsPublisher
 
     override fun establishConnection(configuration: PortConnectionConfiguration) {
         if (checker.isConnectionPossible(configuration)) {
@@ -30,10 +22,7 @@ class DeletingConnectionEstablisher @Inject constructor(
                 deleter.clearConnections(getKeyForClearingBlock(configuration))
             }
 
-            val key = getConnectionKey(configuration)
-
-            connectionsModifier.add(key, configuration.target)
-            establishmentsPublisher.onNext(configuration)
+            connectionsHolder.add(configuration)
         }
     }
 
@@ -46,21 +35,6 @@ class DeletingConnectionEstablisher @Inject constructor(
                     configuration.source.owner.elementId,
                     configuration.value
                 )
-        }
-
-    private fun getConnectionKey(configuration: PortConnectionConfiguration): ConnectionStorageKey =
-        when (configuration) {
-            is StandardPortsConnection -> {
-                StandardConnectionKey(
-                    configuration.source.elementId
-                )
-            }
-            is ConditionalPortsConnection -> {
-                ConditionalConnectionKey(
-                    configuration.source.elementId,
-                    configuration.value
-                )
-            }
         }
 
 }
