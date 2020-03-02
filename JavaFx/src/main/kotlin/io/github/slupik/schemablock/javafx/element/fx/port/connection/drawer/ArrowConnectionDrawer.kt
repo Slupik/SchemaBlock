@@ -163,6 +163,8 @@ class ArrowConnectionDrawer @Inject constructor(
         if (sourceAccessibility == PortAccessibility.CONDITIONAL_INPUT) {
             conditionalConnectionUtils.getValue().subscribeBy(onSuccess = {
                 it.ifPresent {type ->
+                    if(type.buttonData == ButtonBar.ButtonData.CANCEL_CLOSE) return@ifPresent
+
                     val value = when(type.buttonData) {
                         ButtonBar.ButtonData.YES -> true
                         else -> false
