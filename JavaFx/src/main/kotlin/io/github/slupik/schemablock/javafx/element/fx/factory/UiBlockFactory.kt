@@ -32,11 +32,22 @@ class UiBlockFactory @Inject constructor(
 
     fun createUsableBlock(type: UiElementType, id: String?): DescribedBlockPrototype {
         val element = createBase(type, id)
-        element.setElementSize(50.0, 31.0)
+
+        val size = getSizeForElementOnSheet(element)
+        element.setElementSize(size.width, size.height)
+
         element.makeDraggable()
         element.setContextMenu(contextMenuProvider.getFor(element))
         return element
     }
+
+    private fun getSizeForElementOnSheet(element: DescribedBlockPrototype): Size =
+        when(element.type) {
+            UiElementType.IF -> Size(100.0, 60.0)
+            UiElementType.IO -> Size(100.0, 45.0)
+            UiElementType.CALCULATION -> Size(89.0, 55.0)
+            else -> Size(73.0, 45.0)
+        }
 
     fun createIcon(type: UiElementType): DescribedBlockPrototype {
         val element = createBase(type)
