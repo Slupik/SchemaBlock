@@ -5,6 +5,8 @@ import javafx.scene.Node
 import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
+import javafx.scene.paint.Color.web
+import javafx.scene.paint.Paint
 import javafx.scene.shape.Circle
 import org.apache.commons.lang3.RandomStringUtils
 
@@ -53,15 +55,17 @@ class RoundedPort(
 
     private fun setupCircle() {
         circle.radius = 4.0
+        circle.strokeWidth = 1.5
+        circle.stroke = Color.BLACK
         markAsNeutral()
     }
 
     override fun markAsNeutral() {
-        circle.fill = Color.BLACK
+        circle.fill = Color.WHITE
     }
 
     override fun markAsActive() {
-        circle.fill = Color.GREEN
+        circle.fill = Color.LIGHTGREEN
     }
 
     override fun markAsDisabled() {

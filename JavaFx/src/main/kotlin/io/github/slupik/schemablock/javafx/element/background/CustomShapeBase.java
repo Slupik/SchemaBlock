@@ -210,7 +210,7 @@ public abstract class CustomShapeBase extends Pane implements CustomShape {
 
     @Override
     public void resetColor() {
-        setFill(Color.web("#00e860"));
+        setFill(Color.web("#ffffff"));
     }
 
     @Override
