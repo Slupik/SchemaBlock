@@ -8,19 +8,24 @@ import javafx.scene.text.Text
 /**
  * All rights reserved & copyright ©
  */
+private const val MAX_FONT_SIZE = 15.0
+
 internal class TextSizeProvider constructor(
-        val label: Label
+    val label: Label
 ) {
 
     internal fun getFontForContainerSize(width: Double, height: Double): Font {
         var font = getFontFittedForWidth(width)
 
-        if(isFontHigherThanAllowed(font, height)) {
+        if (isFontHigherThanAllowed(font, height)) {
             font = getFontFittedForHeight(height)
         }
 
-        return font
+        return if(font.size > MAX_FONT_SIZE) getMaxFont() else font
     }
+
+    private fun getMaxFont(): Font =
+        Font.font(label.font.family, FontPosture.findByName(label.font.style), MAX_FONT_SIZE)
 
     private fun isFontHigherThanAllowed(font: Font, maxHeight: Double): Boolean {
         val text = getText()
@@ -63,6 +68,6 @@ internal class TextSizeProvider constructor(
     private fun getText(): String? = label.text
 
     private fun getUnitFont(): Font? =
-            Font.font(label.font.family, FontPosture.findByName(label.font.style), 1.0)
+        Font.font(label.font.family, FontPosture.findByName(label.font.style), 1.0)
 
 }
