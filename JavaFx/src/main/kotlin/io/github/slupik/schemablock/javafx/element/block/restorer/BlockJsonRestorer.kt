@@ -69,20 +69,19 @@ class BlockJsonRestorer @Inject constructor(
         }
 
     private fun createIoBlock(specification: IoBlockSpecification): IoUiBlock =
-        IoUiBlock(
-            id = specification.id
-        ).apply {
-            description = specification.description
+        (factory.createUsableBlock(specification.type, specification.id) as IoUiBlock)
+            .apply {
+                description = specification.description
 
-            specification.operations.map {
-                IoOperation(
-                    input = it.input,
-                    code = it.command
-                )
-            }.forEach {
-                addOperation(it)
+                specification.operations.map {
+                    IoOperation(
+                        input = it.input,
+                        code = it.command
+                    )
+                }.forEach {
+                    addOperation(it)
+                }
             }
-        }
 
     private fun createConditionalBlock(specification: CodeAwareBlockSpecification): ConditionalUiBlock =
         (factory.createUsableBlock(specification.type, specification.id) as ConditionalUiBlock)
