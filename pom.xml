@@ -16,6 +16,7 @@
         <module>WitLang-Parser</module>
         <module>WitLang-Model</module>
         <module>UltimateDetail</module>
+        <module>Blocks</module>
     </modules>
 
     <properties>

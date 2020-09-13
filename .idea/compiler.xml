@@ -16,16 +16,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-sources/apt-test" />
         <outputRelativeToContentRoot value="true" />
-        <module name="WitLangParser" />
-        <module name="Entity" />
-        <module name="WitLangModel" />
-        <module name="PandaLang" />
-        <module name="JavaFx" />
-        <module name="WitLang" />
         <module name="UltimateDetail" />
+        <module name="Entity" />
+        <module name="WitLangParser" />
+        <module name="JavaFx" />
+        <module name="WitLangModel" />
+        <module name="WitLang" />
+        <module name="PandaLang" />
+        <module name="Blocks" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Blocks" target="1.8" />
       <module name="Entity" target="1.8" />
       <module name="JavaFx" target="1.8" />
       <module name="PandaLang" target="1.8" />

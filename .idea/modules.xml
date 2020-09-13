@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Blocks/Blocks.iml" filepath="$PROJECT_DIR$/Blocks/Blocks.iml" />
       <module fileurl="file://$PROJECT_DIR$/Entity/Entity.iml" filepath="$PROJECT_DIR$/Entity/Entity.iml" />
       <module fileurl="file://$PROJECT_DIR$/JavaFx/JavaFx.iml" filepath="$PROJECT_DIR$/JavaFx/JavaFx.iml" />
       <module fileurl="file://$PROJECT_DIR$/PandaLang/PandaLang.iml" filepath="$PROJECT_DIR$/PandaLang/PandaLang.iml" />
