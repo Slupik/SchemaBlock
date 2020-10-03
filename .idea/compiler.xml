@@ -18,12 +18,12 @@
         <outputRelativeToContentRoot value="true" />
         <module name="UltimateDetail" />
         <module name="Entity" />
-        <module name="WitLangParser" />
         <module name="JavaFx" />
-        <module name="WitLangModel" />
+        <module name="WitLang-Parser" />
         <module name="WitLang" />
         <module name="PandaLang" />
         <module name="Blocks" />
+        <module name="WitLang-Model" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -34,6 +34,8 @@
       <module name="SchemaBlock" target="1.8" />
       <module name="UltimateDetail" target="1.8" />
       <module name="WitLang" target="1.8" />
+      <module name="WitLang-Model" target="1.8" />
+      <module name="WitLang-Parser" target="1.8" />
       <module name="WitLangModel" target="1.8" />
       <module name="WitLangParser" target="1.8" />
     </bytecodeTargetLevel>
