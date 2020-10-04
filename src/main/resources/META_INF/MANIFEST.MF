@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: 11.0.3 (AdoptOpenJDK)
+Created-By: Sebastian Witasik
+Main-Class: io.github.slupik.schemablock.Main

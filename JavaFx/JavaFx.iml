@@ -47,6 +47,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="javafx-sdk-11" level="project" />
     <orderEntry type="module" module-name="WitLang-Model" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.8.1" level="project" />
@@ -95,6 +96,5 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.5.0-M1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.4.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.4.2" level="project" />
-    <orderEntry type="library" name="javafx-sdk-11" level="project" />
   </component>
 </module>
