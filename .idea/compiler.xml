@@ -27,15 +27,15 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Blocks" target="1.8" />
-      <module name="Entity" target="1.8" />
-      <module name="JavaFx" target="1.8" />
-      <module name="PandaLang" target="1.8" />
-      <module name="SchemaBlock" target="1.8" />
-      <module name="UltimateDetail" target="1.8" />
-      <module name="WitLang" target="1.8" />
-      <module name="WitLang-Model" target="1.8" />
-      <module name="WitLang-Parser" target="1.8" />
+      <module name="Blocks" target="11" />
+      <module name="Entity" target="11" />
+      <module name="JavaFx" target="11" />
+      <module name="PandaLang" target="11" />
+      <module name="SchemaBlock" target="11" />
+      <module name="UltimateDetail" target="11" />
+      <module name="WitLang" target="11" />
+      <module name="WitLang-Model" target="11" />
+      <module name="WitLang-Parser" target="11" />
       <module name="WitLangModel" target="1.8" />
       <module name="WitLangParser" target="1.8" />
     </bytecodeTargetLevel>
