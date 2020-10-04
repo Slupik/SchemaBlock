@@ -2,14 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Blocks/Blocks.iml" filepath="$PROJECT_DIR$/Blocks/Blocks.iml" />
       <module fileurl="file://$PROJECT_DIR$/Entity/Entity.iml" filepath="$PROJECT_DIR$/Entity/Entity.iml" />
       <module fileurl="file://$PROJECT_DIR$/JavaFx/JavaFx.iml" filepath="$PROJECT_DIR$/JavaFx/JavaFx.iml" />
       <module fileurl="file://$PROJECT_DIR$/PandaLang/PandaLang.iml" filepath="$PROJECT_DIR$/PandaLang/PandaLang.iml" />
       <module fileurl="file://$PROJECT_DIR$/SchemaBlock.iml" filepath="$PROJECT_DIR$/SchemaBlock.iml" />
       <module fileurl="file://$PROJECT_DIR$/UltimateDetail/UltimateDetail.iml" filepath="$PROJECT_DIR$/UltimateDetail/UltimateDetail.iml" />
       <module fileurl="file://$PROJECT_DIR$/WitLang/WitLang.iml" filepath="$PROJECT_DIR$/WitLang/WitLang.iml" />
-      <module fileurl="file://$PROJECT_DIR$/WitLang-Model/WitLangModel.iml" filepath="$PROJECT_DIR$/WitLang-Model/WitLangModel.iml" />
-      <module fileurl="file://$PROJECT_DIR$/WitLang-Parser/WitLangParser.iml" filepath="$PROJECT_DIR$/WitLang-Parser/WitLangParser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WitLang-Model/WitLang-Model.iml" filepath="$PROJECT_DIR$/WitLang-Model/WitLang-Model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WitLang-Parser/WitLang-Parser.iml" filepath="$PROJECT_DIR$/WitLang-Parser/WitLang-Parser.iml" />
     </modules>
   </component>
 </project>

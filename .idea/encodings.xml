@@ -2,6 +2,7 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Blocks" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Entity" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/JavaFx" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/PandaLang" charset="UTF-8" />

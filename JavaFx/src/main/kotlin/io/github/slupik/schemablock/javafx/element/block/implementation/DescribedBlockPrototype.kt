@@ -74,7 +74,7 @@ abstract class DescribedBlockPrototype constructor(
 
     }
 
-    private fun getJavaClass() = this.javaClass::class.java
+    private fun getJavaClass() = DescribedBlockPrototype::class.java
 
     private fun initBackground() {
         backgroundShape = createBackgroundElement()
