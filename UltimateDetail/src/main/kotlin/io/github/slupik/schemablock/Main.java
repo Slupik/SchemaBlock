@@ -4,7 +4,7 @@ import de.tesis.dynaware.grapheditor.demo.GraphEditorDemo;
 
 public class Main {
 
-    private static final boolean NEW_UI = true;
+    private static final boolean NEW_UI = false;
 
     public static void main(String[] args) {
         if (NEW_UI) {
