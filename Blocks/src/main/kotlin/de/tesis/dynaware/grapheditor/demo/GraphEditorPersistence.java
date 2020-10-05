@@ -137,7 +137,6 @@ public class GraphEditorPersistence {
     /**
      * Opens the file chooser and returns the selected {@link File}.
      *
-     * @param graphEditor a graph editor instance with a not-null scene
      * @param save {@code true} to open a save dialog, {@code false} to open a load dialog
      * @return the chosen file
      */
