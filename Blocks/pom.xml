@@ -14,11 +14,45 @@
     <name>io.github.slupik Blocks</name>
 
     <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>de.tesis.dynaware</groupId>-->
+<!--            <artifactId>de.tesis.dynaware.grapheditor.core</artifactId>-->
+<!--            <version>${dynaware.grapheditor.version}</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>core</groupId>-->
+<!--                    <artifactId>core</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/de.tesis.dynaware/de.tesis.dynaware.grapheditor -->
         <dependency>
             <groupId>de.tesis.dynaware</groupId>
-            <artifactId>de.tesis.dynaware.grapheditor.core</artifactId>
+            <artifactId>de.tesis.dynaware.grapheditor</artifactId>
+            <version>${dynaware.grapheditor.version}</version>
+            <type>pom</type>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/de.tesis.dynaware/de.tesis.dynaware.grapheditor.api -->
+        <dependency>
+            <groupId>de.tesis.dynaware</groupId>
+            <artifactId>de.tesis.dynaware.grapheditor.api</artifactId>
             <version>${dynaware.grapheditor.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/de.tesis.dynaware/de.tesis.dynaware.grapheditor.model -->
+        <dependency>
+            <groupId>de.tesis.dynaware</groupId>
+            <artifactId>de.tesis.dynaware.grapheditor.model</artifactId>
+            <version>${dynaware.grapheditor.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.eclipse.emf/org.eclipse.emf.ecore.xmi -->
+        <dependency>
+            <groupId>org.eclipse.emf</groupId>
+            <artifactId>org.eclipse.emf.ecore.xmi</artifactId>
+            <version>${eclipse.emf.ecore.version}</version>
+        </dependency>
+
+
+
 
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
         <dependency>
