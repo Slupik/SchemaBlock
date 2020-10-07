@@ -10,6 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>blocks</artifactId>
+    <packaging>jar</packaging>
+    <name>io.github.slupik Blocks</name>
 
     <dependencies>
         <dependency>

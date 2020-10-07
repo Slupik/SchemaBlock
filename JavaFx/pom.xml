@@ -11,8 +11,8 @@
 
     <artifactId>JavaFx</artifactId>
     <packaging>jar</packaging>
-
     <name>io.github.slupik JavaFx</name>
+
     <dependencies>
         <dependency>
             <groupId>io.github.slupik</groupId>
