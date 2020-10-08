@@ -29,6 +29,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -44,6 +45,8 @@ public class GraphEditorDemoController {
 
     @FXML
     private AnchorPane root;
+    @FXML
+    private VBox mainContainer;
     @FXML
     private MenuBar menuBar;
     @FXML
@@ -120,6 +123,9 @@ public class GraphEditorDemoController {
 
         initializeMenuBar();
         addActiveSkinControllerListener();
+
+        mainContainer.prefWidthProperty().bind(root.widthProperty());
+        mainContainer.prefHeightProperty().bind(root.heightProperty());
     }
 
     @FXML
