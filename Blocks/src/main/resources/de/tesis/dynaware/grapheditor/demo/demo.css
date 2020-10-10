@@ -28,3 +28,9 @@
       -fx-background-color: blue;
       -fx-text-fill: white;
  }
+
+.jfx-tree-table-view .column-header .label {
+    -fx-alignment: center-left;
+    -fx-text-fill: BLACK;
+    -fx-padding: 8 16 8 16;
+}

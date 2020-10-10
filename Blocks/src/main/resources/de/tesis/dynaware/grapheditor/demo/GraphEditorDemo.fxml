@@ -130,13 +130,13 @@
                                     </HBox>
                                 </children>
                             </VBox>
-                            <TableView fx:id="tvVariables" prefHeight="200.0" prefWidth="200.0">
+                            <JFXTreeTableView fx:id="tvVariables" prefHeight="200.0" prefWidth="200.0">
                                 <columns>
-                                    <TableColumn fx:id="tcVarType" minWidth="50.0" prefWidth="75.0" text="Typ" />
-                                    <TableColumn fx:id="tcVarName" minWidth="50.0" prefWidth="100.0" text="Nazwa" />
-                                    <TableColumn fx:id="tcVarValue" minWidth="50.0" prefWidth="150.0" text="Wartość" />
+                                    <JFXTreeTableColumn fx:id="tcVarType" minWidth="50.0" prefWidth="75.0" text="Typ" />
+                                    <JFXTreeTableColumn fx:id="tcVarName" minWidth="50.0" prefWidth="100.0" text="Nazwa" />
+                                    <JFXTreeTableColumn fx:id="tcVarValue" minWidth="50.0" prefWidth="150.0" text="Wartość" />
                                 </columns>
-                            </TableView>
+                            </JFXTreeTableView>
                         </items>
                         <padding>
                             <Insets bottom="8.0" left="8.0" right="8.0" />
