@@ -20,9 +20,6 @@
                                 <items>
                                     <MenuItem onAction="#loadSample" text="Default Skins - Small" />
                                     <MenuItem onAction="#loadSampleLarge" text="Default Skins - Large" />
-                                    <SeparatorMenuItem />
-                                    <MenuItem onAction="#loadTree" text="Tree Skins" />
-                                    <MenuItem onAction="#loadTitled" text="Titled Skins" />
                                 </items>
                             </Menu>
                             <MenuItem onAction="#save" text="Save" />
@@ -70,13 +67,6 @@
                         <items>
                             <RadioMenuItem fx:id="showGridButton" text="Show Grid" />
                             <RadioMenuItem fx:id="snapToGridButton" text="Snap to Grid" />
-                            <Menu text="Skin Type">
-                                <items>
-                                    <RadioMenuItem fx:id="defaultSkinButton" onAction="#setDefaultSkin" selected="true" text="Default" />
-                                    <RadioMenuItem fx:id="treeSkinButton" onAction="#setTreeSkin" text="Tree" />
-                                    <RadioMenuItem fx:id="titledSkinButton" onAction="#setTitledSkin" text="Titled" />
-                                </items>
-                            </Menu>
                             <!-- Added blank spaces to force menu to be wider. -->
                             <Menu fx:id="intersectionStyle" text="Intersection Style  ">
                                 <items>

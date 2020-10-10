@@ -1,8 +1,10 @@
 package io.github.slupik.schemablock.view;
 
+import de.tesis.dynaware.grapheditor.Commands;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
 import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.SimpleConnectionSkin;
 import de.tesis.dynaware.grapheditor.model.GModel;
 import de.tesis.dynaware.grapheditor.model.GraphFactory;
 import de.tesis.dynaware.grapheditor.window.WindowPosition;
@@ -14,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
@@ -52,12 +55,6 @@ public class MainViewController implements Initializable {
     @FXML
     private RadioMenuItem snapToGridButton;
     @FXML
-    private RadioMenuItem defaultSkinButton;
-    @FXML
-    private RadioMenuItem treeSkinButton;
-    @FXML
-    private RadioMenuItem titledSkinButton;
-    @FXML
     private Menu intersectionStyle;
     @FXML
     private RadioMenuItem gappedStyleButton;
@@ -75,9 +72,24 @@ public class MainViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         final GModel model = GraphFactory.eINSTANCE.createGModel();
-
         graphEditor.setModel(model);
         graphEditorContainer.setGraphEditor(graphEditor);
+    }
+    @FXML
+    public void loadSample() {
+        setDefaultSkin();
+//        graphEditorPersistence.loadSample(graphEditor);
+    }
+
+    @FXML
+    public void loadSampleLarge() {
+        setDefaultSkin();
+//        graphEditorPersistence.loadSampleLarge(graphEditor);
+    }
+
+    @FXML
+    public void setDefaultSkin() {
+//        activeSkinController.set(defaultSkinController);
     }
 
     @FXML
@@ -87,41 +99,13 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    public void loadSample() {
-        defaultSkinButton.setSelected(true);
-        setDefaultSkin();
-//        graphEditorPersistence.loadSample(graphEditor);
-    }
-
-    @FXML
-    public void loadSampleLarge() {
-        defaultSkinButton.setSelected(true);
-        setDefaultSkin();
-//        graphEditorPersistence.loadSampleLarge(graphEditor);
-    }
-
-    @FXML
-    public void loadTree() {
-        treeSkinButton.setSelected(true);
-        setTreeSkin();
-//        graphEditorPersistence.loadTree(graphEditor);
-    }
-
-    @FXML
-    public void loadTitled() {
-        titledSkinButton.setSelected(true);
-        setTitledSkin();
-//        graphEditorPersistence.loadTitled(graphEditor);
-    }
-
-    @FXML
     public void save() {
 //        graphEditorPersistence.saveToFile(graphEditor);
     }
 
     @FXML
     public void clearAll() {
-//        Commands.clear(graphEditor.getModel());
+        Commands.clear(graphEditor.getModel());
     }
 
     @FXML
@@ -136,22 +120,22 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void undo() {
-//        Commands.undo(graphEditor.getModel());
+        Commands.undo(graphEditor.getModel());
     }
 
     @FXML
     public void redo() {
-//        Commands.redo(graphEditor.getModel());
+        Commands.redo(graphEditor.getModel());
     }
 
     @FXML
     public void cut() {
-//        graphEditor.getSelectionManager().cut();
+        graphEditor.getSelectionManager().cut();
     }
 
     @FXML
     public void copy() {
-//        graphEditor.getSelectionManager().copy();
+        graphEditor.getSelectionManager().copy();
     }
 
     @FXML
@@ -166,7 +150,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void deleteSelection() {
-//        graphEditor.getSelectionManager().deleteSelection();
+        graphEditor.getSelectionManager().deleteSelection();
     }
 
     @FXML
@@ -185,31 +169,16 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    public void setDefaultSkin() {
-//        activeSkinController.set(defaultSkinController);
-    }
-
-    @FXML
-    public void setTreeSkin() {
-//        activeSkinController.set(treeSkinController);
-    }
-
-    @FXML
-    public void setTitledSkin() {
-//        activeSkinController.set(titledSkinController);
-    }
-
-    @FXML
     public void setGappedStyle() {
-//        graphEditor.getProperties().getCustomProperties().remove(SimpleConnectionSkin.SHOW_DETOURS_KEY);
-//        graphEditor.reload();
+        graphEditor.getProperties().getCustomProperties().remove(SimpleConnectionSkin.SHOW_DETOURS_KEY);
+        graphEditor.reload();
     }
 
     @FXML
     public void setDetouredStyle() {
-//        final Map<String, String> customProperties = graphEditor.getProperties().getCustomProperties();
-//        customProperties.put(SimpleConnectionSkin.SHOW_DETOURS_KEY, Boolean.toString(true));
-//        graphEditor.reload();
+        final Map<String, String> customProperties = graphEditor.getProperties().getCustomProperties();
+        customProperties.put(SimpleConnectionSkin.SHOW_DETOURS_KEY, Boolean.toString(true));
+        graphEditor.reload();
     }
 
     @FXML
