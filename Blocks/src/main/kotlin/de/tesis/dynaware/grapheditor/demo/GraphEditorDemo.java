@@ -4,6 +4,7 @@
 package de.tesis.dynaware.grapheditor.demo;
 
 import de.tesis.dynaware.grapheditor.GraphEditor;
+import io.github.slupik.schemablock.view.MainViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,10 +32,10 @@ public class GraphEditorDemo extends Application {
     @Override
     public void start(final Stage stage) throws Exception {
 
-        final URL location = getClass().getResource("GraphEditorDemo.fxml");
+        final URL location = getClass().getResource("MainView.fxml");
         final FXMLLoader loader = new FXMLLoader();
         final Parent root = loader.load(location.openStream());
-        final GraphEditorDemoController controller = loader.getController();
+        final MainViewController controller = loader.getController();
 
         final Scene scene = new Scene(root, 830, 630);
 
