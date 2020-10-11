@@ -14,17 +14,6 @@
     <name>io.github.slupik Blocks</name>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>de.tesis.dynaware</groupId>-->
-<!--            <artifactId>de.tesis.dynaware.grapheditor.core</artifactId>-->
-<!--            <version>${dynaware.grapheditor.version}</version>-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>core</groupId>-->
-<!--                    <artifactId>core</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/de.tesis.dynaware/de.tesis.dynaware.grapheditor -->
         <dependency>
             <groupId>de.tesis.dynaware</groupId>
@@ -95,6 +84,24 @@
             <groupId>com.jfoenix</groupId>
             <artifactId>jfoenix</artifactId>
             <version>${jfoenix.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.dagger/dagger -->
+        <dependency>
+            <groupId>com.google.dagger</groupId>
+            <artifactId>dagger</artifactId>
+            <version>${dagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.dagger</groupId>
+            <artifactId>dagger-compiler</artifactId>
+            <version>${dagger.version}</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
