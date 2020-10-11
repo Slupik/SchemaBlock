@@ -5,6 +5,7 @@ import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
 import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.SimpleConnectionSkin;
+import de.tesis.dynaware.grapheditor.demo.GraphEditorPersistence;
 import de.tesis.dynaware.grapheditor.model.GModel;
 import de.tesis.dynaware.grapheditor.model.GraphFactory;
 import de.tesis.dynaware.grapheditor.window.WindowPosition;
@@ -68,23 +69,32 @@ public class MainViewController implements Initializable {
     private GraphEditorContainer graphEditorContainer;
 
     private final GraphEditor graphEditor = new DefaultGraphEditor();
+    private final GraphEditorPersistence graphEditorPersistence = new GraphEditorPersistence();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         final GModel model = GraphFactory.eINSTANCE.createGModel();
         graphEditor.setModel(model);
         graphEditorContainer.setGraphEditor(graphEditor);
+
+        enableResizing();
     }
+
+    private void enableResizing() {
+        mainContainer.prefWidthProperty().bind(root.widthProperty());
+        mainContainer.prefHeightProperty().bind(root.heightProperty());
+    }
+
     @FXML
     public void loadSample() {
         setDefaultSkin();
-//        graphEditorPersistence.loadSample(graphEditor);
+        graphEditorPersistence.loadSample(graphEditor);
     }
 
     @FXML
     public void loadSampleLarge() {
         setDefaultSkin();
-//        graphEditorPersistence.loadSampleLarge(graphEditor);
+        graphEditorPersistence.loadSampleLarge(graphEditor);
     }
 
     @FXML
@@ -94,13 +104,13 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void load() {
-//        graphEditorPersistence.loadFromFile(graphEditor);
+        graphEditorPersistence.loadFromFile(graphEditor);
 //        checkSkinType();
     }
 
     @FXML
     public void save() {
-//        graphEditorPersistence.saveToFile(graphEditor);
+        graphEditorPersistence.saveToFile(graphEditor);
     }
 
     @FXML
@@ -110,7 +120,8 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void createNew() {
-        System.out.println("Stubbed action: createNew");
+        save();
+        clearAll();
     }
 
     @FXML
