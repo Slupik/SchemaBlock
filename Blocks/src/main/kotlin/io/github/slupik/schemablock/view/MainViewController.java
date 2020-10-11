@@ -11,6 +11,8 @@ import de.tesis.dynaware.grapheditor.demo.utils.AwesomeIcon;
 import de.tesis.dynaware.grapheditor.model.GNode;
 import de.tesis.dynaware.grapheditor.window.WindowPosition;
 import io.github.slupik.schemablock.view.dagger.DaggerViewComponent;
+import io.github.slupik.schemablock.view.dagger.ViewElementsModule;
+import io.github.slupik.schemablock.view.logic.Zoomer;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -21,7 +23,6 @@ import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.transform.Scale;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
@@ -78,22 +79,23 @@ public class MainViewController implements Initializable {
     @FXML
     private GraphEditorContainer graphEditorContainer;
 
-    private Scale scaleTransform;
-    private double currentZoomFactor = 1;
-
     private final ObjectProperty<SkinController> activeSkinController = new SimpleObjectProperty<>();
-    private DefaultSkinController defaultSkinController;
+    @Inject
+    DefaultSkinController defaultSkinController;
     @Inject
     GraphEditor graphEditor;
     @Inject
     GraphEditorPersistence graphEditorPersistence;
+    @Inject
+    Zoomer zoomer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DaggerViewComponent.builder().build().inject(this);
-        graphEditorContainer.setGraphEditor(graphEditor);
+        DaggerViewComponent.builder()
+                .addViewElementsModule(new ViewElementsModule(graphEditorContainer))
+                .build().inject(this);
 
-        defaultSkinController = new DefaultSkinController(graphEditor, graphEditorContainer);
+        graphEditorContainer.setGraphEditor(graphEditor);
         activeSkinController.set(defaultSkinController);
         addActiveSkinControllerListener();
 
@@ -105,11 +107,7 @@ public class MainViewController implements Initializable {
      * Initializes the menu bar.
      */
     private void initializeMenuBar() {
-
-        scaleTransform = new Scale(currentZoomFactor, currentZoomFactor, 0, 0);
-        scaleTransform.yProperty().bind(scaleTransform.xProperty());
-
-        graphEditor.getView().getTransforms().add(scaleTransform);
+        graphEditor.getView().getTransforms().add(zoomer.getScale());
 
         final ToggleGroup connectionStyleGroup = new ToggleGroup();
         connectionStyleGroup.getToggles().addAll(gappedStyleButton, detouredStyleButton);
@@ -138,59 +136,37 @@ public class MainViewController implements Initializable {
      * Initializes the list of zoom options.
      */
     private void initializeZoomOptions() {
-
         final ToggleGroup toggleGroup = new ToggleGroup();
-
-        for (int i = 1; i <= 5; i++) {
-
-            final RadioMenuItem zoomOption = new RadioMenuItem();
-            final double zoomFactor = i;
-
-            zoomOption.setText(i + "00%");
-            zoomOption.setOnAction(event -> setZoomFactor(zoomFactor));
-
-            toggleGroup.getToggles().add(zoomOption);
-            zoomOptions.getItems().add(zoomOption);
-
-            if (i == 1) {
-                zoomOption.setSelected(true);
-            }
-        }
+        addZoomItem(toggleGroup, 10);
+        addZoomItem(toggleGroup, 25);
+        addZoomItem(toggleGroup, 50);
+        addZoomItem(toggleGroup, 75);
+        addZoomItem(toggleGroup, 100);
+        addZoomItem(toggleGroup, 200);
+        addZoomItem(toggleGroup, 300);
+        addZoomItem(toggleGroup, 400);
+        addZoomItem(toggleGroup, 500);
     }
 
-    /**
-     * Sets a new zoom factor.
-     *
-     * <p>
-     * Note that everything will look crap if the zoom factor is non-integer.
-     * </p>
-     *
-     * @param zoomFactor the new zoom factor
-     */
-    private void setZoomFactor(final double zoomFactor) {
+    private void addZoomItem(ToggleGroup toggleGroup, double zoomValue) {
+        final RadioMenuItem zoomOption = new RadioMenuItem();
+        final double zoomFactor = zoomValue / 100;
 
-        final double zoomFactorRatio = zoomFactor / currentZoomFactor;
+        zoomOption.setText(zoomValue + "%");
+        zoomOption.setOnAction(event -> zoomer.zoom(zoomFactor));
 
-        final double currentCenterX = graphEditorContainer.windowXProperty().get();
-        final double currentCenterY = graphEditorContainer.windowYProperty().get();
+        toggleGroup.getToggles().add(zoomOption);
+        zoomOptions.getItems().add(zoomOption);
 
-        if (zoomFactor != 1) {
-            // Cache-while-panning is sometimes very sluggish when zoomed in.
-            graphEditorContainer.setCacheWhilePanning(false);
-        } else {
-            graphEditorContainer.setCacheWhilePanning(true);
+        if (zoomFactor == 1) {
+            zoomOption.setSelected(true);
         }
-
-        scaleTransform.setX(zoomFactor);
-        graphEditorContainer.panTo(currentCenterX * zoomFactorRatio, currentCenterY * zoomFactorRatio);
-        currentZoomFactor = zoomFactor;
     }
 
     /**
      * Adds a listener to make changes to available menu options when the skin type changes.
      */
     private void addActiveSkinControllerListener() {
-
         activeSkinController.addListener((observable, oldValue, newValue) -> {
             handleActiveSkinControllerChange();
         });
@@ -202,8 +178,11 @@ public class MainViewController implements Initializable {
     private void handleActiveSkinControllerChange() {
         graphEditor.setConnectorValidator(null);
         graphEditor.getSelectionManager().setConnectionSelectionPredicate(null);
-
         clearAll();
+    }
+
+    private void clearAll() {
+        clearModel();
         flushCommandStack();
         checkConnectorButtonsToDisable();
         graphEditor.getSelectionManager().clearMemory();
@@ -213,7 +192,6 @@ public class MainViewController implements Initializable {
      * Flushes the command stack, so that the undo/redo history is cleared.
      */
     private void flushCommandStack() {
-
         final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(graphEditor.getModel());
         if (editingDomain != null) {
             editingDomain.getCommandStack().flush();
@@ -281,14 +259,14 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    public void clearAll() {
+    public void clearModel() {
         Commands.clear(graphEditor.getModel());
     }
 
     @FXML
     public void createNew() {
         save();
-        clearAll();
+        clearModel();
     }
 
     @FXML
@@ -333,7 +311,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void addNode() {
-        activeSkinController.get().addNode(currentZoomFactor);
+        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor());
     }
 
     @FXML

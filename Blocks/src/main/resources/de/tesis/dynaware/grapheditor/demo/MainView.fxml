@@ -23,7 +23,7 @@
                                 </items>
                             </Menu>
                             <MenuItem onAction="#save" text="Save" />
-                            <MenuItem onAction="#clearAll" text="Clear All" />
+                            <MenuItem onAction="#clearModel" text="Clear All" />
                             <SeparatorMenuItem />
                             <MenuItem onAction="#exit" text="Exit" />
                         </items>

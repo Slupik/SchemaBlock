@@ -9,9 +9,16 @@ import javax.inject.Singleton;
  * All rights reserved & copyright ©
  */
 @Singleton
-@Component(modules = {DynawareModule.class})
+@Component(modules = {DynawareModule.class, ElementsBindingModule.class, ViewElementsModule.class})
 public interface ViewComponent {
 
     void inject(MainViewController controller);
+
+    @Component.Builder
+    interface Builder {
+        ViewComponent build();
+
+        Builder addViewElementsModule(ViewElementsModule viewElementsModule);
+    }
 
 }
