@@ -21,4 +21,9 @@ public class ViewElementsModule {
         return graphEditorContainer;
     }
 
+    @Provides
+    public WindowProvider window() {
+        return () -> graphEditorContainer.getScene().getWindow();
+    }
+
 }

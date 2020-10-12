@@ -13,6 +13,8 @@ import de.tesis.dynaware.grapheditor.window.WindowPosition;
 import io.github.slupik.schemablock.view.dagger.DaggerViewComponent;
 import io.github.slupik.schemablock.view.dagger.ViewElementsModule;
 import io.github.slupik.schemablock.view.logic.Zoomer;
+import io.github.slupik.schemablock.view.persistance.FileChooser;
+import io.github.slupik.schemablock.view.persistance.GraphSaver;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -27,6 +29,7 @@ import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import javax.inject.Inject;
+import java.io.File;
 import java.net.URL;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -88,6 +91,10 @@ public class MainViewController implements Initializable {
     GraphEditorPersistence graphEditorPersistence;
     @Inject
     Zoomer zoomer;
+    @Inject
+    FileChooser fileChooser;
+    @Inject
+    GraphSaver graphSaver;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -255,7 +262,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void save() {
-        graphEditorPersistence.saveToFile(graphEditor);
+        File file = fileChooser.choseForSave();
+        if (file != null) {
+            graphSaver.saveToFile(graphEditor, file);
+        }
     }
 
     @FXML
