@@ -4,7 +4,6 @@ import de.tesis.dynaware.grapheditor.Commands;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.SimpleConnectionSkin;
-import de.tesis.dynaware.grapheditor.demo.GraphEditorPersistence;
 import de.tesis.dynaware.grapheditor.demo.customskins.DefaultSkinController;
 import de.tesis.dynaware.grapheditor.demo.customskins.SkinController;
 import de.tesis.dynaware.grapheditor.demo.utils.AwesomeIcon;
@@ -14,7 +13,9 @@ import io.github.slupik.schemablock.view.dagger.DaggerViewComponent;
 import io.github.slupik.schemablock.view.dagger.ViewElementsModule;
 import io.github.slupik.schemablock.view.logic.Zoomer;
 import io.github.slupik.schemablock.view.persistance.FileChooser;
+import io.github.slupik.schemablock.view.persistance.GraphLoader;
 import io.github.slupik.schemablock.view.persistance.GraphSaver;
+import io.github.slupik.schemablock.view.persistance.SampleLoader;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -88,13 +89,15 @@ public class MainViewController implements Initializable {
     @Inject
     GraphEditor graphEditor;
     @Inject
-    GraphEditorPersistence graphEditorPersistence;
-    @Inject
     Zoomer zoomer;
     @Inject
     FileChooser fileChooser;
     @Inject
     GraphSaver graphSaver;
+    @Inject
+    GraphLoader graphLoader;
+    @Inject
+    SampleLoader sampleLoader;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -229,13 +232,13 @@ public class MainViewController implements Initializable {
     @FXML
     public void loadSample() {
         setDefaultSkin();
-        graphEditorPersistence.loadSample(graphEditor);
+        sampleLoader.loadSmallSample(graphEditor);
     }
 
     @FXML
     public void loadSampleLarge() {
         setDefaultSkin();
-        graphEditorPersistence.loadSampleLarge(graphEditor);
+        sampleLoader.loadBigSample(graphEditor);
     }
 
     @FXML
@@ -245,7 +248,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void load() {
-        graphEditorPersistence.loadFromFile(graphEditor);
+        File file = fileChooser.choseForOpen();
+        if (file != null) {
+            graphLoader.loadModel(graphEditor, file);
+        }
         checkSkinType();
     }
 
