@@ -11,7 +11,7 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 
-public class CalculationsBlock extends LabeledNodeSkin {
+public class OperationsBlock extends Block {
 
     private static final String STYLE_CLASS_BORDER = "default-node-border";
     private static final String STYLE_CLASS_BACKGROUND = "default-node-background";
@@ -25,12 +25,14 @@ public class CalculationsBlock extends LabeledNodeSkin {
     private final Rectangle border = new Rectangle();
     private final Rectangle background = new Rectangle();
 
+    private String code = "";
+
     /**
      * Creates a new default node skin instance.
      *
      * @param node the {@link GNode} the skin is being created for
      */
-    public CalculationsBlock(GNode node) {
+    public OperationsBlock(GNode node) {
         super(node);
         initElements();
         initLabel("Operations");
@@ -95,7 +97,7 @@ public class CalculationsBlock extends LabeledNodeSkin {
     }
 
     @Override
-    protected Node getBackground() {
+    public Node getBackground() {
         return background;
     }
 
@@ -107,5 +109,13 @@ public class CalculationsBlock extends LabeledNodeSkin {
     @Override
     protected Node getSelectionHalo() {
         return selectionHalo;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

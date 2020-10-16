@@ -3,26 +3,26 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins;
 
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
-
-import de.tesis.dynaware.grapheditor.core.skins.defaults.*;
+import de.tesis.dynaware.grapheditor.*;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.DefaultConnectionSkin;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.DefaultJointSkin;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.DefaultTailSkin;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.node.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import de.tesis.dynaware.grapheditor.GConnectionSkin;
-import de.tesis.dynaware.grapheditor.GConnectorSkin;
-import de.tesis.dynaware.grapheditor.GJointSkin;
-import de.tesis.dynaware.grapheditor.GNodeSkin;
-import de.tesis.dynaware.grapheditor.GTailSkin;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.node.ConditionalBlock;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.node.IoBlock;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.node.OperationsBlock;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.node.StartBlock;
 import de.tesis.dynaware.grapheditor.core.utils.LogMessages;
 import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.model.GConnector;
 import de.tesis.dynaware.grapheditor.model.GJoint;
 import de.tesis.dynaware.grapheditor.model.GNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Resposible for instantiating skins.
@@ -104,7 +104,7 @@ public class SkinFactory {
         if (node == null) {
             return null;
         } else if (node.getType() == null) {
-            return new CalculationsBlock(node);
+            return new OperationsBlock(node);
         } else if(node.getType().equals("start")) {
             return new StartBlock(node);
         } else if(node.getType().equals("io")) {
@@ -116,14 +116,14 @@ public class SkinFactory {
         final Class<? extends GNodeSkin> skinClass = nodeSkins.get(node.getType());
 
         if (skinClass == null) {
-            return new CalculationsBlock(node);
+            return new OperationsBlock(node);
         } else {
             try {
                 final Constructor<? extends GNodeSkin> constructor = skinClass.getConstructor(GNode.class);
                 return constructor.newInstance(node);
             } catch (final ReflectiveOperationException e) {
                 LOGGER.error(LogMessages.CANNOT_INSTANTIATE_SKIN, skinClass.getName());
-                return new CalculationsBlock(node);
+                return new OperationsBlock(node);
             }
         }
     }

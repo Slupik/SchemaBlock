@@ -27,6 +27,14 @@ public abstract class LabeledNodeSkin extends NodeSkin {
         super(node);
     }
 
+    public void setDescription(String description) {
+        updateText(description);
+    }
+
+    public String getDescription() {
+        return label.getText() == null ? "" : label.getText();
+    }
+
     protected void initLabel(String text) {
         getRoot().getChildren().add(label);
         StackPane.setAlignment(label, Pos.CENTER);

@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
  * Connectors are evenly spaced along the sides of the node according to their type.
  * </p>
  */
-public class StartBlock extends LabeledNodeSkin {
+public class StartBlock extends Block {
 
     private static final String STYLE_CLASS_BORDER = "default-node-border";
     private static final String STYLE_CLASS_BACKGROUND = "default-node-background";
@@ -114,7 +114,7 @@ public class StartBlock extends LabeledNodeSkin {
     }
 
     @Override
-    protected Node getBackground() {
+    public Node getBackground() {
         return background;
     }
 

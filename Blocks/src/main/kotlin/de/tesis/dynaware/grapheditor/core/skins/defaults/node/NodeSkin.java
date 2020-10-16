@@ -17,7 +17,6 @@ import javafx.geometry.Point2D;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Rectangle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,6 +67,7 @@ public abstract class NodeSkin extends GNodeSkin {
         getRoot().setMinSize(MIN_WIDTH, MIN_HEIGHT);
 
         getBackground().addEventFilter(MouseEvent.MOUSE_DRAGGED, this::filterMouseDragged);
+        getBackground().addEventFilter(MouseEvent.MOUSE_CLICKED, this::filterMouseClick);
 
         addSelectionHalo();
         addSelectionListener();
@@ -285,7 +285,13 @@ public abstract class NodeSkin extends GNodeSkin {
         }
     }
 
-    protected abstract Node getBackground();
+    private void filterMouseClick(final MouseEvent event) {
+        if (!isSelected()) {
+            event.consume();
+        }
+    }
+
+    public abstract Node getBackground();
 
     protected abstract Node getBorder();
 

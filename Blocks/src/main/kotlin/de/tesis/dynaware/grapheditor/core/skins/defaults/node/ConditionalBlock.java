@@ -11,7 +11,7 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.scene.Node;
 import javafx.scene.shape.Polygon;
 
-public class ConditionalBlock extends LabeledNodeSkin {
+public class ConditionalBlock extends Block {
 
     private static final String STYLE_CLASS_BORDER = "default-node-border";
     private static final String STYLE_CLASS_BACKGROUND = "default-node-background";
@@ -24,6 +24,8 @@ public class ConditionalBlock extends LabeledNodeSkin {
     // Border and background are separated into 2 rectangles so they can have different effects applied to them.
     private final Polygon border = new Polygon();
     private final Polygon background = new Polygon();
+
+    private String code = "";
 
     /**
      * Creates a new default node skin instance.
@@ -123,7 +125,7 @@ public class ConditionalBlock extends LabeledNodeSkin {
     }
 
     @Override
-    protected Node getBackground() {
+    public Node getBackground() {
         return background;
     }
 
@@ -135,5 +137,13 @@ public class ConditionalBlock extends LabeledNodeSkin {
     @Override
     protected Node getSelectionHalo() {
         return selectionHalo;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

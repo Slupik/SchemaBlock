@@ -3,24 +3,18 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins;
 
+import de.tesis.dynaware.grapheditor.*;
+import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.node.Block;
+import de.tesis.dynaware.grapheditor.model.*;
+import io.github.slupik.schemablock.view.dialog.BlockEditionWithDialog;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import de.tesis.dynaware.grapheditor.GConnectionSkin;
-import de.tesis.dynaware.grapheditor.GConnectorSkin;
-import de.tesis.dynaware.grapheditor.GJointSkin;
-import de.tesis.dynaware.grapheditor.GNodeSkin;
-import de.tesis.dynaware.grapheditor.GTailSkin;
-import de.tesis.dynaware.grapheditor.GraphEditor;
-import de.tesis.dynaware.grapheditor.SkinLookup;
-import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
-import de.tesis.dynaware.grapheditor.model.GConnection;
-import de.tesis.dynaware.grapheditor.model.GConnector;
-import de.tesis.dynaware.grapheditor.model.GJoint;
-import de.tesis.dynaware.grapheditor.model.GModel;
-import de.tesis.dynaware.grapheditor.model.GNode;
 
 /**
  * Manages skins for all elements of a {@link GModel}.
@@ -39,22 +33,25 @@ public class SkinManager implements SkinLookup {
     private final Map<GConnection, GConnectionSkin> connectionSkins = new HashMap<>();
     private final Map<GJoint, GJointSkin> jointSkins = new HashMap<>();
     private final Map<GConnector, GTailSkin> tailSkins = new HashMap<>();
+    private final BlockEditionWithDialog blockEditionWithDialog;
 
     /**
      * Creates a new skin manager instance. Only one instance should exist per {@link DefaultGraphEditor} instance.
      */
-    public SkinManager(final GraphEditor graphEditor) {
-        this(graphEditor, new SkinFactory());
+    public SkinManager(final GraphEditor graphEditor, BlockEditionWithDialog blockEditionWithDialog) {
+        this(graphEditor, new SkinFactory(), blockEditionWithDialog);
     }
 
     /**
      * Package-private constructor used only to inject mocks in unit tests.
      *
      * @param skinFactory a mock {@link SkinFactory} instance
+     * @param blockEditionWithDialog
      */
-    SkinManager(final GraphEditor graphEditor, final SkinFactory skinFactory) {
+    SkinManager(final GraphEditor graphEditor, final SkinFactory skinFactory, BlockEditionWithDialog blockEditionWithDialog) {
         this.graphEditor = graphEditor;
         this.skinFactory = skinFactory;
+        this.blockEditionWithDialog = blockEditionWithDialog;
     }
 
     /**
@@ -125,6 +122,15 @@ public class SkinManager implements SkinLookup {
             nodeSkin.setGraphEditor(graphEditor);
             nodeSkin.getRoot().setEditorProperties(graphEditor.getProperties());
             nodeSkin.initialize();
+            if (nodeSkin instanceof Block) {
+                ((Block) nodeSkin).getBackground().addEventHandler(MouseEvent.MOUSE_CLICKED, event ->{
+                    if (event.getButton() == MouseButton.PRIMARY) {
+                        if (event.getClickCount() == 2) {
+                            blockEditionWithDialog.openFor(((Block) nodeSkin));
+                        }
+                    }
+                });
+            }
 
             nodeSkins.put(node, nodeSkin);
 
