@@ -125,7 +125,7 @@ public class ConditionalBlock extends Block {
     }
 
     @Override
-    public Node getBackground() {
+    protected Node getBackground() {
         return background;
     }
 

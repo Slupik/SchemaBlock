@@ -10,6 +10,8 @@ import de.tesis.dynaware.grapheditor.model.GNode;
 import javafx.beans.binding.DoubleBinding;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import org.jetbrains.annotations.NotNull;
@@ -25,6 +27,7 @@ public abstract class LabeledNodeSkin extends NodeSkin {
      */
     public LabeledNodeSkin(GNode node) {
         super(node);
+        addDoubleClickListener();
     }
 
     public void setDescription(String description) {
@@ -45,6 +48,16 @@ public abstract class LabeledNodeSkin extends NodeSkin {
                 resizeText(getTextAreaWidth().get(), newValue.doubleValue())
         );
         updateText(text);
+    }
+
+    private void addDoubleClickListener() {
+        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->{
+            if (event.getButton() == MouseButton.PRIMARY) {
+                if (event.getClickCount() == 2) {
+                    invokeDoubleClickEventHandler(event);
+                }
+            }
+        });
     }
 
     protected void updateText(String text) {

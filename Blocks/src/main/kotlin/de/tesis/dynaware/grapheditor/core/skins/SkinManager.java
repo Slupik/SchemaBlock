@@ -8,8 +8,6 @@ import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.node.Block;
 import de.tesis.dynaware.grapheditor.model.*;
 import io.github.slupik.schemablock.view.dialog.BlockEditionWithDialog;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -123,12 +121,8 @@ public class SkinManager implements SkinLookup {
             nodeSkin.getRoot().setEditorProperties(graphEditor.getProperties());
             nodeSkin.initialize();
             if (nodeSkin instanceof Block) {
-                ((Block) nodeSkin).getBackground().addEventHandler(MouseEvent.MOUSE_CLICKED, event ->{
-                    if (event.getButton() == MouseButton.PRIMARY) {
-                        if (event.getClickCount() == 2) {
-                            blockEditionWithDialog.openFor(((Block) nodeSkin));
-                        }
-                    }
+                ((Block) nodeSkin).addOnDoubleClickEventHandler(event -> {
+                    blockEditionWithDialog.openFor(((Block) nodeSkin));
                 });
             }
 

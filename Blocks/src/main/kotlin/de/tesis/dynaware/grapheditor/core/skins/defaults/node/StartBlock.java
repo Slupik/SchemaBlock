@@ -114,7 +114,7 @@ public class StartBlock extends Block {
     }
 
     @Override
-    public Node getBackground() {
+    protected Node getBackground() {
         return background;
     }
 
