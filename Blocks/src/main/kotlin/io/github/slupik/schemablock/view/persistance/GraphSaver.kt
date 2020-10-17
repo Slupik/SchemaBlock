@@ -9,5 +9,6 @@ import java.io.File
 interface GraphSaver  {
 
     fun saveToFile(graphEditor: GraphEditor, file: File)
+    fun stringify(graphEditor: GraphEditor): String?
 
 }

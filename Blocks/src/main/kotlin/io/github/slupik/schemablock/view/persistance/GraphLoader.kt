@@ -10,6 +10,7 @@ import java.io.File
 interface GraphLoader {
 
     fun loadModel(graphEditor: GraphEditor, file: File)
+    fun loadModel(graphEditor: GraphEditor, content: String)
     fun loadModel(graphEditor: GraphEditor, uri: URI)
 
 }

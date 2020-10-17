@@ -3,13 +3,14 @@ package io.github.slupik.schemablock.view.persistance
 import de.tesis.dynaware.grapheditor.GraphEditor
 import de.tesis.dynaware.grapheditor.model.GModel
 import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.resource.impl.ResourceImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
+import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl
 import java.io.ByteArrayInputStream
 import java.io.File
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
+
 
 /**
  * All rights reserved & copyright ©
@@ -37,9 +38,8 @@ class DefaultGraphLoader @Inject constructor(): GraphLoader {
         }
     }
 
-    // in future may be useful
-    private fun loadModel(graphEditor: GraphEditor, content: String) {
-        val resource = ResourceImpl()
+    override fun loadModel(graphEditor: GraphEditor, content: String) {
+        val resource = XMLResourceImpl()
 
         try {
             resource.load(ByteArrayInputStream(content.toByteArray()), Collections.EMPTY_MAP)

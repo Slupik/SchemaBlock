@@ -4,7 +4,9 @@ import de.tesis.dynaware.grapheditor.GraphEditor
 import de.tesis.dynaware.grapheditor.model.GModel
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
+import org.eclipse.emf.ecore.xmi.impl.XMLResourceImpl
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -18,6 +20,28 @@ class DefaultGraphSaver @Inject constructor() : GraphSaver {
     override fun saveToFile(graphEditor: GraphEditor, file: File) {
         if (graphEditor.model != null) {
             saveModel(file, graphEditor.model)
+        }
+    }
+
+    override fun stringify(graphEditor: GraphEditor): String? {
+        if (graphEditor.model != null) {
+            val resource = XMLResourceImpl()
+            val output = ByteArrayOutputStream();
+            val model = graphEditor.model;
+
+            val editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(model)
+            resource.contents.add(model)
+            try {
+                resource.save(output, Collections.EMPTY_MAP)
+                editingDomain.resourceSet.resources.clear()
+                editingDomain.resourceSet.resources.add(resource)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+            return output.toString()
+        } else {
+            return null;
         }
     }
 
