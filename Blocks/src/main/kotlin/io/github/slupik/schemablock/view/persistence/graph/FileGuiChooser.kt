@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.view.persistance
+package io.github.slupik.schemablock.view.persistence.graph
 
 import io.github.slupik.schemablock.view.dagger.WindowProvider
 import java.io.File

@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.view.persistance
+package io.github.slupik.schemablock.view.persistence.graph
 
 import java.io.File
 

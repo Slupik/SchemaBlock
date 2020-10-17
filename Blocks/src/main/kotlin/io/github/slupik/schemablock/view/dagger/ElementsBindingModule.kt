@@ -4,7 +4,7 @@ import dagger.Binds
 import dagger.Module
 import io.github.slupik.schemablock.view.logic.ZoomController
 import io.github.slupik.schemablock.view.logic.Zoomer
-import io.github.slupik.schemablock.view.persistance.*
+import io.github.slupik.schemablock.view.persistence.graph.*
 import javax.inject.Singleton
 
 /**

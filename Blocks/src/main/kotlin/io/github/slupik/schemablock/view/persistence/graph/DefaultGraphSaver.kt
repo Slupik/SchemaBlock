@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.view.persistance
+package io.github.slupik.schemablock.view.persistence.graph
 
 import de.tesis.dynaware.grapheditor.GraphEditor
 import de.tesis.dynaware.grapheditor.model.GModel
