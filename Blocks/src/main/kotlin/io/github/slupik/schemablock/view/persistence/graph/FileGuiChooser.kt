@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.view.persistence.graph
 
 import io.github.slupik.schemablock.view.dagger.WindowProvider
+import io.github.slupik.schemablock.view.persistence.FileChooser
 import java.io.File
 import javax.inject.Inject
 import javafx.stage.FileChooser as JavaFxFileChooser

@@ -9,8 +9,10 @@ import de.tesis.dynaware.grapheditor.demo.GraphEditorPersistence;
 import de.tesis.dynaware.grapheditor.demo.customskins.DefaultSkinController;
 import de.tesis.dynaware.grapheditor.model.GModel;
 import de.tesis.dynaware.grapheditor.model.GraphFactory;
+import io.github.slupik.schemablock.view.entity.AdditionalBlockModel;
 
 import javax.inject.Singleton;
+import java.util.HashMap;
 
 /**
  * All rights reserved & copyright ©
@@ -43,6 +45,12 @@ public class DynawareModule {
     @Singleton
     GraphEditorPersistence graphEditorPersistence() {
         return new GraphEditorPersistence();
+    }
+
+    @Provides
+    @Singleton
+    AdditionalBlockModel additionalBlockModel() {
+        return new AdditionalBlockModel(new HashMap<>(), new HashMap<>());
     }
 
 }

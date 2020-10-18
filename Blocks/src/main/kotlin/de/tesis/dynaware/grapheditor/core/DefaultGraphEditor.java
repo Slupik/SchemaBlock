@@ -33,7 +33,6 @@ public class DefaultGraphEditor implements GraphEditor {
      * Creates a new default implementation of the {@link GraphEditor}.
      */
     public DefaultGraphEditor() {
-
         // Skin manager needs 'this' reference so users can access GraphEditor inside their custom skins.
         skinManager = new SkinManager(this, new BlockEditionWithDialog());
         connectionEventManager = new ConnectionEventManager();

@@ -15,7 +15,7 @@ import javax.inject.Inject
 /**
  * All rights reserved & copyright ©
  */
-class DefaultGraphLoader @Inject constructor(): GraphLoader {
+class XmlGraphLoader @Inject constructor(): GraphLoader {
 
     override fun loadModel(graphEditor: GraphEditor, file: File) {
         val fileUri = URI.createFileURI(file.absolutePath)

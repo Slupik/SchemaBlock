@@ -15,7 +15,7 @@ import javax.inject.Inject
 /**
  * All rights reserved & copyright ©
  */
-class DefaultGraphSaver @Inject constructor() : GraphSaver {
+class XmlGraphSaver @Inject constructor() : GraphSaver {
 
     override fun saveToFile(graphEditor: GraphEditor, file: File) {
         if (graphEditor.model != null) {

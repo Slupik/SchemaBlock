@@ -11,10 +11,11 @@ import de.tesis.dynaware.grapheditor.model.GNode;
 import de.tesis.dynaware.grapheditor.window.WindowPosition;
 import io.github.slupik.schemablock.view.dagger.DaggerViewComponent;
 import io.github.slupik.schemablock.view.dagger.ViewElementsModule;
+import io.github.slupik.schemablock.view.entity.Diagram;
 import io.github.slupik.schemablock.view.logic.Zoomer;
-import io.github.slupik.schemablock.view.persistence.graph.FileChooser;
-import io.github.slupik.schemablock.view.persistence.graph.GraphLoader;
-import io.github.slupik.schemablock.view.persistence.graph.GraphSaver;
+import io.github.slupik.schemablock.view.persistence.DiagramLoader;
+import io.github.slupik.schemablock.view.persistence.DiagramSaver;
+import io.github.slupik.schemablock.view.persistence.FileChooser;
 import io.github.slupik.schemablock.view.persistence.graph.SampleLoader;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -93,9 +94,11 @@ public class MainViewController implements Initializable {
     @Inject
     FileChooser fileChooser;
     @Inject
-    GraphSaver graphSaver;
+    DiagramSaver graphSaver;
     @Inject
-    GraphLoader graphLoader;
+    DiagramLoader graphLoader;
+    @Inject
+    Diagram diagram;
     @Inject
     SampleLoader sampleLoader;
 
@@ -250,7 +253,7 @@ public class MainViewController implements Initializable {
     public void load() {
         File file = fileChooser.choseForOpen();
         if (file != null) {
-            graphLoader.loadModel(graphEditor, file);
+            graphLoader.loadDiagram(diagram, file);
         }
         checkSkinType();
     }
@@ -270,7 +273,7 @@ public class MainViewController implements Initializable {
     public void save() {
         File file = fileChooser.choseForSave();
         if (file != null) {
-            graphSaver.saveToFile(graphEditor, file);
+            graphSaver.saveToFile(diagram, file);
         }
     }
 
