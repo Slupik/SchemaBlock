@@ -17,6 +17,8 @@ import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.model.GConnector;
 import de.tesis.dynaware.grapheditor.model.GJoint;
 import de.tesis.dynaware.grapheditor.model.GNode;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -100,10 +102,13 @@ public class SkinFactory {
      * @return a new {@link GNodeSkin} instance
      */
     public GNodeSkin createNodeSkin(final GNode node) {
-
         if (node == null) {
             return null;
-        } else if (node.getType() == null) {
+        }
+        if (StringUtils.isBlank(node.getId())) {
+            node.setId(generateId());
+        }
+        if (node.getType() == null) {
             return new OperationsBlock(node);
         } else if(node.getType().equals("start")) {
             return new StartBlock(node);
@@ -126,6 +131,10 @@ public class SkinFactory {
                 return new OperationsBlock(node);
             }
         }
+    }
+
+    private String generateId() {
+        return "Block_" + RandomStringUtils.random(32);
     }
 
     /**

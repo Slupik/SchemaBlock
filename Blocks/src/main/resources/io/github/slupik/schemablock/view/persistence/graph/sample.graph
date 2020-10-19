@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="ASCII"?>
 <graph:GModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:graph="http://de.tesis.dynaware.grapheditor.model/1.0">
-  <nodes x="1211.0" y="1043.0" width="157.0" height="181.0" type="start" id="b1">
+  <nodes x="1211.0" y="1043.0" width="157.0" height="181.0" type="start">
     <connectors type="left-input"/>
     <connectors type="right-output" connections="//@connections.0"/>
     <connectors type="top-output" connections="//@connections.2"/>
   </nodes>
-  <nodes x="1403.0" y="899.0" width="121.0" height="97.0" type="io" id="b2">
+  <nodes x="1403.0" y="899.0" width="121.0" height="97.0" type="io">
     <connectors type="bottom-input" connections="//@connections.0"/>
     <connectors type="right-output" connections="//@connections.1"/>
   </nodes>
-  <nodes x="1619.0" y="1007.0" width="145.0" height="97.0" type="condition" id="b3">
+  <nodes x="1619.0" y="1007.0" width="145.0" height="97.0" type="condition">
     <connectors type="left-input" connections="//@connections.1"/>
     <connectors type="bottom-output"/>
   </nodes>
-  <nodes x="1499.0" y="1199.0" width="157.0" height="109.0" id="b4">
+  <nodes x="1499.0" y="1199.0" width="157.0" height="109.0">
     <connectors type="right-output"/>
     <connectors type="left-input" connections="//@connections.2"/>
   </nodes>

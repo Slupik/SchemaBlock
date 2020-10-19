@@ -28,7 +28,7 @@ public class DefaultSkinController implements SkinController {
 
     /**
      * Creates a new {@link DefaultSkinController} instance.
-     * 
+     *
      * @param graphEditor the graph editor on display in this de.tesis.dynaware.grapheditor.demo
      * @param graphEditorContainer the graph editor container on display in this de.tesis.dynaware.grapheditor.demo
      */
@@ -40,7 +40,6 @@ public class DefaultSkinController implements SkinController {
 
     @Override
     public void addNode(final double currentZoomFactor) {
-
         final double windowXOffset = graphEditorContainer.windowXProperty().get() / currentZoomFactor;
         final double windowYOffset = graphEditorContainer.windowYProperty().get() / currentZoomFactor;
 
@@ -134,7 +133,7 @@ public class DefaultSkinController implements SkinController {
 
     /**
      * Gets the connector type string corresponding to the given position and input values.
-     * 
+     *
      * @param position a {@link Side} value
      * @param input {@code true} for input, {@code false} for output
      * @return the connector type corresponding to these values
