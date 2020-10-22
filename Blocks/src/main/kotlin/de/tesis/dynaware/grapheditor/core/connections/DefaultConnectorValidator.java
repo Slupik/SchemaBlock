@@ -5,15 +5,14 @@ package de.tesis.dynaware.grapheditor.core.connections;
 
 import de.tesis.dynaware.grapheditor.GConnectorValidator;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.DefaultConnectorTypes;
-import de.tesis.dynaware.grapheditor.model.GConnectable;
 import de.tesis.dynaware.grapheditor.model.GConnector;
-
-import java.util.Collection;
 
 /**
  * Default validation rules that determine which connectors can be connected to each other.
  */
 public class DefaultConnectorValidator implements GConnectorValidator {
+
+    private final ConnectionsValidationUtils utils = new ConnectionsValidationUtils();
 
     @Override
     public boolean prevalidate(final GConnector source, final GConnector target) {
@@ -28,7 +27,7 @@ public class DefaultConnectorValidator implements GConnectorValidator {
 
         if (source.getType() == null || target.getType() == null) {
             return false;
-        } else if (alreadyHaveOutput(source.getParent())) {
+        } else if (utils.alreadyHaveOutput(source.getParent())) {
             return false;
         } else if (source.getParent().equals(target.getParent())) {
             return false;
@@ -38,13 +37,6 @@ public class DefaultConnectorValidator implements GConnectorValidator {
             return DefaultConnectorTypes.isBoth(target.getType()) || DefaultConnectorTypes.isInput(target.getType());
         }
         return false;
-    }
-
-    private boolean alreadyHaveOutput(GConnectable parent) {
-        return parent.getConnectors().stream()
-                .map(GConnector::getConnections)
-                .flatMap(Collection::stream)
-                .anyMatch(connection -> connection.getSource().getParent().equals(parent));
     }
 
     @Override

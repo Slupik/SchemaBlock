@@ -52,6 +52,7 @@ public class ConnectorDragManager {
     private final Map<GConnector, EventHandler<MouseEvent>> mouseDragReleasedHandlers = new HashMap<>();
 
     private GConnectorValidator validator = new DefaultConnectorValidator();
+    private ConnectionsValidationUtils connectionValidationUtils = new ConnectionsValidationUtils();
 
     private GConnector hoveredConnector;
     private GConnector sourceConnector;
@@ -283,6 +284,9 @@ public class ConnectorDragManager {
         if (targetConnector != null && skinLookup.lookupConnector(targetConnector) != null) {
             skinLookup.lookupConnector(targetConnector).applyStyle(GConnectorStyle.DEFAULT);
         }
+        if (sourceConnector != null && skinLookup.lookupConnector(sourceConnector) != null) {
+            skinLookup.lookupConnector(sourceConnector).applyStyle(GConnectorStyle.DEFAULT);
+        }
 
         sourceConnector = null;
         removalConnector = null;
@@ -306,6 +310,11 @@ public class ConnectorDragManager {
         }
 
         if (checkCreatable(connector)) {
+            if (connectionValidationUtils.alreadyHaveOutput(connector.getParent())) {
+                skinLookup.lookupConnector(connector).applyStyle(GConnectorStyle.DRAG_OVER_FORBIDDEN);
+            } else {
+                skinLookup.lookupConnector(connector).applyStyle(GConnectorStyle.DRAG_OVER_ALLOWED);
+            }
 
             sourceConnector = connector;
             skinLookup.lookupConnector(connector).getRoot().startFullDrag();
@@ -383,6 +392,9 @@ public class ConnectorDragManager {
      * @param connector the {@link GConnector} on which this event occured
      */
     private void handleDragExited(final MouseEvent event, final GConnector connector) {
+        if (connector == sourceConnector) {
+            return;
+        }
 
         skinLookup.lookupConnector(connector).applyStyle(GConnectorStyle.DEFAULT);
         repositionAllowed = true;
@@ -410,6 +422,7 @@ public class ConnectorDragManager {
         event.consume();
 
         final GConnectorSkin targetConnectorSkin = skinLookup.lookupConnector(connector);
+        final GConnectorSkin sourceConnectorSkin = skinLookup.lookupConnector(sourceConnector);
 
         if (validator.prevalidate(sourceConnector, connector) && validator.validate(sourceConnector, connector)) {
 
@@ -420,6 +433,7 @@ public class ConnectorDragManager {
             hoveredConnector = connector;
         }
 
+        sourceConnectorSkin.applyStyle(GConnectorStyle.DEFAULT);
         targetConnectorSkin.applyStyle(GConnectorStyle.DEFAULT);
     }
 
