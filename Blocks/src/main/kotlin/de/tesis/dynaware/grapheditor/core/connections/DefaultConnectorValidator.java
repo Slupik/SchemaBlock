@@ -17,11 +17,7 @@ public class DefaultConnectorValidator implements GConnectorValidator {
 
         if (source == null || target == null) {
             return false;
-        } else if (source.equals(target)) {
-            return false;
-        }
-
-        return true;
+        } else return !source.equals(target);
     }
 
     @Override
@@ -35,10 +31,10 @@ public class DefaultConnectorValidator implements GConnectorValidator {
             return false;
         }
 
-        final boolean sourceIsInput = DefaultConnectorTypes.isInput(source.getType());
-        final boolean targetIsInput = DefaultConnectorTypes.isInput(target.getType());
-
-        return sourceIsInput != targetIsInput;
+        if (DefaultConnectorTypes.isBoth(source.getType()) || DefaultConnectorTypes.isOutput(source.getType())) {
+            return DefaultConnectorTypes.isBoth(target.getType()) || DefaultConnectorTypes.isInput(target.getType());
+        }
+        return false;
     }
 
     @Override
