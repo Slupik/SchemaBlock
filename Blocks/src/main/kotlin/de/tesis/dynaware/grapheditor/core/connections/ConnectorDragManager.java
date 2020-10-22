@@ -51,8 +51,8 @@ public class ConnectorDragManager {
     private final Map<GConnector, EventHandler<MouseEvent>> mouseDragExitedHandlers = new HashMap<>();
     private final Map<GConnector, EventHandler<MouseEvent>> mouseDragReleasedHandlers = new HashMap<>();
 
-    private GConnectorValidator validator = new DefaultConnectorValidator();
-    private ConnectionsValidationUtils connectionValidationUtils = new ConnectionsValidationUtils();
+    private GConnectorValidator validator;
+    private ConnectionsValidationUtils connectionValidationUtils;
 
     private GConnector hoveredConnector;
     private GConnector sourceConnector;
@@ -73,6 +73,8 @@ public class ConnectorDragManager {
             final GraphEditorView view) {
 
         this.skinLookup = skinLookup;
+        validator = new DefaultConnectorValidator(skinLookup);
+        connectionValidationUtils = new ConnectionsValidationUtils(skinLookup);
         this.connectionEventManager = connectionEventManager;
 
         tailManager = new TailManager(skinLookup, view);
@@ -100,7 +102,7 @@ public class ConnectorDragManager {
         if (validator != null) {
             this.validator = validator;
         } else {
-            this.validator = new DefaultConnectorValidator();
+            this.validator = new DefaultConnectorValidator(skinLookup);
         }
     }
 
@@ -310,7 +312,7 @@ public class ConnectorDragManager {
         }
 
         if (checkCreatable(connector)) {
-            if (connectionValidationUtils.alreadyHaveOutput(connector.getParent())) {
+            if (connectionValidationUtils.alreadyHasMaxOutputs(connector.getParent())) {
                 skinLookup.lookupConnector(connector).applyStyle(GConnectorStyle.DRAG_OVER_FORBIDDEN);
             } else {
                 skinLookup.lookupConnector(connector).applyStyle(GConnectorStyle.DRAG_OVER_ALLOWED);
@@ -433,7 +435,9 @@ public class ConnectorDragManager {
             hoveredConnector = connector;
         }
 
-        sourceConnectorSkin.applyStyle(GConnectorStyle.DEFAULT);
+        if (sourceConnectorSkin != null) {
+            sourceConnectorSkin.applyStyle(GConnectorStyle.DEFAULT);
+        }
         targetConnectorSkin.applyStyle(GConnectorStyle.DEFAULT);
     }
 
