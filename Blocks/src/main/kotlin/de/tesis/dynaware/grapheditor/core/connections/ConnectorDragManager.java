@@ -3,11 +3,13 @@
  */
 package de.tesis.dynaware.grapheditor.core.connections;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import de.tesis.dynaware.grapheditor.GConnectorSkin;
+import de.tesis.dynaware.grapheditor.GConnectorStyle;
+import de.tesis.dynaware.grapheditor.GConnectorValidator;
+import de.tesis.dynaware.grapheditor.SkinLookup;
+import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
+import de.tesis.dynaware.grapheditor.core.view.GraphEditorView;
+import de.tesis.dynaware.grapheditor.model.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -15,21 +17,12 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
-
 import org.eclipse.emf.common.command.CompoundCommand;
 
-import de.tesis.dynaware.grapheditor.GConnectorSkin;
-import de.tesis.dynaware.grapheditor.GConnectorStyle;
-import de.tesis.dynaware.grapheditor.GConnectorValidator;
-import de.tesis.dynaware.grapheditor.SkinLookup;
-import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
-import de.tesis.dynaware.grapheditor.core.view.GraphEditorView;
-import de.tesis.dynaware.grapheditor.model.GConnection;
-import de.tesis.dynaware.grapheditor.model.GConnector;
-import de.tesis.dynaware.grapheditor.model.GJoint;
-import de.tesis.dynaware.grapheditor.model.GModel;
-import de.tesis.dynaware.grapheditor.model.GNode;
-import de.tesis.dynaware.grapheditor.model.GraphFactory;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Responsible for what happens when connectors are dragged in the graph editor.
@@ -366,7 +359,7 @@ public class ConnectorDragManager {
             return;
         }
 
-        if (event.getButton().equals(MouseButton.PRIMARY) && validator.prevalidate(sourceConnector, connector)) {
+        if (validator.prevalidate(sourceConnector, connector)) {
 
             final boolean valid = validator.validate(sourceConnector, connector);
             tailManager.snapPosition(sourceConnector, connector, valid);

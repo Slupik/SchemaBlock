@@ -25,7 +25,7 @@ public class DefaultConnectorValidator implements GConnectorValidator {
 
         if (source.getType() == null || target.getType() == null) {
             return false;
-        } else if (!source.getConnections().isEmpty() || !target.getConnections().isEmpty()) {
+        } else if (!source.getConnections().isEmpty()) {
             return false;
         } else if (source.getParent().equals(target.getParent())) {
             return false;
