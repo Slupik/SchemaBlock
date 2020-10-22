@@ -4,9 +4,8 @@
 package de.tesis.dynaware.grapheditor.core.skins;
 
 import de.tesis.dynaware.grapheditor.*;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.DefaultConnectionSkin;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.DefaultJointSkin;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.DefaultTailSkin;
+import de.tesis.dynaware.grapheditor.core.connections.ConnectionType;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.*;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.node.ConditionalBlock;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.node.IoBlock;
@@ -175,24 +174,29 @@ public class SkinFactory {
      * @return a new {@link GConnectionSkin} instance
      */
     public GConnectionSkin createConnectionSkin(final GConnection connection) {
-
         if (connection == null) {
             return null;
         } else if (connection.getType() == null) {
-            return new DefaultConnectionSkin(connection);
+            return new StandardConnectionSkin(connection);
+        } else if (ConnectionType.STANDARD.name().equals(connection.getType())) {
+            return new StandardConnectionSkin(connection);
+        } else if (ConnectionType.CONDITIONAL_TRUE.name().equals(connection.getType())) {
+            return new ConditionalTrueConnectionSkin(connection);
+        } else if (ConnectionType.CONDITIONAL_FALSE.name().equals(connection.getType())) {
+            return new ConditionalFalseConnectionSkin(connection);
         }
 
         final Class<? extends GConnectionSkin> skinClass = connectionSkins.get(connection.getType());
 
         if (skinClass == null) {
-            return new DefaultConnectionSkin(connection);
+            return new StandardConnectionSkin(connection);
         } else {
             try {
                 final Constructor<? extends GConnectionSkin> constructor = skinClass.getConstructor(GConnection.class);
                 return constructor.newInstance(connection);
             } catch (final ReflectiveOperationException e) {
                 LOGGER.error(LogMessages.CANNOT_INSTANTIATE_SKIN, skinClass.getName());
-                return new DefaultConnectionSkin(connection);
+                return new StandardConnectionSkin(connection);
             }
         }
     }

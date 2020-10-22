@@ -107,6 +107,18 @@
 	-fx-fill: linear-gradient(from 0px 0px to 0px 25px, -inside-fill, -inside-fill 36%, -fx-stroke 36%, -fx-stroke 40%, -outside-fill 40%, -outside-fill);
 }
 
+.conditional-connection-true {
+	-fx-stroke-width: 1;
+	-fx-stroke: lightgreen;
+	-fx-effect: dropshadow(one-pass-box, rgba(180, 180, 180), 5, 0, 1, 1);
+}
+
+.conditional-connection-false {
+	-fx-stroke-width: 1;
+	-fx-stroke: red;
+	-fx-effect: dropshadow(one-pass-box, rgba(180, 180, 180), 5, 0, 1, 1);
+}
+
 .default-connection {
 	-fx-stroke-width: 1;
 	-fx-stroke: darkslategrey;
