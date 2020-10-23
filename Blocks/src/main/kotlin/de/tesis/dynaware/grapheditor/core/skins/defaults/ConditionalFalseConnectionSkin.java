@@ -13,7 +13,7 @@ import de.tesis.dynaware.grapheditor.model.GConnection;
  * Extension of {@link SimpleConnectionSkin} that provides a mechanism for creating and removing joints.
  * </p>
  */
-public class ConditionalFalseConnectionSkin extends DefaultConnectionSkin {
+public class ConditionalFalseConnectionSkin extends ConditionalConnectionSkin {
 
     private static final String STYLE_CLASS = "conditional-connection-false";
 
