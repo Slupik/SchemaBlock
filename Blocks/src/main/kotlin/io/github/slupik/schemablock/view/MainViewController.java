@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.view;
 
+import com.jfoenix.controls.JFXButton;
 import de.tesis.dynaware.grapheditor.Commands;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
@@ -42,6 +43,8 @@ import java.util.ResourceBundle;
  */
 public class MainViewController implements Initializable {
 
+    @FXML
+    private JFXButton btnContinue;
     @FXML
     private AnchorPane root;
     @FXML
@@ -111,10 +114,16 @@ public class MainViewController implements Initializable {
 
         graphEditorContainer.setGraphEditor(graphEditor);
         activeSkinController.set(defaultSkinController);
+        btnContinue.setDisable(true);
         addActiveSkinControllerListener();
 
         enableResizing();
         initializeMenuBar();
+        Platform.runLater(this::addStartNode);
+    }
+
+    private void addStartNode() {
+        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), BlockType.START);
     }
 
     /**
@@ -281,6 +290,7 @@ public class MainViewController implements Initializable {
     @FXML
     public void clearModel() {
         Commands.clear(graphEditor.getModel());
+        addStartNode();
     }
 
     @FXML
