@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Manages skins for all elements of a {@link GModel}.
@@ -123,9 +124,24 @@ public class SkinManager implements SkinLookup {
             nodeSkin.getRoot().setEditorProperties(graphEditor.getProperties());
             nodeSkin.initialize();
             if (nodeSkin instanceof Block) {
-                ((Block) nodeSkin).addOnDoubleClickEventHandler(event -> {
-                    blockEditionWithDialog.openFor(((Block) nodeSkin));
-                });
+                ((Block) nodeSkin).addOnDoubleClickEventHandler(event ->
+                        blockEditionWithDialog.openFor(((Block) nodeSkin)));
+            }
+            if (nodeSkin instanceof ConditionalBlock) {
+                nodeSkin.selectedProperty()
+                        .addListener((observableValue, oldValue, newValue) -> {
+                            List<ConditionalConnectionSkin> connections = connectionSkins.entrySet()
+                                    .stream()
+                                    .filter(entry -> entry.getKey().getSource().getParent().equals(node))
+                                    .map(Map.Entry::getValue)
+                                    .map(value -> ((ConditionalConnectionSkin) value))
+                                    .collect(Collectors.toList());
+                            if (newValue) {
+                                connections.forEach(ConditionalConnectionSkin::showTypeSwitch);
+                            } else {
+                                connections.forEach(ConditionalConnectionSkin::hideTypeSwitch);
+                            }
+                        });
             }
 
             nodeSkins.put(node, nodeSkin);
@@ -199,22 +215,6 @@ public class SkinManager implements SkinLookup {
         for (final GConnection connection : connectionsToAdd) {
             final GConnectionSkin connectionSkin = skinFactory.createConnectionSkin(connection);
             connectionSkin.setGraphEditor(graphEditor);
-
-            GConnectable connectable = connection.getSource().getParent();
-            if (connectable instanceof GNode && connectionSkin instanceof ConditionalConnectionSkin) {
-                GNodeSkin sourceSkin = lookupNode((GNode) connectable);
-                ConditionalConnectionSkin conditionalConnection = (ConditionalConnectionSkin) connectionSkin;
-                if (sourceSkin instanceof ConditionalBlock) {
-                    ConditionalBlock block = (ConditionalBlock) sourceSkin;
-                    block.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
-                        if (newValue) {
-                            conditionalConnection.showTypeSwitch();
-                        } else {
-                            conditionalConnection.hideTypeSwitch();
-                        }
-                    });
-                }
-            }
 
             connectionSkins.put(connection, connectionSkin);
 
