@@ -42,4 +42,12 @@ public abstract class ConditionalConnectionSkin extends DefaultConnectionSkin {
         changer.setPosition(position);
     }
 
+    public void showTypeSwitch() {
+        changer.show();
+    }
+
+    public void hideTypeSwitch() {
+        changer.hide();
+    }
+
 }

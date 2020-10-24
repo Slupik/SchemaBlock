@@ -38,4 +38,14 @@ public class FakeConditionChanger implements ConditionChanger {
         return rectangle.getHeight();
     }
 
+    @Override
+    public void show() {
+        root.setVisible(true);
+    }
+
+    @Override
+    public void hide() {
+        root.setVisible(false);
+    }
+
 }

@@ -5,7 +5,9 @@ package de.tesis.dynaware.grapheditor.core.skins;
 
 import de.tesis.dynaware.grapheditor.*;
 import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.ConditionalConnectionSkin;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.node.Block;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.node.ConditionalBlock;
 import de.tesis.dynaware.grapheditor.model.*;
 import io.github.slupik.schemablock.view.dialog.BlockEditionWithDialog;
 
@@ -195,9 +197,24 @@ public class SkinManager implements SkinLookup {
     public void addConnections(final List<GConnection> connectionsToAdd) {
 
         for (final GConnection connection : connectionsToAdd) {
-
             final GConnectionSkin connectionSkin = skinFactory.createConnectionSkin(connection);
             connectionSkin.setGraphEditor(graphEditor);
+
+            GConnectable connectable = connection.getSource().getParent();
+            if (connectable instanceof GNode && connectionSkin instanceof ConditionalConnectionSkin) {
+                GNodeSkin sourceSkin = lookupNode((GNode) connectable);
+                ConditionalConnectionSkin conditionalConnection = (ConditionalConnectionSkin) connectionSkin;
+                if (sourceSkin instanceof ConditionalBlock) {
+                    ConditionalBlock block = (ConditionalBlock) sourceSkin;
+                    block.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
+                        if (newValue) {
+                            conditionalConnection.showTypeSwitch();
+                        } else {
+                            conditionalConnection.hideTypeSwitch();
+                        }
+                    });
+                }
+            }
 
             connectionSkins.put(connection, connectionSkin);
 

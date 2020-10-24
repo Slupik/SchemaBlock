@@ -80,7 +80,6 @@ public class ConditionalBlock extends Block {
 
     @Override
     protected void addSelectionHalo() {
-
         getRoot().getChildren().add(selectionHalo);
 
         selectionHalo.setManaged(false);

@@ -39,4 +39,14 @@ public class ToggleConditionChanger implements ConditionChanger {
         return btn.getHeight();
     }
 
+    @Override
+    public void show() {
+        root.setVisible(true);
+    }
+
+    @Override
+    public void hide() {
+        root.setVisible(false);
+    }
+
 }

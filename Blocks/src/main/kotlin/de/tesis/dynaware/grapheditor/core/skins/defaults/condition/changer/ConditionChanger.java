@@ -16,4 +16,8 @@ public interface ConditionChanger {
 
     double getHeight();
 
+    void show();
+
+    void hide();
+
 }
