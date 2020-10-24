@@ -8,6 +8,7 @@ import de.tesis.dynaware.grapheditor.core.skins.defaults.condition.changer.Condi
 import de.tesis.dynaware.grapheditor.core.skins.defaults.condition.changer.ToggleConditionChanger;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.SimpleConnectionSkin;
 import de.tesis.dynaware.grapheditor.model.GConnection;
+import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Point2D;
 
 import java.util.List;
@@ -20,10 +21,13 @@ import java.util.Map;
  * Extension of {@link SimpleConnectionSkin} that provides a mechanism for creating and removing joints.
  * </p>
  */
-public abstract class ConditionalConnectionSkin extends DefaultConnectionSkin {
+public class ConditionalConnectionSkin extends DefaultConnectionSkin {
 
-    private ConditionChanger changer = new ToggleConditionChanger();
-    private ConditionChangerPositionCalculator positionCalculator = new ConditionChangerPositionCalculator();
+    private static final String STYLE_CLASS_CONNECTION_FALSE = "conditional-connection-false";
+    private static final String STYLE_CLASS_CONNECTION_TRUE = "conditional-connection-true";
+
+    private final ConditionChanger changer = new ToggleConditionChanger();
+    private final ConditionChangerPositionCalculator positionCalculator = new ConditionChangerPositionCalculator();
 
     /**
      * Creates a new default connection skin instance.
@@ -33,6 +37,19 @@ public abstract class ConditionalConnectionSkin extends DefaultConnectionSkin {
     public ConditionalConnectionSkin(GConnection connection) {
         super(connection);
         root.getChildren().add(changer.getRoot());
+        changer.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (newValue) {
+                path.getStyleClass().setAll(STYLE_CLASS_CONNECTION_TRUE);
+            } else {
+                path.getStyleClass().setAll(STYLE_CLASS_CONNECTION_FALSE);
+            }
+        });
+        hideTypeSwitch();
+    }
+
+    @Override
+    protected String getStyleClass() {
+        return STYLE_CLASS_CONNECTION_TRUE;
     }
 
     @Override
@@ -50,4 +67,11 @@ public abstract class ConditionalConnectionSkin extends DefaultConnectionSkin {
         changer.hide();
     }
 
+    public BooleanProperty valueProperty() {
+        return changer.valueProperty();
+    }
+
+    public void setValue(boolean value) {
+        changer.setValue(value);
+    }
 }

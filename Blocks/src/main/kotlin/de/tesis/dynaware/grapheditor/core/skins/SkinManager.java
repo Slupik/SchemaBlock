@@ -216,6 +216,22 @@ public class SkinManager implements SkinLookup {
             final GConnectionSkin connectionSkin = skinFactory.createConnectionSkin(connection);
             connectionSkin.setGraphEditor(graphEditor);
 
+            if (connectionSkin instanceof ConditionalConnectionSkin) {
+                ((ConditionalConnectionSkin) connectionSkin).valueProperty()
+                        .addListener((observableValue, oldValue, newValue) -> {
+                            List<ConditionalConnectionSkin> connections = connectionSkins.entrySet()
+                                    .stream()
+                                    .filter(entry -> entry.getKey().getSource().getParent().equals(connection.getSource().getParent()))
+                                    .filter(entry -> !entry.getKey().equals(connection))
+                                    .map(Map.Entry::getValue)
+                                    .map(value -> ((ConditionalConnectionSkin) value))
+                                    .collect(Collectors.toList());
+                            if (connections.size() == 1) {
+                                connections.get(0).setValue(!newValue);
+                            }
+                        });
+            }
+
             connectionSkins.put(connection, connectionSkin);
 
             addJoints(connection);

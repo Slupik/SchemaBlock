@@ -1,5 +1,6 @@
 package de.tesis.dynaware.grapheditor.core.skins.defaults.condition.changer;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 
@@ -19,5 +20,9 @@ public interface ConditionChanger {
     void show();
 
     void hide();
+
+    BooleanProperty valueProperty();
+
+    void setValue(boolean value);
 
 }

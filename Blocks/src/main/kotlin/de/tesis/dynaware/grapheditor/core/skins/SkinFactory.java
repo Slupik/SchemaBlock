@@ -181,9 +181,13 @@ public class SkinFactory {
         } else if (ConnectionType.STANDARD.name().equals(connection.getType())) {
             return new StandardConnectionSkin(connection);
         } else if (ConnectionType.CONDITIONAL_TRUE.name().equals(connection.getType())) {
-            return new ConditionalTrueConnectionSkin(connection);
+            ConditionalConnectionSkin skin = new ConditionalConnectionSkin(connection);
+            skin.setValue(true);
+            return skin;
         } else if (ConnectionType.CONDITIONAL_FALSE.name().equals(connection.getType())) {
-            return new ConditionalFalseConnectionSkin(connection);
+            ConditionalConnectionSkin skin = new ConditionalConnectionSkin(connection);
+            skin.setValue(false);
+            return skin;
         }
 
         final Class<? extends GConnectionSkin> skinClass = connectionSkins.get(connection.getType());

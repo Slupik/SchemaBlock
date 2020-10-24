@@ -1,6 +1,7 @@
 package de.tesis.dynaware.grapheditor.core.skins.defaults.condition.changer;
 
 import com.jfoenix.controls.JFXToggleButton;
+import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 
@@ -13,9 +14,17 @@ public class ToggleConditionChanger implements ConditionChanger {
     private final JFXToggleButton btn = new JFXToggleButton();
 
     {
-        btn.setText("True");
         root.getChildren().add(btn);
         root.setManaged(false);
+        btn.setSelected(true);
+        btn.setText("True");
+        btn.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (newValue) {
+                btn.setText("True");
+            } else {
+                btn.setText("False");
+            }
+        });
     }
 
     @Override
@@ -47,6 +56,16 @@ public class ToggleConditionChanger implements ConditionChanger {
     @Override
     public void hide() {
         root.setVisible(false);
+    }
+
+    @Override
+    public BooleanProperty valueProperty() {
+        return btn.selectedProperty();
+    }
+
+    @Override
+    public void setValue(boolean value) {
+        btn.setSelected(value);
     }
 
 }

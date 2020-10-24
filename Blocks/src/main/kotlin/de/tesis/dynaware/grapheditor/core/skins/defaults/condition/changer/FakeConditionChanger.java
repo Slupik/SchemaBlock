@@ -1,5 +1,6 @@
 package de.tesis.dynaware.grapheditor.core.skins.defaults.condition.changer;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
@@ -46,6 +47,16 @@ public class FakeConditionChanger implements ConditionChanger {
     @Override
     public void hide() {
         root.setVisible(false);
+    }
+
+    @Override
+    public BooleanProperty valueProperty() {
+        return null;
+    }
+
+    @Override
+    public void setValue(boolean value) {
+
     }
 
 }
