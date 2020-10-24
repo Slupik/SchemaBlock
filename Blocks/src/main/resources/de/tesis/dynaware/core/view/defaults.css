@@ -22,6 +22,14 @@
 	-fx-fill: derive(rgb(249,247,250), -5%);
 }
 
+.default-node-background:error {
+	-fx-fill: derive(rgb(220,20,60), -5%);
+}
+
+.default-node-background:current {
+	-fx-fill: derive(rgb(0,191,255), -5%);
+}
+
 .default-node-selection-halo {
 	-fx-stroke: deepskyblue;
 	-fx-stroke-type: inside;
