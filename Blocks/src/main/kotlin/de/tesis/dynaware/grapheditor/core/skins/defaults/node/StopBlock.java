@@ -20,16 +20,16 @@ import de.tesis.dynaware.grapheditor.utils.ResizableBox;
  * Connectors are evenly spaced along the sides of the node according to their type.
  * </p>
  */
-public class StartBlock extends RoundedNodeSkin {
+public class StopBlock extends RoundedNodeSkin {
 
     /**
      * Creates a new default node skin instance.
      *
      * @param node the {@link GNode} the skin is being created for
      */
-    public StartBlock(GNode node) {
+    public StopBlock(GNode node) {
         super(node);
-        initLabel("Start");
+        initLabel("Stop");
     }
 
 }

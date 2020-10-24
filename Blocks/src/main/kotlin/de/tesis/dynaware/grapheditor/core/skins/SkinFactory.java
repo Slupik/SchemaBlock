@@ -7,10 +7,7 @@ import de.tesis.dynaware.grapheditor.*;
 import de.tesis.dynaware.grapheditor.core.connections.ConnectionType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.*;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.node.ConditionalBlock;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.node.IoBlock;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.node.OperationsBlock;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.node.StartBlock;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.node.*;
 import de.tesis.dynaware.grapheditor.core.utils.LogMessages;
 import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.model.GConnector;
@@ -111,6 +108,8 @@ public class SkinFactory {
             return new OperationsBlock(node);
         } else if(node.getType().equalsIgnoreCase(BlockType.START.code)) {
             return new StartBlock(node);
+        } else if(node.getType().equalsIgnoreCase(BlockType.STOP.code)) {
+            return new StopBlock(node);
         } else if(node.getType().equalsIgnoreCase(BlockType.IO.code)) {
             return new IoBlock(node);
         } else if(node.getType().equalsIgnoreCase(BlockType.CONDITION.code)) {
