@@ -44,7 +44,14 @@
                     </Menu>
                     <Menu text="Actions">
                         <items>
-                            <MenuItem accelerator="Shortcut+N" onAction="#addNode" text="Add Node" />
+                     <Menu mnemonicParsing="false" text="Add Node">
+                       <items>
+                         <MenuItem mnemonicParsing="false" onAction="#addCalculationsNode" text="Calculations" />
+                           <MenuItem mnemonicParsing="false" onAction="#addConditionNode" text="Condition" />
+                           <MenuItem mnemonicParsing="false" onAction="#addIoNode" text="I/O" />
+                           <MenuItem mnemonicParsing="false" onAction="#addStopNode" text="Stop" />
+                       </items>
+                     </Menu>
                             <MenuItem fx:id="addConnectorButton" accelerator="Shortcut+E" onAction="#addConnector" text="Add Connector" />
                             <MenuItem fx:id="clearConnectorsButton" accelerator="Shortcut+W" onAction="#clearConnectors" text="Clear Connectors" />
                             <Menu fx:id="connectorTypeMenu" text="Connector Type">

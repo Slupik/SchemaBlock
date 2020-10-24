@@ -109,11 +109,11 @@ public class SkinFactory {
         }
         if (node.getType() == null) {
             return new OperationsBlock(node);
-        } else if(node.getType().equals("start")) {
+        } else if(node.getType().equalsIgnoreCase(BlockType.START.code)) {
             return new StartBlock(node);
-        } else if(node.getType().equals("io")) {
+        } else if(node.getType().equalsIgnoreCase(BlockType.IO.code)) {
             return new IoBlock(node);
-        } else if(node.getType().equals("condition")) {
+        } else if(node.getType().equalsIgnoreCase(BlockType.CONDITION.code)) {
             return new ConditionalBlock(node);
         }
 

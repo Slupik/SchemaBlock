@@ -4,6 +4,7 @@ import de.tesis.dynaware.grapheditor.Commands;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
 import de.tesis.dynaware.grapheditor.SkinLookup;
+import de.tesis.dynaware.grapheditor.core.skins.BlockType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.DefaultConnectorTypes;
 import de.tesis.dynaware.grapheditor.model.*;
 import javafx.geometry.Side;
@@ -39,11 +40,12 @@ public class DefaultSkinController implements SkinController {
     }
 
     @Override
-    public void addNode(final double currentZoomFactor) {
+    public void addNode(final double currentZoomFactor, BlockType blockType) {
         final double windowXOffset = graphEditorContainer.windowXProperty().get() / currentZoomFactor;
         final double windowYOffset = graphEditorContainer.windowYProperty().get() / currentZoomFactor;
 
         final GNode node = GraphFactory.eINSTANCE.createGNode();
+        node.setType(blockType.code);
         node.setY(NODE_INITIAL_Y + windowYOffset);
 
         final GConnector rightOutput = GraphFactory.eINSTANCE.createGConnector();
@@ -52,10 +54,25 @@ public class DefaultSkinController implements SkinController {
         final GConnector leftInput = GraphFactory.eINSTANCE.createGConnector();
         node.getConnectors().add(leftInput);
 
+        final GConnector topInput = GraphFactory.eINSTANCE.createGConnector();
+        node.getConnectors().add(topInput);
+
+        final GConnector bottomInput = GraphFactory.eINSTANCE.createGConnector();
+        node.getConnectors().add(bottomInput);
+
         node.setX(NODE_INITIAL_X + windowXOffset);
 
-        rightOutput.setType(DefaultConnectorTypes.RIGHT_OUTPUT);
-        leftInput.setType(DefaultConnectorTypes.LEFT_INPUT);
+        if (BlockType.STOP == blockType) {
+            rightOutput.setType(DefaultConnectorTypes.RIGHT_INPUT);
+            leftInput.setType(DefaultConnectorTypes.LEFT_INPUT);
+            topInput.setType(DefaultConnectorTypes.TOP_INPUT);
+            bottomInput.setType(DefaultConnectorTypes.BOTTOM_INPUT);
+        } else {
+            rightOutput.setType(DefaultConnectorTypes.RIGHT_BOTH);
+            leftInput.setType(DefaultConnectorTypes.LEFT_BOTH);
+            topInput.setType(DefaultConnectorTypes.TOP_BOTH);
+            bottomInput.setType(DefaultConnectorTypes.BOTTOM_BOTH);
+        }
 
         Commands.addNode(graphEditor.getModel(), node);
     }

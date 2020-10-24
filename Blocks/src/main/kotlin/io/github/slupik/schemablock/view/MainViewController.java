@@ -3,6 +3,7 @@ package io.github.slupik.schemablock.view;
 import de.tesis.dynaware.grapheditor.Commands;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
+import de.tesis.dynaware.grapheditor.core.skins.BlockType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.SimpleConnectionSkin;
 import de.tesis.dynaware.grapheditor.demo.customskins.DefaultSkinController;
 import de.tesis.dynaware.grapheditor.demo.customskins.SkinController;
@@ -329,8 +330,23 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    public void addNode() {
-        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor());
+    public void addCalculationsNode() {
+        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), BlockType.OPERATIONS);
+    }
+
+    @FXML
+    public void addConditionNode() {
+        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), BlockType.CONDITION);
+    }
+
+    @FXML
+    public void addIoNode() {
+        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), BlockType.IO);
+    }
+
+    @FXML
+    public void addStopNode() {
+        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), BlockType.STOP);
     }
 
     @FXML

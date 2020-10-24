@@ -1,5 +1,6 @@
 package de.tesis.dynaware.grapheditor.demo.customskins;
 
+import de.tesis.dynaware.grapheditor.core.skins.BlockType;
 import javafx.geometry.Side;
 
 /**
@@ -9,10 +10,11 @@ public interface SkinController {
 
     /**
      * Adds a node to the graph.
-     * 
+     *
      * @param currentZoomFactor the current zoom factor (1 for 100%)
+     * @param blockType
      */
-    void addNode(final double currentZoomFactor);
+    void addNode(final double currentZoomFactor, BlockType blockType);
 
     /**
      * Adds a connector of the given type to all selected nodes.
