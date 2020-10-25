@@ -3,6 +3,7 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins.defaults;
 
+import de.tesis.dynaware.grapheditor.core.connections.ConnectionType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.condition.changer.ConditionChanger;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.condition.changer.ConditionChangerPositionCalculator;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.condition.changer.ToggleConditionChanger;
@@ -40,8 +41,10 @@ public class ConditionalConnectionSkin extends DefaultConnectionSkin {
         changer.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             if (newValue) {
                 path.getStyleClass().setAll(STYLE_CLASS_CONNECTION_TRUE);
+                getConnection().setType(ConnectionType.CONDITIONAL_TRUE.name());
             } else {
                 path.getStyleClass().setAll(STYLE_CLASS_CONNECTION_FALSE);
+                getConnection().setType(ConnectionType.CONDITIONAL_FALSE.name());
             }
         });
         hideTypeSwitch();
