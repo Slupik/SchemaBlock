@@ -14,9 +14,11 @@ import de.tesis.dynaware.grapheditor.window.WindowPosition;
 import io.github.slupik.schemablock.view.dagger.DaggerViewComponent;
 import io.github.slupik.schemablock.view.dagger.ViewElementsModule;
 import io.github.slupik.schemablock.view.entity.Diagram;
-import io.github.slupik.schemablock.view.logic.execution.dagger.BlockElementsModule;
-import io.github.slupik.schemablock.view.logic.provider.DynawareBlocksProvider;
-import io.github.slupik.schemablock.view.logic.provider.DynawareChainedElementProvider;
+import io.github.slupik.schemablock.view.logic.communication.UIIOCommunicator;
+import io.github.slupik.schemablock.view.logic.execution.dagger.DiagramExecutorElementsModule;
+import io.github.slupik.schemablock.view.logic.execution.dagger.ExecutionElementsModule;
+import io.github.slupik.schemablock.view.logic.execution.dagger.HeapControllerCallbackModule;
+import io.github.slupik.schemablock.view.logic.execution.diagram.DiagramExecutor;
 import io.github.slupik.schemablock.view.logic.zoom.Zoomer;
 import io.github.slupik.schemablock.view.persistence.DiagramLoader;
 import io.github.slupik.schemablock.view.persistence.DiagramSaver;
@@ -32,6 +34,7 @@ import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.web.WebView;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
@@ -90,6 +93,12 @@ public class MainViewController implements Initializable {
     private ToggleButton minimapButton;
     @FXML
     private GraphEditorContainer graphEditorContainer;
+    @FXML
+    private TextField tfInput;
+    @FXML
+    private JFXButton btnEnter;
+    @FXML
+    private WebView outputView;
 
     private final ObjectProperty<SkinController> activeSkinController = new SimpleObjectProperty<>();
     @Inject
@@ -108,13 +117,19 @@ public class MainViewController implements Initializable {
     Diagram diagram;
     @Inject
     SampleLoader sampleLoader;
+    @Inject
+    DiagramExecutor executor;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DaggerViewComponent.builder()
                 .addViewElementsModule(new ViewElementsModule(graphEditorContainer))
-//                .addViewElementsModule(new DiagramExecutorElementsModule(null))
-                .addViewElementsModule(new BlockElementsModule(new DynawareBlocksProvider(), new DynawareChainedElementProvider()))
+                .addViewElementsModule(new DiagramExecutorElementsModule(null))
+                .addViewElementsModule(new HeapControllerCallbackModule(() -> System.out.println("TEST")))
+                .addViewElementsModule(new ExecutionElementsModule(new UIIOCommunicator(tfInput, outputView, btnEnter)))
+//                .addViewElementsModule(new BlockElementsModule(
+//                        new DynawareBlocksProvider(graphEditor),
+//                        new DynawareChainedElementProvider(graphEditor)))
                 .build().inject(this);
 
         graphEditorContainer.setGraphEditor(graphEditor);
