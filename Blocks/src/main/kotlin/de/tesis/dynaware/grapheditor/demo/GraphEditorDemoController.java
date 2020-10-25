@@ -7,7 +7,7 @@ import de.tesis.dynaware.grapheditor.Commands;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
 import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
-import de.tesis.dynaware.grapheditor.core.skins.BlockType;
+import de.tesis.dynaware.grapheditor.core.skins.UiElementType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.SimpleConnectionSkin;
 import de.tesis.dynaware.grapheditor.demo.customskins.DefaultSkinController;
 import de.tesis.dynaware.grapheditor.demo.customskins.SkinController;
@@ -215,7 +215,7 @@ public class GraphEditorDemoController {
 
     @FXML
     public void addNode() {
-        activeSkinController.get().addNode(currentZoomFactor, BlockType.OPERATIONS);
+        activeSkinController.get().addNode(currentZoomFactor, UiElementType.OPERATIONS);
     }
 
     @FXML

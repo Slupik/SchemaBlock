@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.view.logic
+package io.github.slupik.schemablock.view.logic.zoom
 
 import de.tesis.dynaware.grapheditor.GraphEditorContainer
 import javafx.scene.transform.Scale

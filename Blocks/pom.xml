@@ -129,6 +129,18 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons.lang.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.slupik</groupId>
+            <artifactId>WitLang-Model</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.reactivex.rxjava3</groupId>
+            <artifactId>rxjava</artifactId>
+            <version>3.0.0-RC1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>

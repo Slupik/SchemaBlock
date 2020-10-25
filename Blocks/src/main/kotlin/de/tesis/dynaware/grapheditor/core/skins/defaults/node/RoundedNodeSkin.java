@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
  * Connectors are evenly spaced along the sides of the node according to their type.
  * </p>
  */
-public class RoundedNodeSkin extends Block {
+public abstract class RoundedNodeSkin extends Block {
 
     private static final String STYLE_CLASS_BORDER = "default-node-border";
     private static final String STYLE_CLASS_BACKGROUND = "default-node-background";

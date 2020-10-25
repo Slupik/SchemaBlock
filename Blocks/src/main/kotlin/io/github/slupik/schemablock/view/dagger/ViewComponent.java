@@ -2,6 +2,8 @@ package io.github.slupik.schemablock.view.dagger;
 
 import dagger.Component;
 import io.github.slupik.schemablock.view.MainViewController;
+import io.github.slupik.schemablock.view.logic.execution.dagger.BlockElementsModule;
+import io.github.slupik.schemablock.view.logic.execution.dagger.ExecutorBinding;
 
 import javax.inject.Singleton;
 
@@ -9,7 +11,9 @@ import javax.inject.Singleton;
  * All rights reserved & copyright ©
  */
 @Singleton
-@Component(modules = {DynawareModule.class, ElementsBindingModule.class, ViewElementsModule.class})
+@Component(modules = {DynawareModule.class, ElementsBindingModule.class, ViewElementsModule.class, ExecutorBinding.class,
+        BlockElementsModule.class})
+//DiagramExecutorElementsModule.class,
 public interface ViewComponent {
 
     void inject(MainViewController controller);
@@ -19,6 +23,8 @@ public interface ViewComponent {
         ViewComponent build();
 
         Builder addViewElementsModule(ViewElementsModule viewElementsModule);
+//        Builder addViewElementsModule(DiagramExecutorElementsModule diagramExecutorElementsModule);
+        Builder addViewElementsModule(BlockElementsModule blockElementsModule);
     }
 
 }

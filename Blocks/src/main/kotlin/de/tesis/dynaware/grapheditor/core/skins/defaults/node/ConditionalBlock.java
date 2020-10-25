@@ -5,6 +5,7 @@
 
 package de.tesis.dynaware.grapheditor.core.skins.defaults.node;
 
+import de.tesis.dynaware.grapheditor.core.skins.UiElementType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
 import de.tesis.dynaware.grapheditor.model.GNode;
 import javafx.beans.binding.DoubleBinding;
@@ -36,6 +37,11 @@ public class ConditionalBlock extends Block {
         super(node);
         initElements();
         initLabel("IF");
+    }
+
+    @Override
+    public UiElementType getType() {
+        return UiElementType.CONDITION;
     }
 
     protected void initElements() {

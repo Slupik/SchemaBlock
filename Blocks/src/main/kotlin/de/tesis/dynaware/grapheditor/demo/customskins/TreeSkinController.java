@@ -3,7 +3,7 @@ package de.tesis.dynaware.grapheditor.demo.customskins;
 import de.tesis.dynaware.grapheditor.Commands;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
-import de.tesis.dynaware.grapheditor.core.skins.BlockType;
+import de.tesis.dynaware.grapheditor.core.skins.UiElementType;
 import de.tesis.dynaware.grapheditor.demo.customskins.tree.*;
 import de.tesis.dynaware.grapheditor.model.GConnector;
 import de.tesis.dynaware.grapheditor.model.GNode;
@@ -42,7 +42,7 @@ public class TreeSkinController implements SkinController {
     }
 
     @Override
-    public void addNode(final double currentZoomFactor, BlockType operations) {
+    public void addNode(final double currentZoomFactor, UiElementType operations) {
 
         final double windowXOffset = graphEditorContainer.windowXProperty().get() / currentZoomFactor;
         final double windowYOffset = graphEditorContainer.windowYProperty().get() / currentZoomFactor;

@@ -4,7 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import de.tesis.dynaware.grapheditor.Commands;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
-import de.tesis.dynaware.grapheditor.core.skins.BlockType;
+import de.tesis.dynaware.grapheditor.core.skins.UiElementType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.SimpleConnectionSkin;
 import de.tesis.dynaware.grapheditor.demo.customskins.DefaultSkinController;
 import de.tesis.dynaware.grapheditor.demo.customskins.SkinController;
@@ -14,7 +14,10 @@ import de.tesis.dynaware.grapheditor.window.WindowPosition;
 import io.github.slupik.schemablock.view.dagger.DaggerViewComponent;
 import io.github.slupik.schemablock.view.dagger.ViewElementsModule;
 import io.github.slupik.schemablock.view.entity.Diagram;
-import io.github.slupik.schemablock.view.logic.Zoomer;
+import io.github.slupik.schemablock.view.logic.execution.dagger.BlockElementsModule;
+import io.github.slupik.schemablock.view.logic.provider.DynawareBlocksProvider;
+import io.github.slupik.schemablock.view.logic.provider.DynawareChainedElementProvider;
+import io.github.slupik.schemablock.view.logic.zoom.Zoomer;
 import io.github.slupik.schemablock.view.persistence.DiagramLoader;
 import io.github.slupik.schemablock.view.persistence.DiagramSaver;
 import io.github.slupik.schemablock.view.persistence.FileChooser;
@@ -110,6 +113,8 @@ public class MainViewController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DaggerViewComponent.builder()
                 .addViewElementsModule(new ViewElementsModule(graphEditorContainer))
+//                .addViewElementsModule(new DiagramExecutorElementsModule(null))
+                .addViewElementsModule(new BlockElementsModule(new DynawareBlocksProvider(), new DynawareChainedElementProvider()))
                 .build().inject(this);
 
         graphEditorContainer.setGraphEditor(graphEditor);
@@ -123,7 +128,7 @@ public class MainViewController implements Initializable {
     }
 
     private void addStartNode() {
-        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), BlockType.START);
+        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), UiElementType.START);
     }
 
     /**
@@ -341,22 +346,22 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void addCalculationsNode() {
-        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), BlockType.OPERATIONS);
+        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), UiElementType.OPERATIONS);
     }
 
     @FXML
     public void addConditionNode() {
-        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), BlockType.CONDITION);
+        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), UiElementType.CONDITION);
     }
 
     @FXML
     public void addIoNode() {
-        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), BlockType.IO);
+        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), UiElementType.IO);
     }
 
     @FXML
     public void addStopNode() {
-        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), BlockType.STOP);
+        activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), UiElementType.STOP);
     }
 
     @FXML

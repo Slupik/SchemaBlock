@@ -107,13 +107,13 @@ public class SkinFactory {
         }
         if (node.getType() == null) {
             return new OperationsBlock(node);
-        } else if(node.getType().equalsIgnoreCase(BlockType.START.code)) {
+        } else if(node.getType().equalsIgnoreCase(UiElementType.START.code)) {
             return new StartBlock(node);
-        } else if(node.getType().equalsIgnoreCase(BlockType.STOP.code)) {
+        } else if(node.getType().equalsIgnoreCase(UiElementType.STOP.code)) {
             return new StopBlock(node);
-        } else if(node.getType().equalsIgnoreCase(BlockType.IO.code)) {
+        } else if(node.getType().equalsIgnoreCase(UiElementType.IO.code)) {
             return new IoBlock(node);
-        } else if(node.getType().equalsIgnoreCase(BlockType.CONDITION.code)) {
+        } else if(node.getType().equalsIgnoreCase(UiElementType.CONDITION.code)) {
             return new ConditionalBlock(node);
         }
 

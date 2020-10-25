@@ -5,6 +5,7 @@
 
 package de.tesis.dynaware.grapheditor.core.skins.defaults.node;
 
+import de.tesis.dynaware.grapheditor.core.skins.UiElementType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.DefaultConnectorTypes;
 import de.tesis.dynaware.grapheditor.model.GConnector;
@@ -42,6 +43,11 @@ public class IoBlock extends Block {
         super(node);
         initElements();
         initLabel("I/O");
+    }
+
+    @Override
+    public UiElementType getType() {
+        return UiElementType.IO;
     }
 
     protected void initElements() {

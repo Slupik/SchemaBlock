@@ -4,6 +4,7 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins.defaults.node;
 
+import de.tesis.dynaware.grapheditor.core.skins.UiElementType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.DefaultConnectorTypes;
 import de.tesis.dynaware.grapheditor.model.GNode;
 import de.tesis.dynaware.grapheditor.utils.ResizableBox;
@@ -30,6 +31,11 @@ public class StartBlock extends RoundedNodeSkin {
     public StartBlock(GNode node) {
         super(node);
         initLabel("Start");
+    }
+
+    @Override
+    public UiElementType getType() {
+        return UiElementType.START;
     }
 
 }

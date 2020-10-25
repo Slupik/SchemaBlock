@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.view.logic
+package io.github.slupik.schemablock.view.logic.zoom
 
 import javafx.scene.transform.Scale
 

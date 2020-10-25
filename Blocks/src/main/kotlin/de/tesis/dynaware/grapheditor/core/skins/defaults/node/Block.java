@@ -1,5 +1,6 @@
 package de.tesis.dynaware.grapheditor.core.skins.defaults.node;
 
+import de.tesis.dynaware.grapheditor.core.skins.UiElementType;
 import de.tesis.dynaware.grapheditor.model.GNode;
 import javafx.css.PseudoClass;
 
@@ -34,5 +35,7 @@ public abstract class Block extends LabeledNodeSkin  {
         getBackground().pseudoClassStateChanged(PSEUDO_CLASS_ERROR, true);
         getBackground().pseudoClassStateChanged(PSEUDO_CLASS_CURRENT, false);
     }
+
+    public abstract UiElementType getType();
 
 }
