@@ -2,6 +2,7 @@ package de.tesis.dynaware.grapheditor.core.skins.defaults.condition.changer;
 
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.beans.property.BooleanProperty;
+import javafx.css.PseudoClass;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 
@@ -10,6 +11,9 @@ import javafx.scene.Group;
  */
 public class ToggleConditionChanger implements ConditionChanger {
 
+    private static final PseudoClass PSEUDO_CLASS_TRUE = PseudoClass.getPseudoClass("true");
+    private static final PseudoClass PSEUDO_CLASS_FALSE = PseudoClass.getPseudoClass("false");
+
     private final Group root = new Group();
     private final JFXToggleButton btn = new JFXToggleButton();
 
@@ -17,14 +21,22 @@ public class ToggleConditionChanger implements ConditionChanger {
         root.getChildren().add(btn);
         root.setManaged(false);
         btn.setSelected(true);
+        setVisualStateValue(true);
         btn.setText("True");
-        btn.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (newValue) {
-                btn.setText("True");
-            } else {
-                btn.setText("False");
-            }
-        });
+        btn.getStyleClass().setAll("connection-type-toggle");
+        btn.selectedProperty().addListener((observableValue, oldValue, newValue) -> setVisualStateValue(newValue));
+    }
+
+    private void setVisualStateValue(Boolean newValue) {
+        if (newValue) {
+            btn.pseudoClassStateChanged(PSEUDO_CLASS_TRUE, true);
+            btn.pseudoClassStateChanged(PSEUDO_CLASS_FALSE, false);
+            btn.setText("True");
+        } else {
+            btn.pseudoClassStateChanged(PSEUDO_CLASS_TRUE, false);
+            btn.pseudoClassStateChanged(PSEUDO_CLASS_FALSE, true);
+            btn.setText("False");
+        }
     }
 
     @Override
