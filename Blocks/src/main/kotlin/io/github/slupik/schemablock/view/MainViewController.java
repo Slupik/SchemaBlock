@@ -25,6 +25,7 @@ import io.github.slupik.schemablock.view.logic.execution.dagger.HeapControllerCa
 import io.github.slupik.schemablock.view.logic.execution.diagram.DiagramExecutor;
 import io.github.slupik.schemablock.view.logic.execution.diagram.ExecutionEvent;
 import io.github.slupik.schemablock.view.logic.execution.diagram.exception.NextBlockNotFound;
+import io.github.slupik.schemablock.view.logic.marker.BlockExecutionStateMarker;
 import io.github.slupik.schemablock.view.logic.memory.HeapValueFx;
 import io.github.slupik.schemablock.view.logic.memory.NewHeapSpy;
 import io.github.slupik.schemablock.view.logic.zoom.Zoomer;
@@ -148,6 +149,8 @@ public class MainViewController implements Initializable {
     DiagramExecutor executor;
     @Inject
     NewHeapSpy memory;
+    @Inject
+    BlockExecutionStateMarker stateMarker;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -159,9 +162,6 @@ public class MainViewController implements Initializable {
                         () -> tvVariables.refresh()
                 ))
                 .addViewElementsModule(new ExecutionElementsModule(output))
-//                .addViewElementsModule(new BlockElementsModule(
-//                        new DynawareBlocksProvider(graphEditor),
-//                        new DynawareChainedElementProvider(graphEditor)))
                 .build().inject(this);
 
         graphEditorContainer.setGraphEditor(graphEditor);
@@ -373,6 +373,7 @@ public class MainViewController implements Initializable {
     }
 
     private void handleExecutionStates(Observable<ExecutionEvent> observable) {
+        stateMarker.handleObservable(observable);
         Disposable disp = observable.subscribe(
                 executionEvent -> {
                     System.out.println("executionEvent = " + executionEvent);
@@ -382,6 +383,7 @@ public class MainViewController implements Initializable {
                     if (throwable instanceof NextBlockNotFound) {
                         System.out.println("type " + ((NextBlockNotFound) throwable).getCurrentBlock());
                     }
+                    onExecutionEnd();
                 },
                 () -> {
                     System.out.println("END");

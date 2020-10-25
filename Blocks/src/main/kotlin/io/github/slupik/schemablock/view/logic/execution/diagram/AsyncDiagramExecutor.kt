@@ -69,7 +69,7 @@ class AsyncDiagramExecutor @Inject constructor(
                 if (!stop) {
                     executeNextBlock(controller, block, result)
                 } else {
-                    stop = false;
+                    stop = false
                 }
             } catch (t: Throwable) {
                 publisher.onNext(ErrorEvent(t))
