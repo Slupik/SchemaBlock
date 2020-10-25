@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.view.logic.memory;
 
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.newparser.memory.element.*;
 import javafx.beans.property.SimpleStringProperty;
@@ -9,7 +10,7 @@ import javax.inject.Inject;
 /**
  * All rights reserved & copyright ©
  */
-public class HeapValueFx implements Variable {
+public class HeapValueFx extends RecursiveTreeObject<HeapValueFx> implements Variable {
 
     private final Variable source;
     private final Runnable callbackAfterItemChange;
@@ -113,7 +114,7 @@ public class HeapValueFx implements Variable {
         }
     }
 
-    public SimpleStringProperty getTypeProprty() {
+    public SimpleStringProperty getTypeProperty() {
         return type;
     }
 

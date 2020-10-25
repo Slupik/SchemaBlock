@@ -1,6 +1,10 @@
 package io.github.slupik.schemablock.view;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTreeTableColumn;
+import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import de.tesis.dynaware.grapheditor.Commands;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
@@ -21,6 +25,8 @@ import io.github.slupik.schemablock.view.logic.execution.dagger.HeapControllerCa
 import io.github.slupik.schemablock.view.logic.execution.diagram.DiagramExecutor;
 import io.github.slupik.schemablock.view.logic.execution.diagram.ExecutionEvent;
 import io.github.slupik.schemablock.view.logic.execution.diagram.exception.NextBlockNotFound;
+import io.github.slupik.schemablock.view.logic.memory.HeapValueFx;
+import io.github.slupik.schemablock.view.logic.memory.NewHeapSpy;
 import io.github.slupik.schemablock.view.logic.zoom.Zoomer;
 import io.github.slupik.schemablock.view.persistence.DiagramLoader;
 import io.github.slupik.schemablock.view.persistence.DiagramSaver;
@@ -104,6 +110,14 @@ public class MainViewController implements Initializable {
     private JFXButton btnEnter;
     @FXML
     private WebView outputView;
+    @FXML
+    private JFXTreeTableView<HeapValueFx> tvVariables;
+    @FXML
+    private JFXTreeTableColumn<HeapValueFx, String> tcVarType;
+    @FXML
+    private JFXTreeTableColumn<HeapValueFx, String> tcVarName;
+    @FXML
+    private JFXTreeTableColumn<HeapValueFx, String> tcVarValue;
 
     private final ObjectProperty<SkinController> activeSkinController = new SimpleObjectProperty<>();
     private CompositeDisposable composite = new CompositeDisposable();
@@ -125,13 +139,17 @@ public class MainViewController implements Initializable {
     SampleLoader sampleLoader;
     @Inject
     DiagramExecutor executor;
+    @Inject
+    NewHeapSpy memory;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DaggerViewComponent.builder()
                 .addViewElementsModule(new ViewElementsModule(graphEditorContainer))
                 .addViewElementsModule(new DiagramExecutorElementsModule(null))
-                .addViewElementsModule(new HeapControllerCallbackModule(() -> System.out.println("TEST")))
+                .addViewElementsModule(new HeapControllerCallbackModule(
+                        () -> tvVariables.refresh()
+                ))
                 .addViewElementsModule(new ExecutionElementsModule(new UIIOCommunicator(tfInput, outputView, btnEnter)))
 //                .addViewElementsModule(new BlockElementsModule(
 //                        new DynawareBlocksProvider(graphEditor),
@@ -145,7 +163,18 @@ public class MainViewController implements Initializable {
 
         enableResizing();
         initializeMenuBar();
+        bindTable();
         Platform.runLater(this::addStartNode);
+    }
+
+    private void bindTable() {
+        final TreeItem<HeapValueFx> root = new RecursiveTreeItem<>(memory.getVariableList(), RecursiveTreeObject::getChildren);
+        tvVariables.setRoot(root);
+        tvVariables.setShowRoot(false);
+
+        tcVarType.setCellValueFactory(param -> param.getValue().getValue().getTypeProperty());
+        tcVarName.setCellValueFactory(param -> param.getValue().getValue().getNameProperty());
+        tcVarValue.setCellValueFactory(param -> param.getValue().getValue().getValueProperty());
     }
 
     private void addStartNode() {
@@ -307,6 +336,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void runDiagram() {
+        memory.clear();
         handleExecutionStates(executor.run());
     }
 
