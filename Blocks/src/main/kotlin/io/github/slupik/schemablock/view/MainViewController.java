@@ -121,6 +121,7 @@ public class MainViewController implements Initializable {
 
     private final ObjectProperty<SkinController> activeSkinController = new SimpleObjectProperty<>();
     private CompositeDisposable composite = new CompositeDisposable();
+    private UIIOCommunicator output;
     @Inject
     DefaultSkinController defaultSkinController;
     @Inject
@@ -144,13 +145,14 @@ public class MainViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        output = new UIIOCommunicator(tfInput, outputView, btnEnter);
         DaggerViewComponent.builder()
                 .addViewElementsModule(new ViewElementsModule(graphEditorContainer))
                 .addViewElementsModule(new DiagramExecutorElementsModule(null))
                 .addViewElementsModule(new HeapControllerCallbackModule(
                         () -> tvVariables.refresh()
                 ))
-                .addViewElementsModule(new ExecutionElementsModule(new UIIOCommunicator(tfInput, outputView, btnEnter)))
+                .addViewElementsModule(new ExecutionElementsModule(output))
 //                .addViewElementsModule(new BlockElementsModule(
 //                        new DynawareBlocksProvider(graphEditor),
 //                        new DynawareChainedElementProvider(graphEditor)))
@@ -336,7 +338,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void runDiagram() {
-        memory.clear();
+        resetUserView();
         handleExecutionStates(executor.run());
     }
 
@@ -370,12 +372,18 @@ public class MainViewController implements Initializable {
     public void clearModel() {
         Commands.clear(graphEditor.getModel());
         addStartNode();
+        resetUserView();
     }
 
     @FXML
     public void createNew() {
         save();
         clearModel();
+    }
+
+    private void resetUserView() {
+        memory.clear();
+        output.clear();
     }
 
     @FXML
