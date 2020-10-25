@@ -94,7 +94,7 @@
             <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: lightgray;">
                 <items>
                     <JFXButton buttonType="FLAT" managed="false" mnemonicParsing="false" styleClass="jfx-button-flat" text="Dummy button to keep right colors of other buttons" />
-                    <JFXButton fx:id="btnRun" buttonType="FLAT" defaultButton="true" mnemonicParsing="false" styleClass="jfx-button-flat" text="Run" />
+                    <JFXButton fx:id="btnRun" buttonType="FLAT" defaultButton="true" mnemonicParsing="false" onAction="#runDiagram" styleClass="jfx-button-flat" text="Run" />
                     <JFXButton fx:id="btnDebug" buttonType="FLAT" mnemonicParsing="false" styleClass="jfx-button-flat" text="Debug" />
                     <JFXButton fx:id="btnContinue" buttonType="FLAT" mnemonicParsing="false" styleClass="jfx-button-flat" text="Continue" />
                     <HBox fx:id="availableBlocks" spacing="16.0">

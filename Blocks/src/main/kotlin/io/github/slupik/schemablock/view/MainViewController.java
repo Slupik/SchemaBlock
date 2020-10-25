@@ -19,11 +19,16 @@ import io.github.slupik.schemablock.view.logic.execution.dagger.DiagramExecutorE
 import io.github.slupik.schemablock.view.logic.execution.dagger.ExecutionElementsModule;
 import io.github.slupik.schemablock.view.logic.execution.dagger.HeapControllerCallbackModule;
 import io.github.slupik.schemablock.view.logic.execution.diagram.DiagramExecutor;
+import io.github.slupik.schemablock.view.logic.execution.diagram.ExecutionEvent;
+import io.github.slupik.schemablock.view.logic.execution.diagram.exception.NextBlockNotFound;
 import io.github.slupik.schemablock.view.logic.zoom.Zoomer;
 import io.github.slupik.schemablock.view.persistence.DiagramLoader;
 import io.github.slupik.schemablock.view.persistence.DiagramSaver;
 import io.github.slupik.schemablock.view.persistence.FileChooser;
 import io.github.slupik.schemablock.view.persistence.graph.SampleLoader;
+import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -101,6 +106,7 @@ public class MainViewController implements Initializable {
     private WebView outputView;
 
     private final ObjectProperty<SkinController> activeSkinController = new SimpleObjectProperty<>();
+    private CompositeDisposable composite = new CompositeDisposable();
     @Inject
     DefaultSkinController defaultSkinController;
     @Inject
@@ -297,6 +303,29 @@ public class MainViewController implements Initializable {
             final String type = firstNode.getType();
             activeSkinController.set(defaultSkinController);
         }
+    }
+
+    @FXML
+    public void runDiagram() {
+        handleExecutionStates(executor.run());
+    }
+
+    private void handleExecutionStates(Observable<ExecutionEvent> observable) {
+        Disposable disp = observable.subscribe(
+                executionEvent -> {
+                    System.out.println("executionEvent = " + executionEvent);
+                },
+                throwable -> {
+                    System.out.println("throwable = " + throwable);
+                    if (throwable instanceof NextBlockNotFound) {
+                        System.out.println("type " + ((NextBlockNotFound) throwable).getCurrentBlock());
+                    }
+                },
+                () -> {
+                    System.out.println("END");
+                }
+        );
+        composite.add(disp);
     }
 
     @FXML
