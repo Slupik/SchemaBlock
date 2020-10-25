@@ -61,7 +61,13 @@ import java.util.ResourceBundle;
 public class MainViewController implements Initializable {
 
     @FXML
+    private JFXButton btnRun;
+    @FXML
+    private JFXButton btnDebug;
+    @FXML
     private JFXButton btnContinue;
+    @FXML
+    private JFXButton btnStop;
     @FXML
     private AnchorPane root;
     @FXML
@@ -161,6 +167,7 @@ public class MainViewController implements Initializable {
         graphEditorContainer.setGraphEditor(graphEditor);
         activeSkinController.set(defaultSkinController);
         btnContinue.setDisable(true);
+        btnStop.setDisable(true);
         addActiveSkinControllerListener();
 
         enableResizing();
@@ -263,6 +270,7 @@ public class MainViewController implements Initializable {
 
     private void clearAll() {
         clearModel();
+        stopExecution();
         flushCommandStack();
         checkConnectorButtonsToDisable();
         graphEditor.getSelectionManager().clearMemory();
@@ -340,6 +348,28 @@ public class MainViewController implements Initializable {
     public void runDiagram() {
         resetUserView();
         handleExecutionStates(executor.run());
+        onExecutionStart();
+    }
+
+    @FXML
+    public void stopExecution() {
+        onExecutionEnd();
+        resetUserView();
+        executor.stop();
+    }
+
+    private void onExecutionStart() {
+        btnRun.setDisable(true);
+        btnDebug.setDisable(true);
+        btnContinue.setDisable(true);
+        btnStop.setDisable(false);
+    }
+
+    private void onExecutionEnd() {
+        btnRun.setDisable(false);
+        btnDebug.setDisable(false);
+        btnContinue.setDisable(true);
+        btnStop.setDisable(true);
     }
 
     private void handleExecutionStates(Observable<ExecutionEvent> observable) {
@@ -355,6 +385,7 @@ public class MainViewController implements Initializable {
                 },
                 () -> {
                     System.out.println("END");
+                    onExecutionEnd();
                 }
         );
         composite.add(disp);
@@ -372,13 +403,13 @@ public class MainViewController implements Initializable {
     public void clearModel() {
         Commands.clear(graphEditor.getModel());
         addStartNode();
-        resetUserView();
     }
 
     @FXML
     public void createNew() {
         save();
         clearModel();
+        stopExecution();
     }
 
     private void resetUserView() {

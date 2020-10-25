@@ -12,12 +12,18 @@ class ContinuousDiagramExecutor @Inject constructor(
     @OneTime private val executorProvider: Provider<DiagramExecutor>
 ) : DiagramExecutor {
 
+    private val executionController = ContinuousExecutionController()
+
     override fun run(): Observable<ExecutionEvent> =
-        debug(ContinuousExecutionController())
+        debug(executionController)
 
     override fun debug(controller: DiagramExecutionController): Observable<ExecutionEvent> {
         val executor = createOneTimeExecutor()
         return executor.debug(controller)
+    }
+
+    override fun stop() {
+        executionController.stop();
     }
 
     private fun createOneTimeExecutor(): DiagramExecutor =

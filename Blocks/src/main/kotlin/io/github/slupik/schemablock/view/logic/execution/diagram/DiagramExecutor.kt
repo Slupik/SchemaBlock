@@ -11,5 +11,6 @@ interface DiagramExecutor {
     fun run(): Observable<ExecutionEvent>
 
     fun debug(controller: DiagramExecutionController): Observable<ExecutionEvent>
+    fun stop()
 
 }

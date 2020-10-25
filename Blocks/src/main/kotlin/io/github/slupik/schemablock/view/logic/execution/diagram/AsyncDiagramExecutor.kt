@@ -24,6 +24,7 @@ class AsyncDiagramExecutor @Inject constructor(
 ) : DiagramExecutor {
 
     private val publisher = PublishSubject.create<ExecutionEvent>()
+    private var stop = false;
 
     override fun run(): Observable<ExecutionEvent> =
         debug(ContinuousExecutionController())
@@ -39,6 +40,10 @@ class AsyncDiagramExecutor @Inject constructor(
             }
         }.start()
         return publisher
+    }
+
+    override fun stop() {
+        stop = true
     }
 
     private fun onStartBlockNotFound() {
@@ -61,7 +66,11 @@ class AsyncDiagramExecutor @Inject constructor(
                 val result = blockExecutor.execute(block)
                 onPostExecute(block, result)
 
-                executeNextBlock(controller, block, result)
+                if (!stop) {
+                    executeNextBlock(controller, block, result)
+                } else {
+                    stop = false;
+                }
             } catch (t: Throwable) {
                 publisher.onNext(ErrorEvent(t))
                 publisher.onNext(ExecutionEnd)
