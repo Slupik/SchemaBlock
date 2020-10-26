@@ -5,9 +5,6 @@ package de.tesis.dynaware.grapheditor.core.view;
 
 import de.tesis.dynaware.grapheditor.SkinLookup;
 import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.TriangleDrawer;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.DefaultConnectorTypes;
 import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.model.GModel;
 import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
@@ -94,32 +91,10 @@ public class ConnectionLayouter {
         final List<Point2D> points = new ArrayList<>();
 
         points.add(GeometryUtils.getConnectorPosition(connection.getSource(), skinLookup));
-
-        List<Point2D> joints = GeometryUtils.getJointPositions(connection, skinLookup);
-        points.addAll(joints);
-
-        Point2D target = GeometryUtils.getConnectorPosition(connection.getTarget(), skinLookup);
-        target = alignTargetPosition(joints.get(joints.size()-1), target);
-        points.add(target);
+        points.addAll(GeometryUtils.getJointPositions(connection, skinLookup));
+        points.add(GeometryUtils.getConnectorPosition(connection.getTarget(), skinLookup));
 
         return points;
-    }
-
-    private Point2D alignTargetPosition(Point2D lastJoint, Point2D target) {
-        double changeX = 0;
-        double changeY = 0;
-        String type = TriangleDrawer.getTriangleType(lastJoint, target);
-        double headSize = DefaultConnectorSkin.OUTER_SIZE;
-        if(DefaultConnectorTypes.isTop(type)) {
-            changeY = -headSize*1.5;
-        } else if(DefaultConnectorTypes.isBottom(type)) {
-            changeY = headSize*1.5;
-        } else if(DefaultConnectorTypes.isRight(type)) {
-            changeX = headSize*1.5;
-        } else if(DefaultConnectorTypes.isLeft(type)) {
-            changeX = -headSize*1.5;
-        }
-        return target.subtract(changeX, changeY);
     }
 
 }

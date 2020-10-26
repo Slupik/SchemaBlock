@@ -11,6 +11,7 @@ import de.tesis.dynaware.grapheditor.core.skins.defaults.TriangleDrawer;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.segment.ConnectionSegment;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.segment.DetouredConnectionSegment;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.segment.GappedConnectionSegment;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.DefaultConnectorTypes;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.RectangularConnectionUtils;
 import de.tesis.dynaware.grapheditor.model.GConnection;
@@ -157,19 +158,20 @@ public abstract class SimpleConnectionSkin extends GConnectionSkin {
     private void layoutArrowhead(String type, Point2D port) {
         double changeX = 0;
         double changeY = 0;
-        double headSize = arrowhead.getBoundsInLocal().getHeight();
+        double connectorRadius = DefaultConnectorSkin.OUTER_SIZE;
+        double arrowSize = TriangleDrawer.OUTER_SIZE;
         if(DefaultConnectorTypes.isTop(type)) {
-            changeX = headSize/2;
-            changeY = headSize;
+            changeX = arrowSize/2;
+            changeY = -connectorRadius*0.5;
         } else if(DefaultConnectorTypes.isBottom(type)) {
-            changeX = headSize/2;
-            changeY = 0;
+            changeX = arrowSize/2;
+            changeY = connectorRadius*0.5+arrowSize;
         } else if(DefaultConnectorTypes.isRight(type)) {
-            changeY = headSize/2;
-            changeX = 0;
+            changeY = arrowSize/2;
+            changeX = connectorRadius*0.5+arrowSize;
         } else if(DefaultConnectorTypes.isLeft(type)) {
-            changeY = headSize/2;
-            changeX = headSize;
+            changeY = arrowSize/2;
+            changeX = -connectorRadius*0.5;
         }
         arrowhead.setLayoutX(port.getX()-changeX);
         arrowhead.setLayoutY(port.getY()-changeY);
