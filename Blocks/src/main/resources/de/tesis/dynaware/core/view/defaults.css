@@ -84,35 +84,35 @@
 }
 
 .left-input {
-	-fx-fill: linear-gradient(from 0px 0px to 25px 0px, -outside-fill, -outside-fill 40%, -fx-stroke 40%, -fx-stroke 44%, -inside-fill 44%, -inside-fill);
+	-fx-fill: linear-gradient(from 0px 0px to 17px 0px, -outside-fill, -outside-fill 40%, -fx-stroke 40%, -fx-stroke 44%, -inside-fill 44%, -inside-fill);
 }
 
 .left-output {
-	-fx-fill: linear-gradient(from 0px 0px to 25px 0px, -outside-fill, -outside-fill 60%, -fx-stroke 60%, -fx-stroke 64%, -inside-fill 64%, -inside-fill);
+	-fx-fill: linear-gradient(from 0px 0px to 17px 0px, -outside-fill, -outside-fill 60%, -fx-stroke 60%, -fx-stroke 64%, -inside-fill 64%, -inside-fill);
 }
 
 .right-input {
-	-fx-fill: linear-gradient(from 0px 0px to 25px 0px, -inside-fill, -inside-fill 56%, -fx-stroke 56%, -fx-stroke 60%, -outside-fill 60%, -outside-fill);
+	-fx-fill: linear-gradient(from 0px 0px to 17px 0px, -inside-fill, -inside-fill 56%, -fx-stroke 56%, -fx-stroke 60%, -outside-fill 60%, -outside-fill);
 }
 
 .right-output {
-	-fx-fill: linear-gradient(from 0px 0px to 25px 0px, -inside-fill, -inside-fill 36%, -fx-stroke 36%, -fx-stroke 40%, -outside-fill 40%, -outside-fill);
+	-fx-fill: linear-gradient(from 0px 0px to 17px 0px, -inside-fill, -inside-fill 36%, -fx-stroke 36%, -fx-stroke 40%, -outside-fill 40%, -outside-fill);
 }
 
 .top-input {
-	-fx-fill: linear-gradient(from 0px 0px to 0px 25px, -outside-fill, -outside-fill 40%, -fx-stroke 40%, -fx-stroke 44%, -inside-fill 44%, -inside-fill);
+	-fx-fill: linear-gradient(from 0px 0px to 0px 17px, -outside-fill, -outside-fill 40%, -fx-stroke 40%, -fx-stroke 44%, -inside-fill 44%, -inside-fill);
 }
 
 .top-output {
-	-fx-fill: linear-gradient(from 0px 0px to 0px 25px, -outside-fill, -outside-fill 60%, -fx-stroke 60%, -fx-stroke 64%, -inside-fill 64%, -inside-fill);
+	-fx-fill: linear-gradient(from 0px 0px to 0px 17px, -outside-fill, -outside-fill 60%, -fx-stroke 60%, -fx-stroke 64%, -inside-fill 64%, -inside-fill);
 }
 
 .bottom-input {
-	-fx-fill: linear-gradient(from 0px 0px to 0px 25px, -inside-fill, -inside-fill 56%, -fx-stroke 56%, -fx-stroke 60%, -outside-fill 60%, -outside-fill);
+	-fx-fill: linear-gradient(from 0px 0px to 0px 17px, -inside-fill, -inside-fill 56%, -fx-stroke 56%, -fx-stroke 60%, -outside-fill 60%, -outside-fill);
 }
 
 .bottom-output {
-	-fx-fill: linear-gradient(from 0px 0px to 0px 25px, -inside-fill, -inside-fill 36%, -fx-stroke 36%, -fx-stroke 40%, -outside-fill 40%, -outside-fill);
+	-fx-fill: linear-gradient(from 0px 0px to 0px 17px, -inside-fill, -inside-fill 36%, -fx-stroke 36%, -fx-stroke 40%, -outside-fill 40%, -outside-fill);
 }
 
 .conditional-connection-true {
