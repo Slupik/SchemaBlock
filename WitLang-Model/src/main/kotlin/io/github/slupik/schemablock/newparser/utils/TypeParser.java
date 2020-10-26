@@ -41,7 +41,7 @@ public class TypeParser {
                     } else {
                         throw new ValueTooBig(data);
                     }
-                } catch (Exception ignore) {}
+                } catch (NumberFormatException ignore) {}
             }
         } else if(data.startsWith("\"") && data.endsWith("\"")) {
             return STRING;
