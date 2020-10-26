@@ -3,21 +3,16 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins.defaults;
 
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.tesis.dynaware.grapheditor.GJointSkin;
 import de.tesis.dynaware.grapheditor.GraphEditor;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.CursorOffsetCalculator;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.JointAlignmentManager;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.JointCleaner;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.JointCreator;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.SimpleConnectionSkin;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.*;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.RectangularConnectionUtils;
 import de.tesis.dynaware.grapheditor.core.utils.LogMessages;
 import de.tesis.dynaware.grapheditor.model.GConnection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * The default connection skin.
@@ -26,7 +21,7 @@ import de.tesis.dynaware.grapheditor.model.GConnection;
  * Extension of {@link SimpleConnectionSkin} that provides a mechanism for creating and removing joints.
  * </p>
  */
-public class DefaultConnectionSkin extends SimpleConnectionSkin {
+public abstract class DefaultConnectionSkin extends SimpleConnectionSkin {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultConnectionSkin.class);
 

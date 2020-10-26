@@ -9,6 +9,7 @@ import de.tesis.dynaware.grapheditor.core.skins.SkinManager;
 import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.model.GModel;
 import de.tesis.dynaware.grapheditor.utils.GraphEditorProperties;
+import io.github.slupik.schemablock.view.dialog.BlockEditionWithDialog;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.Region;
@@ -32,9 +33,8 @@ public class DefaultGraphEditor implements GraphEditor {
      * Creates a new default implementation of the {@link GraphEditor}.
      */
     public DefaultGraphEditor() {
-
         // Skin manager needs 'this' reference so users can access GraphEditor inside their custom skins.
-        skinManager = new SkinManager(this);
+        skinManager = new SkinManager(this, new BlockEditionWithDialog());
         connectionEventManager = new ConnectionEventManager();
 
         controller = new GraphEditorController(skinManager, connectionEventManager);

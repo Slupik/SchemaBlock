@@ -3,6 +3,7 @@ package de.tesis.dynaware.grapheditor.demo.customskins;
 import de.tesis.dynaware.grapheditor.Commands;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
+import de.tesis.dynaware.grapheditor.core.skins.UiElementType;
 import de.tesis.dynaware.grapheditor.demo.customskins.titled.TitledConnectorSkin;
 import de.tesis.dynaware.grapheditor.demo.customskins.titled.TitledNodeSkin;
 import de.tesis.dynaware.grapheditor.demo.customskins.titled.TitledSkinConstants;
@@ -45,7 +46,7 @@ public class TitledSkinController extends DefaultSkinController {
     }
 
     @Override
-    public void addNode(final double currentZoomFactor) {
+    public void addNode(final double currentZoomFactor, UiElementType uiElementType) {
 
         final double windowXOffset = graphEditorContainer.windowXProperty().get() / currentZoomFactor;
         final double windowYOffset = graphEditorContainer.windowYProperty().get() / currentZoomFactor;

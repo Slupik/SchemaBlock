@@ -3,11 +3,13 @@
  */
 package de.tesis.dynaware.grapheditor.core.connections;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import de.tesis.dynaware.grapheditor.GConnectorSkin;
+import de.tesis.dynaware.grapheditor.GConnectorStyle;
+import de.tesis.dynaware.grapheditor.GConnectorValidator;
+import de.tesis.dynaware.grapheditor.SkinLookup;
+import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
+import de.tesis.dynaware.grapheditor.core.view.GraphEditorView;
+import de.tesis.dynaware.grapheditor.model.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -15,21 +17,12 @@ import javafx.scene.Parent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
-
 import org.eclipse.emf.common.command.CompoundCommand;
 
-import de.tesis.dynaware.grapheditor.GConnectorSkin;
-import de.tesis.dynaware.grapheditor.GConnectorStyle;
-import de.tesis.dynaware.grapheditor.GConnectorValidator;
-import de.tesis.dynaware.grapheditor.SkinLookup;
-import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
-import de.tesis.dynaware.grapheditor.core.view.GraphEditorView;
-import de.tesis.dynaware.grapheditor.model.GConnection;
-import de.tesis.dynaware.grapheditor.model.GConnector;
-import de.tesis.dynaware.grapheditor.model.GJoint;
-import de.tesis.dynaware.grapheditor.model.GModel;
-import de.tesis.dynaware.grapheditor.model.GNode;
-import de.tesis.dynaware.grapheditor.model.GraphFactory;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Responsible for what happens when connectors are dragged in the graph editor.
@@ -58,7 +51,8 @@ public class ConnectorDragManager {
     private final Map<GConnector, EventHandler<MouseEvent>> mouseDragExitedHandlers = new HashMap<>();
     private final Map<GConnector, EventHandler<MouseEvent>> mouseDragReleasedHandlers = new HashMap<>();
 
-    private GConnectorValidator validator = new DefaultConnectorValidator();
+    private GConnectorValidator validator;
+    private ConnectionsValidationUtils connectionValidationUtils;
 
     private GConnector hoveredConnector;
     private GConnector sourceConnector;
@@ -79,6 +73,8 @@ public class ConnectorDragManager {
             final GraphEditorView view) {
 
         this.skinLookup = skinLookup;
+        validator = new DefaultConnectorValidator(skinLookup);
+        connectionValidationUtils = new ConnectionsValidationUtils(skinLookup);
         this.connectionEventManager = connectionEventManager;
 
         tailManager = new TailManager(skinLookup, view);
@@ -106,7 +102,7 @@ public class ConnectorDragManager {
         if (validator != null) {
             this.validator = validator;
         } else {
-            this.validator = new DefaultConnectorValidator();
+            this.validator = new DefaultConnectorValidator(skinLookup);
         }
     }
 
@@ -290,6 +286,9 @@ public class ConnectorDragManager {
         if (targetConnector != null && skinLookup.lookupConnector(targetConnector) != null) {
             skinLookup.lookupConnector(targetConnector).applyStyle(GConnectorStyle.DEFAULT);
         }
+        if (sourceConnector != null && skinLookup.lookupConnector(sourceConnector) != null) {
+            skinLookup.lookupConnector(sourceConnector).applyStyle(GConnectorStyle.DEFAULT);
+        }
 
         sourceConnector = null;
         removalConnector = null;
@@ -313,6 +312,11 @@ public class ConnectorDragManager {
         }
 
         if (checkCreatable(connector)) {
+            if (connectionValidationUtils.alreadyHasMaxOutputs(connector.getParent())) {
+                skinLookup.lookupConnector(connector).applyStyle(GConnectorStyle.DRAG_OVER_FORBIDDEN);
+            } else {
+                skinLookup.lookupConnector(connector).applyStyle(GConnectorStyle.DRAG_OVER_ALLOWED);
+            }
 
             sourceConnector = connector;
             skinLookup.lookupConnector(connector).getRoot().startFullDrag();
@@ -366,7 +370,7 @@ public class ConnectorDragManager {
             return;
         }
 
-        if (event.getButton().equals(MouseButton.PRIMARY) && validator.prevalidate(sourceConnector, connector)) {
+        if (validator.prevalidate(sourceConnector, connector)) {
 
             final boolean valid = validator.validate(sourceConnector, connector);
             tailManager.snapPosition(sourceConnector, connector, valid);
@@ -390,6 +394,9 @@ public class ConnectorDragManager {
      * @param connector the {@link GConnector} on which this event occured
      */
     private void handleDragExited(final MouseEvent event, final GConnector connector) {
+        if (connector == sourceConnector) {
+            return;
+        }
 
         skinLookup.lookupConnector(connector).applyStyle(GConnectorStyle.DEFAULT);
         repositionAllowed = true;
@@ -417,6 +424,7 @@ public class ConnectorDragManager {
         event.consume();
 
         final GConnectorSkin targetConnectorSkin = skinLookup.lookupConnector(connector);
+        final GConnectorSkin sourceConnectorSkin = skinLookup.lookupConnector(sourceConnector);
 
         if (validator.prevalidate(sourceConnector, connector) && validator.validate(sourceConnector, connector)) {
 
@@ -427,6 +435,9 @@ public class ConnectorDragManager {
             hoveredConnector = connector;
         }
 
+        if (sourceConnectorSkin != null) {
+            sourceConnectorSkin.applyStyle(GConnectorStyle.DEFAULT);
+        }
         targetConnectorSkin.applyStyle(GConnectorStyle.DEFAULT);
     }
 

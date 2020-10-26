@@ -13,11 +13,12 @@ import de.tesis.dynaware.grapheditor.model.GNode;
 import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
 import de.tesis.dynaware.grapheditor.utils.ResizableBox;
 import javafx.css.PseudoClass;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.geometry.Side;
 import javafx.scene.Node;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Rectangle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +54,8 @@ public abstract class NodeSkin extends GNodeSkin {
     private final List<GConnectorSkin> bottomConnectorSkins = new ArrayList<>();
     private final List<GConnectorSkin> leftConnectorSkins = new ArrayList<>();
 
+    private final List<EventHandler<MouseEvent>> doubleClickHandlers = new ArrayList<>();
+
     /**
      * Creates a new default node skin instance.
      *
@@ -68,9 +71,21 @@ public abstract class NodeSkin extends GNodeSkin {
         getRoot().setMinSize(MIN_WIDTH, MIN_HEIGHT);
 
         getBackground().addEventFilter(MouseEvent.MOUSE_DRAGGED, this::filterMouseDragged);
+        getBackground().addEventFilter(MouseEvent.MOUSE_CLICKED, this::filterMouseClick);
 
         addSelectionHalo();
         addSelectionListener();
+        addDoubleClickListener();
+    }
+
+    private void addDoubleClickListener() {
+        getBackground().addEventHandler(MouseEvent.MOUSE_CLICKED, event ->{
+            if (event.getButton() == MouseButton.PRIMARY) {
+                if (event.getClickCount() == 2) {
+                    invokeDoubleClickEventHandler(event);
+                }
+            }
+        });
     }
 
     protected abstract void initElements();
@@ -283,6 +298,20 @@ public abstract class NodeSkin extends GNodeSkin {
         if (event.isPrimaryButtonDown() && !isSelected()) {
             event.consume();
         }
+    }
+
+    private void filterMouseClick(final MouseEvent event) {
+        if (!isSelected()) {
+            event.consume();
+        }
+    }
+
+    public void addOnDoubleClickEventHandler(EventHandler<MouseEvent> eventHandler) {
+        doubleClickHandlers.add(eventHandler);
+    }
+
+    protected void invokeDoubleClickEventHandler(MouseEvent event) {
+        doubleClickHandlers.forEach(handler -> handler.handle(event));
     }
 
     protected abstract Node getBackground();

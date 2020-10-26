@@ -5,13 +5,14 @@
 
 package de.tesis.dynaware.grapheditor.core.skins.defaults.node;
 
+import de.tesis.dynaware.grapheditor.core.skins.UiElementType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
 import de.tesis.dynaware.grapheditor.model.GNode;
 import javafx.beans.binding.DoubleBinding;
 import javafx.scene.Node;
 import javafx.scene.shape.Polygon;
 
-public class ConditionalBlock extends LabeledNodeSkin {
+public class ConditionalBlock extends Block {
 
     private static final String STYLE_CLASS_BORDER = "default-node-border";
     private static final String STYLE_CLASS_BACKGROUND = "default-node-background";
@@ -25,6 +26,8 @@ public class ConditionalBlock extends LabeledNodeSkin {
     private final Polygon border = new Polygon();
     private final Polygon background = new Polygon();
 
+    private String code = "";
+
     /**
      * Creates a new default node skin instance.
      *
@@ -34,6 +37,11 @@ public class ConditionalBlock extends LabeledNodeSkin {
         super(node);
         initElements();
         initLabel("IF");
+    }
+
+    @Override
+    public UiElementType getType() {
+        return UiElementType.CONDITION;
     }
 
     protected void initElements() {
@@ -78,7 +86,6 @@ public class ConditionalBlock extends LabeledNodeSkin {
 
     @Override
     protected void addSelectionHalo() {
-
         getRoot().getChildren().add(selectionHalo);
 
         selectionHalo.setManaged(false);
@@ -135,5 +142,13 @@ public class ConditionalBlock extends LabeledNodeSkin {
     @Override
     protected Node getSelectionHalo() {
         return selectionHalo;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

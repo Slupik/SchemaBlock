@@ -3,26 +3,25 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins;
 
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
-
+import de.tesis.dynaware.grapheditor.*;
+import de.tesis.dynaware.grapheditor.core.connections.ConnectionType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.*;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.node.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import de.tesis.dynaware.grapheditor.GConnectionSkin;
-import de.tesis.dynaware.grapheditor.GConnectorSkin;
-import de.tesis.dynaware.grapheditor.GJointSkin;
-import de.tesis.dynaware.grapheditor.GNodeSkin;
-import de.tesis.dynaware.grapheditor.GTailSkin;
 import de.tesis.dynaware.grapheditor.core.utils.LogMessages;
 import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.model.GConnector;
 import de.tesis.dynaware.grapheditor.model.GJoint;
 import de.tesis.dynaware.grapheditor.model.GNode;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.eclipse.emf.ecore.xml.type.internal.DataValue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Resposible for instantiating skins.
@@ -100,32 +99,41 @@ public class SkinFactory {
      * @return a new {@link GNodeSkin} instance
      */
     public GNodeSkin createNodeSkin(final GNode node) {
-
         if (node == null) {
             return null;
-        } else if (node.getType() == null) {
-            return new CalculationsBlock(node);
-        } else if(node.getType().equals("start")) {
+        }
+        if (StringUtils.isBlank(node.getId())) {
+            node.setId(generateId());
+        }
+        if (node.getType() == null) {
+            return new OperationsBlock(node);
+        } else if(node.getType().equalsIgnoreCase(UiElementType.START.code)) {
             return new StartBlock(node);
-        } else if(node.getType().equals("io")) {
+        } else if(node.getType().equalsIgnoreCase(UiElementType.STOP.code)) {
+            return new StopBlock(node);
+        } else if(node.getType().equalsIgnoreCase(UiElementType.IO.code)) {
             return new IoBlock(node);
-        } else if(node.getType().equals("condition")) {
+        } else if(node.getType().equalsIgnoreCase(UiElementType.CONDITION.code)) {
             return new ConditionalBlock(node);
         }
 
         final Class<? extends GNodeSkin> skinClass = nodeSkins.get(node.getType());
 
         if (skinClass == null) {
-            return new CalculationsBlock(node);
+            return new OperationsBlock(node);
         } else {
             try {
                 final Constructor<? extends GNodeSkin> constructor = skinClass.getConstructor(GNode.class);
                 return constructor.newInstance(node);
             } catch (final ReflectiveOperationException e) {
                 LOGGER.error(LogMessages.CANNOT_INSTANTIATE_SKIN, skinClass.getName());
-                return new CalculationsBlock(node);
+                return new OperationsBlock(node);
             }
         }
+    }
+
+    private String generateId() {
+        return "Block_" + DataValue.Base64.encode(RandomStringUtils.random(32).getBytes());
     }
 
     /**
@@ -166,24 +174,33 @@ public class SkinFactory {
      * @return a new {@link GConnectionSkin} instance
      */
     public GConnectionSkin createConnectionSkin(final GConnection connection) {
-
         if (connection == null) {
             return null;
         } else if (connection.getType() == null) {
-            return new DefaultConnectionSkin(connection);
+            return new StandardConnectionSkin(connection);
+        } else if (ConnectionType.STANDARD.name().equals(connection.getType())) {
+            return new StandardConnectionSkin(connection);
+        } else if (ConnectionType.CONDITIONAL_TRUE.name().equals(connection.getType())) {
+            ConditionalConnectionSkin skin = new ConditionalConnectionSkin(connection);
+            skin.setValue(true);
+            return skin;
+        } else if (ConnectionType.CONDITIONAL_FALSE.name().equals(connection.getType())) {
+            ConditionalConnectionSkin skin = new ConditionalConnectionSkin(connection);
+            skin.setValue(false);
+            return skin;
         }
 
         final Class<? extends GConnectionSkin> skinClass = connectionSkins.get(connection.getType());
 
         if (skinClass == null) {
-            return new DefaultConnectionSkin(connection);
+            return new StandardConnectionSkin(connection);
         } else {
             try {
                 final Constructor<? extends GConnectionSkin> constructor = skinClass.getConstructor(GConnection.class);
                 return constructor.newInstance(connection);
             } catch (final ReflectiveOperationException e) {
                 LOGGER.error(LogMessages.CANNOT_INSTANTIATE_SKIN, skinClass.getName());
-                return new DefaultConnectionSkin(connection);
+                return new StandardConnectionSkin(connection);
             }
         }
     }

@@ -5,15 +5,20 @@
 
 package de.tesis.dynaware.grapheditor.core.skins.defaults.node;
 
+import de.tesis.dynaware.grapheditor.core.skins.UiElementType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.DefaultConnectorTypes;
 import de.tesis.dynaware.grapheditor.model.GConnector;
 import de.tesis.dynaware.grapheditor.model.GNode;
+import io.github.slupik.schemablock.view.dialog.data.IoOperation;
 import javafx.beans.binding.DoubleBinding;
 import javafx.scene.Node;
 import javafx.scene.shape.Polygon;
 
-public class IoBlock extends LabeledNodeSkin {
+import java.util.ArrayList;
+import java.util.List;
+
+public class IoBlock extends Block {
 
     private static final String STYLE_CLASS_BORDER = "default-node-border";
     private static final String STYLE_CLASS_BACKGROUND = "default-node-background";
@@ -27,6 +32,8 @@ public class IoBlock extends LabeledNodeSkin {
     private final Polygon border = new Polygon();
     private final Polygon background = new Polygon();
 
+    private List<IoOperation> operations = new ArrayList<>();
+
     /**
      * Creates a new default node skin instance.
      *
@@ -36,6 +43,11 @@ public class IoBlock extends LabeledNodeSkin {
         super(node);
         initElements();
         initLabel("I/O");
+    }
+
+    @Override
+    public UiElementType getType() {
+        return UiElementType.IO;
     }
 
     protected void initElements() {
@@ -165,5 +177,13 @@ public class IoBlock extends LabeledNodeSkin {
     @Override
     protected Node getSelectionHalo() {
         return selectionHalo;
+    }
+
+    public List<IoOperation> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(List<IoOperation> operations) {
+        this.operations = operations;
     }
 }

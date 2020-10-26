@@ -7,6 +7,7 @@ import de.tesis.dynaware.grapheditor.Commands;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
 import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
+import de.tesis.dynaware.grapheditor.core.skins.UiElementType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.SimpleConnectionSkin;
 import de.tesis.dynaware.grapheditor.demo.customskins.DefaultSkinController;
 import de.tesis.dynaware.grapheditor.demo.customskins.SkinController;
@@ -29,6 +30,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -44,6 +46,8 @@ public class GraphEditorDemoController {
 
     @FXML
     private AnchorPane root;
+    @FXML
+    private VBox mainContainer;
     @FXML
     private MenuBar menuBar;
     @FXML
@@ -120,6 +124,9 @@ public class GraphEditorDemoController {
 
         initializeMenuBar();
         addActiveSkinControllerListener();
+
+        mainContainer.prefWidthProperty().bind(root.widthProperty());
+        mainContainer.prefHeightProperty().bind(root.heightProperty());
     }
 
     @FXML
@@ -208,7 +215,7 @@ public class GraphEditorDemoController {
 
     @FXML
     public void addNode() {
-        activeSkinController.get().addNode(currentZoomFactor);
+        activeSkinController.get().addNode(currentZoomFactor, UiElementType.OPERATIONS);
     }
 
     @FXML

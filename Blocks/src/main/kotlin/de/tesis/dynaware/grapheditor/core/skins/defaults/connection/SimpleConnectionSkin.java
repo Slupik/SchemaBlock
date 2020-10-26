@@ -36,7 +36,7 @@ import java.util.Map;
  * the connection intersects other connections.
  * </p>
  */
-public class SimpleConnectionSkin extends GConnectionSkin {
+public abstract class SimpleConnectionSkin extends GConnectionSkin {
 
     /**
      * Property key to show detours at intersections.
@@ -61,7 +61,6 @@ public class SimpleConnectionSkin extends GConnectionSkin {
 
     protected final List<ConnectionSegment> connectionSegments = new ArrayList<>();
 
-    private static final String STYLE_CLASS = "default-connection";
     private static final String STYLE_CLASS_BACKGROUND = "default-connection-background";
 
     private final IntersectionFinder intersectionFinder;
@@ -90,8 +89,10 @@ public class SimpleConnectionSkin extends GConnectionSkin {
         path.setMouseTransparent(true);
 
         backgroundPath.getStyleClass().setAll(STYLE_CLASS_BACKGROUND);
-        path.getStyleClass().setAll(STYLE_CLASS);
+        path.getStyleClass().setAll(getStyleClass());
     }
+
+    protected abstract String getStyleClass();
 
     @Override
     public Node getRoot() {

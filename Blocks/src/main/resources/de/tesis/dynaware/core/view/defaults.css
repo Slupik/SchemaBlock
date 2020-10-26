@@ -22,6 +22,14 @@
 	-fx-fill: derive(rgb(249,247,250), -5%);
 }
 
+.default-node-background:error {
+	-fx-fill: derive(rgb(220,20,60), -5%);
+}
+
+.default-node-background:current {
+	-fx-fill: derive(rgb(0,191,255), -5%);
+}
+
 .default-node-selection-halo {
 	-fx-stroke: deepskyblue;
 	-fx-stroke-type: inside;
@@ -105,6 +113,33 @@
 
 .bottom-output {
 	-fx-fill: linear-gradient(from 0px 0px to 0px 25px, -inside-fill, -inside-fill 36%, -fx-stroke 36%, -fx-stroke 40%, -outside-fill 40%, -outside-fill);
+}
+
+.conditional-connection-true {
+	-fx-stroke-width: 1;
+	-fx-stroke: lightgreen;
+	-fx-effect: dropshadow(one-pass-box, rgba(180, 180, 180), 5, 0, 1, 1);
+}
+
+.conditional-connection-false {
+	-fx-stroke-width: 1;
+	-fx-stroke: red;
+	-fx-effect: dropshadow(one-pass-box, rgba(180, 180, 180), 5, 0, 1, 1);
+}
+
+.connection-type-toggle {
+    -jfx-size: 10.0;
+    -jfx-disable-visual-focus: false;
+}
+
+.connection-type-toggle:false {
+    -jfx-untoggle-color: rgb(255,0,0);
+    -jfx-untoggle-line-color: rgb(178,34,34);
+}
+
+.connection-type-toggle:true {
+    -jfx-toggle-color: #009688;
+    -jfx-toggle-line-color: #77C2BB;
 }
 
 .default-connection {

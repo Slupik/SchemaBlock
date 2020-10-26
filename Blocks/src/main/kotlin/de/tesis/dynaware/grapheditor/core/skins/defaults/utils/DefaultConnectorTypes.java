@@ -96,9 +96,9 @@ public class DefaultConnectorTypes {
     public static boolean isValid(final String type) {
 
         final boolean hasSide = type != null && (isTop(type) || isRight(type) || isBottom(type) || isLeft(type));
-        final boolean inputOrOutput = type != null && (isInput(type) || isOutput(type));
+        final boolean rightType = type != null && (isInput(type) || isOutput(type) || isBoth(type));
 
-        return hasSide && inputOrOutput;
+        return hasSide && rightType;
     }
 
     /**
