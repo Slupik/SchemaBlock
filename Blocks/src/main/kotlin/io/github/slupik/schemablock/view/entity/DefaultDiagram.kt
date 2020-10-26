@@ -56,7 +56,7 @@ class DefaultDiagram @Inject constructor(
                     map[it.id] = DescriptionAndIO(element.description, element.operations)
                 }
             }
-        return map;
+        return map
     }
 
     private fun load(additionalModel: AdditionalBlockModel) {
@@ -80,13 +80,14 @@ class DefaultDiagram @Inject constructor(
         }
         additionalModel.ioBlocks.entries.forEach {
             val node = getNodeForId(it.key)
-            if (node is Block) {
-                if (node is IoBlock) {
-                    node.operations = it.value.operations
+            val element = graph.skinLookup.lookupNode(node)
+            if (element is Block) {
+                if (element is IoBlock) {
+                    element.operations = it.value.operations
                 } else {
                     LOGGER.error("Block with id ${it.key} not found.")
                 }
-                node.description = it.value.description
+                element.description = it.value.description
             }
         }
     }
