@@ -36,6 +36,7 @@ import io.github.slupik.schemablock.view.persistence.graph.SampleLoader;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.subjects.PublishSubject;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -44,6 +45,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
@@ -128,6 +130,7 @@ public class MainViewController implements Initializable {
 
     private final ObjectProperty<SkinController> activeSkinController = new SimpleObjectProperty<>();
     private CompositeDisposable composite = new CompositeDisposable();
+    private Disposable continuationDispose = null;
     private UIIOCommunicator output;
     @Inject
     DefaultSkinController defaultSkinController;
@@ -345,9 +348,38 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
+    public void debugDiagram() {
+        resetUserView();
+        executor.resetState();
+        handleExecutionStates(executor.getEventSource());
+        Observable<Boolean> continuationTrigger = getContinuationTrigger();
+        executor.debug(execution -> {
+                    if (continuationDispose != null) {
+                        continuationDispose.dispose();
+                    }
+                    continuationDispose = continuationTrigger.subscribe(
+                            aBoolean -> execution.invoke(),
+                            Throwable::printStackTrace
+                    );
+                }
+        );
+        onExecutionStart();
+        btnContinue.setDisable(false);
+    }
+
+    private Observable<Boolean> getContinuationTrigger() {
+        PublishSubject<Boolean> continuationTrigger = PublishSubject.create();
+        btnContinue.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->
+                continuationTrigger.onNext(true));
+        return continuationTrigger;
+    }
+
+    @FXML
     public void runDiagram() {
         resetUserView();
-        handleExecutionStates(executor.run());
+        executor.resetState();
+        handleExecutionStates(executor.getEventSource());
+        executor.run();
         onExecutionStart();
     }
 

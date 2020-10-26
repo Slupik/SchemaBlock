@@ -23,13 +23,19 @@ class AsyncDiagramExecutor @Inject constructor(
     private val blockExecutor: BlockExecutor
 ) : DiagramExecutor {
 
-    private val publisher = PublishSubject.create<ExecutionEvent>()
+    private var publisher = PublishSubject.create<ExecutionEvent>()
     private var stop = false;
+    override val eventSource: Observable<ExecutionEvent>
+        get() = publisher
 
-    override fun run(): Observable<ExecutionEvent> =
+    override fun resetState() {
+        publisher = PublishSubject.create<ExecutionEvent>()
+    }
+
+    override fun run(): Unit =
         debug(ContinuousExecutionController())
 
-    override fun debug(controller: DiagramExecutionController): Observable<ExecutionEvent> {
+    override fun debug(controller: DiagramExecutionController): Unit {
         Thread {
             val startingId = getStartBlock()
             if (startingId != null) {
@@ -39,7 +45,6 @@ class AsyncDiagramExecutor @Inject constructor(
                 onStartBlockNotFound()
             }
         }.start()
-        return publisher
     }
 
     override fun stop() {

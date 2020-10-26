@@ -2,6 +2,7 @@ package io.github.slupik.schemablock.view.logic.execution.diagram
 
 import io.github.slupik.schemablock.view.logic.execution.dagger.OneTime
 import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -13,13 +14,21 @@ class ContinuousDiagramExecutor @Inject constructor(
 ) : DiagramExecutor {
 
     private val executionController = ContinuousExecutionController()
+    private var publisher = PublishSubject.create<ExecutionEvent>()
+    override val eventSource: Observable<ExecutionEvent>
+        get() = publisher
 
-    override fun run(): Observable<ExecutionEvent> =
+    override fun resetState() {
+        publisher = PublishSubject.create<ExecutionEvent>()
+    }
+
+    override fun run() =
         debug(executionController)
 
-    override fun debug(controller: DiagramExecutionController): Observable<ExecutionEvent> {
+    override fun debug(controller: DiagramExecutionController) {
         val executor = createOneTimeExecutor()
-        return executor.debug(controller)
+        executor.eventSource.subscribe(publisher)
+        executor.debug(controller)
     }
 
     override fun stop() {

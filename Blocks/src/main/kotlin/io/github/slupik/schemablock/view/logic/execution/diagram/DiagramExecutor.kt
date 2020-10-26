@@ -8,9 +8,11 @@ import io.reactivex.Observable
  */
 interface DiagramExecutor {
 
-    fun run(): Observable<ExecutionEvent>
+    val eventSource: Observable<ExecutionEvent>
 
-    fun debug(controller: DiagramExecutionController): Observable<ExecutionEvent>
+    fun resetState()
+    fun run()
+    fun debug(controller: DiagramExecutionController)
     fun stop()
 
 }

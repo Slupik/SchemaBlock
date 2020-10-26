@@ -1,8 +1,9 @@
 package io.github.slupik.schemablock.view.logic.marker
 
+import de.tesis.dynaware.grapheditor.core.skins.UiElementType
 import de.tesis.dynaware.grapheditor.core.skins.defaults.node.Block
+import io.github.slupik.schemablock.view.logic.execution.diagram.ExecutionEnd
 import io.github.slupik.schemablock.view.logic.execution.diagram.ExecutionEvent
-import io.github.slupik.schemablock.view.logic.execution.diagram.PostExecutionEvent
 import io.github.slupik.schemablock.view.logic.execution.diagram.PreExecutionEvent
 import io.github.slupik.schemablock.view.logic.provider.BlocksProvider
 import io.reactivex.Observable
@@ -25,10 +26,12 @@ class BlockExecutionStateMarker @Inject constructor(
             { executionEvent: ExecutionEvent ->
                 if (executionEvent is PreExecutionEvent) {
                     executionEvent.executingBlock.markAsCurrent()
+                    lastExecutedBlock?.markAsNeutral()
                     lastExecutedBlock = executionEvent.executingBlock
                 }
-                if (executionEvent is PostExecutionEvent) {
-                    executionEvent.executedBlock.markAsNeutral()
+                if (executionEvent is ExecutionEnd) {
+                    lastExecutedBlock?.markAsNeutral()
+                    lastExecutedBlock = null
                 }
             },
             {
@@ -36,5 +39,8 @@ class BlockExecutionStateMarker @Inject constructor(
             }
         ))
     }
+
+    private fun getStartBlock(): Block? =
+        blocksProvider.blocks.firstOrNull { block -> block.type == UiElementType.START }
 
 }
