@@ -3,20 +3,20 @@
  */
 package de.tesis.dynaware.grapheditor.core.view;
 
+import de.tesis.dynaware.grapheditor.SkinLookup;
+import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.TriangleDrawer;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.DefaultConnectorTypes;
+import de.tesis.dynaware.grapheditor.model.GConnection;
+import de.tesis.dynaware.grapheditor.model.GModel;
+import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
+import javafx.geometry.Point2D;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import de.tesis.dynaware.grapheditor.core.skins.defaults.TriangleDrawer;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.DefaultConnectorTypes;
-import javafx.geometry.Point2D;
-import de.tesis.dynaware.grapheditor.SkinLookup;
-import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
-import de.tesis.dynaware.grapheditor.model.GConnection;
-import de.tesis.dynaware.grapheditor.model.GModel;
-import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
 
 /**
  * Responsible for telling connection skins to draw themselves.

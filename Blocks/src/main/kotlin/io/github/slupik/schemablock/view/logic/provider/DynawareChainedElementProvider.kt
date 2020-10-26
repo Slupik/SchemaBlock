@@ -37,9 +37,9 @@ class DynawareChainedElementProvider @Inject constructor(
             .asSequence()
             .filter { connection ->
                 val parent = connection.source.parent
-                parent is GNode && parent.id == sourceBlockId && (
-                        connection.type == ConnectionType.CONDITIONAL_FALSE.name ||
-                                connection.type == ConnectionType.CONDITIONAL_TRUE.name)
+                parent is GNode && parent.id == sourceBlockId && ((!result &&
+                        connection.type == ConnectionType.CONDITIONAL_FALSE.name) || (result &&
+                                connection.type == ConnectionType.CONDITIONAL_TRUE.name))
             }
             .map { connection -> connection.target.parent }
             .filterIsInstance<GNode>()
