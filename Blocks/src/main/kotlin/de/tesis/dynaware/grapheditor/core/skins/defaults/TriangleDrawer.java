@@ -11,7 +11,7 @@ import javafx.scene.shape.Polygon;
 
 public class TriangleDrawer {
 
-    public static final double OUTER_SIZE = 25;
+    public static final double OUTER_SIZE = 17;
 
     public static String getTriangleType(Point2D lastJoint, Point2D port) {
         double accuracy = 0;
