@@ -50,8 +50,8 @@ class Tokenizer {
             }
 
             //Comments
-            if((commentMode || permanentCommentMode) && (i+1)<code.length()) {
-                if(!textMode && token == '*' && code.charAt(i+1)=='/') {
+            if((commentMode || permanentCommentMode)) {
+                if((i+1)<code.length() && !textMode && token == '*' && code.charAt(i+1)=='/') {
                     permanentCommentMode = false;
                     i++;
                 }
