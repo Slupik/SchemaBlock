@@ -29,7 +29,7 @@ public class UIIOCommunicator implements IOCommunicable {
 
         btnSend.setOnAction(event -> flushInputControl());
         input.setOnKeyReleased(event -> {
-            if(event.getCode() == KeyCode.ENTER) {
+            if (event.getCode() == KeyCode.ENTER) {
                 flushInputControl();
             }
         });
@@ -37,13 +37,13 @@ public class UIIOCommunicator implements IOCommunicable {
 
     private void flushInputControl() {
         text = input.getText();
-        printOnUiThread("<font color=\"#28B463\">"+text+"</font>"+'\n');
+        printOnUiThread("<font color=\"#28B463\">" + text + "</font>" + '\n');
         input.setText("");
     }
 
     @Override
     public String getInput() {
-        while(text==null) {
+        while (text == null) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -57,11 +57,15 @@ public class UIIOCommunicator implements IOCommunicable {
 
     @Override
     public void print(String value) {
-        printOnUiThread(value, countDownLatch::countDown);
-        try {
-            countDownLatch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (Platform.isFxApplicationThread()) {
+            printOnUiThread(value);
+        } else {
+            printOnUiThread(value, countDownLatch::countDown);
+            try {
+                countDownLatch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -74,24 +78,34 @@ public class UIIOCommunicator implements IOCommunicable {
 
     @Override
     public void printAlgorithmError(String text) {
-        printOnUiThread("<font color=\"#FF0000\">[ERROR] "+text+"</font>"+'\n');
+        printOnUiThread("<font color=\"#FF0000\">[ERROR] " + text + "</font>" + '\n');
     }
 
     @Override
     public void printProgramError(String text) {
-        printOnUiThread("<font color=\"#FF0000\"><b>[INTERNAL ERROR] "+text+"</b></font>"+'\n');
+        printOnUiThread("<font color=\"#FF0000\"><b>[INTERNAL ERROR] " + text + "</b></font>" + '\n');
     }
 
     private void printOnUiThread(String value) {
-        printOnUiThread(value, ()->{});
+        printOnUiThread(value, () -> {
+        });
     }
 
     private void printOnUiThread(String value, Runnable callback) {
         value = value.replace("\n", "</br>");
         outputData += value;
-        Platform.runLater(()->{
-            output.getEngine().loadContent(outputData, "text/html");
 
+        Runnable contentLoader = getContentLoaderTask(callback);
+        if (Platform.isFxApplicationThread()) {
+            contentLoader.run();
+        } else {
+            Platform.runLater(contentLoader);
+        }
+    }
+
+    private Runnable getContentLoaderTask(Runnable callback) {
+        return () -> {
+            output.getEngine().loadContent(outputData, "text/html");
             WebEngine webEngine = output.getEngine();
             String html = "<html>" +
                     "<head>" +
@@ -102,11 +116,11 @@ public class UIIOCommunicator implements IOCommunicable {
                     "   </script>" +
                     "</head>" +
                     "<body onload='toBottom()'>" +
-                        outputData +
+                    outputData +
                     "</body></html>";
             webEngine.loadContent(html, "text/html");
-
             callback.run();
-        });
+        };
     }
+
 }

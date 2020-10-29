@@ -12,6 +12,8 @@ import io.github.slupik.schemablock.view.logic.provider.BlocksProvider
 import io.github.slupik.schemablock.view.logic.provider.ChainedElementProvider
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
 /**
@@ -23,10 +25,13 @@ class AsyncDiagramExecutor @Inject constructor(
     private val blockExecutor: BlockExecutor
 ) : DiagramExecutor {
 
-    private var publisher = PublishSubject.create<ExecutionEvent>()
+    private val executor: ExecutorService = Executors.newSingleThreadExecutor()
+
     private var stop = false;
+    private var publisher = PublishSubject.create<ExecutionEvent>()
     override val eventSource: Observable<ExecutionEvent>
         get() = publisher
+
 
     override fun resetState() {
         publisher = PublishSubject.create<ExecutionEvent>()
@@ -35,8 +40,8 @@ class AsyncDiagramExecutor @Inject constructor(
     override fun run(): Unit =
         debug(ContinuousExecutionController())
 
-    override fun debug(controller: DiagramExecutionController): Unit {
-        Thread {
+    override fun debug(controller: DiagramExecutionController) {
+         executor.submit {
             val startingId = getStartBlock()
             if (startingId != null) {
                 publisher.onNext(ExecutionStart)
@@ -44,7 +49,7 @@ class AsyncDiagramExecutor @Inject constructor(
             } else {
                 onStartBlockNotFound()
             }
-        }.start()
+        }
     }
 
     override fun stop() {
@@ -113,11 +118,13 @@ class AsyncDiagramExecutor @Inject constructor(
         result: ExecutionResult
     ) {
         controller.resumeExecutionOnDemand {
-            val nextBlock = getNextBlock(currentBlock.node.id, result)
-            if (nextBlock != null) {
-                executeBlock(publisher, controller, nextBlock)
-            } else {
-                onNextBlockNotFound(currentBlock)
+            executor.submit {
+                val nextBlock = getNextBlock(currentBlock.node.id, result)
+                if (nextBlock != null) {
+                    executeBlock(publisher, controller, nextBlock)
+                } else {
+                    onNextBlockNotFound(currentBlock)
+                }
             }
         }
     }
