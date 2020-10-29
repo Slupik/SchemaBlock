@@ -4,26 +4,20 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins.defaults.connector;
 
-import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.ColorAnimationUtils;
-import javafx.css.PseudoClass;
+import de.tesis.dynaware.grapheditor.GConnectorSkin;
+import de.tesis.dynaware.grapheditor.GConnectorStyle;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.DefaultConnectorTypes;
+import de.tesis.dynaware.grapheditor.core.utils.LogMessages;
+import de.tesis.dynaware.grapheditor.model.GConnector;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
-import javafx.util.Duration;
-
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import de.tesis.dynaware.grapheditor.GConnectorSkin;
-import de.tesis.dynaware.grapheditor.GConnectorStyle;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.AnimatedColor;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.DefaultConnectorTypes;
-import de.tesis.dynaware.grapheditor.core.utils.LogMessages;
-import de.tesis.dynaware.grapheditor.model.GConnector;
 
 /**
  * The default connector skin.
@@ -40,7 +34,7 @@ public class DefaultConnectorSkin extends GConnectorSkin {
     private static final String STYLE_CLASS_OUTER_BORDER = "default-connector-outer-border";
     private static final String STYLE_CLASS_MIDDLE_BORDER = "default-connector-middle-border";
 
-    public static final double OUTER_SIZE = 25;
+    public static final double OUTER_SIZE = 17;
     private static final double BORDER_WIDTH = 1.5;
 
     private final StackPane root = new StackPane();
