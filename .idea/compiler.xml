@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <option name="DEFAULT_COMPILER" value="Javac" />
-    <resourceExtensions />
     <wildcardResourcePatterns>
       <entry name="!?*.java" />
       <entry name="!?*.form" />
@@ -14,10 +12,34 @@
       <entry name="!?*.clj" />
     </wildcardResourcePatterns>
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="false">
-        <processorPath useClasspath="true" />
+      <profile name="Annotation profile for schemablock" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-sources/apt-test" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="JavaFx" />
+        <module name="WitLang" />
+        <module name="Entity" />
+        <module name="WitLang-Model" />
+        <module name="WitLang-Parser" />
+        <module name="Blocks" />
+        <module name="UltimateDetail" />
+        <module name="PandaLang" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Blocks" target="11" />
+      <module name="blocks (1)" target="11" />
+      <module name="blocks (2)" target="11" />
+      <module name="Entity" target="11" />
+      <module name="JavaFx" target="11" />
+      <module name="PandaLang" target="11" />
+      <module name="SchemaBlock" target="11" />
+      <module name="UltimateDetail" target="11" />
+      <module name="WitLang" target="11" />
+      <module name="WitLang-Model" target="11" />
+      <module name="WitLang-Parser" target="11" />
+      <module name="WitLangModel" target="1.8" />
+      <module name="WitLangParser" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
-

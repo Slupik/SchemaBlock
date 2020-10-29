@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Entity/0 Entity.iml" filepath="$PROJECT_DIR$/Entity/0 Entity.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Model/1 Model.iml" filepath="$PROJECT_DIR$/Model/1 Model.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Parser/1 Parser.iml" filepath="$PROJECT_DIR$/Parser/1 Parser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Logic/2 Logic.iml" filepath="$PROJECT_DIR$/Logic/2 Logic.iml" />
-      <module fileurl="file://$PROJECT_DIR$/JavaFx/3 JavaFx.iml" filepath="$PROJECT_DIR$/JavaFx/3 JavaFx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Blocks/Blocks.iml" filepath="$PROJECT_DIR$/Blocks/Blocks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Entity/Entity.iml" filepath="$PROJECT_DIR$/Entity/Entity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JavaFx/JavaFx.iml" filepath="$PROJECT_DIR$/JavaFx/JavaFx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PandaLang/PandaLang.iml" filepath="$PROJECT_DIR$/PandaLang/PandaLang.iml" />
       <module fileurl="file://$PROJECT_DIR$/SchemaBlock.iml" filepath="$PROJECT_DIR$/SchemaBlock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UltimateDetail/UltimateDetail.iml" filepath="$PROJECT_DIR$/UltimateDetail/UltimateDetail.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WitLang/WitLang.iml" filepath="$PROJECT_DIR$/WitLang/WitLang.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WitLang-Model/WitLang-Model.iml" filepath="$PROJECT_DIR$/WitLang-Model/WitLang-Model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WitLang-Parser/WitLang-Parser.iml" filepath="$PROJECT_DIR$/WitLang-Parser/WitLang-Parser.iml" />
     </modules>
   </component>
 </project>
