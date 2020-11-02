@@ -30,8 +30,8 @@ public class TitledSkinController extends DefaultSkinController {
 
     /**
      * Creates a new {@link TitledSkinController} instance.
-     * 
-     * @param graphEditor the graph editor on display in this de.tesis.dynaware.grapheditor.demo
+     *
+     * @param graphEditor          the graph editor on display in this de.tesis.dynaware.grapheditor.demo
      * @param graphEditorContainer the graph editor container on display in this de.tesis.dynaware.grapheditor.demo
      */
     public TitledSkinController(final GraphEditor graphEditor, final GraphEditorContainer graphEditorContainer) {
@@ -76,8 +76,8 @@ public class TitledSkinController extends DefaultSkinController {
 
     /**
      * Allocates ID's to recently pasted nodes.
-     * 
-     * @param nodes the recently pasted nodes
+     *
+     * @param nodes   the recently pasted nodes
      * @param command the command responsible for adding the nodes
      */
     private void allocateIds(final List<GNode> nodes, final CompoundCommand command) {
@@ -103,8 +103,8 @@ public class TitledSkinController extends DefaultSkinController {
 
     /**
      * Check the given node needs a new ID, i.e. that it's not already in use.
-     * 
-     * @param node the nodes to check
+     *
+     * @param node        the nodes to check
      * @param pastedNodes the recently-pasted nodes
      */
     private boolean checkNeedsNewId(final GNode node, final List<GNode> pastedNodes) {
@@ -117,7 +117,7 @@ public class TitledSkinController extends DefaultSkinController {
 
     /**
      * Allocates a new ID corresponding to the largest existing ID + 1.
-     * 
+     *
      * @return the new ID
      */
     private String allocateNewId() {

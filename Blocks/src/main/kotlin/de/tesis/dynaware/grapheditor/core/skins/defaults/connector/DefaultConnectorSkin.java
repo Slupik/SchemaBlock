@@ -29,12 +29,10 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultConnectorSkin extends GConnectorSkin {
 
+    public static final double OUTER_SIZE = 17;
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultConnectorSkin.class);
-
     private static final String STYLE_CLASS_OUTER_BORDER = "default-connector-outer-border";
     private static final String STYLE_CLASS_MIDDLE_BORDER = "default-connector-middle-border";
-
-    public static final double OUTER_SIZE = 17;
     private static final double BORDER_WIDTH = 1.5;
 
     private final StackPane root = new StackPane();

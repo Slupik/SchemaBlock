@@ -31,12 +31,12 @@ public class HeapValueFx extends RecursiveTreeObject<HeapValueFx> implements Var
         value.setValue(getAsString(source.getContent()));
     }
 
-    public void setName(String name) {
-        this.name.setValue(name);
-    }
-
     public String getName() {
         return name.getValue();
+    }
+
+    public void setName(String name) {
+        this.name.setValue(name);
     }
 
     @Override
@@ -47,6 +47,17 @@ public class HeapValueFx extends RecursiveTreeObject<HeapValueFx> implements Var
     @Override
     public ValueType getType() {
         return source.getType();
+    }
+
+    public void setType(ValueType type) {
+        if (type == ValueType.STRING) {
+            this.type.setValue(
+                    type.toString().substring(0, 1).toUpperCase() +
+                            type.toString().substring(1).toLowerCase()
+            );
+        } else {
+            this.type.setValue(type.toString().toLowerCase());
+        }
     }
 
     @Override
@@ -63,7 +74,7 @@ public class HeapValueFx extends RecursiveTreeObject<HeapValueFx> implements Var
     }
 
     private void updateType() {
-        if(source.getContent()==null) {
+        if (source.getContent() == null) {
             type.setValue("???");
         } else {
             type.setValue(String.valueOf(source.getContent().getType()));
@@ -101,11 +112,6 @@ public class HeapValueFx extends RecursiveTreeObject<HeapValueFx> implements Var
         return value.getValue();
     }
 
-
-    public SimpleStringProperty getValueProperty() {
-        return value;
-    }
-
     public void setValue(Object value) {
         if (value == null) {
             this.value.setValue(null);
@@ -114,19 +120,12 @@ public class HeapValueFx extends RecursiveTreeObject<HeapValueFx> implements Var
         }
     }
 
-    public SimpleStringProperty getTypeProperty() {
-        return type;
+    public SimpleStringProperty getValueProperty() {
+        return value;
     }
 
-    public void setType(ValueType type) {
-        if (type == ValueType.STRING) {
-            this.type.setValue(
-                    type.toString().substring(0, 1).toUpperCase() +
-                            type.toString().substring(1).toLowerCase()
-            );
-        } else {
-            this.type.setValue(type.toString().toLowerCase());
-        }
+    public SimpleStringProperty getTypeProperty() {
+        return type;
     }
 
 }

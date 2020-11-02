@@ -5,5 +5,6 @@ package io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction;
  */
 public interface ByteCommandExecute extends ByteCommand {
     String getName();
+
     int getArgsCount();
 }

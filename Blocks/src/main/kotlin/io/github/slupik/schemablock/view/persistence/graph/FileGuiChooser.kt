@@ -17,7 +17,7 @@ class FileGuiChooser @Inject constructor(
 
     private val initialDirectory: File? = null
 
-    override fun choseForSave(): File?  = getFileChooser().showSaveDialog(window.provide())
+    override fun choseForSave(): File? = getFileChooser().showSaveDialog(window.provide())
 
     override fun choseForOpen(): File? = getFileChooser().showOpenDialog(window.provide())
 

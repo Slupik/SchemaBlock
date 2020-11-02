@@ -17,12 +17,12 @@ public class MemoryImpl implements Memory {
     private final HashMap<String, Variable> data = new HashMap<>();
 
     @Inject
-    public MemoryImpl(){
+    public MemoryImpl() {
     }
 
     @Override
     public void register(Variable variable) throws AlgorithmException {
-        if(data.containsKey(variable.getName())) {
+        if (data.containsKey(variable.getName())) {
             throw new VariableAlreadyDefined(variable.getName());
         }
         data.put(variable.getName(), variable);
@@ -30,7 +30,7 @@ public class MemoryImpl implements Memory {
 
     @Override
     public Variable get(String name) throws VariableNotFound {
-        if(data.containsKey(name)) {
+        if (data.containsKey(name)) {
             return data.get(name);
         } else {
             throw new VariableNotFound(name);

@@ -32,11 +32,11 @@ public class ByteCommandHeapVariableImpl extends ByteCommandBase implements Byte
     }
 
     @Override
-    public String toString(){
-        if(indexes==0) {
-            return getCommandType().toString()+" "+name;
+    public String toString() {
+        if (indexes == 0) {
+            return getCommandType().toString() + " " + name;
         } else {
-            return getCommandType().toString()+" "+name+" "+indexes;
+            return getCommandType().toString() + " " + name + " " + indexes;
         }
     }
 }

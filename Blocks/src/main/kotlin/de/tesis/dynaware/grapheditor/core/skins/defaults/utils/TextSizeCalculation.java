@@ -21,7 +21,7 @@ public class TextSizeCalculation {
             font = getFontFittedForHeight(label, height);
         }
 
-        if(font.getSize() > MAX_FONT_SIZE) {
+        if (font.getSize() > MAX_FONT_SIZE) {
             return getMaxFont(label);
         } else {
             return font;

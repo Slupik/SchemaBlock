@@ -1,8 +1,8 @@
 package io.github.slupik.schemablock.newparser.bytecode.bytecommand.implementation;
 
-import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.ByteCommandType;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommandHeapValue;
+import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 
 /**
  * All rights reserved & copyright ©
@@ -29,7 +29,7 @@ public class ByteCommandHeapValueImpl extends ByteCommandBase implements ByteCom
     }
 
     @Override
-    public String toString(){
-        return getCommandType().toString()+" "+type.toString()+" "+name;
+    public String toString() {
+        return getCommandType().toString() + " " + type.toString() + " " + name;
     }
 }

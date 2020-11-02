@@ -30,12 +30,12 @@ public abstract class LabeledNodeSkin extends NodeSkin {
         addDoubleClickListener();
     }
 
-    public void setDescription(String description) {
-        updateText(description);
-    }
-
     public String getDescription() {
         return label.getText() == null ? "" : label.getText();
+    }
+
+    public void setDescription(String description) {
+        updateText(description);
     }
 
     protected void initLabel(String text) {
@@ -51,7 +51,7 @@ public abstract class LabeledNodeSkin extends NodeSkin {
     }
 
     private void addDoubleClickListener() {
-        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->{
+        label.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 if (event.getClickCount() == 2) {
                     invokeDoubleClickEventHandler(event);

@@ -6,6 +6,7 @@ package io.github.slupik.schemablock.model.ui.implementation.container;
 public interface ExecutionCallback {
 
     void onStart();
+
     void onStop();
 
 }

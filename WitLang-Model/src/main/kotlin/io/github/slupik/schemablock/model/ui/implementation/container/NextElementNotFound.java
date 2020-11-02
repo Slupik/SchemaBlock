@@ -10,7 +10,7 @@ public class NextElementNotFound extends AlgorithmException {
     private final String elementId;
 
     public NextElementNotFound(String elementId) {
-        super("Element with id: "+elementId+" hasn't been found.");
+        super("Element with id: " + elementId + " hasn't been found.");
         this.elementId = elementId;
     }
 

@@ -11,7 +11,7 @@ public class VariableNotFound extends AlgorithmException {
     public final String varName;
 
     public VariableNotFound(String varName) {
-        super("Variable with name "+varName+" doesn't exists");
+        super("Variable with name " + varName + " doesn't exists");
         this.varName = varName;
     }
 

@@ -3,19 +3,15 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins.defaults.connection;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
-
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import de.tesis.dynaware.grapheditor.SkinLookup;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.RectangularConnectionUtils;
 import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+
+import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * Responsible for finding the intersection points between a connection and other connections.
@@ -51,7 +47,7 @@ public class IntersectionFinder {
      * Finds the intersection points of the connection with all other connections that are in front of / behind it.
      *
      * @param allPoints the map of all current points of all connections in the model
-     * @param behind {@code true} to find intersections with the connections that are behind
+     * @param behind    {@code true} to find intersections with the connections that are behind
      * @return a map of intersection points for each segment of the connection
      */
     public Map<Integer, List<Double>> find(final Map<GConnection, List<Point2D>> allPoints, final boolean behind) {
@@ -87,9 +83,9 @@ public class IntersectionFinder {
 
     /**
      * Finds the intersection points of other connections with a particular connection segment.
-     * 
-     * @param behind {@code true} to find intersections with the connections that are behind
-     * @param index the index of the connection segment
+     *
+     * @param behind       {@code true} to find intersections with the connections that are behind
+     * @param index        the index of the connection segment
      * @param isHorizontal {@code true} if the connection segment is horizontal
      * @return a list of positions along the segment where intersections occur
      */
@@ -138,7 +134,7 @@ public class IntersectionFinder {
     /**
      * Filters out some connections, because we want to either ignore connections in front or behind. We only want one
      * of the connections at an intersection to draw a detour graphic.
-     * 
+     *
      * @param behind {@code true} to leave in connections behind this one and filter out those in front
      * @return a stream of connections with some filtered out
      */

@@ -8,19 +8,24 @@ import java.util.List;
  * All rights reserved & copyright ©
  */
 public interface IOElement extends StandardElement {
-    void setNextElement(String elementId);
     String getNextElement();
+
+    void setNextElement(String elementId);
+
     void removeNextElement(String elementId);
 
-    void setCommunicator(IOCommunicable communicator);
     IOCommunicable getCommunicator();
+
+    void setCommunicator(IOCommunicable communicator);
 
     //TODO cleanup this mess
     void setContent(List<Data> content);
+
     List<Data> getContentAsList();
 
     interface Data {
         boolean isInput();
+
         String getValue();
     }
 }

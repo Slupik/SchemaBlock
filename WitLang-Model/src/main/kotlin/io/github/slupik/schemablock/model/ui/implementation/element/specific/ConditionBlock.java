@@ -30,7 +30,7 @@ public class ConditionBlock extends StandardElementBase implements ConditionalEl
     public void run() throws AlgorithmException {
         onStart();
         SimpleValue result = (SimpleValue) runAndGetResult();
-        if(result.getCastedValue()) {
+        if (result.getCastedValue()) {
             tryRun(elementOnTrue);
         } else {
             tryRun(elementOnFalse);
@@ -42,11 +42,11 @@ public class ConditionBlock extends StandardElementBase implements ConditionalEl
     protected ElementPOJO getPOJO() {
         ElementPOJO pojo = getPreCreatedPOJO();
         pojo.nextBlocks = new String[2];
-        if(elementOnFalse!=null && elementOnFalse.length()>0) {
-            pojo.nextBlocks[0] = elementOnFalse+";"+"false";
+        if (elementOnFalse != null && elementOnFalse.length() > 0) {
+            pojo.nextBlocks[0] = elementOnFalse + ";" + "false";
         }
-        if(elementOnTrue!=null && elementOnTrue.length()>0) {
-            pojo.nextBlocks[1] = elementOnTrue+";"+"true";
+        if (elementOnTrue != null && elementOnTrue.length() > 0) {
+            pojo.nextBlocks[1] = elementOnTrue + ";" + "true";
         }
         return pojo;
     }
@@ -54,7 +54,7 @@ public class ConditionBlock extends StandardElementBase implements ConditionalEl
     @Override
     protected void load(ElementPOJO pojo) throws BlockParserException {
         super.load(pojo);
-        for(String element:pojo.nextBlocks) {
+        for (String element : pojo.nextBlocks) {
             restoreElement(element);
         }
     }
@@ -63,21 +63,11 @@ public class ConditionBlock extends StandardElementBase implements ConditionalEl
         String id = element.split(";")[0];
         String type = element.split(";")[1];
 
-        if(type.equalsIgnoreCase("false")) {
+        if (type.equalsIgnoreCase("false")) {
             setOnFalse(id);
         } else {
             setOnTrue(id);
         }
-    }
-
-    @Override
-    public void setOnFalse(String elementId) {
-        elementOnFalse = elementId;
-    }
-
-    @Override
-    public void setOnTrue(String elementId) {
-        elementOnTrue = elementId;
     }
 
     @Override
@@ -86,20 +76,30 @@ public class ConditionBlock extends StandardElementBase implements ConditionalEl
     }
 
     @Override
+    public void setOnFalse(String elementId) {
+        elementOnFalse = elementId;
+    }
+
+    @Override
     public String getOnTrue() {
         return elementOnTrue;
     }
 
     @Override
+    public void setOnTrue(String elementId) {
+        elementOnTrue = elementId;
+    }
+
+    @Override
     public void removeOnFalse(String elementId) {
-        if(elementOnFalse.equals(elementId)) {
+        if (elementOnFalse.equals(elementId)) {
             elementOnFalse = "";
         }
     }
 
     @Override
     public void removeOnTrue(String elementId) {
-        if(elementOnTrue.equals(elementId)) {
+        if (elementOnTrue.equals(elementId)) {
             elementOnTrue = "";
         }
     }

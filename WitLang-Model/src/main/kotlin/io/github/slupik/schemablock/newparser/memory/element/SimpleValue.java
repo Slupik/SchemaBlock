@@ -5,9 +5,10 @@ package io.github.slupik.schemablock.newparser.memory.element;
  */
 public interface SimpleValue extends Value {
     <T> T getCastedValue();
+
     Object getValue();
 
-    default boolean isArray(){
+    default boolean isArray() {
         return false;
     }
 }

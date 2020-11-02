@@ -3,12 +3,6 @@
  */
 package de.tesis.dynaware.grapheditor.core.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Region;
 import de.tesis.dynaware.grapheditor.GJointSkin;
 import de.tesis.dynaware.grapheditor.GNodeSkin;
 import de.tesis.dynaware.grapheditor.SkinLookup;
@@ -17,6 +11,12 @@ import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.model.GJoint;
 import de.tesis.dynaware.grapheditor.model.GModel;
 import de.tesis.dynaware.grapheditor.model.GNode;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Responsible for updating the {@link GModel}'s layout values at the end of each mouse gesture.
@@ -32,7 +32,7 @@ public class ModelLayoutUpdater {
     /**
      * Creates a new model layout updater. Only one instance should exist per {@link DefaultGraphEditor} instance.
      *
-     * @param skinLookup the {@link SkinLookup} used to lookup skins
+     * @param skinLookup          the {@link SkinLookup} used to lookup skins
      * @param modelEditingManager the {@link ModelEditingManager} used to update the model values
      */
     public ModelLayoutUpdater(final SkinLookup skinLookup, final ModelEditingManager modelEditingManager) {
@@ -112,7 +112,7 @@ public class ModelLayoutUpdater {
     /**
      * Removes a mouse-released handler from a node skin's root JavaFX node.
      *
-     * @param node the {@link GNode} whose handler should be removed
+     * @param node    the {@link GNode} whose handler should be removed
      * @param handler the mouse-released handler to remove
      */
     private void removeHandler(final GNode node, final EventHandler<MouseEvent> handler) {
@@ -122,7 +122,7 @@ public class ModelLayoutUpdater {
     /**
      * Removes a mouse-released handler from a joint skin's root JavaFX node.
      *
-     * @param joint the {@link GJoint} whose handler should be removed
+     * @param joint   the {@link GJoint} whose handler should be removed
      * @param handler the mouse-released handler to remove
      */
     private void removeHandler(final GJoint joint, final EventHandler<MouseEvent> handler) {
@@ -133,7 +133,6 @@ public class ModelLayoutUpdater {
      * Checks if a node's JavaFX region has different layout values than those currently stored in the model.
      *
      * @param node the model instance for the node
-     *
      * @return {@code true} if any layout value has changed, {@code false if not}
      */
     private boolean checkNodeChanged(final GNode node) {
@@ -162,7 +161,6 @@ public class ModelLayoutUpdater {
      * Checks if a joint's JavaFX region has different layout values than those currently stored in the model.
      *
      * @param joint the model instance for the joint
-     *
      * @return {@code true} if any layout value has changed, {@code false if not}
      */
     private boolean checkJointChanged(final GJoint joint) {

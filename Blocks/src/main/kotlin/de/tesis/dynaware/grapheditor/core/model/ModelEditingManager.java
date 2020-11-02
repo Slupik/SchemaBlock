@@ -89,7 +89,7 @@ public class ModelEditingManager {
      * All references to the removed elements are also removed.
      * </p>
      *
-     * @param nodesToRemove the nodes to be removed
+     * @param nodesToRemove       the nodes to be removed
      * @param connectionsToRemove the connections to be removed
      */
     public CompoundCommand remove(final List<GNode> nodesToRemove, final List<GConnection> connectionsToRemove) {

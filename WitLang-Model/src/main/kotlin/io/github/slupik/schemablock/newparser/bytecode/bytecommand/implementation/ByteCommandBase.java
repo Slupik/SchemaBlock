@@ -12,7 +12,7 @@ public abstract class ByteCommandBase implements ByteCommand {
     private final int pos;
     private final ByteCommandType comType;
 
-    public ByteCommandBase(int line, int pos, ByteCommandType comType){
+    public ByteCommandBase(int line, int pos, ByteCommandType comType) {
         this.line = line;
         this.pos = pos;
         this.comType = comType;

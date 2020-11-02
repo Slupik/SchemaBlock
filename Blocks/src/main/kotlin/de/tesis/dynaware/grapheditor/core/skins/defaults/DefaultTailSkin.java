@@ -3,26 +3,23 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins.defaults;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
-import javafx.geometry.Point2D;
-import javafx.geometry.Side;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Polyline;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.tesis.dynaware.grapheditor.GTailSkin;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.tail.RectangularPathCreator;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.DefaultConnectorTypes;
 import de.tesis.dynaware.grapheditor.core.utils.LogMessages;
 import de.tesis.dynaware.grapheditor.model.GConnector;
 import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
+import javafx.geometry.Point2D;
+import javafx.geometry.Side;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Polyline;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The default tail skin.
@@ -94,7 +91,7 @@ public class DefaultTailSkin extends GTailSkin {
 
     @Override
     public void draw(final Point2D start, final Point2D end, final List<Point2D> jointPositions,
-            final GConnector target, final boolean valid) {
+                     final GConnector target, final boolean valid) {
         draw(start, end, target, valid);
     }
 
@@ -116,7 +113,7 @@ public class DefaultTailSkin extends GTailSkin {
 
     /**
      * Sets layout values of the endpoint based on the new cursor position.
-     * 
+     *
      * @param position the new cursor position
      */
     protected void layoutEndpoint(final Point2D position) {
@@ -136,9 +133,9 @@ public class DefaultTailSkin extends GTailSkin {
 
     /**
      * Draws the tail simply from the start position to the end.
-     * 
+     *
      * @param start the start position of the tail
-     * @param end the end position of the tail
+     * @param end   the end position of the tail
      */
     private void drawStupid(final Point2D start, final Point2D end) {
 
@@ -158,9 +155,9 @@ public class DefaultTailSkin extends GTailSkin {
 
     /**
      * Draws the tail based additionally on the sides of the nodes it starts and ends at.
-     * 
-     * @param start the start position of the tail
-     * @param end the end position of the tail
+     *
+     * @param start  the start position of the tail
+     * @param end    the end position of the tail
      * @param target the connector the tail is attaching to
      */
     private void drawSmart(final Point2D start, final Point2D end, final GConnector target) {
@@ -186,7 +183,7 @@ public class DefaultTailSkin extends GTailSkin {
 
     /**
      * Adds the given point to the tail path.
-     * 
+     *
      * @param point the x & y coordinates of the point
      */
     private void addPoint(final Point2D point) {
@@ -195,7 +192,7 @@ public class DefaultTailSkin extends GTailSkin {
 
     /**
      * Adds the given point to the tail path.
-     * 
+     *
      * @param x the x coordinate of the point
      * @param y the y coordinate of the point
      */

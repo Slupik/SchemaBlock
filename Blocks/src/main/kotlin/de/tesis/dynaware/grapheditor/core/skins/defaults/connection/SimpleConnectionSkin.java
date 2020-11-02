@@ -31,7 +31,7 @@ import java.util.Map;
 
 /**
  * A simple rectangular connection skin.
- * 
+ *
  * <p>
  * Shows a rectangular connection shape based on the positions of its joints. Shows a graphical effect at points where
  * the connection intersects other connections.
@@ -54,16 +54,12 @@ public abstract class SimpleConnectionSkin extends GConnectionSkin {
      */
     public static final String SHOW_DETOURS_KEY = "default-connection-skin-show-detours";
     private static final String STYLE_CLASS_BASE = "connected-tail-endpoint";
-
+    private static final String STYLE_CLASS_BACKGROUND = "default-connection-background";
     protected final Group root = new Group();
     protected final Path path = new Path();
     protected final Path backgroundPath = new Path();
     protected final Polygon arrowhead = new Polygon();
-
     protected final List<ConnectionSegment> connectionSegments = new ArrayList<>();
-
-    private static final String STYLE_CLASS_BACKGROUND = "default-connection-background";
-
     private final IntersectionFinder intersectionFinder;
 
     private List<GJointSkin> jointSkins;
@@ -141,8 +137,8 @@ public abstract class SimpleConnectionSkin extends GConnectionSkin {
         if (pointsRequireRedraw || intersectionsRequireRedraw) {
             drawAllSegments(points, intersections);
 
-            Point2D lastJoint = points.get(points.size()-2);
-            Point2D port = points.get(points.size()-1);
+            Point2D lastJoint = points.get(points.size() - 2);
+            Point2D port = points.get(points.size() - 1);
             String type = TriangleDrawer.getTriangleType(lastJoint, port);
 
             drawTriangle(type);
@@ -160,21 +156,21 @@ public abstract class SimpleConnectionSkin extends GConnectionSkin {
         double changeY = 0;
         double connectorRadius = DefaultConnectorSkin.OUTER_SIZE;
         double arrowSize = TriangleDrawer.OUTER_SIZE;
-        if(DefaultConnectorTypes.isTop(type)) {
-            changeX = arrowSize/2;
-            changeY = -connectorRadius*0.5;
-        } else if(DefaultConnectorTypes.isBottom(type)) {
-            changeX = arrowSize/2;
-            changeY = connectorRadius*0.5+arrowSize;
-        } else if(DefaultConnectorTypes.isRight(type)) {
-            changeY = arrowSize/2;
-            changeX = connectorRadius*0.5+arrowSize;
-        } else if(DefaultConnectorTypes.isLeft(type)) {
-            changeY = arrowSize/2;
-            changeX = -connectorRadius*0.5;
+        if (DefaultConnectorTypes.isTop(type)) {
+            changeX = arrowSize / 2;
+            changeY = -connectorRadius * 0.5;
+        } else if (DefaultConnectorTypes.isBottom(type)) {
+            changeX = arrowSize / 2;
+            changeY = connectorRadius * 0.5 + arrowSize;
+        } else if (DefaultConnectorTypes.isRight(type)) {
+            changeY = arrowSize / 2;
+            changeX = connectorRadius * 0.5 + arrowSize;
+        } else if (DefaultConnectorTypes.isLeft(type)) {
+            changeY = arrowSize / 2;
+            changeX = -connectorRadius * 0.5;
         }
-        arrowhead.setLayoutX(port.getX()-changeX);
-        arrowhead.setLayoutY(port.getY()-changeY);
+        arrowhead.setLayoutX(port.getX() - changeX);
+        arrowhead.setLayoutY(port.getY() - changeY);
     }
 
     private void drawTriangle(String type) {
@@ -268,9 +264,9 @@ public abstract class SimpleConnectionSkin extends GConnectionSkin {
     /**
      * Aligns the first or last joint to have the same vertical or horizontal position as the start or end point.
      *
-     * @param points the list of points in this connection
+     * @param points   the list of points in this connection
      * @param vertical {@code true} to align in the vertical (y) direction, {@code false} for horizontal (x)
-     * @param start {@code true} to align the first joint to the start, {@code false} for the last joint to the end
+     * @param start    {@code true} to align the first joint to the start, {@code false} for the last joint to the end
      */
     private void alignJoint(final List<Point2D> points, final boolean vertical, final boolean start) {
 
@@ -302,7 +298,7 @@ public abstract class SimpleConnectionSkin extends GConnectionSkin {
     /**
      * Draws all segments of the connection.
      *
-     * @param points all points that the connection should pass through (both connector and joint positions)
+     * @param points        all points that the connection should pass through (both connector and joint positions)
      * @param intersections all intersection-points of this connection with other connections
      */
     private void drawAllSegments(final List<Point2D> points, final Map<Integer, List<Double>> intersections) {

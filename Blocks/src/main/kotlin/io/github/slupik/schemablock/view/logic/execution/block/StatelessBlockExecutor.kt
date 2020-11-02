@@ -21,7 +21,7 @@ class StatelessBlockExecutor @Inject constructor(
 ) : BlockExecutor {
 
     override fun execute(block: Block): ExecutionResult =
-        when(block) {
+        when (block) {
             is OperationsBlock -> {
                 executeOperations(block.code)
                 Void
@@ -44,8 +44,8 @@ class StatelessBlockExecutor @Inject constructor(
     }
 
     private fun executeIoOperations(operations: List<IoOperation>) {
-        for(operation in operations) {
-            if(operation.input) {
+        for (operation in operations) {
+            if (operation.input) {
                 val input = communicator.input
                 val value = ValueFactory.createValue(
                     heap.getVariableType(operation.code),

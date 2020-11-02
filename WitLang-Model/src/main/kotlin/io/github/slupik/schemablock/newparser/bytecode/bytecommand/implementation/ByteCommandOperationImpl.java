@@ -21,7 +21,7 @@ public class ByteCommandOperationImpl extends ByteCommandBase implements ByteCom
     }
 
     @Override
-    public String toString(){
-        return getCommandType().toString()+" "+symbol;
+    public String toString() {
+        return getCommandType().toString() + " " + symbol;
     }
 }

@@ -83,7 +83,6 @@ public class ConnectionLayouter {
      * </p>
      *
      * @param connection a {@link GConnection} instance
-     *
      * @return a list of the given connection's points
      */
     private List<Point2D> createPoints(final GConnection connection) {

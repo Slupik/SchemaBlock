@@ -15,7 +15,7 @@ import io.github.slupik.schemablock.newparser.executor.Executor;
 public abstract class StandardElementBase extends ElementBase implements StandardElement {
 
     private String codeToRun = "";
-    private Executor executor;
+    private final Executor executor;
     private ElementStateListener stateListener;
 
     public StandardElementBase(Executor executor) {
@@ -23,13 +23,13 @@ public abstract class StandardElementBase extends ElementBase implements Standar
     }
 
     @Override
-    public void setContent(String content) {
-        codeToRun = content;
+    public String getContent() {
+        return codeToRun;
     }
 
     @Override
-    public String getContent() {
-        return codeToRun;
+    public void setContent(String content) {
+        codeToRun = content;
     }
 
     protected void justRunCode() throws AlgorithmException {

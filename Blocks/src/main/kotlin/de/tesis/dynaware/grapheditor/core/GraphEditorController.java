@@ -53,7 +53,7 @@ public class GraphEditorController {
     /**
      * Creates a new controller instance. Only one instance should exist per {@link DefaultGraphEditor} instance.
      *
-     * @param skinManager the {@link SkinManager} instance
+     * @param skinManager            the {@link SkinManager} instance
      * @param connectionEventManager the {@link ConnectionEventManager} instance
      */
     public GraphEditorController(final SkinManager skinManager, final ConnectionEventManager connectionEventManager) {
@@ -83,6 +83,15 @@ public class GraphEditorController {
     }
 
     /**
+     * Gets the graph model currently being edited.
+     *
+     * @return the {@link GModel} being edited, or {@code null} if no model was ever set
+     */
+    public GModel getModel() {
+        return model;
+    }
+
+    /**
      * Sets the graph model to be edited.
      *
      * @param model the {@link GModel} to be edited
@@ -98,15 +107,6 @@ public class GraphEditorController {
         if (model != null) {
             initializeAll();
         }
-    }
-
-    /**
-     * Gets the graph model currently being edited.
-     *
-     * @return the {@link GModel} being edited, or {@code null} if no model was ever set
-     */
-    public GModel getModel() {
-        return model;
     }
 
     /**
@@ -153,7 +153,7 @@ public class GraphEditorController {
 
     /**
      * Sets the validator that determines what connections can be created.
-     * 
+     *
      * @param validator a {@link GConnectorValidator} implementaiton, or null to use the default
      */
     public void setConnectorValidator(final GConnectorValidator validator) {

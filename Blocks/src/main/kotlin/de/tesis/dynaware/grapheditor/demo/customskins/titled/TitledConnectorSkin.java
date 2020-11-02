@@ -69,29 +69,29 @@ public class TitledConnectorSkin extends GConnectorSkin {
 
         switch (style) {
 
-        case DEFAULT:
-            root.pseudoClassStateChanged(PSEUDO_CLASS_FORBIDDEN, false);
-            root.pseudoClassStateChanged(PSEUDO_CLASS_ALLOWED, false);
-            forbiddenGraphic.setVisible(false);
-            break;
+            case DEFAULT:
+                root.pseudoClassStateChanged(PSEUDO_CLASS_FORBIDDEN, false);
+                root.pseudoClassStateChanged(PSEUDO_CLASS_ALLOWED, false);
+                forbiddenGraphic.setVisible(false);
+                break;
 
-        case DRAG_OVER_ALLOWED:
-            root.pseudoClassStateChanged(PSEUDO_CLASS_FORBIDDEN, false);
-            root.pseudoClassStateChanged(PSEUDO_CLASS_ALLOWED, true);
-            forbiddenGraphic.setVisible(false);
-            break;
+            case DRAG_OVER_ALLOWED:
+                root.pseudoClassStateChanged(PSEUDO_CLASS_FORBIDDEN, false);
+                root.pseudoClassStateChanged(PSEUDO_CLASS_ALLOWED, true);
+                forbiddenGraphic.setVisible(false);
+                break;
 
-        case DRAG_OVER_FORBIDDEN:
-            root.pseudoClassStateChanged(PSEUDO_CLASS_FORBIDDEN, true);
-            root.pseudoClassStateChanged(PSEUDO_CLASS_ALLOWED, false);
-            forbiddenGraphic.setVisible(true);
-            break;
+            case DRAG_OVER_FORBIDDEN:
+                root.pseudoClassStateChanged(PSEUDO_CLASS_FORBIDDEN, true);
+                root.pseudoClassStateChanged(PSEUDO_CLASS_ALLOWED, false);
+                forbiddenGraphic.setVisible(true);
+                break;
         }
     }
 
     /**
      * Sets the 'selected' pseudo-class based on the given boolean.
-     * 
+     *
      * @param isSelected {@code true} to add the selected pseudo-class, {@code false} to remove it
      */
     public void setSelected(final boolean isSelected) {
@@ -104,7 +104,7 @@ public class TitledConnectorSkin extends GConnectorSkin {
 
     /**
      * Creates a graphic to display a 'forbidden' effect in the connector.
-     * 
+     *
      * @return the new graphic
      */
     private Group createForbiddenGraphic() {

@@ -3,15 +3,14 @@
  */
 package de.tesis.dynaware.grapheditor.core.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
 import de.tesis.dynaware.grapheditor.core.utils.LogMessages;
 import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.model.GConnector;
 import de.tesis.dynaware.grapheditor.model.GModel;
 import de.tesis.dynaware.grapheditor.model.GNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides a static validation method to check a {@link GModel} instance for errors.
@@ -44,7 +43,7 @@ public class ModelSanityChecker {
 
     /**
      * Performs a basic sanity check that width and height parameters are non-negative.
-     * 
+     *
      * @param model the {@link GModel} to be validated
      * @return {@code true} if the model width and height parameters are valid
      */
@@ -67,7 +66,7 @@ public class ModelSanityChecker {
 
     /**
      * Validates that the references between connectors and their connections make sense.
-     * 
+     *
      * @param model the {@link GModel} to be validated
      * @return {@code true} if the model references are valid
      */

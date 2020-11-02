@@ -21,16 +21,14 @@ public class DefaultSkinController implements SkinController {
 
     protected static final int NODE_INITIAL_X = 19;
     protected static final int NODE_INITIAL_Y = 19;
-
+    private static final int MAX_CONNECTOR_COUNT = 5;
     protected final GraphEditor graphEditor;
     protected final GraphEditorContainer graphEditorContainer;
-
-    private static final int MAX_CONNECTOR_COUNT = 5;
 
     /**
      * Creates a new {@link DefaultSkinController} instance.
      *
-     * @param graphEditor the graph editor on display in this de.tesis.dynaware.grapheditor.demo
+     * @param graphEditor          the graph editor on display in this de.tesis.dynaware.grapheditor.demo
      * @param graphEditorContainer the graph editor container on display in this de.tesis.dynaware.grapheditor.demo
      */
     public DefaultSkinController(final GraphEditor graphEditor, final GraphEditorContainer graphEditorContainer) {
@@ -81,7 +79,7 @@ public class DefaultSkinController implements SkinController {
      * Adds a connector of the given type to all nodes that are currently selected.
      *
      * @param position the position of the new connector
-     * @param input {@code true} for input, {@code false} for output
+     * @param input    {@code true} for input, {@code false} for output
      */
     @Override
     public void addConnector(final Side position, final boolean input) {
@@ -152,36 +150,36 @@ public class DefaultSkinController implements SkinController {
      * Gets the connector type string corresponding to the given position and input values.
      *
      * @param position a {@link Side} value
-     * @param input {@code true} for input, {@code false} for output
+     * @param input    {@code true} for input, {@code false} for output
      * @return the connector type corresponding to these values
      */
     private String getType(final Side position, final boolean input) {
 
         switch (position) {
-        case TOP:
-            if (input) {
-                return DefaultConnectorTypes.TOP_INPUT;
-            } else {
-                return DefaultConnectorTypes.TOP_OUTPUT;
-            }
-        case RIGHT:
-            if (input) {
-                return DefaultConnectorTypes.RIGHT_INPUT;
-            } else {
-                return DefaultConnectorTypes.RIGHT_OUTPUT;
-            }
-        case BOTTOM:
-            if (input) {
-                return DefaultConnectorTypes.BOTTOM_INPUT;
-            } else {
-                return DefaultConnectorTypes.BOTTOM_OUTPUT;
-            }
-        case LEFT:
-            if (input) {
-                return DefaultConnectorTypes.LEFT_INPUT;
-            } else {
-                return DefaultConnectorTypes.LEFT_OUTPUT;
-            }
+            case TOP:
+                if (input) {
+                    return DefaultConnectorTypes.TOP_INPUT;
+                } else {
+                    return DefaultConnectorTypes.TOP_OUTPUT;
+                }
+            case RIGHT:
+                if (input) {
+                    return DefaultConnectorTypes.RIGHT_INPUT;
+                } else {
+                    return DefaultConnectorTypes.RIGHT_OUTPUT;
+                }
+            case BOTTOM:
+                if (input) {
+                    return DefaultConnectorTypes.BOTTOM_INPUT;
+                } else {
+                    return DefaultConnectorTypes.BOTTOM_OUTPUT;
+                }
+            case LEFT:
+                if (input) {
+                    return DefaultConnectorTypes.LEFT_INPUT;
+                } else {
+                    return DefaultConnectorTypes.LEFT_OUTPUT;
+                }
         }
 
         return null;

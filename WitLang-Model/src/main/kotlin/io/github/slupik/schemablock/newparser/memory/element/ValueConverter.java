@@ -6,7 +6,7 @@ package io.github.slupik.schemablock.newparser.memory.element;
 class ValueConverter {
 
     static Object castValueToType(ValueType type, Object value) {
-        if(value==null) return null;
+        if (value == null) return null;
 
         value = value.toString();
         String parsed = ((String) value);

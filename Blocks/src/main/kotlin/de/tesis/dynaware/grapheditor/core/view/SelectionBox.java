@@ -33,9 +33,9 @@ public class SelectionBox extends Rectangle {
     /**
      * Draws the selection box for the given position parameters.
      *
-     * @param x the start x position of the box
-     * @param y the start y position of the box
-     * @param width the width of the box
+     * @param x      the start x position of the box
+     * @param y      the start y position of the box
+     * @param width  the width of the box
      * @param height the height of the box
      */
     public void draw(final double x, final double y, final double width, final double height) {

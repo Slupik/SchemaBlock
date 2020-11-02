@@ -34,7 +34,7 @@ public class Token {
 
     public void setVariable(boolean variable) {
         this.variable = variable;
-        if(variable) {
+        if (variable) {
             functionArguments = -1;
         }
     }
@@ -45,13 +45,13 @@ public class Token {
 
     public void setFunctionArguments(int functionArguments) {
         this.functionArguments = functionArguments;
-        if(functionArguments>=0) {
+        if (functionArguments >= 0) {
             variable = false;
         }
     }
 
     public boolean isFunction() {
-        return getFunctionArguments()>=0;
+        return getFunctionArguments() >= 0;
     }
 
     public boolean isSpecialToken() {

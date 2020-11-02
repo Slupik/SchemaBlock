@@ -92,14 +92,14 @@ public class OperationsBlock extends Block {
     protected DoubleBinding getTextAreaWidth() {
         return border.widthProperty()
                 .subtract(DefaultConnectorSkin.OUTER_SIZE)
-                .multiply(4/5d);
+                .multiply(4 / 5d);
     }
 
     @Override
     protected DoubleBinding getTextAreaHeight() {
         return border.heightProperty()
                 .subtract(DefaultConnectorSkin.OUTER_SIZE)
-                .multiply(4/5d);
+                .multiply(4 / 5d);
     }
 
     @Override

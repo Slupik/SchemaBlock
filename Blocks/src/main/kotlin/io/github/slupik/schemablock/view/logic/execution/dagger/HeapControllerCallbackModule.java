@@ -17,7 +17,7 @@ public class HeapControllerCallbackModule {
 
     @Provides
     @HeapSpy
-    Runnable provideCallback(){
+    Runnable provideCallback() {
         return callback;
     }
 

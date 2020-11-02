@@ -33,21 +33,21 @@ public class VariableImpl implements Variable {
 
     @Override
     public void setContent(Value value) throws AlgorithmException {
-        if(value!=null) {
-            if(!ValueType.isCompatible(type, value.getType())) {
+        if (value != null) {
+            if (!ValueType.isCompatible(type, value.getType())) {
                 throw new IncompatibleTypeException(type, value.getType());
             }
-            if(value.isArray()) {
-                if(getDimensionsCount()>0) {
+            if (value.isArray()) {
+                if (getDimensionsCount() > 0) {
                     Array array = ((Array) value);
-                    if(array.getDimensionsCount()!= dimensions) {
+                    if (array.getDimensionsCount() != dimensions) {
                         throw new IncompatibleArrayException(dimensions, array.getDimensionsCount());
                     }
                 } else {
                     throw new ExceptedArray();
                 }
             } else {
-                if(dimensions!=0) {
+                if (dimensions != 0) {
                     throw new ExceptedValue();
                 }
             }

@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 public class TextUtils {
 
     public static boolean isWhitespace(char token) {
-        return StringUtils.isWhitespace(token+"");
+        return StringUtils.isWhitespace(token + "");
     }
 
     public static boolean isDigit(char token) {
@@ -19,14 +19,16 @@ public class TextUtils {
         try {
             Double.parseDouble(text);
             return true;
-        } catch (Exception ignore) {}
+        } catch (Exception ignore) {
+        }
         text = text.toLowerCase();
 
-        if(CodeUtils.isLetterForNumber(text.charAt(text.length()-1))) {
+        if (CodeUtils.isLetterForNumber(text.charAt(text.length() - 1))) {
             try {
-                Double.parseDouble(text.substring(0, text.length()-1));
+                Double.parseDouble(text.substring(0, text.length() - 1));
                 return true;
-            } catch (Exception ignore) {}
+            } catch (Exception ignore) {
+            }
         }
 
         return false;

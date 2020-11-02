@@ -56,9 +56,9 @@ public class ExecutorImpl implements Executor {
     public SimpleValue getResult(Queue<ByteCommand> cmds) throws AlgorithmException {
         ByteCodeExe.execute(cmds, memory, register, FUNCTIONS_CONTAINER, FUNCTION_EXECUTOR);
         Memoryable memoryable = register.pop();
-        if(memoryable instanceof SimpleValue) {
+        if (memoryable instanceof SimpleValue) {
             return ((SimpleValue) memoryable);
-        } else if(memoryable instanceof ArrayCell) {
+        } else if (memoryable instanceof ArrayCell) {
             return ((SimpleValue) ((ArrayCell) memoryable).getValue());
         } else {
             return ((SimpleValue) ((Variable) memoryable).getContent());

@@ -37,7 +37,7 @@ public class FunctionExplode implements Function {
                 1,
                 parts.length
         );
-        for(int i=0;i<parts.length;i++) {
+        for (int i = 0; i < parts.length; i++) {
             array.setValue(
                     new int[]{i},
                     new SimpleValueImpl(

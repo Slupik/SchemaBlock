@@ -41,7 +41,7 @@ class AsyncDiagramExecutor @Inject constructor(
         debug(ContinuousExecutionController())
 
     override fun debug(controller: DiagramExecutionController) {
-         executor.submit {
+        executor.submit {
             val startingId = getStartBlock()
             if (startingId != null) {
                 publisher.onNext(ExecutionStart)

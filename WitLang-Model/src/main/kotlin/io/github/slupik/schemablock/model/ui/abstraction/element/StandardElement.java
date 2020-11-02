@@ -5,8 +5,10 @@ package io.github.slupik.schemablock.model.ui.abstraction.element;
  */
 public interface StandardElement extends Element {
 
-    void setContent(String content);
     String getContent();
+
+    void setContent(String content);
+
     void setStateListener(ElementStateListener listener);
 
 }

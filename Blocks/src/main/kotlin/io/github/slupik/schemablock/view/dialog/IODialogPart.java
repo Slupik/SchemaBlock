@@ -22,14 +22,39 @@ public class IODialogPart extends Pane {
 
     private Runnable remover;
 
-    public IODialogPart(){
+    public IODialogPart() {
         getChildren().add(container);
         setupControls();
     }
 
+    private static ChoiceBox<IOType> getIOTypeSelector() {
+        ChoiceBox<IOType> selector = new ChoiceBox<>();
+        selector.getItems().addAll(IOType.values());
+        selector.setConverter(new StringConverter<IOType>() {
+            @Override
+            public String toString(IOType object) {
+                switch (object) {
+                    case INPUT: {
+                        return "Wczytaj wartość";
+                    }
+                    case OUTPUT: {
+                        return "Wyświetl";
+                    }
+                }
+                return null;
+            }
+
+            @Override
+            public IOType fromString(String string) {
+                return IOType.valueOf(string);
+            }
+        });
+        return selector;
+    }
+
     private void setupControls() {
         selector.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue==IOType.INPUT) {
+            if (newValue == IOType.INPUT) {
                 content.setPromptText("Tylko 1 zmienna");
             } else {
                 content.setPromptText("Tekst");
@@ -55,14 +80,14 @@ public class IODialogPart extends Pane {
 
     public void load(String code, boolean input) {
         content.setText(code);
-        if(input) {
+        if (input) {
             selector.setValue(IOType.INPUT);
         } else {
             selector.setValue(IOType.OUTPUT);
         }
     }
 
-    public IoOperation getAsField(){
+    public IoOperation getAsField() {
         return new IoOperation(
                 selector.getValue() == IOType.INPUT,
                 content.getText()
@@ -71,30 +96,5 @@ public class IODialogPart extends Pane {
 
     public void setRemover(Runnable runnable) {
         remover = runnable;
-    }
-
-    private static ChoiceBox<IOType> getIOTypeSelector(){
-        ChoiceBox<IOType> selector = new ChoiceBox<>();
-        selector.getItems().addAll(IOType.values());
-        selector.setConverter(new StringConverter<IOType>() {
-            @Override
-            public String toString(IOType object) {
-                switch (object) {
-                    case INPUT: {
-                        return "Wczytaj wartość";
-                    }
-                    case OUTPUT: {
-                        return "Wyświetl";
-                    }
-                }
-                return null;
-            }
-
-            @Override
-            public IOType fromString(String string) {
-                return IOType.valueOf(string);
-            }
-        });
-        return selector;
     }
 }

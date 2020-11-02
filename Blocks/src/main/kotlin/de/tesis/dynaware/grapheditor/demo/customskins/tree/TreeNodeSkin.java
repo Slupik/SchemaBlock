@@ -53,13 +53,11 @@ public class TreeNodeSkin extends GNodeSkin {
 
     private final Rectangle selectionHalo = new Rectangle();
     private final Button addChildButton = new Button();
-
-    private GConnectorSkin inputConnectorSkin;
-    private GConnectorSkin outputConnectorSkin;
-
     // Border and background are separated into 2 rectangles so they can have different effects applied to them.
     private final Rectangle border = new Rectangle();
     private final Rectangle background = new Rectangle();
+    private GConnectorSkin inputConnectorSkin;
+    private GConnectorSkin outputConnectorSkin;
 
     /**
      * Creates a new {@link TreeNodeSkin} instance.
@@ -309,7 +307,7 @@ public class TreeNodeSkin extends GNodeSkin {
 
     /**
      * Stops the node being dragged if it isn't selected.
-     * 
+     *
      * @param event a mouse-dragged event on the node
      */
     private void filterMouseDragged(final MouseEvent event) {

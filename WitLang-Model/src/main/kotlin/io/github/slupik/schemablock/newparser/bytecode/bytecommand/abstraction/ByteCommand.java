@@ -9,5 +9,6 @@ public interface ByteCommand {
     ByteCommandType getCommandType();
 
     int getLine();
+
     int getPosition();
 }

@@ -28,7 +28,7 @@ public class ByteCommandExecuteImpl extends ByteCommandBase implements ByteComma
     }
 
     @Override
-    public String toString(){
-        return getCommandType().toString()+" "+name+" "+argsCount;
+    public String toString() {
+        return getCommandType().toString() + " " + name + " " + argsCount;
     }
 }

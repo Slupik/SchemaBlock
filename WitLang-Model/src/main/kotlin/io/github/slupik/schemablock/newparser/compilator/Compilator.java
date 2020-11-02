@@ -14,6 +14,7 @@ import java.util.Queue;
  */
 public interface Compilator {
     Queue<ByteCommand> getCompiled(String code) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig, SemicolonNotFound;
+
     Queue<ByteCommand> getCompiled(String code, boolean forResult) throws ComExIllegalEscapeChar, NameForDeclarationCannotBeFound, ExceptedTypeOfArray, ValueTooBig, SemicolonNotFound;
 
     /* ByteCode ideas

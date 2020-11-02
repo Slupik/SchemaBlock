@@ -20,18 +20,18 @@ public class OperationBlock extends StandardElementBase implements OperationElem
     }
 
     @Override
-    public void setNextElement(String elementId) {
-        nextElement = elementId;
-    }
-
-    @Override
     public String getNextElement() {
         return nextElement;
     }
 
     @Override
+    public void setNextElement(String elementId) {
+        nextElement = elementId;
+    }
+
+    @Override
     public void removeNextElement(String elementId) {
-        if(nextElement.equals(elementId)) {
+        if (nextElement.equals(elementId)) {
             nextElement = "";
         }
     }
@@ -53,7 +53,7 @@ public class OperationBlock extends StandardElementBase implements OperationElem
     protected ElementPOJO getPOJO() {
         ElementPOJO pojo = getPreCreatedPOJO();
         pojo.nextBlocks = new String[1];
-        if(nextElement!=null) {
+        if (nextElement != null) {
             pojo.nextBlocks[0] = nextElement;
         }
         return pojo;

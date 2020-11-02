@@ -6,7 +6,7 @@ import javafx.scene.text.Text;
 
 /**
  * A few icons.
- * 
+ *
  * <p>
  * Uses Font Awesome by Dave Gandy - http://fontawesome.io.
  * </p>
@@ -34,7 +34,7 @@ public enum AwesomeIcon {
 
     /**
      * Creates a new awesome icon for the given unicode value.
-     * 
+     *
      * @param unicode the unicode value as an integer
      */
     private AwesomeIcon(final int unicode) {
@@ -43,7 +43,7 @@ public enum AwesomeIcon {
 
     /**
      * Returns a new {@link Node} containing the icon.
-     * 
+     *
      * @return a new node containing the icon
      */
     public Node node() {

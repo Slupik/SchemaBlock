@@ -27,7 +27,7 @@ class ByteCodeExe {
             try {
                 execute(cmd, memory, register, functionContainer, executor);
             } catch (Throwable throwable) {
-                if(throwable instanceof AlgorithmException) {
+                if (throwable instanceof AlgorithmException) {
                     throw throwable;
                 } else {
                     throwable.printStackTrace();

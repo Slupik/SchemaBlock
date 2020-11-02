@@ -3,19 +3,14 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins.defaults.connection;
 
-import java.util.List;
-
-import javafx.geometry.Point2D;
-import javafx.scene.shape.ArcTo;
-import javafx.scene.shape.HLineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.PathElement;
-import javafx.scene.shape.VLineTo;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.segment.ConnectionSegment;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.RectangularConnectionUtils;
 import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
+import javafx.geometry.Point2D;
+import javafx.scene.shape.*;
+
+import java.util.List;
 
 /**
  * Helper class for calculating the offset of the cursor to a default connection skin.
@@ -36,12 +31,12 @@ public class CursorOffsetCalculator {
     /**
      * Creates a new cursor offset calculator instance for a default connection skin.
      *
-     * @param path the connection's path
-     * @param backgroundPath the connection's background path
+     * @param path               the connection's path
+     * @param backgroundPath     the connection's background path
      * @param connectionSegments the connection's list of segments
      */
     public CursorOffsetCalculator(final GConnection connection, final Path path, final Path backgroundPath,
-            final List<ConnectionSegment> connectionSegments) {
+                                  final List<ConnectionSegment> connectionSegments) {
 
         this.connection = connection;
         this.path = path;
@@ -134,13 +129,13 @@ public class CursorOffsetCalculator {
      * If the offset is smaller than the current minimum variable, its value will be updated.
      * </p>
      *
-     * @param pathElement a {@link PathElement} inside the connection path
+     * @param pathElement  a {@link PathElement} inside the connection path
      * @param cursorSceneX the x position of the cursor
      * @param cursorSceneY the y position of the cursor
-     * @param offsetBound the maximum allowed offset value
+     * @param offsetBound  the maximum allowed offset value
      */
     private void calculateOffset(final PathElement pathElement, final double cursorSceneX, final double cursorSceneY,
-            final double offsetBound) {
+                                 final double offsetBound) {
 
         final double currentSceneX = path.localToScene(currentX, currentY).getX();
         final double currentSceneY = path.localToScene(currentX, currentY).getY();

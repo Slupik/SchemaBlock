@@ -3,13 +3,6 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins.defaults.connection;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import de.tesis.dynaware.grapheditor.GJointSkin;
 import de.tesis.dynaware.grapheditor.GNodeSkin;
 import de.tesis.dynaware.grapheditor.SkinLookup;
@@ -19,6 +12,13 @@ import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.model.GConnector;
 import de.tesis.dynaware.grapheditor.model.GNode;
 import de.tesis.dynaware.grapheditor.utils.DraggableBox;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Responsible for how joints align to adjacent joints when dragged close enough to them in the default connection skin.
@@ -31,7 +31,7 @@ public class JointAlignmentManager {
 
     /**
      * Creates a new {@link JointAlignmentManager} instance.
-     * 
+     *
      * @param connection the connection whose joints are being aligned
      */
     public JointAlignmentManager(final GConnection connection) {
@@ -85,7 +85,7 @@ public class JointAlignmentManager {
     /**
      * Adds horizontal alignment targets to the given joint skin based on the positions of neighbouring joints.
      *
-     * @param jointSkin the current joint skin
+     * @param jointSkin  the current joint skin
      * @param jointSkins all joint skin instances belonging to a connection
      */
     private void addHorizontalAlignmentTargets(final GJointSkin jointSkin, final List<GJointSkin> jointSkins) {
@@ -119,7 +119,7 @@ public class JointAlignmentManager {
     /**
      * Adds vertical alignment targets to the given joint skin based on the positions of neighbouring joints.
      *
-     * @param jointSkin the current joint skin
+     * @param jointSkin  the current joint skin
      * @param jointSkins all joint skin instances belonging to a connection
      */
     private void addVerticalAlignmentTargets(final GJointSkin jointSkin, final List<GJointSkin> jointSkins) {
@@ -153,9 +153,8 @@ public class JointAlignmentManager {
     /**
      * Checks whether the previous vertical horizontal segment will remain stationary when the current joint is dragged.
      *
-     * @param index the index of the current joint
+     * @param index      the index of the current joint
      * @param jointSkins the list of joint skins for the joint's connection
-     *
      * @return {@code true} if the previous vertical segment of the connection will remain stationary
      */
     private boolean isPreviousVerticalSegmentStationary(final int index, final List<GJointSkin> jointSkins) {
@@ -172,9 +171,8 @@ public class JointAlignmentManager {
     /**
      * Checks whether the next vertical segment will remain stationary when the current joint is dragged.
      *
-     * @param currentIndex the index of the current joint
-     * @param jointSkins the list of joint skins for the joint's connection
-     *
+     * @param index the index of the current joint
+     * @param jointSkins   the list of joint skins for the joint's connection
      * @return {@code true} if the next vertical segment of the connection will remain stationary
      */
     private boolean isNextVerticalSegmentStationary(final int index, final List<GJointSkin> jointSkins) {
@@ -192,9 +190,8 @@ public class JointAlignmentManager {
     /**
      * Checks whether the previous horizontal segment will remain stationary when the current joint is dragged.
      *
-     * @param index the index of the current joint
+     * @param index      the index of the current joint
      * @param jointSkins the list of joint skins for the joint's connection
-     *
      * @return {@code true} if the previous horizontal segment of the connection will remain stationary
      */
     private boolean isPreviousHorizontalSegmentStationary(final int index, final List<GJointSkin> jointSkins) {
@@ -211,9 +208,8 @@ public class JointAlignmentManager {
     /**
      * Checks whether the next horizontal segment will remain stationary when the current joint is dragged.
      *
-     * @param index the index of the current joint
+     * @param index      the index of the current joint
      * @param jointSkins the list of joint skins for the joint's connection
-     *
      * @return {@code true} if the next horizontal segment of the connection will remain stationary
      */
     private boolean isNextHorizontalSegmentStationary(final int index, final List<GJointSkin> jointSkins) {
@@ -230,13 +226,13 @@ public class JointAlignmentManager {
 
     /**
      * Checks whether a node attached to the connection's source or target connector will move when a joint is dragged.
-     * 
+     *
      * <p>
      * This is evaluated based on whether the node and/or joint are selected.
      * </p>
-     * 
+     *
      * @param jointSkin a {@link GJointSkin} that is dragged
-     * @param source {@code true} to query source node, {@code false} to query target node
+     * @param source    {@code true} to query source node, {@code false} to query target node
      * @return {@code true} if the node will move when the given joint is dragged
      */
     private boolean isNodeStationary(final GJointSkin jointSkin, final boolean source) {
@@ -254,15 +250,15 @@ public class JointAlignmentManager {
 
     /**
      * Checks if the previous or next horizontal or vertical joint pair will remain stationary.
-     * 
-     * @param index the dragged joint index in the list of joint skins
+     *
+     * @param index      the dragged joint index in the list of joint skins
      * @param horizontal {@code true} for horizontal segment, {@code false} for vertical
-     * @param next {@code true} for next segment, {@code false} for previous
+     * @param next       {@code true} for next segment, {@code false} for previous
      * @param jointSkins the list of joint skins
      * @return {@code true} if the joint pair will remain stationary when the joint is dragged
      */
     private boolean isJointPairStationary(final int index, final boolean horizontal, final boolean next,
-            final List<GJointSkin> jointSkins) {
+                                          final List<GJointSkin> jointSkins) {
 
         final boolean segmentHorizontal = RectangularConnectionUtils.isSegmentHorizontal(connection, index + 1);
 

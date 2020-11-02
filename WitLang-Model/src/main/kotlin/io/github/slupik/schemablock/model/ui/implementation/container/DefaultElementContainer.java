@@ -32,7 +32,7 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
     private String previousElement = null;
     private ExecutionCallback callback;
 
-    public DefaultElementContainer(Register register, Memory memory, ElementParser elementParser){
+    public DefaultElementContainer(Register register, Memory memory, ElementParser elementParser) {
         this.register = register;
         this.memory = memory;
         this.elementParser = elementParser;
@@ -45,7 +45,7 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
         register.clear();
         previousElement = null;
 
-        if(callback!=null) {
+        if (callback != null) {
             callback.onStart();
         }
         controller.onStart();
@@ -66,9 +66,9 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
 
     @Override
     public void addElement(Element element) {
-        if(element!=null) {
-            if(element.getType() == ElementType.START) {
-                if(start!=null) {
+        if (element != null) {
+            if (element.getType() == ElementType.START) {
+                if (start != null) {
                     removeElement(element.getId());
                 }
                 start = element.getId();
@@ -80,10 +80,10 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
 
     @Override
     public Element getElement(String id) throws NextElementNotFound {
-        for(Element element:elements) {
-            if(element!=null) {
-                if(element.getId()!=null) {
-                    if(element.getId().equalsIgnoreCase(id)) {
+        for (Element element : elements) {
+            if (element != null) {
+                if (element.getId() != null) {
+                    if (element.getId().equalsIgnoreCase(id)) {
                         return element;
                     }
                 }
@@ -95,16 +95,16 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
     @Override
     public void removeElement(String id) {
         List<Element> toDelete = new ArrayList<>();
-        for(Element element:elements) {
-            if(element!=null && element.getId().equalsIgnoreCase(id)) {
-                if(element.getType()==ElementType.START) {
+        for (Element element : elements) {
+            if (element != null && element.getId().equalsIgnoreCase(id)) {
+                if (element.getType() == ElementType.START) {
                     start = null;
                 }
                 toDelete.add(element);
                 element.unregisterCallback(this);
             }
         }
-        for(Element element:toDelete) {
+        for (Element element : toDelete) {
             elements.remove(element);
         }
     }
@@ -118,7 +118,7 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
     public String stringify() {
         ElementContainerPOJO pojo = new ElementContainerPOJO();
         pojo.startElement = start;
-        for(Element element:elements) {
+        for (Element element : elements) {
             pojo.elements.add(element.stringify());
         }
         return new Gson().toJson(pojo);
@@ -128,7 +128,7 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
     public void restore(String data) {
         ElementContainerPOJO pojo = new Gson().fromJson(data, ElementContainerPOJO.class);
         start = pojo.startElement;
-        for(String elementString:pojo.elements) {
+        for (String elementString : pojo.elements) {
             try {
                 Element element = elementParser.parse(elementString);
                 addElement(element);
@@ -163,7 +163,7 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
             e.printStackTrace();
         }
         try {
-            if(previousElement!=null) {
+            if (previousElement != null) {
                 getElement(previousElement).setState(ElementState.STOP);
             }
             previousElement = elementId;
@@ -172,19 +172,21 @@ public class DefaultElementContainer implements ElementContainer, ElementCallbac
             getElement(elementId).setState(ElementState.STOP);
         } catch (Throwable e) {
             controller.onException(e);
-            if(!(e instanceof NextElementNotFound)) {
+            if (!(e instanceof NextElementNotFound)) {
                 try {
                     getElement(elementId).setState(ElementState.ERROR);
-                } catch (NextElementNotFound ignore) {}
+                } catch (NextElementNotFound ignore) {
+                }
             }
         }
 
         try {
-            if(getElement(elementId) instanceof StopBlock) {
-                if(callback!=null) {
+            if (getElement(elementId) instanceof StopBlock) {
+                if (callback != null) {
                     callback.onStop();
                 }
             }
-        } catch (NextElementNotFound ignore) {}
+        } catch (NextElementNotFound ignore) {
+        }
     }
 }

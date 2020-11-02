@@ -14,23 +14,23 @@ class MathOperationExecutor extends OperationExecutor {
     static SimpleValue add(SimpleValue a, SimpleValue b) throws IllegalOperation {
         ValueType resultType = getResultType(a, b);
 
-        if(resultType.IS_NUMBER) {
+        if (resultType.IS_NUMBER) {
 
             Number nA = a.getCastedValue();
             Number nB = b.getCastedValue();
 
-            if(resultType==DOUBLE || resultType==FLOAT) {
+            if (resultType == DOUBLE || resultType == FLOAT) {
                 double parsedA = nA.doubleValue();
                 double parsedB = nB.doubleValue();
-                return new SimpleValueImpl(resultType, parsedA+parsedB);
+                return new SimpleValueImpl(resultType, parsedA + parsedB);
             } else {
                 long parsedA = nA.longValue();
                 long parsedB = nB.longValue();
-                return new SimpleValueImpl(resultType, parsedA+parsedB);
+                return new SimpleValueImpl(resultType, parsedA + parsedB);
             }
         }
-        if(resultType == STRING) {
-            return new SimpleValueImpl(resultType, String.valueOf(a.getValue())+String.valueOf(b.getValue()));
+        if (resultType == STRING) {
+            return new SimpleValueImpl(resultType, String.valueOf(a.getValue()) + b.getValue());
         }
         throw new IllegalOperation(a.getType(), b.getType(), "+");
     }
@@ -38,19 +38,19 @@ class MathOperationExecutor extends OperationExecutor {
     static SimpleValue subtract(SimpleValue a, SimpleValue b) throws IllegalOperation {
         ValueType resultType = getResultType(a, b);
 
-        if(resultType.IS_NUMBER) {
+        if (resultType.IS_NUMBER) {
 
             Number nA = a.getCastedValue();
             Number nB = b.getCastedValue();
 
-            if(resultType==DOUBLE || resultType==FLOAT) {
+            if (resultType == DOUBLE || resultType == FLOAT) {
                 double parsedA = nA.doubleValue();
                 double parsedB = nB.doubleValue();
-                return new SimpleValueImpl(resultType, parsedA-parsedB);
+                return new SimpleValueImpl(resultType, parsedA - parsedB);
             } else {
                 long parsedA = nA.longValue();
                 long parsedB = nB.longValue();
-                return new SimpleValueImpl(resultType, parsedA-parsedB);
+                return new SimpleValueImpl(resultType, parsedA - parsedB);
             }
         }
         throw new IllegalOperation(a.getType(), b.getType(), "-");
@@ -59,19 +59,19 @@ class MathOperationExecutor extends OperationExecutor {
     static SimpleValue multiply(SimpleValue a, SimpleValue b) throws IllegalOperation {
         ValueType resultType = getResultType(a, b);
 
-        if(resultType.IS_NUMBER) {
+        if (resultType.IS_NUMBER) {
 
             Number nA = a.getCastedValue();
             Number nB = b.getCastedValue();
 
-            if(resultType==DOUBLE || resultType==FLOAT) {
+            if (resultType == DOUBLE || resultType == FLOAT) {
                 double parsedA = nA.doubleValue();
                 double parsedB = nB.doubleValue();
-                return new SimpleValueImpl(resultType, parsedA*parsedB);
+                return new SimpleValueImpl(resultType, parsedA * parsedB);
             } else {
                 long parsedA = nA.longValue();
                 long parsedB = nB.longValue();
-                return new SimpleValueImpl(resultType, parsedA*parsedB);
+                return new SimpleValueImpl(resultType, parsedA * parsedB);
             }
         }
         throw new IllegalOperation(a.getType(), b.getType(), "*");
@@ -80,16 +80,16 @@ class MathOperationExecutor extends OperationExecutor {
     static SimpleValue divide(SimpleValue a, SimpleValue b, boolean rest) throws IllegalOperation {
         ValueType resultType = getResultType(a, b);
 
-        if(resultType.IS_NUMBER) {
+        if (resultType.IS_NUMBER) {
 
             Number nA = a.getCastedValue();
             Number nB = b.getCastedValue();
 
-            if(resultType==DOUBLE || resultType==FLOAT) {
+            if (resultType == DOUBLE || resultType == FLOAT) {
                 double parsedA = nA.doubleValue();
                 double parsedB = nB.doubleValue();
-                double result = parsedA/parsedB;
-                if(rest) {
+                double result = parsedA / parsedB;
+                if (rest) {
                     return new SimpleValueImpl(resultType, result);
                 } else {
                     return new SimpleValueImpl(resultType, ((long) result));
@@ -97,11 +97,11 @@ class MathOperationExecutor extends OperationExecutor {
             } else {
                 long parsedA = nA.longValue();
                 long parsedB = nB.longValue();
-                long result = parsedA/parsedB;
+                long result = parsedA / parsedB;
                 return new SimpleValueImpl(resultType, result);
             }
         }
-        if(rest) {
+        if (rest) {
             throw new IllegalOperation(a.getType(), b.getType(), "/");
         } else {
             throw new IllegalOperation(a.getType(), b.getType(), "\\");
@@ -111,19 +111,19 @@ class MathOperationExecutor extends OperationExecutor {
     static SimpleValue modulo(SimpleValue a, SimpleValue b) throws IllegalOperation {
         ValueType resultType = getResultType(a, b);
 
-        if(resultType.IS_NUMBER) {
+        if (resultType.IS_NUMBER) {
 
             Number nA = a.getCastedValue();
             Number nB = b.getCastedValue();
 
-            if(resultType==DOUBLE || resultType==FLOAT) {
+            if (resultType == DOUBLE || resultType == FLOAT) {
                 double parsedA = nA.doubleValue();
                 double parsedB = nB.doubleValue();
-                return new SimpleValueImpl(resultType, parsedA%parsedB);
+                return new SimpleValueImpl(resultType, parsedA % parsedB);
             } else {
                 long parsedA = nA.longValue();
                 long parsedB = nB.longValue();
-                return new SimpleValueImpl(resultType, parsedA%parsedB);
+                return new SimpleValueImpl(resultType, parsedA % parsedB);
             }
         }
         throw new IllegalOperation(a.getType(), b.getType(), "%");

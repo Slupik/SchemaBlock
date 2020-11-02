@@ -76,13 +76,13 @@ public class DefaultGraphEditor implements GraphEditor {
     }
 
     @Override
-    public void setModel(final GModel model) {
-        modelProperty.set(model);
+    public GModel getModel() {
+        return modelProperty.get();
     }
 
     @Override
-    public GModel getModel() {
-        return modelProperty.get();
+    public void setModel(final GModel model) {
+        modelProperty.set(model);
     }
 
     @Override

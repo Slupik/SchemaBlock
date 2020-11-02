@@ -11,7 +11,7 @@ public class ValueTooBig extends AlgorithmException {
     public final String value;
 
     public ValueTooBig(String value) {
-        super("Given number ("+value+") is too big to be processed.");
+        super("Given number (" + value + ") is too big to be processed.");
         this.value = value;
     }
 

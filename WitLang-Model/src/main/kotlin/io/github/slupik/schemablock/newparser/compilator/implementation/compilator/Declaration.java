@@ -24,11 +24,11 @@ class Declaration {
 
         List<Token> partialDeclaration = new ArrayList<>();//ex. int a, b;
         int arrayNestLvl = 0;
-        for(Token part:parts) {
-            if(CodeUtils.isArrayStart(part)) arrayNestLvl++;
-            if(CodeUtils.isArrayEnd(part)) arrayNestLvl--;
+        for (Token part : parts) {
+            if (CodeUtils.isArrayStart(part)) arrayNestLvl++;
+            if (CodeUtils.isArrayEnd(part)) arrayNestLvl--;
 
-            if(",".equals(part.getData()) && arrayNestLvl==0) {
+            if (",".equals(part.getData()) && arrayNestLvl == 0) {
                 compiled.addAll(compilePart(type, partialDeclaration));
                 partialDeclaration.clear();
             } else {
@@ -36,7 +36,7 @@ class Declaration {
             }
         }
 
-        if(partialDeclaration.size()>0) {
+        if (partialDeclaration.size() > 0) {
             compiled.addAll(compilePart(type, partialDeclaration));
         }
 
@@ -47,18 +47,18 @@ class Declaration {
         List<ByteCommand> compiled = new ArrayList<>();
 
         Token tokenWithName = null;
-        if(isNameOfVariable(parts.get(0).getData())) {
+        if (isNameOfVariable(parts.get(0).getData())) {
             tokenWithName = parts.get(0);
         }
-        for(int i=0;i<parts.size();i++) {
+        for (int i = 0; i < parts.size(); i++) {
             Token current = parts.get(i);
-            if((CodeUtils.isArrayEnd(current) && CodeUtils.getArrayNestLvl(current)==0) || CodeUtils.isEmptyArrayBrackets(current)) {
-                if(parts.size()>i+1) {
-                    if(isNameOfVariable(parts.get(i+1).getData())) {
-                        tokenWithName = parts.get(i+1);
+            if ((CodeUtils.isArrayEnd(current) && CodeUtils.getArrayNestLvl(current) == 0) || CodeUtils.isEmptyArrayBrackets(current)) {
+                if (parts.size() > i + 1) {
+                    if (isNameOfVariable(parts.get(i + 1).getData())) {
+                        tokenWithName = parts.get(i + 1);
                     }
                 } else {
-                    if(tokenWithName==null) {
+                    if (tokenWithName == null) {
                         throw new NameForDeclarationCannotBeFound(parts.get(0).getLine(), parts.get(0).getPos());
                     } else {
                         break;
@@ -66,7 +66,7 @@ class Declaration {
                 }
             }
         }
-        if(tokenWithName==null) {
+        if (tokenWithName == null) {
             throw new NameForDeclarationCannotBeFound(parts.get(0).getLine(), parts.get(0).getPos());
         }
 
@@ -74,28 +74,28 @@ class Declaration {
         List<Token> actDimension = new ArrayList<>();
         int nestLevel = -1;
         for (Token checked : parts) {
-            if(checked.equals(tokenWithName)) {
+            if (checked.equals(tokenWithName)) {
                 continue;
             }
 
-            if(CodeUtils.isArrayStart(checked)) {
+            if (CodeUtils.isArrayStart(checked)) {
                 nestLevel = CodeUtils.getArrayNestLvl(checked);
                 continue;
-            } else if(CodeUtils.isArrayEnd(checked)) {
-                nestLevel = CodeUtils.getArrayNestLvl(checked)-1;
-                if(nestLevel==-1) {
+            } else if (CodeUtils.isArrayEnd(checked)) {
+                nestLevel = CodeUtils.getArrayNestLvl(checked) - 1;
+                if (nestLevel == -1) {
                     dimensions.add(actDimension);
                     actDimension = new ArrayList<>();
                 }
                 continue;
             }
 
-            if(nestLevel>-1) {//CodeUtils.isSpecialText(checked.getData()) || TextUtils.isNumber(checked.getData())
+            if (nestLevel > -1) {//CodeUtils.isSpecialText(checked.getData()) || TextUtils.isNumber(checked.getData())
                 actDimension.add(checked);
                 continue;
             }
 
-            if(nestLevel==-1 && CodeUtils.isEmptyArrayBrackets(checked)) {
+            if (nestLevel == -1 && CodeUtils.isEmptyArrayBrackets(checked)) {
                 dimensions.add(actDimension);
                 actDimension = new ArrayList<>();
             }
@@ -115,11 +115,11 @@ class Declaration {
         ));
 
         int lastSize = compiled.size();
-        for(int i=dimensions.size()-1;i>=0;i--) {
+        for (int i = dimensions.size() - 1; i >= 0; i--) {
             compiled.addAll(LineCompilator.getCompiledLine(dimensions.get(i)));
         }
 
-        if(lastSize!=compiled.size()) {
+        if (lastSize != compiled.size()) {
             compiled.add(new ByteCommandHeapVirArrImpl(
                     tokenWithName.getLine(),
                     tokenWithName.getPos(),

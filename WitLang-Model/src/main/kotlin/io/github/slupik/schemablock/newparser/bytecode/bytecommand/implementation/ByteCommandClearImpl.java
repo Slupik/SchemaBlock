@@ -21,7 +21,7 @@ public class ByteCommandClearImpl extends ByteCommandBase implements ByteCommand
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return getCommandType().toString();
     }
 }

@@ -3,19 +3,6 @@
  */
 package de.tesis.dynaware.grapheditor.core.selections;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.BiPredicate;
-
-import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Region;
 import de.tesis.dynaware.grapheditor.GConnectionSkin;
 import de.tesis.dynaware.grapheditor.GJointSkin;
 import de.tesis.dynaware.grapheditor.GNodeSkin;
@@ -23,12 +10,21 @@ import de.tesis.dynaware.grapheditor.SkinLookup;
 import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
 import de.tesis.dynaware.grapheditor.core.utils.GModelUtils;
 import de.tesis.dynaware.grapheditor.core.view.GraphEditorView;
-import de.tesis.dynaware.grapheditor.model.GConnection;
-import de.tesis.dynaware.grapheditor.model.GConnector;
-import de.tesis.dynaware.grapheditor.model.GJoint;
-import de.tesis.dynaware.grapheditor.model.GModel;
-import de.tesis.dynaware.grapheditor.model.GNode;
+import de.tesis.dynaware.grapheditor.model.*;
 import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
+import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiPredicate;
 
 /**
  * Responsible for creating selections of nodes, connections, and joints in the graph editor.
@@ -43,28 +39,20 @@ public class SelectionCreator {
     private final SkinLookup skinLookup;
     private final GraphEditorView view;
     private final SelectionDragManager selectionDragManager;
-
-    private GModel model;
-
     // Keep track of all added handlers, because adding a handler twice is punishable by death.
     private final Map<GNode, EventHandler<MouseEvent>> nodePressedHandlers = new HashMap<>();
     private final Map<GNode, EventHandler<MouseEvent>> nodeReleasedHandlers = new HashMap<>();
-
     private final Map<GConnector, EventHandler<MouseEvent>> connectorPressedHandlers = new HashMap<>();
-
     private final Map<GJoint, EventHandler<MouseEvent>> jointPressedHandlers = new HashMap<>();
     private final Map<GJoint, EventHandler<MouseEvent>> jointReleasedHandlers = new HashMap<>();
-
-    private EventHandler<MouseEvent> viewPressedHandler;
-    private EventHandler<MouseEvent> viewDraggedHandler;
-    private EventHandler<MouseEvent> viewReleasedHandler;
-
-    private List<GJoint> allJoints;
-
     private final List<GNode> selectedNodesBackup = new ArrayList<>();
     private final List<GJoint> selectedJointsBackup = new ArrayList<>();
     private final List<GConnection> selectedConnectionsBackup = new ArrayList<>();
-
+    private GModel model;
+    private EventHandler<MouseEvent> viewPressedHandler;
+    private EventHandler<MouseEvent> viewDraggedHandler;
+    private EventHandler<MouseEvent> viewReleasedHandler;
+    private List<GJoint> allJoints;
     private Rectangle2D selection;
 
     private Point2D selectionBoxStart;
@@ -75,12 +63,12 @@ public class SelectionCreator {
     /**
      * Creates a new selection creator instance. Only one instance should exist per {@link DefaultGraphEditor} instance.
      *
-     * @param skinLookup the {@link SkinLookup} used to look up skins
-     * @param view the {@link GraphEditorView} instance
+     * @param skinLookup           the {@link SkinLookup} used to look up skins
+     * @param view                 the {@link GraphEditorView} instance
      * @param selectionDragManager the {@link SelectionDragManager} instance for this graph editor
      */
     public SelectionCreator(final SkinLookup skinLookup, final GraphEditorView view,
-            final SelectionDragManager selectionDragManager) {
+                            final SelectionDragManager selectionDragManager) {
 
         this.skinLookup = skinLookup;
         this.view = view;
@@ -258,7 +246,7 @@ public class SelectionCreator {
      * Handles mouse-pressed events on the given node.
      *
      * @param event a mouse-pressed event
-     * @param node the {@link GNode} on which this event occurred
+     * @param node  the {@link GNode} on which this event occurred
      */
     private void handleNodePressed(final MouseEvent event, final GNode node) {
 
@@ -294,7 +282,7 @@ public class SelectionCreator {
      * Handles mouse-released events on the given node.
      *
      * @param event a mouse-released event
-     * @param node the {@link GNode} on which this event occured
+     * @param node  the {@link GNode} on which this event occured
      */
     private void handleNodeReleased(final MouseEvent event, final GNode node) {
 

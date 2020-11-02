@@ -5,8 +5,8 @@ package io.github.slupik.schemablock.view.logic.execution.block
  */
 sealed class ExecutionResult
 
-object Void: ExecutionResult()
+object Void : ExecutionResult()
 
 data class Logic(
     val value: Boolean
-): ExecutionResult()
+) : ExecutionResult()

@@ -54,7 +54,8 @@ object DialogFactory {
         val loginButton = dialog.dialogPane.lookupButton(saveButtonType)
         loginButton.isDisable = input.description.isEmpty()
 
-        title.textProperty().addListener { _, _, newValue -> loginButton.isDisable = newValue.trim { it <= ' ' }.isEmpty() }
+        title.textProperty()
+            .addListener { _, _, newValue -> loginButton.isDisable = newValue.trim { it <= ' ' }.isEmpty() }
 
         dialog.dialogPane.content = verContainer
 
@@ -103,7 +104,8 @@ object DialogFactory {
         val loginButton = dialog.dialogPane.lookupButton(saveButtonType)
         loginButton.isDisable = input.description.isEmpty()
 
-        title.textProperty().addListener { _, _, newValue -> loginButton.isDisable = newValue.trim { it <= ' ' }.isEmpty() }
+        title.textProperty()
+            .addListener { _, _, newValue -> loginButton.isDisable = newValue.trim { it <= ' ' }.isEmpty() }
 
         dialog.dialogPane.content = verContainer
 
@@ -175,7 +177,8 @@ object DialogFactory {
         val loginButton = dialog.dialogPane.lookupButton(saveButtonType)
         loginButton.isDisable = input.description.isEmpty()
 
-        title.textProperty().addListener { _, _, newValue -> loginButton.isDisable = newValue.trim { it <= ' ' }.isEmpty() }
+        title.textProperty()
+            .addListener { _, _, newValue -> loginButton.isDisable = newValue.trim { it <= ' ' }.isEmpty() }
 
         val btnAddOption = Button("Dodaj")
         btnAddOption.setOnAction {

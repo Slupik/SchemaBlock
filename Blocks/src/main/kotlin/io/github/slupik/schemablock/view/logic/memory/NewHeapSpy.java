@@ -39,7 +39,7 @@ public class NewHeapSpy implements HeapController, Memory {
     @Override
     public void setVariableValue(String name, Value value) throws AlgorithmException {
         Variable variable = memory.get(name);
-        if(variable==null) {
+        if (variable == null) {
             throw new VariableNotFound(name);
         } else {
             variable.setContent(value);
@@ -49,7 +49,7 @@ public class NewHeapSpy implements HeapController, Memory {
     @Override
     public ValueType getVariableType(String name) throws VariableNotFound {
         Variable variable = memory.get(name);
-        if(variable==null) {
+        if (variable == null) {
             throw new VariableNotFound(name);
         } else {
             return variable.getType();

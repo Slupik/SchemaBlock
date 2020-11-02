@@ -44,7 +44,7 @@ public class ElementParser {
                 break;
             }
             default: {
-                throw new BlockParserException("Not found block for type "+pojo.elementType);
+                throw new BlockParserException("Not found block for type " + pojo.elementType);
             }
         }
         element.load(data);

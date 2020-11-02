@@ -48,10 +48,8 @@ public class GraphEditorView extends Region {
     private final GraphEditorViewLayer connectionLayer = new GraphEditorViewLayer();
 
     private final GraphEditorGrid grid = new GraphEditorGrid();
-    private ConnectionLayouter connectionLayouter;
-
     private final SelectionBox selectionBox = new SelectionBox();
-
+    private ConnectionLayouter connectionLayouter;
     private GraphEditorProperties editorProperties;
 
     /**
@@ -163,6 +161,15 @@ public class GraphEditorView extends Region {
     }
 
     /**
+     * Gets the editor properties instance used by the view.
+     *
+     * @return editorProperties the {@link GraphEditorProperties} instance used by the view
+     */
+    public GraphEditorProperties getEditorProperties() {
+        return editorProperties;
+    }
+
+    /**
      * Sets the layout properties of the view.
      *
      * <p>
@@ -183,20 +190,11 @@ public class GraphEditorView extends Region {
     }
 
     /**
-     * Gets the editor properties instance used by the view.
-     *
-     * @return editorProperties the {@link GraphEditorProperties} instance used by the view
-     */
-    public GraphEditorProperties getEditorProperties() {
-        return editorProperties;
-    }
-
-    /**
      * Draws a selection box in the view.
      *
-     * @param x the x position of the selection box
-     * @param y the y position of the selection box
-     * @param width the width of the selection box
+     * @param x      the x position of the selection box
+     * @param y      the y position of the selection box
+     * @param width  the width of the selection box
      * @param height the height of the selection box
      */
     public void drawSelectionBox(final double x, final double y, final double width, final double height) {
@@ -217,7 +215,7 @@ public class GraphEditorView extends Region {
      * This increases performance if the content does not need to be redrawn. It <b>decreases</b> performance when the
      * content is redrawn. Use with care.
      * </p>
-     * 
+     *
      * <p>
      * <b>Note:</b> Currently leads to poor performance when scale transforms are used, or on retina displays.
      * </p>

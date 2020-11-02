@@ -12,10 +12,13 @@ public interface Element {
     ElementType getType();
 
     void run() throws AlgorithmException;
+
     String stringify();
+
     void load(String data) throws BlockParserException;
 
     void registerCallback(ElementCallback callback);
+
     void unregisterCallback(ElementCallback callback);
 
     String getId();

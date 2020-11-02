@@ -38,15 +38,15 @@ public class ConnectionCommands {
     /**
      * Adds a connection to the model.
      *
-     * @param model the {@link GModel} to which the connection should be added
+     * @param model  the {@link GModel} to which the connection should be added
      * @param source the source {@link GConnector} of the new connection
      * @param target the target {@link GConnector} of the new connection
-     * @param type the type attribute for the new connection
+     * @param type   the type attribute for the new connection
      * @param joints the list of {@link GJoint} instances to be added inside the new connection
      * @return the newly-executed {@link CompoundCommand} that added the connection
      */
     public static CompoundCommand addConnection(final GModel model, final GConnector source, final GConnector target,
-            final String type, final List<GJoint> joints) {
+                                                final String type, final List<GJoint> joints) {
 
         final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(model);
 
@@ -83,7 +83,7 @@ public class ConnectionCommands {
     /**
      * Removes a connection from the model.
      *
-     * @param model the {@link GModel} from which the connection should be removed
+     * @param model      the {@link GModel} from which the connection should be removed
      * @param connection the {@link GConnection} to be removed
      * @return the newly-executed {@link CompoundCommand} that removed the connection
      */

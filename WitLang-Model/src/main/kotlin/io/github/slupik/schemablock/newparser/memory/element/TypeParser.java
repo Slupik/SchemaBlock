@@ -7,7 +7,7 @@ class TypeParser<V> {
 
     private final V val;
 
-    TypeParser(V val){
+    TypeParser(V val) {
         this.val = val;
     }
 

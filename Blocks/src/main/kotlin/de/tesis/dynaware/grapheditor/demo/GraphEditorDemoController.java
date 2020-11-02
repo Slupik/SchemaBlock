@@ -43,7 +43,9 @@ import java.util.Map;
 public class GraphEditorDemoController {
 
     private static final String STYLE_CLASS_TITLED_SKINS = "titled-skins";
-
+    private final GraphEditor graphEditor = new DefaultGraphEditor();
+    private final GraphEditorPersistence graphEditorPersistence = new GraphEditorPersistence();
+    private final ObjectProperty<SkinController> activeSkinController = new SimpleObjectProperty<>();
     @FXML
     private AnchorPane root;
     @FXML
@@ -92,18 +94,11 @@ public class GraphEditorDemoController {
     private ToggleButton minimapButton;
     @FXML
     private GraphEditorContainer graphEditorContainer;
-
-    private final GraphEditor graphEditor = new DefaultGraphEditor();
-    private final GraphEditorPersistence graphEditorPersistence = new GraphEditorPersistence();
-
     private Scale scaleTransform;
     private double currentZoomFactor = 1;
-
     private DefaultSkinController defaultSkinController;
     private TreeSkinController treeSkinController;
     private TitledSkinController titledSkinController;
-
-    private final ObjectProperty<SkinController> activeSkinController = new SimpleObjectProperty<>();
 
     /**
      * Called by JavaFX when FXML is loaded.

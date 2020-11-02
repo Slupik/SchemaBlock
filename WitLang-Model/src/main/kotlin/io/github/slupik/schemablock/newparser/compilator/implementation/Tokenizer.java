@@ -31,11 +31,11 @@ class Tokenizer {
         boolean textMode = false;
         boolean commentMode = false;
         boolean permanentCommentMode = false;
-        for(int i=0;i<code.length();i++) {
+        for (int i = 0; i < code.length(); i++) {
             char token = code.charAt(i);
 
             //Pointer (cursor)
-            if(token=='\n') {
+            if (token == '\n') {
                 line++;
                 linePos = 0;
                 commentMode = false;
@@ -44,14 +44,14 @@ class Tokenizer {
             }
 
             //Whitespace
-            if(!textMode && TextUtils.isWhitespace(token)) {
+            if (!textMode && TextUtils.isWhitespace(token)) {
                 addNewToken(word);
                 continue;
             }
 
             //Comments
-            if((commentMode || permanentCommentMode)) {
-                if((i+1)<code.length() && !textMode && token == '*' && code.charAt(i+1)=='/') {
+            if ((commentMode || permanentCommentMode)) {
+                if ((i + 1) < code.length() && !textMode && token == '*' && code.charAt(i + 1) == '/') {
                     permanentCommentMode = false;
                     i++;
                 }
@@ -59,14 +59,14 @@ class Tokenizer {
             }
 
             //Text
-            if(textMode) {
-                if(token=='\"') {
+            if (textMode) {
+                if (token == '\"') {
                     word.append(token);
                     addNewToken(word);
                     textMode = false;
                     continue;
                 }
-                if(token=='\\' && (i+1)<code.length()) {
+                if (token == '\\' && (i + 1) < code.length()) {
                     char nextToken = code.charAt(++i);
                     switch (nextToken) {
                         case 't': {
@@ -115,7 +115,7 @@ class Tokenizer {
                 }
                 continue;
             }
-            if(token=='\"'){
+            if (token == '\"') {
                 addNewToken(word);
                 word.append(token);
                 textMode = true;
@@ -123,13 +123,13 @@ class Tokenizer {
             }
 
             //Comments
-            if(token == '/' && (i+1)<code.length() && code.charAt(i+1)=='/') {
+            if (token == '/' && (i + 1) < code.length() && code.charAt(i + 1) == '/') {
                 i++;
                 addNewToken(word);
                 commentMode = true;
                 continue;
             }
-            if(token == '/' && (i+1)<code.length() && code.charAt(i+1)=='*') {
+            if (token == '/' && (i + 1) < code.length() && code.charAt(i + 1) == '*') {
                 i++;
                 addNewToken(word);
                 permanentCommentMode = true;
@@ -137,19 +137,19 @@ class Tokenizer {
             }
 
             //Functional signs
-            if(CodeUtils.isFunctionalSign(token)) {
+            if (CodeUtils.isFunctionalSign(token)) {
                 addNewToken(word);//Flush last word
                 word.append(token);
-                if(CodeUtils.isSignOfAction(token)) {
+                if (CodeUtils.isSignOfAction(token)) {
                     i++;
                     linePos++;
-                    for(;i<code.length() && CodeUtils.isSignOfAction(code.charAt(i));i++) {
+                    for (; i < code.length() && CodeUtils.isSignOfAction(code.charAt(i)); i++) {
                         word.append(code.charAt(i));
-                        if(!new CodeOperations().containsKey(word.toString())) {
+                        if (!new CodeOperations().containsKey(word.toString())) {
                             linePos--;
 
                             //Split to 2 known words
-                            word.deleteCharAt(word.length()-1);
+                            word.deleteCharAt(word.length() - 1);
                             addNewToken(word);
 
                             word.append(code.charAt(i));
@@ -172,11 +172,11 @@ class Tokenizer {
     }
 
     private void addNewToken(StringBuilder builder) {
-        if(builder.length()>0) {
+        if (builder.length() > 0) {
 
             int posOfToken = linePos;
             posOfToken--;//escape ending char position
-            posOfToken-=builder.length();//return to start of lexeme
+            posOfToken -= builder.length();//return to start of lexeme
 
             tokens.add(new Token(builder.toString(), line, posOfToken));
             builder.delete(0, builder.length());

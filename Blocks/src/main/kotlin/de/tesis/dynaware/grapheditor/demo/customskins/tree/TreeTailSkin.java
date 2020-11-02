@@ -62,9 +62,9 @@ public class TreeTailSkin extends GTailSkin {
 
     /**
      * Draws an arrow from the start to end point.
-     * 
+     *
      * @param start the start point of the arrow
-     * @param end the end point (tip) of the arrow
+     * @param end   the end point (tip) of the arrow
      */
     private void drawArrow(final Point2D start, final Point2D end) {
 
