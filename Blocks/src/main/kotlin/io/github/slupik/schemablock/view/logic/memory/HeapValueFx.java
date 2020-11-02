@@ -77,8 +77,17 @@ public class HeapValueFx extends RecursiveTreeObject<HeapValueFx> implements Var
         if (source.getType() == null) {
             type.setValue("???");
         } else {
-            type.setValue(String.valueOf(source.getType()));
+            String arrayPart = getArrayPart(source.getDimensionsCount());
+            type.setValue(source.getType().name().toLowerCase() + arrayPart);
         }
+    }
+
+    private String getArrayPart(int dimensionsCount) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < dimensionsCount; i++) {
+            builder.append("[]");
+        }
+        return builder.toString();
     }
 
     private String getAsString(Value value) {
