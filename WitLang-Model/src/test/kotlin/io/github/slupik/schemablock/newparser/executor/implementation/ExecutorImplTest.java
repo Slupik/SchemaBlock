@@ -68,6 +68,12 @@ class ExecutorImplTest {
                 "double a = b[1][0];", 2);
         check("double[][] b = {{1, 4}, {3, 2}};" +
                 "double a = b[1][1];", 2);
+        check("double[][] b = new double[8][9];" +
+                "b[0][0] = 5;" +
+                "double a = b[0][0];", 5);
+        check("double[8][9] b;" +
+                "b[0][0] = 5;" +
+                "double a = b[0][0];", 5);
 
         check("double a = 0;" +
                 "a = sqrt(4);",2.0);
@@ -134,13 +140,14 @@ class ExecutorImplTest {
 
     @Test
     void handRepair() throws Throwable {
-//        exe.execute("double[] b = {1, 2};");
+//        exe.execute("");
 //
 //
 //
-//        Value value = memory.get("b").getContent();
+//        Value value = memory.get("a").getContent();
 //        Assertions.assertTrue(value.isArray());
 //        Array array = ((Array) value);
+//        Assertions.assertEquals(2, array.getDimensionsCount());
 //        Assertions.assertEquals(1, ((int) ((SimpleValue) array.getElement(new int[]{0})).getCastedValue()));
 //
 //

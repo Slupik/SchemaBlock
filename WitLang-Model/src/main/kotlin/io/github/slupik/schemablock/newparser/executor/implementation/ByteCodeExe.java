@@ -57,6 +57,7 @@ class ByteCodeExe {
                                     indexes[args.length - 1 - i] = ((SimpleValue) arg).getCastedValue();
                                 } else {
                                     System.err.println("BCE exe heap_1");
+                                    System.err.println("Here should be an error");
                                     //TODO error
                                 }
                             }
@@ -64,6 +65,7 @@ class ByteCodeExe {
 
                         register.add(array.getCell(indexes));
                     } else {
+                        System.err.println("Here should be an error");
                         //TODO error
                     }
                 } else {
@@ -103,6 +105,7 @@ class ByteCodeExe {
                 for (int i = 0; i < argsCount; i++) {
                     Value val = pollValue(register);
                     if (val.isArray()) {
+                        System.err.println("Here should be an error");
                         //TODO throw error
                     } else {
                         args[argsCount - 1 - i] = ((SimpleValue) val);
@@ -216,13 +219,14 @@ class ByteCodeExe {
                             indexes[i] = ((SimpleValue) value).getCastedValue();
                         } else {
                             System.err.println("Heap_array_1");
+                            System.err.println("Here should be an error");
                             //TODO throw error
                         }
                     }
 
                     List<Array> arrays = new ArrayList<>();
                     for (int index : indexes) {
-                        int dimensions = bc.getElementsCount() + 1 - indexes.length;
+                        int dimensions = bc.getElementsCount();
                         if (arrays.isEmpty()) {
                             Array array = new ArrayImpl(bc.getType(), dimensions, index);
                             register.add(array);
@@ -252,6 +256,7 @@ class ByteCodeExe {
                             array.setValue(new int[]{i}, (SimpleValue) values[values.length - 1 - i]);
                         } else {
                             System.err.println("Heap_array_2");
+                            System.err.println("Here should be an error");
                             //TODO throw error
                         }
                     }
@@ -313,6 +318,7 @@ class ByteCodeExe {
         } else if (memoried instanceof Array) {
             value = ((Array) memoried);
         } else {
+            System.err.println("Here should be an error");
             //TODO throw error
         }
         return value;
