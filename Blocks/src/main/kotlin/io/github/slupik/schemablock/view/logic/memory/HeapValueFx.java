@@ -74,10 +74,10 @@ public class HeapValueFx extends RecursiveTreeObject<HeapValueFx> implements Var
     }
 
     private void updateType() {
-        if (source.getContent() == null) {
+        if (source.getType() == null) {
             type.setValue("???");
         } else {
-            type.setValue(String.valueOf(source.getContent().getType()));
+            type.setValue(String.valueOf(source.getType()));
         }
     }
 
