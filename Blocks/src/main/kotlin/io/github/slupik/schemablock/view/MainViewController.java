@@ -24,6 +24,7 @@ import io.github.slupik.schemablock.view.logic.execution.dagger.ExecutionElement
 import io.github.slupik.schemablock.view.logic.execution.dagger.HeapControllerCallbackModule;
 import io.github.slupik.schemablock.view.logic.execution.diagram.DiagramExecutor;
 import io.github.slupik.schemablock.view.logic.execution.diagram.ExecutionEvent;
+import io.github.slupik.schemablock.view.logic.execution.diagram.PostExecutionEvent;
 import io.github.slupik.schemablock.view.logic.execution.diagram.exception.NextBlockNotFound;
 import io.github.slupik.schemablock.view.logic.marker.BlockExecutionStateMarker;
 import io.github.slupik.schemablock.view.logic.memory.HeapValueFx;
@@ -156,7 +157,7 @@ public class MainViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        output = new UIIOCommunicator(tfInput, outputView, btnEnter);
+        output = new UIIOCommunicator(tfInput, outputView, btnEnter, (message) -> {memory.refresh();});
         DaggerViewComponent.builder()
                 .addViewElementsModule(new ViewElementsModule(graphEditorContainer))
                 .addViewElementsModule(new DiagramExecutorElementsModule(null))
@@ -407,6 +408,9 @@ public class MainViewController implements Initializable {
         stateMarker.handleObservable(observable);
         Disposable disp = observable.subscribe(
                 executionEvent -> {
+                    if (executionEvent instanceof PostExecutionEvent) {
+                        memory.refresh();
+                    }
                     System.out.println("executionEvent = " + executionEvent);
                 },
                 throwable -> {

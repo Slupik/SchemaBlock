@@ -27,6 +27,10 @@ public class HeapValueFx extends RecursiveTreeObject<HeapValueFx> implements Var
         updateType();
     }
 
+    public void refresh() {
+        updateValue();
+    }
+
     private void updateValue() {
         value.setValue(getAsString(source.getContent()));
     }

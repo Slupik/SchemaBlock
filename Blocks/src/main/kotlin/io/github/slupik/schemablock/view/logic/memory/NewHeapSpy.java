@@ -36,6 +36,10 @@ public class NewHeapSpy implements HeapController, Memory {
         return list;
     }
 
+    public void refresh() {
+        list.forEach(HeapValueFx::refresh);
+    }
+
     @Override
     public void setVariableValue(String name, Value value) throws AlgorithmException {
         Variable variable = memory.get(name);
