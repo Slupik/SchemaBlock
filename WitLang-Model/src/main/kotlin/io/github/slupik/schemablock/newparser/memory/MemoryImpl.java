@@ -15,9 +15,11 @@ import java.util.HashMap;
 public class MemoryImpl implements Memory {
 
     private final HashMap<String, Variable> data = new HashMap<>();
+    private final IndexesExtractor indexesExtractor;
 
     @Inject
-    public MemoryImpl() {
+    public MemoryImpl(IndexesExtractor indexesExtractor) {
+        this.indexesExtractor = indexesExtractor;
     }
 
     @Override
@@ -25,11 +27,14 @@ public class MemoryImpl implements Memory {
         if (data.containsKey(variable.getName())) {
             throw new VariableAlreadyDefined(variable.getName());
         }
+        System.out.println("variable.getName() = " + variable.getName());
         data.put(variable.getName(), variable);
     }
 
     @Override
-    public Variable get(String name) throws VariableNotFound {
+    public Variable get(String name) throws AlgorithmException {
+        int[] indexes = indexesExtractor.extractIndexes(name);
+        String core = indexesExtractor.extractName(name);
         if (data.containsKey(name)) {
             return data.get(name);
         } else {

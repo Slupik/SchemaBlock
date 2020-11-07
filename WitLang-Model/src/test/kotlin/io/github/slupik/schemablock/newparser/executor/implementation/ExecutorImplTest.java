@@ -3,10 +3,7 @@ package io.github.slupik.schemablock.newparser.executor.implementation;
 import io.github.slupik.schemablock.newparser.compilator.Compilator;
 import io.github.slupik.schemablock.newparser.compilator.implementation.DefaultCompilator;
 import io.github.slupik.schemablock.newparser.executor.Executor;
-import io.github.slupik.schemablock.newparser.memory.Memory;
-import io.github.slupik.schemablock.newparser.memory.MemoryImpl;
-import io.github.slupik.schemablock.newparser.memory.Register;
-import io.github.slupik.schemablock.newparser.memory.RegisterImpl;
+import io.github.slupik.schemablock.newparser.memory.*;
 import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
 import io.github.slupik.schemablock.newparser.memory.element.Value;
 import org.junit.jupiter.api.Assertions;
@@ -26,7 +23,7 @@ class ExecutorImplTest {
     @BeforeEach
     void setup() {
         compilator = new DefaultCompilator();
-        memory = new MemoryImpl();
+        memory = new MemoryImpl(new TokenizingIndexesExtractor(exe));
         register = new RegisterImpl();
         exe = new ExecutorImpl(compilator, memory, register);
     }
