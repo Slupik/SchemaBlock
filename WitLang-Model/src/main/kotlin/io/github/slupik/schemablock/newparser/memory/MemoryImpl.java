@@ -15,12 +15,9 @@ import java.util.HashMap;
 public class MemoryImpl implements Memory {
 
     private final HashMap<String, Variable> data = new HashMap<>();
-    private final IndexesExtractor indexesExtractor;
 
     @Inject
-    public MemoryImpl(IndexesExtractor indexesExtractor) {
-        this.indexesExtractor = indexesExtractor;
-    }
+    public MemoryImpl() {}
 
     @Override
     public void register(Variable variable) throws AlgorithmException {
@@ -33,8 +30,6 @@ public class MemoryImpl implements Memory {
 
     @Override
     public Variable get(String name) throws AlgorithmException {
-        int[] indexes = indexesExtractor.extractIndexes(name);
-        String core = indexesExtractor.extractName(name);
         if (data.containsKey(name)) {
             return data.get(name);
         } else {

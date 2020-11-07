@@ -32,4 +32,24 @@ class ArrayImplTest {
         parentArray.setValue(new int[]{5, 2}, new SimpleValueImpl(ValueType.INTEGER, 85));
         assertEquals(85, ((SimpleValue) parentArray.getElement(new int[]{5, 2})).getValue());
     }
+
+    @Test
+    void checkSettingInternalValueInOneDim() throws AlgorithmException {
+        ArrayImpl array = new ArrayImpl(ValueType.INTEGER, 1, 10);
+
+        array.setValue(new int[]{5}, new SimpleValueImpl(ValueType.INTEGER, 99));
+        assertEquals(99, ((SimpleValue) array.getElement(new int[]{5})).getValue());
+    }
+
+    @Test
+    void checkSettingInternalValueInMultiDim() throws AlgorithmException {
+        final int arraySize = 10;
+        ArrayImpl array = new ArrayImpl(ValueType.INTEGER, 2, arraySize);
+        for (int i = 0; i < arraySize; i++) {
+            array.setValue(new int[]{i}, new ArrayImpl(ValueType.INTEGER, 1, arraySize));
+        }
+
+        array.setValue(new int[]{5, 6}, new SimpleValueImpl(ValueType.INTEGER, 99));
+        assertEquals(99, ((Integer) ((SimpleValue) array.getCell(new int[]{5, 6}).getValue()).getCastedValue()));
+    }
 }

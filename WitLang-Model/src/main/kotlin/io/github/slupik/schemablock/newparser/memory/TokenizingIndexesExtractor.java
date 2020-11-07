@@ -1,8 +1,8 @@
 package io.github.slupik.schemablock.newparser.memory;
 
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
-import io.github.slupik.schemablock.newparser.executor.Executor;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +22,8 @@ public class TokenizingIndexesExtractor implements IndexesExtractor {
     private static final char INDEX_OPEN_CHAR = '[';
     private static final char INDEX_CLOSE_CHAR = ']';
 
-    private final Executor executor;
-
-    public TokenizingIndexesExtractor(Executor executor) {
-        this.executor = executor;
+    @Inject
+    public TokenizingIndexesExtractor() {
     }
 
     @Override
@@ -38,41 +36,43 @@ public class TokenizingIndexesExtractor implements IndexesExtractor {
     }
 
     @Override
-    public int[] extractIndexes(String fullName) throws AlgorithmException {
-        List<Integer> indexes = new ArrayList<>();
-        String indexesPart = fullName.substring(fullName.indexOf(INDEX_OPEN_CHAR, fullName.length()));
+    public String[] extractIndexes(String fullName) throws AlgorithmException {
+        final int startOfIndexesPart = fullName.indexOf(INDEX_OPEN_CHAR);
+        if (fullName.length() == 0 || startOfIndexesPart < 0) {
+            return new String[0];
+        }
+        List<String> indexes = new ArrayList<>();
+        String indexesPart = fullName.substring(startOfIndexesPart);
         int nestLevel = 0;
         StringBuilder singleIndex = new StringBuilder();
         for (int i = 0; i < indexesPart.length(); i++) {
             char currentChar = indexesPart.charAt(i);
+            int currentPositionInLine = startOfIndexesPart + i;
             if (INDEX_OPEN_CHAR == currentChar) {
                 nestLevel++;
                 if (nestLevel == 1) {
-                    singleIndex = new StringBuilder();
+                    if (singleIndex.length() > 0) {
+                        throw new ExceptedEndOfIndex(0, currentPositionInLine);
+                    }
                 } else {
                     singleIndex.append(currentChar);
                 }
             } else if (INDEX_CLOSE_CHAR == currentChar) {
                 nestLevel--;
                 if (nestLevel == 0) {
-                    indexes.add(calculate(singleIndex.toString()));
+                    indexes.add(singleIndex.toString());
+                    singleIndex = new StringBuilder();
                 } else {
                     singleIndex.append(currentChar);
                 }
             } else {
                 if (nestLevel < 1) {
-                    int currentPositionInLine = fullName.indexOf(INDEX_OPEN_CHAR) + i;
                     throw new UnexpectedCharBetweenIndexes(0, currentPositionInLine, currentChar);
                 }
                 singleIndex.append(currentChar);
             }
         }
-        return indexes.stream().mapToInt(i -> i).toArray();
-    }
-
-    private Integer calculate(String singleIndex) throws AlgorithmException {
-        System.out.println("singleIndex = " + singleIndex);
-        return executor.getResult(singleIndex).getCastedValue();
+        return indexes.toArray(new String[0]);
     }
 
 }

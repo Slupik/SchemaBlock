@@ -33,27 +33,12 @@ public class ArrayImpl implements Array {
     @Override
     public void setValue(int[] indexes, SimpleValue value) throws AlgorithmException {
         if (ValueType.isCompatible(TYPE, value.getType())) {
-            if (indexes.length > 1) {
-                getArray(
-                        Arrays.copyOfRange(indexes, 0, indexes.length - 1)
-                ).setValue(
-                        new int[]{indexes[indexes.length - 1]},
-                        value
-                );
+            ArrayCell cell = getCell(indexes);
+            Value cellValue = cell.getValue();
+            if (cellValue == null || cellValue instanceof SimpleValue) {
+                cell.setValue(value);
             } else {
-                if (indexes.length == 1) {
-                    if (DIMENSIONS == 1) {
-                        if (VALUES.length > indexes[0]) {
-                            VALUES[indexes[0]].setValue(value);
-                        } else {
-                            throw new IndexOutOfBoundsException(VALUES.length, indexes[0]);
-                        }
-                    } else {
-                        throw new IncompatibleArrayException(0, indexes.length);
-                    }
-                } else {
-                    throw new IncompatibleArrayException(indexes.length, 1);
-                }
+                throw new IncompatibleArrayException(0, ((Array) cellValue).getDimensionsCount());
             }
         } else {
             throw new IncompatibleTypeException(TYPE, value.getType());

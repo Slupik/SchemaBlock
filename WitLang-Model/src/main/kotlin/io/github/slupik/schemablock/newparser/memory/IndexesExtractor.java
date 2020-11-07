@@ -8,6 +8,6 @@ import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 public interface IndexesExtractor {
 
     String extractName(String fullName);
-    int[] extractIndexes(String fullName) throws AlgorithmException;
+    String[] extractIndexes(String fullName) throws AlgorithmException;
 
 }

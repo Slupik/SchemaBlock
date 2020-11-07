@@ -3,10 +3,9 @@ package io.github.slupik.schemablock.view.logic.memory;
 import io.github.slupik.schemablock.execution.VariableNotFound;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.newparser.HeapController;
+import io.github.slupik.schemablock.newparser.memory.IndexesExtractor;
 import io.github.slupik.schemablock.newparser.memory.Memory;
-import io.github.slupik.schemablock.newparser.memory.element.Value;
-import io.github.slupik.schemablock.newparser.memory.element.ValueType;
-import io.github.slupik.schemablock.newparser.memory.element.Variable;
+import io.github.slupik.schemablock.newparser.memory.element.*;
 import io.github.slupik.schemablock.view.logic.execution.dagger.AtomicMemory;
 import io.github.slupik.schemablock.view.logic.execution.dagger.HeapSpy;
 import javafx.collections.FXCollections;
@@ -25,11 +24,15 @@ public class NewHeapSpy implements HeapController, Memory {
     private final ObservableList<HeapValueFx> list = FXCollections.observableList(new ArrayList<>());
     private final Memory memory;
     private final Runnable callbackAfterItemChange;
+    private final IndexesExtractor indexesExtractor;
 
     @Inject
-    public NewHeapSpy(@AtomicMemory Memory memory, @HeapSpy Runnable callbackAfterItemChange) {
+    public NewHeapSpy(@AtomicMemory Memory memory,
+                      @HeapSpy Runnable callbackAfterItemChange,
+                      IndexesExtractor indexesExtractor) {
         this.memory = memory;
         this.callbackAfterItemChange = callbackAfterItemChange;
+        this.indexesExtractor = indexesExtractor;
     }
 
     public ObservableList<HeapValueFx> getVariableList() {
@@ -41,18 +44,29 @@ public class NewHeapSpy implements HeapController, Memory {
     }
 
     @Override
-    public void setVariableValue(String name, Value value) throws AlgorithmException {
-        Variable variable = memory.get(name);
+    public void setVariableValue(String name, int[] indexes, Value value) throws AlgorithmException {
+        Variable variable = get(name);
         if (variable == null) {
             throw new VariableNotFound(name);
-        } else {
+        }
+
+        if (indexes.length == 0) {
             variable.setContent(value);
+        } else {
+            Value content = variable.getContent();
+            if (content instanceof Array) {
+                if (value instanceof SimpleValue) {
+                    ((Array) content).setValue(indexes, ((SimpleValue) value));
+                } else {
+                    ((Array) content).setValue(indexes, ((Array) value));
+                }
+            }
         }
     }
 
     @Override
-    public ValueType getVariableType(String name) throws VariableNotFound {
-        Variable variable = memory.get(name);
+    public ValueType getVariableType(String name) throws AlgorithmException {
+        Variable variable = get(name);
         if (variable == null) {
             throw new VariableNotFound(name);
         } else {
@@ -68,8 +82,9 @@ public class NewHeapSpy implements HeapController, Memory {
     }
 
     @Override
-    public Variable get(String name) throws VariableNotFound {
-        return memory.get(name);
+    public Variable get(String name) throws AlgorithmException {
+        String core = indexesExtractor.extractName(name);
+        return memory.get(core);
     }
 
     @Override

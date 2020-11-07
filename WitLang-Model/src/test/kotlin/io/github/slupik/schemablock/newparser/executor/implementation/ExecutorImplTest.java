@@ -23,7 +23,7 @@ class ExecutorImplTest {
     @BeforeEach
     void setup() {
         compilator = new DefaultCompilator();
-        memory = new MemoryImpl(new TokenizingIndexesExtractor(exe));
+        memory = new MemoryImpl();
         register = new RegisterImpl();
         exe = new ExecutorImpl(compilator, memory, register);
     }
