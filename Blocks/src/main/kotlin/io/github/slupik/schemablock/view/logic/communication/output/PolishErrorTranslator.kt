@@ -22,11 +22,13 @@ import io.github.slupik.schemablock.view.logic.execution.diagram.exception.Diagr
 import io.github.slupik.schemablock.view.logic.execution.diagram.exception.NextBlockNotFound
 import io.github.slupik.schemablock.view.logic.execution.diagram.exception.StartBlockNotFound
 import java.util.stream.Collectors
+import javax.inject.Inject
 
 /**
  * All rights reserved & copyright ©
  */
-class PolishErrorTranslator : ErrorTranslator {
+class PolishErrorTranslator @Inject constructor() : ErrorTranslator {
+
     override fun translateError(error: Throwable): String =
         when (error) {
             is DiagramException -> {
@@ -78,7 +80,7 @@ class PolishErrorTranslator : ErrorTranslator {
         }
 
     private fun handleCompilationError(error: CompilationException): String {
-        val TAG = "[Błąd przetwarzania][${error.line}, ${error.position}] "
+        val TAG = "[linia: ${error.line}, pozycja: ${error.position}] [Błąd kodu]: "
         return TAG + when (error) {
             is MissingSemicolon -> {
                 "Prawdopodobnie brakuje średnika w tym miejscu."
