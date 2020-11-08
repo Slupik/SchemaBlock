@@ -23,18 +23,14 @@ public class UIIOCommunicator implements IOCommunicable {
 
     private String text = null;
 
-    public UIIOCommunicator(TextField input, WebView output, Button btnSend, MessageSendListener onRefresh) {
+    public UIIOCommunicator(TextField input, WebView output, Button btnSend) {
         this.input = input;
         this.output = output;
 
         btnSend.setOnAction(event -> flushInputControl());
         input.setOnKeyReleased(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                String message = input.getText();
                 flushInputControl();
-                if (onRefresh != null) {
-                    onRefresh.onSend(message);
-                }
             }
         });
     }

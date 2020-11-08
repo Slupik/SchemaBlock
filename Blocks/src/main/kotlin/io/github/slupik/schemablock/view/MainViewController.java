@@ -151,13 +151,14 @@ public class MainViewController implements Initializable {
     private JFXTreeTableColumn<HeapValueFx, String> tcVarName;
     @FXML
     private JFXTreeTableColumn<HeapValueFx, String> tcVarValue;
-    private CompositeDisposable composite = new CompositeDisposable();
+
+    private final CompositeDisposable composite = new CompositeDisposable();
     private Disposable continuationDispose = null;
     private UIIOCommunicator output;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        output = new UIIOCommunicator(tfInput, outputView, btnEnter, (message) -> {memory.refresh();});
+        output = new UIIOCommunicator(tfInput, outputView, btnEnter);
         DaggerViewComponent.builder()
                 .addViewElementsModule(new ViewElementsModule(graphEditorContainer))
                 .addViewElementsModule(new DiagramExecutorElementsModule(null))

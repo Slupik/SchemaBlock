@@ -62,6 +62,8 @@ public class NewHeapSpy implements HeapController, Memory {
                 }
             }
         }
+
+        refresh();
     }
 
     @Override
