@@ -25,76 +25,76 @@ class BitwiseOperationExecutor extends OperationExecutor {
                 byte parsedA = nA.byteValue();
                 if (b.getType() == BYTE) {
                     byte parsedB = nB.byteValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
                 if (b.getType() == SHORT) {
                     short parsedB = nB.shortValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
                 if (b.getType() == INTEGER) {
                     int parsedB = nB.intValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
                 if (b.getType() == LONG) {
                     long parsedB = nB.longValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
             }
             if (a.getType() == SHORT) {
                 short parsedA = nA.shortValue();
                 if (b.getType() == BYTE) {
                     byte parsedB = nB.byteValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
                 if (b.getType() == SHORT) {
                     short parsedB = nB.shortValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
                 if (b.getType() == INTEGER) {
                     int parsedB = nB.intValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
                 if (b.getType() == LONG) {
                     long parsedB = nB.longValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
             }
             if (a.getType() == INTEGER) {
                 int parsedA = nA.intValue();
                 if (b.getType() == BYTE) {
                     byte parsedB = nB.byteValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
                 if (b.getType() == SHORT) {
                     short parsedB = nB.shortValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
                 if (b.getType() == INTEGER) {
                     int parsedB = nB.intValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
                 if (b.getType() == LONG) {
                     long parsedB = nB.longValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
             }
             if (a.getType() == LONG) {
                 long parsedA = nA.longValue();
                 if (b.getType() == BYTE) {
                     byte parsedB = nB.byteValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
                 if (b.getType() == SHORT) {
                     short parsedB = nB.shortValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
                 if (b.getType() == INTEGER) {
                     int parsedB = nB.intValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
                 if (b.getType() == LONG) {
                     long parsedB = nB.longValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB)), parsedA << parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA << parsedB), commandOperation), parsedA << parsedB);
                 }
             }
         }
@@ -112,76 +112,76 @@ class BitwiseOperationExecutor extends OperationExecutor {
                 byte parsedA = nA.byteValue();
                 if (b.getType() == BYTE) {
                     byte parsedB = nB.byteValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
                 if (b.getType() == SHORT) {
                     short parsedB = nB.shortValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
                 if (b.getType() == INTEGER) {
                     int parsedB = nB.intValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
                 if (b.getType() == LONG) {
                     long parsedB = nB.longValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
             }
             if (a.getType() == SHORT) {
                 short parsedA = nA.shortValue();
                 if (b.getType() == BYTE) {
                     byte parsedB = nB.byteValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
                 if (b.getType() == SHORT) {
                     short parsedB = nB.shortValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
                 if (b.getType() == INTEGER) {
                     int parsedB = nB.intValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
                 if (b.getType() == LONG) {
                     long parsedB = nB.longValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
             }
             if (a.getType() == INTEGER) {
                 int parsedA = nA.intValue();
                 if (b.getType() == BYTE) {
                     byte parsedB = nB.byteValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
                 if (b.getType() == SHORT) {
                     short parsedB = nB.shortValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
                 if (b.getType() == INTEGER) {
                     int parsedB = nB.intValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
                 if (b.getType() == LONG) {
                     long parsedB = nB.longValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
             }
             if (a.getType() == LONG) {
                 long parsedA = nA.longValue();
                 if (b.getType() == BYTE) {
                     byte parsedB = nB.byteValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
                 if (b.getType() == SHORT) {
                     short parsedB = nB.shortValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
                 if (b.getType() == INTEGER) {
                     int parsedB = nB.intValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
                 if (b.getType() == LONG) {
                     long parsedB = nB.longValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB)), parsedA >> parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA >> parsedB), commandOperation), parsedA >> parsedB);
                 }
             }
         }
@@ -214,76 +214,76 @@ class BitwiseOperationExecutor extends OperationExecutor {
                 byte parsedA = nA.byteValue();
                 if (b.getType() == BYTE) {
                     byte parsedB = nB.byteValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
                 if (b.getType() == SHORT) {
                     short parsedB = nB.shortValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
                 if (b.getType() == INTEGER) {
                     int parsedB = nB.intValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
                 if (b.getType() == LONG) {
                     long parsedB = nB.longValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
             }
             if (a.getType() == SHORT) {
                 short parsedA = nA.shortValue();
                 if (b.getType() == BYTE) {
                     byte parsedB = nB.byteValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
                 if (b.getType() == SHORT) {
                     short parsedB = nB.shortValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
                 if (b.getType() == INTEGER) {
                     int parsedB = nB.intValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
                 if (b.getType() == LONG) {
                     long parsedB = nB.longValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
             }
             if (a.getType() == INTEGER) {
                 int parsedA = nA.intValue();
                 if (b.getType() == BYTE) {
                     byte parsedB = nB.byteValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
                 if (b.getType() == SHORT) {
                     short parsedB = nB.shortValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
                 if (b.getType() == INTEGER) {
                     int parsedB = nB.intValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
                 if (b.getType() == LONG) {
                     long parsedB = nB.longValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
             }
             if (a.getType() == LONG) {
                 long parsedA = nA.longValue();
                 if (b.getType() == BYTE) {
                     byte parsedB = nB.byteValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
                 if (b.getType() == SHORT) {
                     short parsedB = nB.shortValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
                 if (b.getType() == INTEGER) {
                     int parsedB = nB.intValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
                 if (b.getType() == LONG) {
                     long parsedB = nB.longValue();
-                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB)), parsedA ^ parsedB);
+                    return new SimpleValueImpl(TypeParser.getType(String.valueOf(parsedA ^ parsedB), commandOperation), parsedA ^ parsedB);
                 }
             }
         }
