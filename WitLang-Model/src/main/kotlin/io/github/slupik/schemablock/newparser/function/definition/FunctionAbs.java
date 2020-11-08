@@ -28,7 +28,7 @@ public class FunctionAbs implements Function {
     }
 
     @Override
-    public Value execute(List<Value> args) {
+    public Value execute(List<Value> args, int line, int position) {
         SimpleValue arg = ((SimpleValue) args.get(0));
         switch (arg.getType()) {
             case SHORT: {

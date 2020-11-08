@@ -19,10 +19,12 @@ import io.github.slupik.schemablock.view.dagger.DaggerViewComponent;
 import io.github.slupik.schemablock.view.dagger.ViewElementsModule;
 import io.github.slupik.schemablock.view.entity.Diagram;
 import io.github.slupik.schemablock.view.logic.communication.UIIOCommunicator;
+import io.github.slupik.schemablock.view.logic.communication.output.ErrorTranslator;
 import io.github.slupik.schemablock.view.logic.execution.dagger.DiagramExecutorElementsModule;
 import io.github.slupik.schemablock.view.logic.execution.dagger.ExecutionElementsModule;
 import io.github.slupik.schemablock.view.logic.execution.dagger.HeapControllerCallbackModule;
 import io.github.slupik.schemablock.view.logic.execution.diagram.DiagramExecutor;
+import io.github.slupik.schemablock.view.logic.execution.diagram.ErrorEvent;
 import io.github.slupik.schemablock.view.logic.execution.diagram.ExecutionEvent;
 import io.github.slupik.schemablock.view.logic.execution.diagram.PostExecutionEvent;
 import io.github.slupik.schemablock.view.logic.execution.diagram.exception.NextBlockNotFound;
@@ -64,7 +66,6 @@ import java.util.ResourceBundle;
  */
 public class MainViewController implements Initializable {
 
-    private final ObjectProperty<SkinController> activeSkinController = new SimpleObjectProperty<>();
     @Inject
     DefaultSkinController defaultSkinController;
     @Inject
@@ -87,6 +88,8 @@ public class MainViewController implements Initializable {
     NewHeapSpy memory;
     @Inject
     BlockExecutionStateMarker stateMarker;
+    @Inject
+    ErrorTranslator translator;
     @FXML
     private JFXButton btnRun;
     @FXML
@@ -152,6 +155,7 @@ public class MainViewController implements Initializable {
     @FXML
     private JFXTreeTableColumn<HeapValueFx, String> tcVarValue;
 
+    private final ObjectProperty<SkinController> activeSkinController = new SimpleObjectProperty<>();
     private final CompositeDisposable composite = new CompositeDisposable();
     private Disposable continuationDispose = null;
     private UIIOCommunicator output;
@@ -411,6 +415,8 @@ public class MainViewController implements Initializable {
                 executionEvent -> {
                     if (executionEvent instanceof PostExecutionEvent) {
                         memory.refresh();
+                    } else if (executionEvent instanceof ErrorEvent) {
+                        output.printAlgorithmError(translator.translateError(((ErrorEvent) executionEvent).getError()));
                     }
                     System.out.println("executionEvent = " + executionEvent);
                 },
@@ -419,6 +425,7 @@ public class MainViewController implements Initializable {
                     if (throwable instanceof NextBlockNotFound) {
                         System.out.println("type " + ((NextBlockNotFound) throwable).getCurrentBlock());
                     }
+                    output.printProgramError(throwable.getMessage());
                     onExecutionEnd();
                 },
                 () -> {

@@ -1,7 +1,7 @@
 package io.github.slupik.schemablock.newparser.executor.implementation;
 
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
-import io.github.slupik.schemablock.model.ui.error.UnkownError;
+import io.github.slupik.schemablock.model.ui.error.UnknownError;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.*;
 import io.github.slupik.schemablock.newparser.function.Function;
 import io.github.slupik.schemablock.newparser.function.FunctionContainer;
@@ -31,7 +31,7 @@ class ByteCodeExe {
                     throw throwable;
                 } else {
                     throwable.printStackTrace();
-                    throw new UnkownError();
+                    throw new UnknownError();
                 }
             }
         }
@@ -114,95 +114,95 @@ class ByteCodeExe {
 
                 switch (bc.getSymbol()) {
                     case "+": {
-                        register.add(MathOperationExecutor.add(args[0], args[1]));
+                        register.add(MathOperationExecutor.add(args[0], args[1], bc));
                         break;
                     }
                     case "-": {
-                        register.add(MathOperationExecutor.subtract(args[0], args[1]));
+                        register.add(MathOperationExecutor.subtract(args[0], args[1], bc));
                         break;
                     }
                     case "*": {
-                        register.add(MathOperationExecutor.multiply(args[0], args[1]));
+                        register.add(MathOperationExecutor.multiply(args[0], args[1], bc));
                         break;
                     }
                     case "/": {
-                        register.add(MathOperationExecutor.divide(args[0], args[1], true));
+                        register.add(MathOperationExecutor.divide(args[0], args[1], true, bc));
                         break;
                     }
                     case "\\": {
-                        register.add(MathOperationExecutor.divide(args[0], args[1], false));
+                        register.add(MathOperationExecutor.divide(args[0], args[1], false, bc));
                         break;
                     }
                     case "%": {
-                        register.add(MathOperationExecutor.modulo(args[0], args[1]));
+                        register.add(MathOperationExecutor.modulo(args[0], args[1], bc));
                         break;
                     }
 
                     case "<<": {
-                        register.add(BitwiseOperationExecutor.leftShift(args[0], args[1]));
+                        register.add(BitwiseOperationExecutor.leftShift(args[0], args[1], bc));
                         break;
                     }
                     case ">>": {
-                        register.add(BitwiseOperationExecutor.rightShift(args[0], args[1]));
+                        register.add(BitwiseOperationExecutor.rightShift(args[0], args[1], bc));
                         break;
                     }
                     case "&": {
-                        register.add(BitwiseOperationExecutor.and(args[0], args[1]));
+                        register.add(BitwiseOperationExecutor.and(args[0], args[1], bc));
                         break;
                     }
                     case "^": {
-                        register.add(BitwiseOperationExecutor.xor(args[0], args[1]));
+                        register.add(BitwiseOperationExecutor.xor(args[0], args[1], bc));
                         break;
                     }
                     case "|": {
-                        register.add(BitwiseOperationExecutor.or(args[0], args[1]));
+                        register.add(BitwiseOperationExecutor.or(args[0], args[1], bc));
                         break;
                     }
                     case "~": {
-                        register.add(BitwiseOperationExecutor.not(args[0]));
+                        register.add(BitwiseOperationExecutor.not(args[0], bc));
                         break;
                     }
 
                     case "&&": {
-                        register.add(LogicOperationExecutor.and(args[0], args[1]));
+                        register.add(LogicOperationExecutor.and(args[0], args[1], bc));
                         break;
                     }
                     case "||": {
-                        register.add(LogicOperationExecutor.or(args[0], args[1]));
+                        register.add(LogicOperationExecutor.or(args[0], args[1], bc));
                         break;
                     }
                     case "!": {
-                        register.add(LogicOperationExecutor.not(args[0]));
+                        register.add(LogicOperationExecutor.not(args[0], bc));
                         break;
                     }
 
                     case "<=": {
-                        register.add(ComparisonOperationExecutor.smallerOrEqual(args[0], args[1]));
+                        register.add(ComparisonOperationExecutor.smallerOrEqual(args[0], args[1], bc));
                         break;
                     }
                     case ">=": {
-                        register.add(ComparisonOperationExecutor.greaterOrEqual(args[0], args[1]));
+                        register.add(ComparisonOperationExecutor.greaterOrEqual(args[0], args[1], bc));
                         break;
                     }
                     case "<": {
-                        register.add(ComparisonOperationExecutor.smaller(args[0], args[1]));
+                        register.add(ComparisonOperationExecutor.smaller(args[0], args[1], bc));
                         break;
                     }
                     case ">": {
-                        register.add(ComparisonOperationExecutor.greater(args[0], args[1]));
+                        register.add(ComparisonOperationExecutor.greater(args[0], args[1], bc));
                         break;
                     }
                     case "==": {
-                        register.add(ComparisonOperationExecutor.equal(args[0], args[1]));
+                        register.add(ComparisonOperationExecutor.equal(args[0], args[1], bc));
                         break;
                     }
                     case "!=": {
-                        register.add(ComparisonOperationExecutor.notEqual(args[0], args[1]));
+                        register.add(ComparisonOperationExecutor.notEqual(args[0], args[1], bc));
                         break;
                     }
 
                     default: {
-                        throw new UnknownOperation(bc.getSymbol());
+                        throw new UnknownOperation(bc.getSymbol(), bc.getLine(), bc.getPosition());
                     }
                 }
                 break;
@@ -273,14 +273,16 @@ class ByteCodeExe {
                 }
 
                 List<Function> matchingFunctions = functionContainer.getMatchingFunctions(bc.getName());
-                Value result = executor.execute(matchingFunctions, args);
+                Value result = executor.execute(matchingFunctions, args, bc);
                 if (result == null) {
                     throw new NoMatchingFunction(
                             bc.getName(),
                             args
                                     .stream()
                                     .map(Memoryable::getType)
-                                    .collect(Collectors.toList())
+                                    .collect(Collectors.toList()),
+                            bc.getPosition(),
+                            bc.getLine()
                     );
                 }
 

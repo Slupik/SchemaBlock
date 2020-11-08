@@ -25,7 +25,7 @@ public class FunctionPrintln implements Function {
     }
 
     @Override
-    public Value execute(List<Value> args) {
+    public Value execute(List<Value> args, int line, int position) {
         String text;
         if (args.get(0).isArray()) {
             text = toString(((Array) args.get(0)));

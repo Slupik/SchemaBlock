@@ -28,7 +28,7 @@ public class FunctionSin implements Function {
     }
 
     @Override
-    public Value execute(List<Value> args) {
+    public Value execute(List<Value> args, int line, int position) {
         return new SimpleValueImpl(
                 ValueType.DOUBLE,
                 Math.sin(

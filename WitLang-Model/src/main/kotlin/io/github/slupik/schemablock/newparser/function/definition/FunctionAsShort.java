@@ -30,7 +30,7 @@ public class FunctionAsShort implements Function {
     }
 
     @Override
-    public Value execute(List<Value> args) throws AlgorithmException {
+    public Value execute(List<Value> args, int line, int position) throws AlgorithmException {
         Object value = ((SimpleValue) args.get(0)).getValue();
         try {
             return new SimpleValueImpl(
@@ -38,7 +38,7 @@ public class FunctionAsShort implements Function {
                     Short.parseShort(value.toString())
             );
         } catch (Exception e) {
-            throw new CannotParseData(value, ValueType.SHORT);
+            throw new CannotParseData(value, ValueType.SHORT, line, position);
         }
     }
 

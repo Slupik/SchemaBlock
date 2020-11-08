@@ -28,7 +28,7 @@ public class FunctionExplode implements Function {
     }
 
     @Override
-    public Value execute(List<Value> args) throws AlgorithmException {
+    public Value execute(List<Value> args, int line, int position) throws AlgorithmException {
         String text = ((SimpleValue) args.get(0)).getCastedValue();
         String delimiter = ((SimpleValue) args.get(1)).getCastedValue();
         String[] parts = StringUtils.split(text, delimiter);

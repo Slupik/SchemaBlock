@@ -3,9 +3,9 @@ package io.github.slupik.schemablock.model.ui.error;
 /**
  * All rights reserved & copyright ©
  */
-public class UnkownError extends AlgorithmException {
+public class UnknownError extends AlgorithmException {
 
-    public UnkownError() {
+    public UnknownError() {
         super("There was occurred unknown error.");
     }
 

@@ -29,7 +29,7 @@ public class FunctionLength implements Function {
     }
 
     @Override
-    public Value execute(List<Value> args) throws AlgorithmException {
+    public Value execute(List<Value> args, int line, int position) throws AlgorithmException {
         String text = ((SimpleValue) args.get(0)).getCastedValue();
         return new SimpleValueImpl(
                 ValueType.INTEGER,

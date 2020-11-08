@@ -14,12 +14,12 @@ public class NoMatchingFunction extends FunctionExecutionException {
     public final String name;
     public final List<ValueType> argsTypes;
 
-    public NoMatchingFunction(String name, List<ValueType> argsTypes) {
+    public NoMatchingFunction(String name, List<ValueType> argsTypes, int line, int position) {
         super("Function with name: " + name + " with types of arguments: " +
                 argsTypes.stream()
                         .map(String::valueOf)
                         .collect(Collectors.joining(", ", "", ""))
-                + " doesn't exists."
+                + " doesn't exists.", line, position
         );
         this.name = name;
         this.argsTypes = argsTypes;

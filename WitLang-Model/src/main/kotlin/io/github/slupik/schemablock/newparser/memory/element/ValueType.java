@@ -1,5 +1,7 @@
 package io.github.slupik.schemablock.newparser.memory.element;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * All rights reserved & copyright ©
  */
@@ -71,5 +73,10 @@ public enum ValueType {
             return VOID;
         }
         return UNKNOWN;
+    }
+
+    @NotNull
+    public String getDisplayName() {
+        return name().toLowerCase();
     }
 }

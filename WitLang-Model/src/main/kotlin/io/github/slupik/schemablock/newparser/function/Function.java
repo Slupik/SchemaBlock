@@ -14,6 +14,6 @@ public interface Function {
 
     List<FunctionArgType> getArgumentsType();
 
-    Value execute(List<Value> args) throws AlgorithmException;
+    Value execute(List<Value> args, int line, int position) throws AlgorithmException;
 
 }

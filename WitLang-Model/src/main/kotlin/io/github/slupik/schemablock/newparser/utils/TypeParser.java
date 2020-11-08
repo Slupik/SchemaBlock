@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.newparser.utils;
 
 
+import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommandOperation;
 import io.github.slupik.schemablock.newparser.compilator.implementation.Token;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 
@@ -12,10 +13,14 @@ import static io.github.slupik.schemablock.newparser.memory.element.ValueType.*;
 public class TypeParser {
 
     public static ValueType getType(Token token) throws ValueTooBig {
-        return getType(token.getData());
+        return getType(token.getData(), token.getLine(), token.getPos());
     }
 
-    public static ValueType getType(String data) throws ValueTooBig {
+    public static ValueType getType(String data, ByteCommandOperation commandOperation) throws ValueTooBig {
+        return getType(data, commandOperation.getLine(), commandOperation.getPosition());
+    }
+
+    public static ValueType getType(String data, int line, int position) throws ValueTooBig {
         if (TextUtils.isNumber(data)) {
             if (CodeUtils.isLetterForNumber(data.charAt(data.length() - 1))) {
                 char lastLetter = data.charAt(data.length() - 1);
@@ -47,7 +52,7 @@ public class TypeParser {
                     if (Double.toString(parsed).equals(data)) {
                         return DOUBLE;
                     } else {
-                        throw new ValueTooBig(data);
+                        throw new ValueTooBig(data, line, position);
                     }
                 } catch (NumberFormatException ignore) {
                 }

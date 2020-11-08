@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.newparser.function;
 
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
+import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommandExecute;
 import io.github.slupik.schemablock.newparser.memory.element.Value;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class DefaultFunctionExecutor implements FunctionExecutor {
 
     @Override
-    public Value execute(List<Function> availableFunctions, List<Value> args) throws AlgorithmException {
+    public Value execute(List<Function> availableFunctions, List<Value> args, ByteCommandExecute bc) throws AlgorithmException {
         //TODO add exceptions:
         // - no enough arguments
         // - too many arguments
@@ -28,7 +29,7 @@ public class DefaultFunctionExecutor implements FunctionExecutor {
                     }
                 }
                 if (isCompatible) {
-                    return function.execute(args);
+                    return function.execute(args, bc.getLine(), bc.getPosition());
                 }
             }
         }
