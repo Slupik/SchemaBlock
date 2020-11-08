@@ -27,8 +27,8 @@ public class IOBlock extends StandardElementBase implements IOElement {
 
     private final Executor executor;
     private final HeapController heap;
-    private String nextElement = "";
     private final List<Data> instructions = new ArrayList<>();
+    private String nextElement = "";
     private IOCommunicable communicator;
 
     public IOBlock(Executor executor, HeapController heap) {
@@ -38,13 +38,13 @@ public class IOBlock extends StandardElementBase implements IOElement {
     }
 
     @Override
-    public void setNextElement(String elementId) {
-        nextElement = elementId;
+    public String getNextElement() {
+        return nextElement;
     }
 
     @Override
-    public String getNextElement() {
-        return nextElement;
+    public void setNextElement(String elementId) {
+        nextElement = elementId;
     }
 
     @Override
@@ -55,13 +55,18 @@ public class IOBlock extends StandardElementBase implements IOElement {
     }
 
     @Override
+    public IOCommunicable getCommunicator() {
+        return communicator;
+    }
+
+    @Override
     public void setCommunicator(IOCommunicable communicator) {
         this.communicator = communicator;
     }
 
     @Override
-    public IOCommunicable getCommunicator() {
-        return communicator;
+    public String getContent() {
+        return new Gson().toJson(getContentAsList());
     }
 
     @Override
@@ -76,11 +81,6 @@ public class IOBlock extends StandardElementBase implements IOElement {
     public void setContent(List<Data> content) {
         instructions.clear();
         instructions.addAll(content);
-    }
-
-    @Override
-    public String getContent() {
-        return new Gson().toJson(getContentAsList());
     }
 
     @Override

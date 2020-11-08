@@ -4,19 +4,6 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins.defaults.node;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javafx.css.PseudoClass;
-import javafx.geometry.Point2D;
-import javafx.geometry.Side;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Rectangle;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.tesis.dynaware.grapheditor.GConnectorSkin;
 import de.tesis.dynaware.grapheditor.GNodeSkin;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.utils.DefaultConnectorTypes;
@@ -25,6 +12,17 @@ import de.tesis.dynaware.grapheditor.model.GConnector;
 import de.tesis.dynaware.grapheditor.model.GNode;
 import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
 import de.tesis.dynaware.grapheditor.utils.ResizableBox;
+import javafx.css.PseudoClass;
+import javafx.geometry.Point2D;
+import javafx.geometry.Side;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The default node skin. Uses a {@link ResizableBox}.
@@ -33,7 +31,7 @@ import de.tesis.dynaware.grapheditor.utils.ResizableBox;
  * If a node uses this skin its connectors must have one of the 8 types defined in {@link DefaultConnectorTypes}. If a
  * connector does not have one of these types, it will be set to <b>left-input</b>.
  * </p>
- * 
+ *
  * <p>
  * Connectors are evenly spaced along the sides of the node according to their type.
  * </p>
@@ -189,8 +187,8 @@ public class DefaultNodeSkin extends GNodeSkin {
      * Lays out the given connector skins in a horizontal or vertical direction at the given offset.
      *
      * @param connectorSkins the skins to lay out
-     * @param vertical {@code true} to lay out vertically, {@code false} to lay out horizontally
-     * @param offset the offset in the other dimension that the skins are layed out in
+     * @param vertical       {@code true} to lay out vertically, {@code false} to lay out horizontally
+     * @param offset         the offset in the other dimension that the skins are layed out in
      */
     private void layoutConnectors(final List<GConnectorSkin> connectorSkins, final boolean vertical, final double offset) {
 
@@ -289,7 +287,7 @@ public class DefaultNodeSkin extends GNodeSkin {
     /**
      * Gets a minor x-offset of a few pixels in order that the connector's area is distributed more evenly on either
      * side of the node border.
-     * 
+     *
      * @param connector the connector to be positioned
      * @return an x-offset of a few pixels
      */
@@ -307,7 +305,7 @@ public class DefaultNodeSkin extends GNodeSkin {
     /**
      * Gets a minor y-offset of a few pixels in order that the connector's area is distributed more evenly on either
      * side of the node border.
-     * 
+     *
      * @param connector the connector to be positioned
      * @return a y-offset of a few pixels
      */
@@ -324,7 +322,7 @@ public class DefaultNodeSkin extends GNodeSkin {
 
     /**
      * Stops the node being dragged if it isn't selected.
-     * 
+     *
      * @param event a mouse-dragged event on the node
      */
     private void filterMouseDragged(final MouseEvent event) {

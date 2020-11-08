@@ -11,7 +11,7 @@ import java.util.Stack;
 public class RegisterImpl extends Stack<Memoryable> implements Register {
 
     @Inject
-    public RegisterImpl(){
+    public RegisterImpl() {
     }
 
 }

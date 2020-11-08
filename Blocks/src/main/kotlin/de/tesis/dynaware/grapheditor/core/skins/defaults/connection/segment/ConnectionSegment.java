@@ -3,14 +3,14 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins.defaults.connection.segment;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.HLineTo;
 import javafx.scene.shape.PathElement;
 import javafx.scene.shape.VLineTo;
-import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A single segment of the default connection skin.
@@ -21,14 +21,11 @@ import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
  */
 public abstract class ConnectionSegment {
 
+    private static final int EDGE_OFFSET = 5;
     // True for horizontal segment, false for vertical segment.
     protected final boolean horizontal;
-
     // +1 if position coordinate is increasing, -1 if it is decreasing.
     protected final int sign;
-
-    private static final int EDGE_OFFSET = 5;
-
     private final List<PathElement> pathElements = new ArrayList<>();
     private final Point2D start;
     private final Point2D end;
@@ -37,8 +34,8 @@ public abstract class ConnectionSegment {
     /**
      * Creates a new connection segment for the given start and end points.
      *
-     * @param start the point where the segment starts
-     * @param end the point where the segment ends
+     * @param start         the point where the segment starts
+     * @param end           the point where the segment ends
      * @param intersections the intersection-points of this segment with other connections
      */
     public ConnectionSegment(final Point2D start, final Point2D end, final List<Double> intersections) {
@@ -114,7 +111,7 @@ public abstract class ConnectionSegment {
     /**
      * Draws the intermediate path elements for this connection segment between two intersections.
      *
-     * @param intersection the intersection position to take into account when drawing this element
+     * @param intersection     the intersection position to take into account when drawing this element
      * @param lastIntersection the previous intersection position to take into account when drawing this element
      */
     protected abstract void drawBetweenIntersections(final double intersection, final double lastIntersection);

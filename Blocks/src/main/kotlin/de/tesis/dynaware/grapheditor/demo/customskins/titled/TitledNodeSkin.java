@@ -52,15 +52,12 @@ public class TitledNodeSkin extends GNodeSkin {
     private static final int HEADER_HEIGHT = 20;
 
     private final Rectangle selectionHalo = new Rectangle();
-
+    private final List<GConnectorSkin> inputConnectorSkins = new ArrayList<>();
+    private final List<GConnectorSkin> outputConnectorSkins = new ArrayList<>();
+    private final Rectangle border = new Rectangle();
     private VBox contentRoot = new VBox();
     private HBox header = new HBox();
     private Label title = new Label();
-
-    private final List<GConnectorSkin> inputConnectorSkins = new ArrayList<>();
-    private final List<GConnectorSkin> outputConnectorSkins = new ArrayList<>();
-
-    private final Rectangle border = new Rectangle();
 
     /**
      * Creates a new {@link TitledNodeSkin} instance.
@@ -289,7 +286,7 @@ public class TitledNodeSkin extends GNodeSkin {
 
     /**
      * Adds or removes the 'selected' pseudo-class from all connectors belonging to this node.
-     * 
+     *
      * @param isSelected {@code true} to add the 'selected' pseudo-class, {@code false} to remove it
      */
     private void setConnectorsSelected(final boolean isSelected) {
@@ -309,7 +306,7 @@ public class TitledNodeSkin extends GNodeSkin {
 
     /**
      * Stops the node being dragged if it isn't selected.
-     * 
+     *
      * @param event a mouse-dragged event on the node
      */
     private void filterMouseDragged(final MouseEvent event) {

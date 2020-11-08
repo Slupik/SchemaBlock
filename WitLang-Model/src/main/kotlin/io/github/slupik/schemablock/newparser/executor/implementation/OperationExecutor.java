@@ -4,7 +4,6 @@ import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 
 import static io.github.slupik.schemablock.newparser.memory.element.ValueType.*;
-import static io.github.slupik.schemablock.newparser.memory.element.ValueType.UNKNOWN;
 
 /**
  * All rights reserved & copyright ©
@@ -12,16 +11,17 @@ import static io.github.slupik.schemablock.newparser.memory.element.ValueType.UN
 class OperationExecutor {
 
     protected static final ValueType[] PRIORITY_TYPES = new ValueType[]{STRING, DOUBLE, FLOAT, LONG, INTEGER, SHORT, BYTE};
+
     protected static ValueType getResultType(SimpleValue a, SimpleValue b) {
-        for(ValueType type:PRIORITY_TYPES) {
-            if(isTypeOf(type, a, b)) {
+        for (ValueType type : PRIORITY_TYPES) {
+            if (isTypeOf(type, a, b)) {
                 return type;
             }
         }
 
         //if is not found
-        for(ValueType type:ValueType.values()) {
-            if(isTypeOf(type, a, b)) {
+        for (ValueType type : ValueType.values()) {
+            if (isTypeOf(type, a, b)) {
                 return type;
             }
         }

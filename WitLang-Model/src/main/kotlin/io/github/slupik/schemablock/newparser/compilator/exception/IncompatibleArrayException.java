@@ -12,7 +12,7 @@ public class IncompatibleArrayException extends AlgorithmException {
     private final int actual;
 
     public IncompatibleArrayException(int excepted, int actual) {
-        super("Excepted array with "+excepted+" dimensions but received "+actual);
+        super("Excepted array with " + excepted + " dimensions but received " + actual);
         this.excepted = excepted;
         this.actual = actual;
     }

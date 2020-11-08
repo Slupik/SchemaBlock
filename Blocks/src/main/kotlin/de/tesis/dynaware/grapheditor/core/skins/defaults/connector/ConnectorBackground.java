@@ -37,7 +37,7 @@ class ConnectorBackground {
 
     private void adjustRotation() {
         Side side = DefaultConnectorTypes.getSide(TYPE);
-        if(side == null) side = Side.TOP;
+        if (side == null) side = Side.TOP;
         switch (side) {
             case TOP: {
                 root.setRotate(180);
@@ -61,10 +61,10 @@ class ConnectorBackground {
     private void createInPart() {
         inPart.setStartAngle(0f);
         inPart.setLength(180f);
-        inPart.setRadiusX(OUTER_SIZE/2f);
-        inPart.setRadiusY(OUTER_SIZE/2f);
+        inPart.setRadiusX(OUTER_SIZE / 2f);
+        inPart.setRadiusY(OUTER_SIZE / 2f);
         inPart.setType(ArcType.CHORD);
-        if(DefaultConnectorTypes.isInput(TYPE) || DefaultConnectorTypes.isBoth(TYPE)) {
+        if (DefaultConnectorTypes.isInput(TYPE) || DefaultConnectorTypes.isBoth(TYPE)) {
             inPart.getStyleClass().addAll(STYLE_CLASS_ACTIVE);
         } else {
             inPart.getStyleClass().addAll(STYLE_CLASS_NONACTIVE);
@@ -74,10 +74,10 @@ class ConnectorBackground {
     private void createOutPart() {
         outPart.setStartAngle(-180f);
         outPart.setLength(180f);
-        outPart.setRadiusX(OUTER_SIZE/2f);
-        outPart.setRadiusY(OUTER_SIZE/2f);
+        outPart.setRadiusX(OUTER_SIZE / 2f);
+        outPart.setRadiusY(OUTER_SIZE / 2f);
         outPart.setType(ArcType.CHORD);
-        if(DefaultConnectorTypes.isOutput(TYPE) || DefaultConnectorTypes.isBoth(TYPE)) {
+        if (DefaultConnectorTypes.isOutput(TYPE) || DefaultConnectorTypes.isBoth(TYPE)) {
             outPart.getStyleClass().addAll(STYLE_CLASS_ACTIVE);
         } else {
             outPart.getStyleClass().addAll(STYLE_CLASS_NONACTIVE);
@@ -85,7 +85,7 @@ class ConnectorBackground {
     }
 
     void applyStyle(final GConnectorStyle style) {
-        if(DefaultConnectorTypes.isOutput(TYPE)) {
+        if (DefaultConnectorTypes.isOutput(TYPE)) {
             ConnectorStyleUtils.applyStyle(style, outPart);
         } else if (DefaultConnectorTypes.isInput(TYPE)) {
             ConnectorStyleUtils.applyStyle(style, inPart);
@@ -95,7 +95,7 @@ class ConnectorBackground {
         }
     }
 
-    public Region getRoot(){
+    public Region getRoot() {
         return root;
     }
 

@@ -12,7 +12,7 @@ public class IndexOutOfBoundsException extends AlgorithmException {
     private final int index;
 
     public IndexOutOfBoundsException(int length, int index) {
-        super("Tried to receive value at index "+index+" but array have only "+length+" values.");
+        super("Tried to receive value at index " + index + " but array have only " + length + " values.");
         this.length = length;
         this.index = index;
     }

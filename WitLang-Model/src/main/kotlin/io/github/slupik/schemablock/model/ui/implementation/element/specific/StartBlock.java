@@ -21,18 +21,18 @@ public class StartBlock extends ElementBase implements StartElement {
     }
 
     @Override
-    public void setNextElement(String elementId) {
-        nextElement = elementId;
-    }
-
-    @Override
     public String getNextElement() {
         return nextElement;
     }
 
     @Override
+    public void setNextElement(String elementId) {
+        nextElement = elementId;
+    }
+
+    @Override
     public void removeNextElement(String elementId) {
-        if(nextElement.equals(elementId)) {
+        if (nextElement.equals(elementId)) {
             nextElement = "";
         }
     }

@@ -27,9 +27,9 @@ public class TailManager {
 
     /**
      * Creates a new {@link TailManager} instance.
-     * 
+     *
      * @param skinLookup the {@link SkinLookup} used to look up connector and tail skins
-     * @param view the {@link GraphEditorView} to which tail skins will be added and removed
+     * @param view       the {@link GraphEditorView} to which tail skins will be added and removed
      */
     public TailManager(final SkinLookup skinLookup, final GraphEditorView view) {
         this.skinLookup = skinLookup;
@@ -38,9 +38,9 @@ public class TailManager {
 
     /**
      * Creates a new tail and adds it to the view.
-     * 
+     *
      * @param connector the connector where the tail starts from
-     * @param the mouse event responsible for creating the tail
+     * @param event     the mouse event responsible for creating the tail
      */
     public void create(final GConnector connector, final MouseEvent event) {
 
@@ -61,10 +61,10 @@ public class TailManager {
 
     /**
      * Creates a new tail from a connection that was detached.
-     * 
-     * @param connector the connector that the connection was detached from
+     *
+     * @param connector  the connector that the connection was detached from
      * @param connection the connection that was detached
-     * @param the mouse event responsible for creating the tail
+     * @param event      the mouse event responsible for creating the tail
      */
     public void createFromConnection(final GConnector connector, final GConnection connection, final MouseEvent event) {
 
@@ -90,8 +90,8 @@ public class TailManager {
 
     /**
      * Updates the tail position based on new cursor position.
-     * 
-     * @param the mouse event responsible for updating the position
+     *
+     * @param event the mouse event responsible for updating the position
      */
     public void updatePosition(final MouseEvent event) {
 
@@ -109,10 +109,10 @@ public class TailManager {
 
     /**
      * Snaps the position of the tail to show the position the connection itself would take if it would be created.
-     * 
+     *
      * @param source the source connector
      * @param target the target connector
-     * @param valid {@code true} if the connection is valid, {@code false} if invalid
+     * @param valid  {@code true} if the connection is valid, {@code false} if invalid
      */
     public void snapPosition(final GConnector source, final GConnector target, final boolean valid) {
 
@@ -131,7 +131,7 @@ public class TailManager {
 
     /**
      * Cleans up.
-     * 
+     *
      * <p>
      * Called at the end of a drag gesture or during initialization. Removes any tail from the view and resets tracking
      * parameters.
@@ -149,9 +149,8 @@ public class TailManager {
 
     /**
      * Corrects the cursor position in the case where scale transforms are applied.
-     * 
+     *
      * @param cursorPosition the cursor position calculated assuming scale factor of 1
-     * 
      * @return the corrected cursor position
      */
     private Point2D getScaledPosition(final Point2D cursorPosition) {

@@ -20,23 +20,23 @@ class ElementsArrayCompiler {
         List<Token> toCompile = new ArrayList<>();
 
         int nestLvl = 0;
-        int i=1;
-        for(;i<parts.size();i++) {
+        int i = 1;
+        for (; i < parts.size(); i++) {
             Token token = parts.get(i);
 
-            if("{".equals(token.getData())) {
+            if ("{".equals(token.getData())) {
                 nestLvl++;
-            } else if("}".equals(token.getData())) {
+            } else if ("}".equals(token.getData())) {
                 nestLvl--;
             }
 
-            if(nestLvl>=1) {
-                if(",".equals(token.getData())) {
+            if (nestLvl >= 1) {
+                if (",".equals(token.getData())) {
                     List<ByteCommand> cmdLine = new ArrayList<>(LineCompilator.getCompiledLine(toCompile, arrayType));
                     cmdsForIndexes.add(cmdLine);
                     toCompile = new ArrayList<>();
                 } else {
-                    if(nestLvl>1 || !("{".equals(token.getData()) || "}".equals(token.getData()))) {
+                    if (nestLvl > 1 || !("{".equals(token.getData()) || "}".equals(token.getData()))) {
                         toCompile.add(token);
                     }
                 }
@@ -47,7 +47,7 @@ class ElementsArrayCompiler {
         List<ByteCommand> cmdLine = new ArrayList<>(LineCompilator.getCompiledLine(toCompile, arrayType));
         cmdsForIndexes.add(cmdLine);
 
-        for(int j=cmdsForIndexes.size()-1;j>=0;j--) {
+        for (int j = cmdsForIndexes.size() - 1; j >= 0; j--) {
             compiled.addAll(cmdsForIndexes.get(j));
         }
 
@@ -62,7 +62,7 @@ class ElementsArrayCompiler {
         ElementsArrayData result = new ElementsArrayData();
         result.cmds = compiled;
         result.elementsCount = arraySize;
-        result.elementsToOmitted = i-1;
+        result.elementsToOmitted = i - 1;
 
         return result;
     }
@@ -71,7 +71,8 @@ class ElementsArrayCompiler {
         try {
             Integer.parseInt(token.getData());
             return true;
-        } catch (Exception ignore) {}
+        } catch (Exception ignore) {
+        }
         return true;
     }
 }

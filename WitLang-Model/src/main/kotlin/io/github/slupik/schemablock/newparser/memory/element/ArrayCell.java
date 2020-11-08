@@ -5,9 +5,10 @@ package io.github.slupik.schemablock.newparser.memory.element;
  */
 public interface ArrayCell extends Value {
     Value getValue();
+
     void setValue(Value value);
 
-    default boolean isArray(){
+    default boolean isArray() {
         return false;
     }
 }

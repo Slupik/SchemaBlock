@@ -24,8 +24,8 @@ public class TreeSkinController implements SkinController {
 
     /**
      * Creates a new {@link TreeSkinController} instance.
-     * 
-     * @param graphEditor the graph editor on display in this de.tesis.dynaware.grapheditor.demo
+     *
+     * @param graphEditor          the graph editor on display in this de.tesis.dynaware.grapheditor.demo
      * @param graphEditorContainer the graph editor container on display in this de.tesis.dynaware.grapheditor.demo
      */
     public TreeSkinController(final GraphEditor graphEditor, final GraphEditorContainer graphEditorContainer) {
@@ -87,7 +87,7 @@ public class TreeSkinController implements SkinController {
 
     /**
      * Selects all connections that are referenced (i.e. connected to) the given nodes.
-     * 
+     *
      * @param nodes a list of graph nodes
      */
     private void selectReferencedConnections(final List<GNode> nodes) {

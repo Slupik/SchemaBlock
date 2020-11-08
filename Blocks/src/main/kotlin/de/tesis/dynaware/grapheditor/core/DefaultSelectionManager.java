@@ -51,8 +51,8 @@ public class DefaultSelectionManager implements SelectionManager {
     /**
      * Creates a new default selection manager. Only one instance should exist per {@link DefaultGraphEditor} instance.
      *
-     * @param skinLookup the {@link SkinLookup} instance in use
-     * @param view the {@link GraphEditorView} instance in use
+     * @param skinLookup          the {@link SkinLookup} instance in use
+     * @param view                the {@link GraphEditorView} instance in use
      * @param modelEditingManager the {@link ModelEditingManager} in use
      */
     public DefaultSelectionManager(final SkinLookup skinLookup, final GraphEditorView view,

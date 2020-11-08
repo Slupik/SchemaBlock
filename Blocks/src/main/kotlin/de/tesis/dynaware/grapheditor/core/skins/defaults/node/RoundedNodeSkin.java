@@ -85,14 +85,14 @@ public abstract class RoundedNodeSkin extends Block {
             selectionHalo.setRadiusY(b);
 
             double circuit = Math.PI * (3d / 2d * (a + b) - Math.sqrt(a * b));
-            double lineLength = HALO_CORNER_SIZE*2;
-            double spaceLength = (circuit-lineLength*4)/4;
+            double lineLength = HALO_CORNER_SIZE * 2;
+            double spaceLength = (circuit - lineLength * 4) / 4;
 
-            selectionHalo.setStrokeDashOffset(lineLength+spaceLength/2d);
+            selectionHalo.setStrokeDashOffset(lineLength + spaceLength / 2d);
             selectionHalo.getStrokeDashArray().setAll(lineLength, spaceLength);
 
-            selectionHalo.setLayoutX(selectionHalo.getRadiusX()-HALO_OFFSET);
-            selectionHalo.setLayoutY(selectionHalo.getRadiusY()-HALO_OFFSET);
+            selectionHalo.setLayoutX(selectionHalo.getRadiusX() - HALO_OFFSET);
+            selectionHalo.setLayoutY(selectionHalo.getRadiusY() - HALO_OFFSET);
         }
     }
 
@@ -100,16 +100,16 @@ public abstract class RoundedNodeSkin extends Block {
     @NotNull
     protected DoubleBinding getTextAreaWidth() {
         return border.radiusXProperty()
-                .subtract(DefaultConnectorSkin.OUTER_SIZE/2d)
-                .multiply(2*9/10d);
+                .subtract(DefaultConnectorSkin.OUTER_SIZE / 2d)
+                .multiply(2 * 9 / 10d);
     }
 
     @Override
     @NotNull
     protected DoubleBinding getTextAreaHeight() {
         return border.radiusYProperty()
-                .subtract(DefaultConnectorSkin.OUTER_SIZE/2d)
-                .multiply(2*9/10d);
+                .subtract(DefaultConnectorSkin.OUTER_SIZE / 2d)
+                .multiply(2 * 9 / 10d);
     }
 
     @Override

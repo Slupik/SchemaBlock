@@ -32,7 +32,7 @@ import java.util.List;
  * If a node uses this skin its connectors must have one of the 8 types defined in {@link DefaultConnectorTypes}. If a
  * connector does not have one of these types, it will be set to <b>left-input</b>.
  * </p>
- * 
+ *
  * <p>
  * Connectors are evenly spaced along the sides of the node according to their type.
  * </p>
@@ -79,7 +79,7 @@ public abstract class NodeSkin extends GNodeSkin {
     }
 
     private void addDoubleClickListener() {
-        getBackground().addEventHandler(MouseEvent.MOUSE_CLICKED, event ->{
+        getBackground().addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
                 if (event.getClickCount() == 2) {
                     invokeDoubleClickEventHandler(event);
@@ -182,8 +182,8 @@ public abstract class NodeSkin extends GNodeSkin {
      * Lays out the given connector skins in a horizontal or vertical direction at the given offset.
      *
      * @param connectorSkins the skins to lay out
-     * @param vertical {@code true} to lay out vertically, {@code false} to lay out horizontally
-     * @param offset the offset in the other dimension that the skins are layed out in
+     * @param vertical       {@code true} to lay out vertically, {@code false} to lay out horizontally
+     * @param offset         the offset in the other dimension that the skins are layed out in
      */
     private void layoutConnectors(final List<GConnectorSkin> connectorSkins, final boolean vertical, final double offset) {
 
@@ -256,7 +256,7 @@ public abstract class NodeSkin extends GNodeSkin {
     /**
      * Gets a minor x-offset of a few pixels in order that the connector's area is distributed more evenly on either
      * side of the node border.
-     * 
+     *
      * @param connector the connector to be positioned
      * @return an x-offset of a few pixels
      */
@@ -274,7 +274,7 @@ public abstract class NodeSkin extends GNodeSkin {
     /**
      * Gets a minor y-offset of a few pixels in order that the connector's area is distributed more evenly on either
      * side of the node border.
-     * 
+     *
      * @param connector the connector to be positioned
      * @return a y-offset of a few pixels
      */

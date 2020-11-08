@@ -6,7 +6,7 @@ import java.io.File
 /**
  * All rights reserved & copyright ©
  */
-interface GraphSaver  {
+interface GraphSaver {
 
     fun saveToFile(graphEditor: GraphEditor, file: File)
     fun stringify(graphEditor: GraphEditor): String?

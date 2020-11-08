@@ -6,6 +6,7 @@ import io.github.slupik.schemablock.model.ui.abstraction.element.Element;
 import io.github.slupik.schemablock.model.ui.parser.BlockParserException;
 import io.github.slupik.schemablock.model.ui.parser.ElementPOJO;
 import io.github.slupik.schemablock.model.utils.RandomString;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,26 +41,26 @@ public abstract class ElementBase implements Element {
 
     protected abstract void load(ElementPOJO pojo) throws BlockParserException;
 
-    protected final void onStart(){
-        for(ElementCallback callback:callbacks) {
+    protected final void onStart() {
+        for (ElementCallback callback : callbacks) {
             callback.onStart();
         }
     }
 
-    protected final void onStop(){
-        for(ElementCallback callback:callbacks) {
+    protected final void onStop() {
+        for (ElementCallback callback : callbacks) {
             callback.onStop();
         }
     }
 
-    protected final void onStop(Object result){
-        for(ElementCallback callback:callbacks) {
+    protected final void onStop(Object result) {
+        for (ElementCallback callback : callbacks) {
             callback.onStop(result);
         }
     }
 
     protected final void tryRun(String elementId) {
-        for(ElementCallback callback:callbacks) {
+        for (ElementCallback callback : callbacks) {
             callback.onTryRun(elementId);
         }
     }

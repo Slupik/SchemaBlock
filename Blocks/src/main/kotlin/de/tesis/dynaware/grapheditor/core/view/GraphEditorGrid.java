@@ -3,22 +3,18 @@
  */
 package de.tesis.dynaware.grapheditor.core.view;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import javafx.css.CssMetaData;
-import javafx.css.StyleConverter;
-import javafx.css.Styleable;
-import javafx.css.StyleableObjectProperty;
-import javafx.css.StyleableProperty;
+import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
+import de.tesis.dynaware.grapheditor.utils.GraphEditorProperties;
+import javafx.css.*;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
-import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
-import de.tesis.dynaware.grapheditor.utils.GraphEditorProperties;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The alignment grid that appears in the background of the editor.
@@ -33,9 +29,6 @@ public class GraphEditorGrid extends Group {
     private static final double HALF_PIXEL_OFFSET = -0.5;
 
     private static final Color DEFAULT_GRID_COLOR = Color.rgb(222, 248, 255);
-
-    private GraphEditorProperties editorProperties;
-
     private final StyleableObjectProperty<Paint> gridColor = new StyleableObjectProperty<Paint>(DEFAULT_GRID_COLOR) {
 
         @Override
@@ -57,6 +50,7 @@ public class GraphEditorGrid extends Group {
         protected void invalidated() {
         }
     };
+    private GraphEditorProperties editorProperties;
 
     /**
      * Creates a new grid manager. Only one instance should exist per {@link DefaultGraphEditor} instance.
@@ -81,7 +75,7 @@ public class GraphEditorGrid extends Group {
     /**
      * Draws the grid for the given width and height.
      *
-     * @param width the width of the editor region
+     * @param width  the width of the editor region
      * @param height the height of the editor region
      */
     public void draw(final double width, final double height) {

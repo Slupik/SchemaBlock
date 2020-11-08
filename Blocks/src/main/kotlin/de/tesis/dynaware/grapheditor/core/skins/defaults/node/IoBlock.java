@@ -138,13 +138,13 @@ public class IoBlock extends Block {
         String type = connector.getType();
         double partialWidth = background.getBoundsInLocal().getWidth() + border.getStrokeWidth() * 2 + HALO_OFFSET * 2;
         if (DefaultConnectorTypes.isLeft(type)) {
-            return partialWidth/10;
-        } else if(DefaultConnectorTypes.isRight(type)) {
-            return -partialWidth/10;
+            return partialWidth / 10;
+        } else if (DefaultConnectorTypes.isRight(type)) {
+            return -partialWidth / 10;
         } else if (DefaultConnectorTypes.isTop(type)) {
-            return partialWidth/10;
-        } else if(DefaultConnectorTypes.isBottom(type)) {
-            return -partialWidth/10;
+            return partialWidth / 10;
+        } else if (DefaultConnectorTypes.isBottom(type)) {
+            return -partialWidth / 10;
         } else {
             return super.getMinorOffsetX(connector);
         }

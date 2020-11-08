@@ -3,16 +3,12 @@
  */
 package de.tesis.dynaware.grapheditor.core.model;
 
+import de.tesis.dynaware.grapheditor.model.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import de.tesis.dynaware.grapheditor.model.GConnection;
-import de.tesis.dynaware.grapheditor.model.GConnector;
-import de.tesis.dynaware.grapheditor.model.GJoint;
-import de.tesis.dynaware.grapheditor.model.GModel;
-import de.tesis.dynaware.grapheditor.model.GNode;
 
 /**
  * Responsible for remembering the old model state and calculating the difference between old and new states.
@@ -296,7 +292,7 @@ public class ModelMemory {
      * present at the time of the call.
      * </p>
      *
-     * @param a {@link GModel} instance
+     * @param model a {@link GModel} instance
      */
     private void rememberOldElements(final GModel model) {
 

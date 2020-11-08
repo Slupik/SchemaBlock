@@ -3,15 +3,6 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins.defaults.connection;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import javafx.geometry.Point2D;
-import javafx.scene.Group;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Rectangle;
 import de.tesis.dynaware.grapheditor.GJointSkin;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.SkinLookup;
@@ -20,6 +11,15 @@ import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.model.GJoint;
 import de.tesis.dynaware.grapheditor.model.GraphFactory;
 import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
+import javafx.geometry.Point2D;
+import javafx.scene.Group;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Responsible for creating joints when a click + drag gesture occurs on a connection.
@@ -31,11 +31,8 @@ public class JointCreator {
 
     private final GConnection connection;
     private final CursorOffsetCalculator offsetCalculator;
-
-    private GraphEditor graphEditor;
-
     private final Rectangle hoverEffect = new Rectangle(HOVER_EFFECT_SIZE, HOVER_EFFECT_SIZE);
-
+    private GraphEditor graphEditor;
     private GJointSkin temporarySelectedJointSkin;
 
     private double newJointX;
@@ -47,7 +44,7 @@ public class JointCreator {
     /**
      * Creates a new joint creator. One instance should exist for each default connection skin instance.
      *
-     * @param connection the connection the joint creator is creating joints in
+     * @param connection       the connection the joint creator is creating joints in
      * @param offsetCalculator used to determine where to put new joints based on the cursor position
      */
     public JointCreator(final GConnection connection, final CursorOffsetCalculator offsetCalculator) {
@@ -158,7 +155,7 @@ public class JointCreator {
      * Updates the position of the joint creator effect based on the cursor position.
      *
      * @param event the mouse event containing information about the cursor position
-     * @param root the root node of the connection
+     * @param root  the root node of the connection
      */
     private void updateHoverEffectPosition(final MouseEvent event, final Group root) {
 
@@ -190,7 +187,7 @@ public class JointCreator {
      * Gets the location of the new joint based on the cursor position.
      *
      * @param event the mouse event object containing cursor information
-     * @param root the root node of the connection skin
+     * @param root  the root node of the connection skin
      * @return the index in the connection's joint list of where the new joint would go
      */
     private int getNewJointLocation(final MouseEvent event, final Group root) {
@@ -232,8 +229,8 @@ public class JointCreator {
      * </p>
      *
      * @param index the index in the connection's joint list where the new joints are to be added
-     * @param x the x position for the new joints
-     * @param y the y position for the new joints
+     * @param x     the x position for the new joints
+     * @param y     the y position for the new joints
      */
     private void addTemporaryJoints(final int index, final double x, final double y) {
 

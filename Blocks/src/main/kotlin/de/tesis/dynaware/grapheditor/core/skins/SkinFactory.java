@@ -5,7 +5,10 @@ package de.tesis.dynaware.grapheditor.core.skins;
 
 import de.tesis.dynaware.grapheditor.*;
 import de.tesis.dynaware.grapheditor.core.connections.ConnectionType;
-import de.tesis.dynaware.grapheditor.core.skins.defaults.*;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.ConditionalConnectionSkin;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.DefaultJointSkin;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.DefaultTailSkin;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.StandardConnectionSkin;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connector.DefaultConnectorSkin;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.node.*;
 import de.tesis.dynaware.grapheditor.core.utils.LogMessages;
@@ -95,7 +98,6 @@ public class SkinFactory {
      * Creates a new skin instance for the given node.
      *
      * @param node the {@link GNode} for which a skin should be created
-     *
      * @return a new {@link GNodeSkin} instance
      */
     public GNodeSkin createNodeSkin(final GNode node) {
@@ -107,13 +109,13 @@ public class SkinFactory {
         }
         if (node.getType() == null) {
             return new OperationsBlock(node);
-        } else if(node.getType().equalsIgnoreCase(UiElementType.START.code)) {
+        } else if (node.getType().equalsIgnoreCase(UiElementType.START.code)) {
             return new StartBlock(node);
-        } else if(node.getType().equalsIgnoreCase(UiElementType.STOP.code)) {
+        } else if (node.getType().equalsIgnoreCase(UiElementType.STOP.code)) {
             return new StopBlock(node);
-        } else if(node.getType().equalsIgnoreCase(UiElementType.IO.code)) {
+        } else if (node.getType().equalsIgnoreCase(UiElementType.IO.code)) {
             return new IoBlock(node);
-        } else if(node.getType().equalsIgnoreCase(UiElementType.CONDITION.code)) {
+        } else if (node.getType().equalsIgnoreCase(UiElementType.CONDITION.code)) {
             return new ConditionalBlock(node);
         }
 
@@ -140,7 +142,6 @@ public class SkinFactory {
      * Creates a new skin instance for the given connector.
      *
      * @param connector the {@link GConnector} for which a skin should be created
-     *
      * @return a new {@link GConnectorSkin} instance
      */
     public GConnectorSkin createConnectorSkin(final GConnector connector) {
@@ -170,7 +171,6 @@ public class SkinFactory {
      * Creates a new skin instance for the given connection.
      *
      * @param connection the {@link GConnection} for which a skin should be created
-     *
      * @return a new {@link GConnectionSkin} instance
      */
     public GConnectionSkin createConnectionSkin(final GConnection connection) {
@@ -209,7 +209,6 @@ public class SkinFactory {
      * Creates a new skin instance for the given joint.
      *
      * @param joint the {@link GJoint} for which a skin should be created
-     *
      * @return a new {@link GJointSkin} instance
      */
     public GJointSkin createJointSkin(final GJoint joint) {
@@ -239,7 +238,6 @@ public class SkinFactory {
      * Creates a new tail skin instance for the given connector.
      *
      * @param connector the {@link GConnector} for which a skin should be created
-     *
      * @return a new {@link GTailSkin} instance
      */
     public GTailSkin createTailSkin(final GConnector connector) {

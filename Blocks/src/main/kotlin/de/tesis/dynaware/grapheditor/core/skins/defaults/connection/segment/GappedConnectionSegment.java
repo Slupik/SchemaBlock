@@ -3,11 +3,11 @@
  */
 package de.tesis.dynaware.grapheditor.core.skins.defaults.connection.segment;
 
-import java.util.List;
-
+import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.MoveTo;
-import de.tesis.dynaware.grapheditor.utils.GeometryUtils;
+
+import java.util.List;
 
 /**
  * A connection segment that draws a gap at points where it intersects other connections.
@@ -19,8 +19,8 @@ public class GappedConnectionSegment extends ConnectionSegment {
     /**
      * Creates a new {@link GappedConnectionSegment} instance.
      *
-     * @param start the point where the segment starts
-     * @param end the point where the segment ends
+     * @param start         the point where the segment starts
+     * @param end           the point where the segment ends
      * @param intersections the intersection-points of this segment with other connections
      */
     public GappedConnectionSegment(final Point2D start, final Point2D end, final List<Double> intersections) {

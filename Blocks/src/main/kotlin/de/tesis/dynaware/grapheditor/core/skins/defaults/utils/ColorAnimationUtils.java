@@ -21,7 +21,7 @@ public class ColorAnimationUtils {
 
     /**
      * Adds animated color properties to the given node that can be accessed from CSS.
-     * 
+     *
      * @param node the node to be styled with animated colors
      * @param data a {@link AnimatedColor} object storing the animation parameters
      */

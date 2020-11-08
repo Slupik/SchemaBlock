@@ -24,6 +24,7 @@ import io.github.slupik.schemablock.view.logic.execution.dagger.ExecutionElement
 import io.github.slupik.schemablock.view.logic.execution.dagger.HeapControllerCallbackModule;
 import io.github.slupik.schemablock.view.logic.execution.diagram.DiagramExecutor;
 import io.github.slupik.schemablock.view.logic.execution.diagram.ExecutionEvent;
+import io.github.slupik.schemablock.view.logic.execution.diagram.PostExecutionEvent;
 import io.github.slupik.schemablock.view.logic.execution.diagram.exception.NextBlockNotFound;
 import io.github.slupik.schemablock.view.logic.marker.BlockExecutionStateMarker;
 import io.github.slupik.schemablock.view.logic.memory.HeapValueFx;
@@ -63,6 +64,29 @@ import java.util.ResourceBundle;
  */
 public class MainViewController implements Initializable {
 
+    private final ObjectProperty<SkinController> activeSkinController = new SimpleObjectProperty<>();
+    @Inject
+    DefaultSkinController defaultSkinController;
+    @Inject
+    GraphEditor graphEditor;
+    @Inject
+    Zoomer zoomer;
+    @Inject
+    FileChooser fileChooser;
+    @Inject
+    DiagramSaver graphSaver;
+    @Inject
+    DiagramLoader graphLoader;
+    @Inject
+    Diagram diagram;
+    @Inject
+    SampleLoader sampleLoader;
+    @Inject
+    DiagramExecutor executor;
+    @Inject
+    NewHeapSpy memory;
+    @Inject
+    BlockExecutionStateMarker stateMarker;
     @FXML
     private JFXButton btnRun;
     @FXML
@@ -128,32 +152,9 @@ public class MainViewController implements Initializable {
     @FXML
     private JFXTreeTableColumn<HeapValueFx, String> tcVarValue;
 
-    private final ObjectProperty<SkinController> activeSkinController = new SimpleObjectProperty<>();
-    private CompositeDisposable composite = new CompositeDisposable();
+    private final CompositeDisposable composite = new CompositeDisposable();
     private Disposable continuationDispose = null;
     private UIIOCommunicator output;
-    @Inject
-    DefaultSkinController defaultSkinController;
-    @Inject
-    GraphEditor graphEditor;
-    @Inject
-    Zoomer zoomer;
-    @Inject
-    FileChooser fileChooser;
-    @Inject
-    DiagramSaver graphSaver;
-    @Inject
-    DiagramLoader graphLoader;
-    @Inject
-    Diagram diagram;
-    @Inject
-    SampleLoader sampleLoader;
-    @Inject
-    DiagramExecutor executor;
-    @Inject
-    NewHeapSpy memory;
-    @Inject
-    BlockExecutionStateMarker stateMarker;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -408,6 +409,9 @@ public class MainViewController implements Initializable {
         stateMarker.handleObservable(observable);
         Disposable disp = observable.subscribe(
                 executionEvent -> {
+                    if (executionEvent instanceof PostExecutionEvent) {
+                        memory.refresh();
+                    }
                     System.out.println("executionEvent = " + executionEvent);
                 },
                 throwable -> {

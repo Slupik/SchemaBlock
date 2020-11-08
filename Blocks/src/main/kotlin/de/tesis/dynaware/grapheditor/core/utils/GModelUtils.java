@@ -1,17 +1,12 @@
 package de.tesis.dynaware.grapheditor.core.utils;
 
+import de.tesis.dynaware.grapheditor.model.*;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.eclipse.emf.ecore.util.EcoreUtil;
-
-import de.tesis.dynaware.grapheditor.model.GConnection;
-import de.tesis.dynaware.grapheditor.model.GConnector;
-import de.tesis.dynaware.grapheditor.model.GJoint;
-import de.tesis.dynaware.grapheditor.model.GModel;
-import de.tesis.dynaware.grapheditor.model.GNode;
 
 /**
  * Helper methods to manipulate a {@link GModel}.
@@ -88,7 +83,7 @@ public class GModelUtils {
     /**
      * Gets the node on the other side of the connection to the given connector.
      *
-     * @param connector a {@link GConnector} instance
+     * @param connector  a {@link GConnector} instance
      * @param connection a {@link GConnection} attached to this connector
      * @return the {@link GNode} on the other side of the connection, or {@code null} if none exists
      */

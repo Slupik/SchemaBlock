@@ -11,7 +11,7 @@ public class SimpleValueImpl implements SimpleValue {
 
     public SimpleValueImpl(ValueType type, Object value) {
         this.type = type;
-        if(value instanceof SimpleValue && ((SimpleValue) value).isArray()) {
+        if (value instanceof SimpleValue && ((SimpleValue) value).isArray()) {
             this.array = new SimpleValue[]{((SimpleValue) value)};
             this.single = null;
         } else {
@@ -29,7 +29,7 @@ public class SimpleValueImpl implements SimpleValue {
     @Override
     @SuppressWarnings("unchecked")
     public <T> T getCastedValue() {
-        if(single!=null) {
+        if (single != null) {
             return ((T) ValueConverter.castValueToType(getType(), single));
         } else {
             return ((T) array);
@@ -38,7 +38,7 @@ public class SimpleValueImpl implements SimpleValue {
 
     @Override
     public Object getValue() {
-        if(single!=null) {
+        if (single != null) {
             return ValueConverter.castValueToType(getType(), single);
         } else {
             return array;

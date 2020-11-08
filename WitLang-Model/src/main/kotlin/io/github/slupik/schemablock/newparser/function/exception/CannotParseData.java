@@ -13,7 +13,7 @@ public class CannotParseData extends AlgorithmException {
     public final ValueType type;
 
     public CannotParseData(Object input, ValueType type) {
-        super("Cannot parse input \""+input+"\" to type "+type.name());
+        super("Cannot parse input \"" + input + "\" to type " + type.name());
         this.input = input;
         this.type = type;
     }

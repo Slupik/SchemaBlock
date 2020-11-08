@@ -46,7 +46,7 @@ public class SkinManager implements SkinLookup {
     /**
      * Package-private constructor used only to inject mocks in unit tests.
      *
-     * @param skinFactory a mock {@link SkinFactory} instance
+     * @param skinFactory            a mock {@link SkinFactory} instance
      * @param blockEditionWithDialog
      */
     SkinManager(final GraphEditor graphEditor, final SkinFactory skinFactory, BlockEditionWithDialog blockEditionWithDialog) {
@@ -262,7 +262,7 @@ public class SkinManager implements SkinLookup {
      * list of joints will be updated.
      * </p>
      *
-     * @param connection the {@link GConnection} to which joints should be added
+     * @param connection  the {@link GConnection} to which joints should be added
      * @param jointsToAdd a list of {@link GJoint} instances for which skin instances should be created and added
      */
     public void addJoints(final GConnection connection, final List<GJoint> jointsToAdd) {

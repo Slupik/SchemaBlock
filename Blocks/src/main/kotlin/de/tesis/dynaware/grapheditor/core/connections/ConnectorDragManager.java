@@ -37,20 +37,16 @@ public class ConnectorDragManager {
 
     private final SkinLookup skinLookup;
     private final ConnectionEventManager connectionEventManager;
-
-    private GModel model;
-
     private final Map<GConnector, EventHandler<MouseEvent>> mouseEnteredHandlers = new HashMap<>();
     private final Map<GConnector, EventHandler<MouseEvent>> mouseExitedHandlers = new HashMap<>();
     private final Map<GConnector, EventHandler<MouseEvent>> mouseReleasedHandlers = new HashMap<>();
     private final Map<GConnector, EventHandler<MouseEvent>> mouseMovedHandlers = new HashMap<>();
-
     private final Map<GConnector, EventHandler<MouseEvent>> dragDetectedHandlers = new HashMap<>();
     private final Map<GConnector, EventHandler<MouseEvent>> mouseDraggedHandlers = new HashMap<>();
     private final Map<GConnector, EventHandler<MouseEvent>> mouseDragEnteredHandlers = new HashMap<>();
     private final Map<GConnector, EventHandler<MouseEvent>> mouseDragExitedHandlers = new HashMap<>();
     private final Map<GConnector, EventHandler<MouseEvent>> mouseDragReleasedHandlers = new HashMap<>();
-
+    private GModel model;
     private GConnectorValidator validator;
     private ConnectionsValidationUtils connectionValidationUtils;
 
@@ -65,12 +61,12 @@ public class ConnectorDragManager {
      * Creates a new {@link ConnectorDragManager}. Only one instance should exist per {@link DefaultGraphEditor}
      * instance.
      *
-     * @param skinLookup the {@link SkinLookup} used to look up connector and tail skins
+     * @param skinLookup             the {@link SkinLookup} used to look up connector and tail skins
      * @param connectionEventManager the {@link ConnectionEventManager} used to notify users of connection events
-     * @param view the {@link GraphEditorView} to which tail skins will be added and removed during drag events
+     * @param view                   the {@link GraphEditorView} to which tail skins will be added and removed during drag events
      */
     public ConnectorDragManager(final SkinLookup skinLookup, final ConnectionEventManager connectionEventManager,
-            final GraphEditorView view) {
+                                final GraphEditorView view) {
 
         this.skinLookup = skinLookup;
         validator = new DefaultConnectorValidator(skinLookup);
@@ -95,7 +91,7 @@ public class ConnectorDragManager {
 
     /**
      * Sets the validator that determines what connections can be created.
-     * 
+     *
      * @param validator a {@link GConnectorValidator} implementaiton, or null to use the default
      */
     public void setValidator(final GConnectorValidator validator) {
@@ -245,7 +241,7 @@ public class ConnectorDragManager {
     /**
      * Handles mouse-entered events on the given connector.
      *
-     * @param event a mouse-entered event
+     * @param event     a mouse-entered event
      * @param connector the {@link GConnector} on which this event occured
      */
     private void handleMouseEntered(final MouseEvent event, final GConnector connector) {
@@ -262,7 +258,7 @@ public class ConnectorDragManager {
     /**
      * Handles mouse-exited events on the given connector.
      *
-     * @param event a mouse-exited event
+     * @param event     a mouse-exited event
      * @param connector the {@link GConnector} on which this event occured
      */
     private void handleMouseExited(final MouseEvent event, final GConnector connector) {
@@ -274,7 +270,7 @@ public class ConnectorDragManager {
     /**
      * Handles mouse-released events on the given connector.
      *
-     * @param event a mouse-released event
+     * @param event     a mouse-released event
      * @param connector the {@link GConnector} on which this event occured
      */
     private void handleMouseReleased(final MouseEvent event, final GConnector connector) {
@@ -302,7 +298,7 @@ public class ConnectorDragManager {
     /**
      * Handles drag-detected events on the given connector.
      *
-     * @param event a drag-detected event
+     * @param event     a drag-detected event
      * @param connector the {@link GConnector} on which this event occured
      */
     private void handleDragDetected(final MouseEvent event, final GConnector connector) {
@@ -334,7 +330,7 @@ public class ConnectorDragManager {
     /**
      * Handles mouse-dragged events on the given connector.
      *
-     * @param event a mouse-dragged event
+     * @param event     a mouse-dragged event
      * @param connector the {@link GConnector} on which this event occured
      */
     private void handleMouseDragged(final MouseEvent event, final GConnector connector) {
@@ -361,7 +357,7 @@ public class ConnectorDragManager {
     /**
      * Handles drag-entered events on the given connector.
      *
-     * @param event a drag-entered event
+     * @param event     a drag-entered event
      * @param connector the {@link GConnector} on which this event occured
      */
     private void handleDragEntered(final MouseEvent event, final GConnector connector) {
@@ -390,7 +386,7 @@ public class ConnectorDragManager {
     /**
      * Handles drag-exited events on the given connector.
      *
-     * @param event a drag-exited event
+     * @param event     a drag-exited event
      * @param connector the {@link GConnector} on which this event occured
      */
     private void handleDragExited(final MouseEvent event, final GConnector connector) {
@@ -411,7 +407,7 @@ public class ConnectorDragManager {
     /**
      * Handles drag-released events on the given connector.
      *
-     * @param event a drag-released event
+     * @param event     a drag-released event
      * @param connector the {@link GConnector} on which this event occured
      */
     private void handleDragReleased(final MouseEvent event, final GConnector connector) {
@@ -499,7 +495,7 @@ public class ConnectorDragManager {
     /**
      * Detaches the first connection from the given connector - i.e. removes the connection and replaces it with a tail.
      *
-     * @param event the {@link MouseEvent} that caused the connection to be detached
+     * @param event     the {@link MouseEvent} that caused the connection to be detached
      * @param connector the connector that the connection was detached from
      */
     private void detachConnection(final MouseEvent event, final GConnector connector) {
@@ -528,7 +524,6 @@ public class ConnectorDragManager {
      * Gets the 'opposing' connector that the given connector's first connection is connected to.
      *
      * @param connector a {@link GConnector} instance
-     *
      * @return the {@link GConnector} on the other end of the connection, or {@code null} if no connection is present
      */
     private GConnector getFirstOpposingConnector(final GConnector connector) {

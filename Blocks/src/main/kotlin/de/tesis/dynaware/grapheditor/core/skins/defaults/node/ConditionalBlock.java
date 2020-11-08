@@ -107,8 +107,8 @@ public class ConditionalBlock extends Block {
             recreateHalo(e, f);
 
             final double cornerLength = 2 * HALO_CORNER_SIZE;
-            final double sideLength = Math.sqrt(Math.pow(e/2d, 2)+Math.pow(f/2d, 2));
-            final double gap = sideLength-cornerLength;
+            final double sideLength = Math.sqrt(Math.pow(e / 2d, 2) + Math.pow(f / 2d, 2));
+            final double gap = sideLength - cornerLength;
 
             selectionHalo.setStrokeDashOffset(HALO_CORNER_SIZE);
             selectionHalo.getStrokeDashArray().setAll(cornerLength, gap);

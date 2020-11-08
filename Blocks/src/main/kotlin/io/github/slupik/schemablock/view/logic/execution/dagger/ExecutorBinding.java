@@ -8,10 +8,7 @@ import io.github.slupik.schemablock.newparser.compilator.Compilator;
 import io.github.slupik.schemablock.newparser.compilator.implementation.DefaultCompilator;
 import io.github.slupik.schemablock.newparser.executor.Executor;
 import io.github.slupik.schemablock.newparser.executor.implementation.ExecutorImpl;
-import io.github.slupik.schemablock.newparser.memory.Memory;
-import io.github.slupik.schemablock.newparser.memory.MemoryImpl;
-import io.github.slupik.schemablock.newparser.memory.Register;
-import io.github.slupik.schemablock.newparser.memory.RegisterImpl;
+import io.github.slupik.schemablock.newparser.memory.*;
 import io.github.slupik.schemablock.view.logic.communication.UIIOCommunicator;
 import io.github.slupik.schemablock.view.logic.execution.block.BlockExecutor;
 import io.github.slupik.schemablock.view.logic.execution.block.StatelessBlockExecutor;
@@ -52,6 +49,10 @@ public abstract class ExecutorBinding {
     @Singleton
     @AtomicMemory
     public abstract Memory memory(MemoryImpl memory);
+
+    @Binds
+    @Singleton
+    public abstract IndexesExtractor extractor(TokenizingIndexesExtractor extractor);
 
     @Binds
     @Singleton

@@ -15,7 +15,7 @@ public class TriangleDrawer {
 
     public static String getTriangleType(Point2D lastJoint, Point2D port) {
         double accuracy = 0;
-        if (Math.abs(port.getY() - lastJoint.getY()) < OUTER_SIZE/2) {
+        if (Math.abs(port.getY() - lastJoint.getY()) < OUTER_SIZE / 2) {
             if (port.getX() - lastJoint.getX() >= accuracy) {
                 return DefaultConnectorTypes.RIGHT_OUTPUT;
             } else {

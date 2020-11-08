@@ -3,11 +3,6 @@
  */
 package de.tesis.dynaware.grapheditor.core.selections;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javafx.beans.value.ChangeListener;
-import javafx.scene.layout.Region;
 import de.tesis.dynaware.grapheditor.GJointSkin;
 import de.tesis.dynaware.grapheditor.GNodeSkin;
 import de.tesis.dynaware.grapheditor.SkinLookup;
@@ -19,6 +14,11 @@ import de.tesis.dynaware.grapheditor.model.GModel;
 import de.tesis.dynaware.grapheditor.model.GNode;
 import de.tesis.dynaware.grapheditor.utils.DraggableBox;
 import de.tesis.dynaware.grapheditor.utils.GraphEditorProperties;
+import javafx.beans.value.ChangeListener;
+import javafx.scene.layout.Region;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Handles how a selection of multiple objects is dragged.
@@ -41,7 +41,7 @@ public class SelectionDragManager {
      * Creates a new selection drag manager. Only one instance should exist per {@link DefaultGraphEditor} instance.
      *
      * @param skinLookup the {@link SkinLookup} used to look up skins
-     * @param view the {@link GraphEditorView} instance
+     * @param view       the {@link GraphEditorView} instance
      */
     public SelectionDragManager(final SkinLookup skinLookup, final GraphEditorView view) {
         this.skinLookup = skinLookup;
@@ -51,7 +51,7 @@ public class SelectionDragManager {
     /**
      * Binds the positions of all selected objects to have a fixed position relative to a given node.
      *
-     * @param node the master {@link GNode} that all selected objects should keep a fixed position relative to
+     * @param node  the master {@link GNode} that all selected objects should keep a fixed position relative to
      * @param model the {@link GModel} currently being edited
      */
     public void bindPositions(final GNode node, final GModel model) {
@@ -94,7 +94,7 @@ public class SelectionDragManager {
      * Binds the positions of all selected objects to have a fixed position relative to the given draggable box.
      *
      * @param master the master {@link DraggableBox} that all selected objects should keep a fixed position relative to
-     * @param model the {@link GModel} currently being edited
+     * @param model  the {@link GModel} currently being edited
      */
     private void bindPositions(final DraggableBox master, final GModel model) {
 
@@ -106,7 +106,7 @@ public class SelectionDragManager {
     /**
      * Unbinds the positions of all selected objects.
      *
-     * @param node the master {@link DraggableBox} that all selected objects were previously bound to
+     * @param master node the master {@link DraggableBox} that all selected objects were previously bound to
      */
     private void unbindPositions(final DraggableBox master) {
 
@@ -118,7 +118,7 @@ public class SelectionDragManager {
      * Stores the current offset position of all selected objects with respect to the given master region.
      *
      * @param master the master {@link Region} that all selected objects should keep a fixed position relative to
-     * @param model the {@link GModel} currently being edited
+     * @param model  the {@link GModel} currently being edited
      */
     private void storeCurrentOffsets(final Region master, final GModel model) {
 
@@ -167,7 +167,7 @@ public class SelectionDragManager {
      * </p>
      *
      * @param master the master {@link DraggableBox} that all selected objects should keep a fixed position relative to
-     * @param model the {@link GModel} currently being edited
+     * @param model  the {@link GModel} currently being edited
      */
     private void setEditorBoundsForDrag(final DraggableBox master, final GModel model) {
 
@@ -208,8 +208,8 @@ public class SelectionDragManager {
      * Calculates the offset between the given master and slave boxes and adds it to the maxOffsets instance if it is
      * larger than the current maximum value.
      *
-     * @param master the master {@link DraggableBox} being dragged
-     * @param slave the slave {@link DraggableBox} that is also selected and whose position is bound to the master
+     * @param master     the master {@link DraggableBox} being dragged
+     * @param slave      the slave {@link DraggableBox} that is also selected and whose position is bound to the master
      * @param maxOffsets the {@link BoundOffsets} instance storing the current max offsets in all 4 directions
      */
     private void addOffsets(final DraggableBox master, final DraggableBox slave, final BoundOffsets maxOffsets) {
@@ -248,7 +248,7 @@ public class SelectionDragManager {
     /**
      * Resets the editor properties instance in the master draggable box to its original value.
      *
-     * @param the master {@link DraggableBox} that was just dragged
+     * @param master {@link DraggableBox} that was just dragged
      */
     private void restoreEditorProperties(final DraggableBox master) {
         master.setEditorProperties(view.getEditorProperties());
@@ -257,8 +257,8 @@ public class SelectionDragManager {
     /**
      * Adds listeners to the master region to update all slave regions accordingly when the master's position changes.
      *
-     * @param the master {@link DraggableBox} that is about to be dragged
-     * @param model the {@link GModel} currently being edited
+     * @param master {@link DraggableBox} that is about to be dragged
+     * @param model  the {@link GModel} currently being edited
      */
     private void addPositionListeners(final Region master, final GModel model) {
 

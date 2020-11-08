@@ -11,14 +11,18 @@ import io.github.slupik.schemablock.model.ui.implementation.container.NextElemen
 public interface ElementContainer {
 
     void run(ExecutionCallback callback);
+
     void setExecutionFlowController(ExecutionFlowController controller);
 
     void addElement(Element element);
+
     Element getElement(String id) throws NextElementNotFound;
+
     void removeElement(String id);
 
     void deleteAll();
 
     String stringify();
+
     void restore(String data);
 }

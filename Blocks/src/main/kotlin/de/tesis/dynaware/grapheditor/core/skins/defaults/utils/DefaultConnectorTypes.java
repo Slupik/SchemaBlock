@@ -7,12 +7,12 @@ import javafx.geometry.Side;
 
 /**
  * This class defines 8 connector types. The connectors can be:
- * 
+ *
  * <ol>
  * <li>Either <b>input</b> or <b>output</b></li>
  * <li>Either <b>top</b>, <b>right</b>, <b>bottom</b>, or <b>left</b></li>
  * </ol>
- * 
+ * <p>
  * For example <b>left-input</b> defines a connector on the <em>left</em> side of a node, with a triangle point facing
  * <em>into</em> the node.
  */
@@ -89,7 +89,7 @@ public class DefaultConnectorTypes {
 
     /**
      * Returns true if the type is supported by the default skins.
-     * 
+     *
      * @param type a connector's type string
      * @return {@code true} if the type is supported by the default skins
      */
@@ -103,7 +103,7 @@ public class DefaultConnectorTypes {
 
     /**
      * Gets the side corresponding to the given connector type.
-     * 
+     *
      * @param type a non-null connector type
      * @return the {@link Side} the connector type is on
      */
@@ -124,7 +124,7 @@ public class DefaultConnectorTypes {
 
     /**
      * Returns true if the type corresponds to a connector positioned at the top of a node.
-     * 
+     *
      * @param type a connector's type string
      * @return {@code true} if the connector will be positioned at the top of a node
      */
@@ -134,7 +134,7 @@ public class DefaultConnectorTypes {
 
     /**
      * Returns true if the type corresponds to a connector positioned on the right side of a node.
-     * 
+     *
      * @param type a connector's type string
      * @return {@code true} if the connector will be positioned on the right side of a node
      */
@@ -144,7 +144,7 @@ public class DefaultConnectorTypes {
 
     /**
      * Returns true if the type corresponds to a connector positioned at the bottom of a node.
-     * 
+     *
      * @param type a connector's type string
      * @return {@code true} if the connector will be positioned at the bottom of a node
      */
@@ -154,7 +154,7 @@ public class DefaultConnectorTypes {
 
     /**
      * Returns true if the type corresponds to a connector positioned on the left side of a node.
-     * 
+     *
      * @param type a connector's type string
      * @return {@code true} if the connector will be positioned on the left side of a node
      */
@@ -164,7 +164,7 @@ public class DefaultConnectorTypes {
 
     /**
      * Returns true if the type corresponds to an input connector.
-     * 
+     *
      * @param type a connector's type string
      * @return {@code true} if the connector is any kind of input
      */
@@ -174,7 +174,7 @@ public class DefaultConnectorTypes {
 
     /**
      * Returns true if the type corresponds to an output connector.
-     * 
+     *
      * @param type a connector's type string
      * @return {@code true} if the connector is any kind of output
      */
@@ -194,8 +194,8 @@ public class DefaultConnectorTypes {
 
     /**
      * Returns true if the two given types are on the same side of a node.
-     * 
-     * @param firstType the first connector type
+     *
+     * @param firstType  the first connector type
      * @param secondType the second connector type
      * @return {@code true} if the connectors are on the same side of a node
      */

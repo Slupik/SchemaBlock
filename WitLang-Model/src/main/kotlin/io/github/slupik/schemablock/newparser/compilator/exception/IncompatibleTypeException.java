@@ -13,7 +13,7 @@ public class IncompatibleTypeException extends AlgorithmException {
     public final ValueType actual;
 
     public IncompatibleTypeException(ValueType excepted, ValueType actual) {
-        super("Incompatibility types: "+excepted+" and "+actual);
+        super("Incompatibility types: " + excepted + " and " + actual);
         this.excepted = excepted;
         this.actual = actual;
     }

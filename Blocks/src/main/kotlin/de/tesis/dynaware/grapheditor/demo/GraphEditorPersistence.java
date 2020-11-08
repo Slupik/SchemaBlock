@@ -161,7 +161,7 @@ public class GraphEditorPersistence {
     /**
      * Saves the graph editor's model state in the given file.
      *
-     * @param file the {@link File} the model state will be saved in
+     * @param file  the {@link File} the model state will be saved in
      * @param model the {@link GModel} to be saved
      */
     private void saveModel(final File file, final GModel model) {
@@ -193,7 +193,7 @@ public class GraphEditorPersistence {
     /**
      * Loads the model from the given file and sets it in the given graph editor.
      *
-     * @param file the {@link File} to be loaded
+     * @param file        the {@link File} to be loaded
      * @param graphEditor the {@link GraphEditor} in which the loaded model will be set
      */
     private void loadModel(final File file, final GraphEditor graphEditor) {

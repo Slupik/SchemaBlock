@@ -1,11 +1,11 @@
 package de.tesis.dynaware.grapheditor.core.skins.defaults.tail;
 
+import javafx.geometry.Point2D;
+import javafx.geometry.Side;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javafx.geometry.Point2D;
-import javafx.geometry.Side;
 
 /**
  * Creates a rectangular connection path based on what sides of the nodes the connection starts and ends at.
@@ -16,19 +16,19 @@ public class RectangularPathCreator {
 
     /**
      * Creates a rectangular path from the start to the end positions.
-     * 
+     *
      * <p>
      * Tries to travel outwards from the start and end nodes by at least a minimum amount.
      * </p>
-     * 
+     *
      * @param startPosition the start position
-     * @param endPosition the end position
-     * @param startSide the side of the node the path starts from
-     * @param endSide the side of the node the path travels to
+     * @param endPosition   the end position
+     * @param startSide     the side of the node the path starts from
+     * @param endSide       the side of the node the path travels to
      * @return a list of points specifying the path
      */
     public static List<Point2D> createPath(final Point2D startPosition, final Point2D endPosition,
-            final Side startSide, final Side endSide) {
+                                           final Side startSide, final Side endSide) {
 
         if (startSide.equals(Side.LEFT) && endSide.equals(Side.LEFT)) {
             return connectLeftToLeft(startPosition, endPosition);
@@ -82,9 +82,9 @@ public class RectangularPathCreator {
 
     /**
      * Connects the start point on the left side of a node to an end point on the left side of a node.
-     * 
+     *
      * @param start the start position
-     * @param end the end position
+     * @param end   the end position
      * @return a list of points connecting the start and end
      */
     private static List<Point2D> connectLeftToLeft(final Point2D start, final Point2D end) {
@@ -100,9 +100,9 @@ public class RectangularPathCreator {
 
     /**
      * Connects the start point on the left side of a node to an end point on the right side of a node.
-     * 
+     *
      * @param start the start position
-     * @param end the end position
+     * @param end   the end position
      * @return a list of points connecting the start and end
      */
     private static List<Point2D> connectLeftToRight(final Point2D start, final Point2D end) {
@@ -126,9 +126,9 @@ public class RectangularPathCreator {
 
     /**
      * Connects the start point on the left side of a node to an end point on the top side of a node.
-     * 
+     *
      * @param start the start position
-     * @param end the end position
+     * @param end   the end position
      * @return a list of points connecting the start and end
      */
     private static List<Point2D> connectLeftToTop(final Point2D start, final Point2D end) {
@@ -162,9 +162,9 @@ public class RectangularPathCreator {
 
     /**
      * Connects the start point on the left side of a node to an end point on the bottom side of a node.
-     * 
+     *
      * @param start the start position
-     * @param end the end position
+     * @param end   the end position
      * @return a list of points connecting the start and end
      */
     private static List<Point2D> connectLeftToBottom(final Point2D start, final Point2D end) {
@@ -198,9 +198,9 @@ public class RectangularPathCreator {
 
     /**
      * Connects the start point on the lerightft side of a node to an end point on the right side of a node.
-     * 
+     *
      * @param start the start position
-     * @param end the end position
+     * @param end   the end position
      * @return a list of points connecting the start and end
      */
     private static List<Point2D> connectRightToRight(final Point2D start, final Point2D end) {
@@ -216,9 +216,9 @@ public class RectangularPathCreator {
 
     /**
      * Connects the start point on the right side of a node to an end point on the top side of a node.
-     * 
+     *
      * @param start the start position
-     * @param end the end position
+     * @param end   the end position
      * @return a list of points connecting the start and end
      */
     private static List<Point2D> connectRightToTop(final Point2D start, final Point2D end) {
@@ -252,9 +252,9 @@ public class RectangularPathCreator {
 
     /**
      * Connects the start point on the right side of a node to an end point on the bottom side of a node.
-     * 
+     *
      * @param start the start position
-     * @param end the end position
+     * @param end   the end position
      * @return a list of points connecting the start and end
      */
     private static List<Point2D> connectRightToBottom(final Point2D start, final Point2D end) {
@@ -288,9 +288,9 @@ public class RectangularPathCreator {
 
     /**
      * Connects the start point on the top side of a node to an end point on the top side of a node.
-     * 
+     *
      * @param start the start position
-     * @param end the end position
+     * @param end   the end position
      * @return a list of points connecting the start and end
      */
     private static List<Point2D> connectTopToTop(final Point2D start, final Point2D end) {
@@ -306,9 +306,9 @@ public class RectangularPathCreator {
 
     /**
      * Connects the start point on the top side of a node to an end point on the bottom side of a node.
-     * 
+     *
      * @param start the start position
-     * @param end the end position
+     * @param end   the end position
      * @return a list of points connecting the start and end
      */
     private static List<Point2D> connectTopToBottom(final Point2D start, final Point2D end) {
@@ -332,9 +332,9 @@ public class RectangularPathCreator {
 
     /**
      * Connects the start point on the bottom side of a node to an end point on the bottom side of a node.
-     * 
+     *
      * @param start the start position
-     * @param end the end position
+     * @param end   the end position
      * @return a list of points connecting the start and end
      */
     private static List<Point2D> connectBottomToBottom(final Point2D start, final Point2D end) {
@@ -350,10 +350,10 @@ public class RectangularPathCreator {
 
     /**
      * Adds a point with the given x and y values to the path.
-     * 
+     *
      * @param path a list of points
-     * @param x the x coordinate for the new point
-     * @param y the y coordinate for the new point
+     * @param x    the x coordinate for the new point
+     * @param y    the y coordinate for the new point
      */
     private static void addPoint(final List<Point2D> path, final double x, final double y) {
         path.add(new Point2D(x, y));
@@ -361,7 +361,7 @@ public class RectangularPathCreator {
 
     /**
      * Reverses a list of points and returns it.
-     * 
+     *
      * @param points the list of points to be reversed
      * @return the reversed list of points
      */

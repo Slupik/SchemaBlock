@@ -54,8 +54,8 @@ public class DefaultFunctionContainer implements FunctionContainer {
     @Override
     public List<Function> getMatchingFunctions(String name) {
         List<Function> matching = new ArrayList<>();
-        for(Function function:IMPLEMENTED_FUNCTIONS) {
-            if(function.getName().equals(name)) {
+        for (Function function : IMPLEMENTED_FUNCTIONS) {
+            if (function.getName().equals(name)) {
                 matching.add(function);
             }
         }

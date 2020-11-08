@@ -10,6 +10,7 @@ import javax.inject.Inject
  */
 private const val SAMPLE_FILE: String = "sample$FILE_EXTENSION"
 private const val SAMPLE_FILE_LARGE = "sample-large$FILE_EXTENSION"
+
 class SampleLoader @Inject constructor(
     private val graphLoader: GraphLoader,
     private val converter: GraphToDiagramConverter

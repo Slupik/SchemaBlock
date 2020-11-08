@@ -1,7 +1,6 @@
 package io.github.slupik.schemablock.newparser.function;
 
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
-import io.github.slupik.schemablock.newparser.function.exception.NoMatchingFunction;
 import io.github.slupik.schemablock.newparser.memory.element.Value;
 
 import java.util.List;

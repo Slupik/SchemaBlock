@@ -27,7 +27,7 @@ public class FunctionPrintln implements Function {
     @Override
     public Value execute(List<Value> args) {
         String text;
-        if(args.get(0).isArray()) {
+        if (args.get(0).isArray()) {
             text = toString(((Array) args.get(0)));
         } else {
             text = toString(((SimpleValue) args.get(0)));
@@ -43,15 +43,15 @@ public class FunctionPrintln implements Function {
         StringBuilder output = new StringBuilder("[");
 
         int index = 0;
-        for(ArrayCell cell:array.getCells()) {
-            if(cell.getValue().isArray()) {
-                if(index==0) {
+        for (ArrayCell cell : array.getCells()) {
+            if (cell.getValue().isArray()) {
+                if (index == 0) {
                     output.append(index).append(": ").append(toString(((Array) cell.getValue())));
                 } else {
                     output.append(", ").append(index).append(": ").append(toString(((Array) cell.getValue())));
                 }
             } else {
-                if(index==0) {
+                if (index == 0) {
                     output.append(index).append(": ").append(toString(((SimpleValue) cell.getValue())));
                 } else {
                     output.append(", ").append(index).append(": ").append(toString(((SimpleValue) cell.getValue())));

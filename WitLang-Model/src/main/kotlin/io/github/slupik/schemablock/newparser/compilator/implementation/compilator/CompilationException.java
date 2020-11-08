@@ -16,7 +16,7 @@ public abstract class CompilationException extends AlgorithmException {
     }
 
     public CompilationException(String message, int line, int pos) {
-        super(message+", at line: "+line+ " and at position: "+pos);
+        super(message + ", at line: " + line + " and at position: " + pos);
         this.line = line;
         this.position = pos;
     }

@@ -3,7 +3,10 @@ package io.github.slupik.schemablock.newparser.function.definition;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.newparser.function.Function;
 import io.github.slupik.schemablock.newparser.function.FunctionArgType;
-import io.github.slupik.schemablock.newparser.memory.element.*;
+import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
+import io.github.slupik.schemablock.newparser.memory.element.SimpleValueImpl;
+import io.github.slupik.schemablock.newparser.memory.element.Value;
+import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 
 import java.util.ArrayList;
 import java.util.List;

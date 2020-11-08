@@ -8,6 +8,7 @@ import io.github.slupik.schemablock.entity.element.state.ElementStateListener;
 public interface ListenableElement {
 
     void addStateListener(ElementStateListener listener);
+
     void removeStateListener(ElementStateListener listener);
 
 }

@@ -74,20 +74,20 @@ public class TreeConnectorSkin extends GConnectorSkin {
 
         switch (style) {
 
-        case DEFAULT:
-            circle.pseudoClassStateChanged(PSEUDO_CLASS_FORBIDDEN, false);
-            circle.pseudoClassStateChanged(PSEUDO_CLASS_ALLOWED, false);
-            break;
+            case DEFAULT:
+                circle.pseudoClassStateChanged(PSEUDO_CLASS_FORBIDDEN, false);
+                circle.pseudoClassStateChanged(PSEUDO_CLASS_ALLOWED, false);
+                break;
 
-        case DRAG_OVER_ALLOWED:
-            circle.pseudoClassStateChanged(PSEUDO_CLASS_FORBIDDEN, false);
-            circle.pseudoClassStateChanged(PSEUDO_CLASS_ALLOWED, true);
-            break;
+            case DRAG_OVER_ALLOWED:
+                circle.pseudoClassStateChanged(PSEUDO_CLASS_FORBIDDEN, false);
+                circle.pseudoClassStateChanged(PSEUDO_CLASS_ALLOWED, true);
+                break;
 
-        case DRAG_OVER_FORBIDDEN:
-            circle.pseudoClassStateChanged(PSEUDO_CLASS_FORBIDDEN, true);
-            circle.pseudoClassStateChanged(PSEUDO_CLASS_ALLOWED, false);
-            break;
+            case DRAG_OVER_FORBIDDEN:
+                circle.pseudoClassStateChanged(PSEUDO_CLASS_FORBIDDEN, true);
+                circle.pseudoClassStateChanged(PSEUDO_CLASS_ALLOWED, false);
+                break;
         }
     }
 }

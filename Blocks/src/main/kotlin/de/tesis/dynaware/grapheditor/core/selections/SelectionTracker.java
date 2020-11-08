@@ -1,7 +1,5 @@
 package de.tesis.dynaware.grapheditor.core.selections;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import de.tesis.dynaware.grapheditor.GConnectionSkin;
 import de.tesis.dynaware.grapheditor.GJointSkin;
 import de.tesis.dynaware.grapheditor.GNodeSkin;
@@ -10,17 +8,18 @@ import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.model.GJoint;
 import de.tesis.dynaware.grapheditor.model.GModel;
 import de.tesis.dynaware.grapheditor.model.GNode;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * Provides observable lists of selected nodes and joints for convenience.
  */
 public class SelectionTracker {
 
+    private final SkinLookup skinLookup;
     ObservableList<GNode> selectedNodes = FXCollections.observableArrayList();
     ObservableList<GConnection> selectedConnections = FXCollections.observableArrayList();
     ObservableList<GJoint> selectedJoints = FXCollections.observableArrayList();
-
-    private final SkinLookup skinLookup;
 
     /**
      * Creates a new {@link SelectionTracker} instance.

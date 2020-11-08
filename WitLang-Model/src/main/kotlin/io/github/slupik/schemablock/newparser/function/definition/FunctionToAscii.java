@@ -28,12 +28,12 @@ public class FunctionToAscii implements Function {
     @Override
     public Value execute(List<Value> args) throws AlgorithmException {
         String text = ((SimpleValue) args.get(0)).getCastedValue();
-        if(text.length() == 0) {
+        if (text.length() == 0) {
             return new SimpleValueImpl(
                     ValueType.INTEGER,
                     0
             );
-        } else if(text.length()==1) {
+        } else if (text.length() == 1) {
             char letter = text.charAt(0);
             return new SimpleValueImpl(
                     ValueType.INTEGER,
@@ -45,7 +45,7 @@ public class FunctionToAscii implements Function {
                     1,
                     text.length()
             );
-            for(int i=0;i<text.length();i++) {
+            for (int i = 0; i < text.length(); i++) {
                 char letter = text.charAt(0);
                 array.setValue(
                         new int[]{i},

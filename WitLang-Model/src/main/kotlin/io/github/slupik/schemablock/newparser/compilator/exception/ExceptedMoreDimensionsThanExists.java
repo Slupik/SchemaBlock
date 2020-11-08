@@ -9,7 +9,7 @@ public class ExceptedMoreDimensionsThanExists extends Exception {
     private final int excepted;
 
     public ExceptedMoreDimensionsThanExists(int exists, int excepted) {
-        super("Excepted array with "+excepted+" dimensions but exists only "+exists);
+        super("Excepted array with " + excepted + " dimensions but exists only " + exists);
         this.exists = exists;
         this.excepted = excepted;
     }

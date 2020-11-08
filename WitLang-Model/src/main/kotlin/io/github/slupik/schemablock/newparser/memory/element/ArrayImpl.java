@@ -20,7 +20,7 @@ public class ArrayImpl implements Array {
         TYPE = type;
         DIMENSIONS = dimensions;
         VALUES = new ArrayCell[size];
-        for(int i = 0;i<size;i++) {
+        for (int i = 0; i < size; i++) {
             VALUES[i] = new ArrayCellImpl(type);
         }
     }
@@ -32,28 +32,13 @@ public class ArrayImpl implements Array {
 
     @Override
     public void setValue(int[] indexes, SimpleValue value) throws AlgorithmException {
-        if(ValueType.isCompatible(TYPE, value.getType())) {
-            if(indexes.length>1) {
-                getArray(
-                        Arrays.copyOfRange(indexes, 0, indexes.length-1)
-                ).setValue(
-                        new int[]{indexes[indexes.length-1]},
-                        value
-                );
+        if (ValueType.isCompatible(TYPE, value.getType())) {
+            ArrayCell cell = getCell(indexes);
+            Value cellValue = cell.getValue();
+            if (cellValue == null || cellValue instanceof SimpleValue) {
+                cell.setValue(value);
             } else {
-                if(indexes.length == 1) {
-                    if(DIMENSIONS==1) {
-                        if(VALUES.length>indexes[0]) {
-                            VALUES[indexes[0]].setValue(value);
-                        } else {
-                            throw new IndexOutOfBoundsException(VALUES.length, indexes[0]);
-                        }
-                    } else {
-                        throw new IncompatibleArrayException(0, indexes.length);
-                    }
-                } else {
-                    throw new IncompatibleArrayException(indexes.length, 1);
-                }
+                throw new IncompatibleArrayException(0, ((Array) cellValue).getDimensionsCount());
             }
         } else {
             throw new IncompatibleTypeException(TYPE, value.getType());
@@ -62,17 +47,17 @@ public class ArrayImpl implements Array {
 
     @Override
     public void setValue(int[] indexes, Array value) throws AlgorithmException {
-        if(value.getType() == TYPE) {
-            if(value.getDimensionsCount()+indexes.length==DIMENSIONS) {
-                if(indexes.length==1) {
-                    if(VALUES.length>indexes[0]) {
+        if (value.getType() == TYPE) {
+            if (value.getDimensionsCount() + indexes.length == DIMENSIONS) {
+                if (indexes.length == 1) {
+                    if (VALUES.length > indexes[0]) {
                         VALUES[indexes[0]].setValue(value);
                     } else {
                         throw new IndexOutOfBoundsException(VALUES.length, indexes[0]);
                     }
                 } else {
-                    Array array = getArray(Arrays.copyOfRange(indexes, 0, indexes.length-1));
-                    array.setValue(new int[]{indexes[indexes.length-1]}, value);
+                    Array array = getArray(Arrays.copyOfRange(indexes, 0, indexes.length - 1));
+                    array.setValue(new int[]{indexes[indexes.length - 1]}, value);
                 }
             } else {
                 throw new IncompatibleArrayException(DIMENSIONS, indexes.length);
@@ -84,13 +69,13 @@ public class ArrayImpl implements Array {
 
     @Override
     public ArrayCell getCell(int[] indexes) throws AlgorithmException {
-        if(indexes.length==1) {
+        if (indexes.length == 1) {
             return VALUES[indexes[0]];
         } else {
-            if(DIMENSIONS==indexes.length) {
+            if (DIMENSIONS == indexes.length) {
                 ArrayCell cell = VALUES[indexes[0]];
                 Value memorizes = cell.getValue();
-                if(memorizes instanceof Array) {
+                if (memorizes instanceof Array) {
                     return ((Array) memorizes).getCell(Arrays.copyOfRange(indexes, 1, indexes.length));
                 } else {
                     throw new ExceptedArray();
@@ -108,7 +93,7 @@ public class ArrayImpl implements Array {
 
     private Array getArray(int[] indexes) throws AlgorithmException {
         Memoryable memorized = getElement(indexes);
-        if(memorized instanceof Array) {
+        if (memorized instanceof Array) {
             return (Array) memorized;
         } else {
             throw new ExceptedArray();

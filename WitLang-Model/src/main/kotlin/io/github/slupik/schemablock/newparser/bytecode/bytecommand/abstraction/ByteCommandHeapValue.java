@@ -7,5 +7,6 @@ import io.github.slupik.schemablock.newparser.memory.element.ValueType;
  */
 public interface ByteCommandHeapValue extends ByteCommand {
     ValueType getValueType();
+
     String getRawValue();
 }

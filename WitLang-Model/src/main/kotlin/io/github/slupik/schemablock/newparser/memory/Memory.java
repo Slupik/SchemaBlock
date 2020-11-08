@@ -10,7 +10,8 @@ import io.github.slupik.schemablock.newparser.memory.element.Variable;
 public interface Memory {
 
     void register(Variable variable) throws AlgorithmException;
-    Variable get(String name) throws VariableNotFound;
+
+    Variable get(String name) throws AlgorithmException;
 
     void clear();
 }

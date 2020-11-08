@@ -7,7 +7,7 @@ import javafx.css.PseudoClass;
 /**
  * All rights reserved & copyright ©
  */
-public abstract class Block extends LabeledNodeSkin  {
+public abstract class Block extends LabeledNodeSkin {
 
     private static final PseudoClass PSEUDO_CLASS_ERROR = PseudoClass.getPseudoClass("error");
     private static final PseudoClass PSEUDO_CLASS_CURRENT = PseudoClass.getPseudoClass("current");

@@ -1,16 +1,13 @@
 package de.tesis.dynaware.grapheditor.core.selections;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
-
+import de.tesis.dynaware.grapheditor.GNodeSkin;
+import de.tesis.dynaware.grapheditor.SkinLookup;
+import de.tesis.dynaware.grapheditor.core.utils.GModelUtils;
+import de.tesis.dynaware.grapheditor.model.*;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.layout.Region;
-
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -18,14 +15,11 @@ import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
-import de.tesis.dynaware.grapheditor.GNodeSkin;
-import de.tesis.dynaware.grapheditor.SkinLookup;
-import de.tesis.dynaware.grapheditor.core.utils.GModelUtils;
-import de.tesis.dynaware.grapheditor.model.GConnection;
-import de.tesis.dynaware.grapheditor.model.GJoint;
-import de.tesis.dynaware.grapheditor.model.GModel;
-import de.tesis.dynaware.grapheditor.model.GNode;
-import de.tesis.dynaware.grapheditor.model.GraphPackage;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
 
 /**
  * Manages cut, copy, & paste actions on the current selection.
@@ -62,13 +56,13 @@ public class SelectionCopier {
     /**
      * Creates a new {@link SelectionCopier} instance.
      *
-     * @param skinLookup the {@link SkinLookup} instance for the graph editor
+     * @param skinLookup       the {@link SkinLookup} instance for the graph editor
      * @param selectionTracker the {@link SelectionTracker} instance for the graph editor
      * @param selectionCreator the {@link SelectionCreator} instance for the graph editor
      * @param selectionDeleter the {@link SelectionDeleter} instance for the graph editor
      */
     public SelectionCopier(final SkinLookup skinLookup, final SelectionTracker selectionTracker,
-            final SelectionCreator selectionCreator, final SelectionDeleter selectionDeleter) {
+                           final SelectionCreator selectionCreator, final SelectionDeleter selectionDeleter) {
 
         this.skinLookup = skinLookup;
         this.selectionTracker = selectionTracker;
@@ -87,8 +81,8 @@ public class SelectionCopier {
 
     /**
      * Cuts the current selection and stores it in memory.
-     * 
-     * @param handler a {@link CommandAppender} to allow custom commands to be appended to the cut command
+     *
+     * @param consumer handler a {@link CommandAppender} to allow custom commands to be appended to the cut command
      */
     public void cut(final BiConsumer<List<GNode>, CompoundCommand> consumer) {
 
@@ -174,7 +168,7 @@ public class SelectionCopier {
     /**
      * Prepares the lists of pasted nodes and connections.
      *
-     * @param pastedNodes an empty list to be filled with pasted nodes
+     * @param pastedNodes       an empty list to be filled with pasted nodes
      * @param pastedConnections an empty list to be filled with pasted connections
      */
     private void preparePastedElements(final List<GNode> pastedNodes, final List<GConnection> pastedConnections) {
@@ -195,7 +189,7 @@ public class SelectionCopier {
     /**
      * Adds an x and y offset to all nodes and connections that are about to be pasted.
      *
-     * @param pastedNodes the nodes that are going to be pasted
+     * @param pastedNodes       the nodes that are going to be pasted
      * @param pastedConnections the connections that are going to be pasted
      */
     private void addPasteOffset(final List<GNode> pastedNodes, final List<GConnection> pastedConnections) {
@@ -222,7 +216,7 @@ public class SelectionCopier {
      * Corrects the x and y positions accordingly if they will be outside the bounds.
      * </p>
      *
-     * @param pastedNodes the nodes that are going to be pasted
+     * @param pastedNodes       the nodes that are going to be pasted
      * @param pastedConnections the connections that are going to be pasted
      */
     private void checkWithinBounds(final List<GNode> pastedNodes, final List<GConnection> pastedConnections) {
@@ -269,12 +263,12 @@ public class SelectionCopier {
     /**
      * Adds the pasted elements to the graph editor via a single EMF command.
      *
-     * @param pastedNodes the pasted nodes to be added
+     * @param pastedNodes       the pasted nodes to be added
      * @param pastedConnections the pasted connections to be added
-     * @param consumer a consumer to allow custom commands to be appended to the paste command
+     * @param consumer          a consumer to allow custom commands to be appended to the paste command
      */
     private void addPastedElements(final List<GNode> pastedNodes, final List<GConnection> pastedConnections,
-            final BiConsumer<List<GNode>, CompoundCommand> consumer) {
+                                   final BiConsumer<List<GNode>, CompoundCommand> consumer) {
 
         final EditingDomain editingDomain = AdapterFactoryEditingDomain.getEditingDomainFor(model);
         final CompoundCommand command = new CompoundCommand();
@@ -374,7 +368,7 @@ public class SelectionCopier {
     /**
      * Gets the start and end x- and y-positions of the given group of nodes and joints.
      *
-     * @param nodes a list of nodes
+     * @param nodes       a list of nodes
      * @param connections a list of connections
      * @return the start and end x- and y-positions of the given nodes and joints.
      */

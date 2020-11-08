@@ -3,12 +3,6 @@
  */
 package de.tesis.dynaware.grapheditor.core.selections;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.BiConsumer;
-
-import org.eclipse.emf.common.command.CompoundCommand;
-
 import de.tesis.dynaware.grapheditor.SkinLookup;
 import de.tesis.dynaware.grapheditor.core.DefaultGraphEditor;
 import de.tesis.dynaware.grapheditor.core.model.ModelEditingManager;
@@ -16,6 +10,11 @@ import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.model.GConnector;
 import de.tesis.dynaware.grapheditor.model.GModel;
 import de.tesis.dynaware.grapheditor.model.GNode;
+import org.eclipse.emf.common.command.CompoundCommand;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiConsumer;
 
 /**
  * Responsible for deleting a selection of one or more elements in the graph editor.
@@ -28,7 +27,7 @@ public class SelectionDeleter {
     /**
      * Creates a new selection deleter. Only one instance should exist per {@link DefaultGraphEditor} instance.
      *
-     * @param skinLookup the {@link SkinLookup} used to look up skins
+     * @param skinLookup          the {@link SkinLookup} used to look up skins
      * @param modelEditingManager the {@link ModelEditingManager} used to make changes to the model
      */
     public SelectionDeleter(final SkinLookup skinLookup, final ModelEditingManager modelEditingManager) {
@@ -39,7 +38,7 @@ public class SelectionDeleter {
     /**
      * Deletes all nodes in the current selection and all attached connections.
      *
-     * @param model the {@link GModel} currently being edited
+     * @param model    the {@link GModel} currently being edited
      * @param consumer a consumer to allow custom commands to be appended to the delete command
      */
     public void deleteSelection(final GModel model, final BiConsumer<List<GNode>, CompoundCommand> consumer) {
