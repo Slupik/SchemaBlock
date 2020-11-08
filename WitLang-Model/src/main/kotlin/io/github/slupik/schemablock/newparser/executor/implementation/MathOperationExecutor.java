@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.newparser.executor.implementation;
 
+import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommandOperation;
 import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
 import io.github.slupik.schemablock.newparser.memory.element.SimpleValueImpl;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
@@ -11,7 +12,7 @@ import static io.github.slupik.schemablock.newparser.memory.element.ValueType.*;
  */
 class MathOperationExecutor extends OperationExecutor {
 
-    static SimpleValue add(SimpleValue a, SimpleValue b) throws IllegalOperation {
+    static SimpleValue add(SimpleValue a, SimpleValue b, ByteCommandOperation commandOperation) throws IllegalOperation {
         ValueType resultType = getResultType(a, b);
 
         if (resultType.IS_NUMBER) {
@@ -32,10 +33,10 @@ class MathOperationExecutor extends OperationExecutor {
         if (resultType == STRING) {
             return new SimpleValueImpl(resultType, String.valueOf(a.getValue()) + b.getValue());
         }
-        throw new IllegalOperation(a.getType(), b.getType(), "+");
+        throw new IllegalOperation(a.getType(), b.getType(), "+", commandOperation.getLine(), commandOperation.getPosition());
     }
 
-    static SimpleValue subtract(SimpleValue a, SimpleValue b) throws IllegalOperation {
+    static SimpleValue subtract(SimpleValue a, SimpleValue b, ByteCommandOperation commandOperation) throws IllegalOperation {
         ValueType resultType = getResultType(a, b);
 
         if (resultType.IS_NUMBER) {
@@ -53,10 +54,10 @@ class MathOperationExecutor extends OperationExecutor {
                 return new SimpleValueImpl(resultType, parsedA - parsedB);
             }
         }
-        throw new IllegalOperation(a.getType(), b.getType(), "-");
+        throw new IllegalOperation(a.getType(), b.getType(), "-", commandOperation.getLine(), commandOperation.getPosition());
     }
 
-    static SimpleValue multiply(SimpleValue a, SimpleValue b) throws IllegalOperation {
+    static SimpleValue multiply(SimpleValue a, SimpleValue b, ByteCommandOperation commandOperation) throws IllegalOperation {
         ValueType resultType = getResultType(a, b);
 
         if (resultType.IS_NUMBER) {
@@ -74,10 +75,10 @@ class MathOperationExecutor extends OperationExecutor {
                 return new SimpleValueImpl(resultType, parsedA * parsedB);
             }
         }
-        throw new IllegalOperation(a.getType(), b.getType(), "*");
+        throw new IllegalOperation(a.getType(), b.getType(), "*", commandOperation.getLine(), commandOperation.getPosition());
     }
 
-    static SimpleValue divide(SimpleValue a, SimpleValue b, boolean rest) throws IllegalOperation {
+    static SimpleValue divide(SimpleValue a, SimpleValue b, boolean rest, ByteCommandOperation commandOperation) throws IllegalOperation {
         ValueType resultType = getResultType(a, b);
 
         if (resultType.IS_NUMBER) {
@@ -102,13 +103,13 @@ class MathOperationExecutor extends OperationExecutor {
             }
         }
         if (rest) {
-            throw new IllegalOperation(a.getType(), b.getType(), "/");
+            throw new IllegalOperation(a.getType(), b.getType(), "/", commandOperation.getLine(), commandOperation.getPosition());
         } else {
-            throw new IllegalOperation(a.getType(), b.getType(), "\\");
+            throw new IllegalOperation(a.getType(), b.getType(), "\\", commandOperation.getLine(), commandOperation.getPosition());
         }
     }
 
-    static SimpleValue modulo(SimpleValue a, SimpleValue b) throws IllegalOperation {
+    static SimpleValue modulo(SimpleValue a, SimpleValue b, ByteCommandOperation commandOperation) throws IllegalOperation {
         ValueType resultType = getResultType(a, b);
 
         if (resultType.IS_NUMBER) {
@@ -126,6 +127,6 @@ class MathOperationExecutor extends OperationExecutor {
                 return new SimpleValueImpl(resultType, parsedA % parsedB);
             }
         }
-        throw new IllegalOperation(a.getType(), b.getType(), "%");
+        throw new IllegalOperation(a.getType(), b.getType(), "%", commandOperation.getLine(), commandOperation.getPosition());
     }
 }
