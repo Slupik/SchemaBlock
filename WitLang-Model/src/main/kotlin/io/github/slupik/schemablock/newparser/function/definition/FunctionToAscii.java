@@ -26,7 +26,7 @@ public class FunctionToAscii implements Function {
     }
 
     @Override
-    public Value execute(List<Value> args) throws AlgorithmException {
+    public Value execute(List<Value> args, int line, int position) throws AlgorithmException {
         String text = ((SimpleValue) args.get(0)).getCastedValue();
         if (text.length() == 0) {
             return new SimpleValueImpl(

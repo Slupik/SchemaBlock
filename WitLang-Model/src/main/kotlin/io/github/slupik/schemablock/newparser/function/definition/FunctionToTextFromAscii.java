@@ -29,7 +29,7 @@ public class FunctionToTextFromAscii implements Function {
     }
 
     @Override
-    public Value execute(List<Value> args) throws AlgorithmException {
+    public Value execute(List<Value> args, int line, int position) throws AlgorithmException {
         int code = ((SimpleValue) args.get(0)).getCastedValue();
         char text = (char) code;
         return new SimpleValueImpl(

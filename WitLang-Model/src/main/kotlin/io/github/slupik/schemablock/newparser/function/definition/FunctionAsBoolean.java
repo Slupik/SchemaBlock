@@ -30,7 +30,7 @@ public class FunctionAsBoolean implements Function {
     }
 
     @Override
-    public Value execute(List<Value> args) throws AlgorithmException {
+    public Value execute(List<Value> args, int line, int position) throws AlgorithmException {
         Object value = ((SimpleValue) args.get(0)).getValue();
         try {
             return new SimpleValueImpl(
@@ -38,7 +38,7 @@ public class FunctionAsBoolean implements Function {
                     Boolean.parseBoolean(value.toString())
             );
         } catch (Exception e) {
-            throw new CannotParseData(value, ValueType.BOOLEAN);
+            throw new CannotParseData(value, ValueType.BOOLEAN, line, position);
         }
     }
 

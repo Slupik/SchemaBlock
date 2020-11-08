@@ -273,14 +273,16 @@ class ByteCodeExe {
                 }
 
                 List<Function> matchingFunctions = functionContainer.getMatchingFunctions(bc.getName());
-                Value result = executor.execute(matchingFunctions, args);
+                Value result = executor.execute(matchingFunctions, args, bc);
                 if (result == null) {
                     throw new NoMatchingFunction(
                             bc.getName(),
                             args
                                     .stream()
                                     .map(Memoryable::getType)
-                                    .collect(Collectors.toList())
+                                    .collect(Collectors.toList()),
+                            bc.getPosition(),
+                            bc.getLine()
                     );
                 }
 

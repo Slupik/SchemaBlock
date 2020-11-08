@@ -31,7 +31,7 @@ public class FunctionStartsWith implements Function {
     }
 
     @Override
-    public Value execute(List<Value> args) throws AlgorithmException {
+    public Value execute(List<Value> args, int line, int position) throws AlgorithmException {
         String text1 = ((SimpleValue) args.get(0)).getCastedValue();
         String text2 = ((SimpleValue) args.get(1)).getCastedValue();
         return new SimpleValueImpl(
