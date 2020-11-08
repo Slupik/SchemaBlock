@@ -4,9 +4,11 @@ import de.tesis.dynaware.grapheditor.core.skins.defaults.node.Block
 import de.tesis.dynaware.grapheditor.core.skins.defaults.node.ConditionalBlock
 import de.tesis.dynaware.grapheditor.core.skins.defaults.node.IoBlock
 import de.tesis.dynaware.grapheditor.core.skins.defaults.node.OperationsBlock
+import io.github.slupik.schemablock.model.ui.error.AlgorithmException
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable
 import io.github.slupik.schemablock.model.ui.newparser.HeapController
 import io.github.slupik.schemablock.newparser.executor.Executor
+import io.github.slupik.schemablock.newparser.memory.IndexesExtractor
 import io.github.slupik.schemablock.newparser.memory.ValueFactory
 import io.github.slupik.schemablock.view.dialog.data.IoOperation
 import javax.inject.Inject
@@ -17,7 +19,8 @@ import javax.inject.Inject
 class StatelessBlockExecutor @Inject constructor(
     private val executor: Executor,
     private val communicator: IOCommunicable,
-    private val heap: HeapController
+    private val heap: HeapController,
+    private val extractor: IndexesExtractor
 ) : BlockExecutor {
 
     override fun execute(block: Block): ExecutionResult =
@@ -51,12 +54,22 @@ class StatelessBlockExecutor @Inject constructor(
                     heap.getVariableType(operation.code),
                     input
                 )
-                heap.setVariableValue(operation.code, value)
+                val indexes = extractor.extractIndexes(operation.code)
+                heap.setVariableValue(operation.code, calculate(indexes), value)
             } else {
                 val output = executor.getResult(operation.code).value.toString()
                 communicator.print(output)
             }
         }
+    }
+
+    @Throws(AlgorithmException::class)
+    private fun calculate(indexes: Array<String>): IntArray? {
+        val calculated = IntArray(indexes.size)
+        for (i in indexes.indices) {
+            calculated[i] = executor.getResult(indexes[i]).getCastedValue()
+        }
+        return calculated
     }
 
     private fun executeCondition(code: String): Boolean {

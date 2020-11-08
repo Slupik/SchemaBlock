@@ -17,19 +17,19 @@ public class MemoryImpl implements Memory {
     private final HashMap<String, Variable> data = new HashMap<>();
 
     @Inject
-    public MemoryImpl() {
-    }
+    public MemoryImpl() {}
 
     @Override
     public void register(Variable variable) throws AlgorithmException {
         if (data.containsKey(variable.getName())) {
             throw new VariableAlreadyDefined(variable.getName());
         }
+        System.out.println("variable.getName() = " + variable.getName());
         data.put(variable.getName(), variable);
     }
 
     @Override
-    public Variable get(String name) throws VariableNotFound {
+    public Variable get(String name) throws AlgorithmException {
         if (data.containsKey(name)) {
             return data.get(name);
         } else {

@@ -1,6 +1,5 @@
 package io.github.slupik.schemablock.model.ui.newparser;
 
-import io.github.slupik.schemablock.execution.VariableNotFound;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.newparser.memory.element.Value;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
@@ -10,8 +9,12 @@ import io.github.slupik.schemablock.newparser.memory.element.ValueType;
  */
 public interface HeapController {
 
-    void setVariableValue(String name, Value value) throws AlgorithmException;
+    default void setVariableValue(String name, Value value) throws AlgorithmException {
+        setVariableValue(name, new int[0], value);
+    }
 
-    ValueType getVariableType(String name) throws VariableNotFound;
+    void setVariableValue(String name, int[] indexes, Value value) throws AlgorithmException;
+
+    ValueType getVariableType(String name) throws AlgorithmException;
 
 }

@@ -4,27 +4,29 @@ package io.github.slupik.schemablock.newparser.memory.element;
  * All rights reserved & copyright ©
  */
 public enum ValueType {
-    SHORT(true, true),
-    INTEGER(true, true),
-    LONG(true, true),
-    FLOAT(true, true),
-    DOUBLE(true, true),
+    SHORT(true, true, 0),
+    INTEGER(true, true, 0),
+    LONG(true, true, 0),
+    FLOAT(true, true, 0),
+    DOUBLE(true, true, 0),
 
-    BYTE(true, true),
+    BYTE(true, true, 0),
 
-    BOOLEAN(false, false),
+    BOOLEAN(false, false, false),
 
-    STRING(false, false),
+    STRING(false, false, ""),
 
-    VOID(false, false),
-    UNKNOWN(false, false);
+    VOID(false, false, null),
+    UNKNOWN(false, false, null);
 
     public final boolean IS_NUMBER;
     public final boolean IS_BYTE;
+    public final Object DEFAULT_VALUE;
 
-    ValueType(boolean isNumber, boolean isByte) {
+    ValueType(boolean isNumber, boolean isByte, Object DEFAULT_VALUE) {
         this.IS_NUMBER = isNumber;
         this.IS_BYTE = isByte;
+        this.DEFAULT_VALUE = DEFAULT_VALUE;
     }
 
     public static boolean isCastable(ValueType type1, ValueType type2) {
