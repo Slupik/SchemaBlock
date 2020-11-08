@@ -5,6 +5,6 @@ import de.tesis.dynaware.grapheditor.core.skins.defaults.node.Block
 /**
  * All rights reserved & copyright ©
  */
-class NextBlockNotFound(val currentBlock: Block) : Exception(
+class NextBlockNotFound(val currentBlock: Block) : DiagramException(
     "Next block not found."
 )

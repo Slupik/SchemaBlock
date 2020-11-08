@@ -5,7 +5,7 @@ import io.github.slupik.schemablock.execution.VariableNotFound;
 import io.github.slupik.schemablock.javafx.element.fx.sheet.ElementNotFound;
 import io.github.slupik.schemablock.model.ui.abstraction.container.ElementContainer;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
-import io.github.slupik.schemablock.model.ui.error.UnkownError;
+import io.github.slupik.schemablock.model.ui.error.UnknownError;
 import io.github.slupik.schemablock.model.ui.implementation.container.ExecutionCallback;
 import io.github.slupik.schemablock.model.ui.implementation.container.NextElementNotFound;
 import io.github.slupik.schemablock.model.ui.implementation.element.specific.IOCommunicable;
@@ -86,7 +86,7 @@ public class ExecutionController implements ExecutionFlowController {
             AlgorithmException ae = ((AlgorithmException) exception);
             switch (ae.getType()) {
                 case UNKNOWN_ERROR:
-                    UnkownError unkownError = ((UnkownError) exception);
+                    UnknownError unknownError = ((UnknownError) exception);
                     communicator.printAlgorithmError(
                             "Nastąpił nieznany błąd przy uruchamianiu kodu. Sprawdź składnię poleceń. Najprawdopodobniej gdzieś brakuje średnika (;)."
                     );
