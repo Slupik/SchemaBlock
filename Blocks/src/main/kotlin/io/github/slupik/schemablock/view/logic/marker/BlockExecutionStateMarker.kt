@@ -1,7 +1,7 @@
 package io.github.slupik.schemablock.view.logic.marker
 
-import de.tesis.dynaware.grapheditor.core.skins.UiElementType
 import de.tesis.dynaware.grapheditor.core.skins.defaults.node.Block
+import io.github.slupik.schemablock.view.logic.execution.diagram.ErrorEvent
 import io.github.slupik.schemablock.view.logic.execution.diagram.ExecutionEnd
 import io.github.slupik.schemablock.view.logic.execution.diagram.ExecutionEvent
 import io.github.slupik.schemablock.view.logic.execution.diagram.PreExecutionEvent
@@ -19,9 +19,11 @@ class BlockExecutionStateMarker @Inject constructor(
 
     private val composite = CompositeDisposable()
     private var lastExecutedBlock: Block? = null
+    private var wasError = false
 
     fun handleObservable(observable: Observable<ExecutionEvent>) {
         blocksProvider.blocks.forEach { block -> block.markAsNeutral() }
+        wasError = false
         composite.add(observable.subscribe(
             { executionEvent: ExecutionEvent ->
                 if (executionEvent is PreExecutionEvent) {
@@ -30,17 +32,21 @@ class BlockExecutionStateMarker @Inject constructor(
                     lastExecutedBlock = executionEvent.executingBlock
                 }
                 if (executionEvent is ExecutionEnd) {
-                    lastExecutedBlock?.markAsNeutral()
+                    if (!wasError) {
+                        lastExecutedBlock?.markAsNeutral()
+                    }
                     lastExecutedBlock = null
+                }
+                if (executionEvent is ErrorEvent) {
+                    lastExecutedBlock?.markAsError()
+                    wasError = true
                 }
             },
             {
                 lastExecutedBlock?.markAsError()
+                wasError = true
             }
         ))
     }
-
-    private fun getStartBlock(): Block? =
-        blocksProvider.blocks.firstOrNull { block -> block.type == UiElementType.START }
 
 }

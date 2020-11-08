@@ -80,8 +80,8 @@ class PolishErrorTranslator @Inject constructor() : ErrorTranslator {
         }
 
     private fun handleCompilationError(error: CompilationException): String {
-        val TAG = "[linia: ${error.line}, pozycja: ${error.position}] [Błąd kodu]: "
-        return TAG + when (error) {
+        val tag = "[linia: ${error.line}, pozycja: ${error.position}] [Błąd kodu]: "
+        return tag + when (error) {
             is MissingSemicolon -> {
                 "Prawdopodobnie brakuje średnika w tym miejscu."
             }
