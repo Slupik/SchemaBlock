@@ -21,50 +21,49 @@ import java.util.*
  */
 object DialogFactory {
 
-
     fun buildWithDescAndContent(input: CodeAndDescription): Dialog<UiBlockSettings> {
         val dialog = Dialog<UiBlockSettings>()
         dialog.title = "Edycja bloku"
 
         val saveButtonType = ButtonType("Zapisz", ButtonBar.ButtonData.OK_DONE)
-        dialog.dialogPane.buttonTypes.addAll(saveButtonType, ButtonType.CANCEL)
+        val cancelButtonType = ButtonType("Anuluj", ButtonBar.ButtonData.CANCEL_CLOSE)
+        dialog.dialogPane.buttonTypes.addAll(cancelButtonType, saveButtonType)
 
         val verContainer = VBox()
-        verContainer.padding = Insets(20.0, 150.0, 10.0, 10.0)
+        verContainer.padding = Insets(8.0, 16.0, 8.0, 8.0)
 
-        val horContainer = HBox()
+        val descriptionLabel = Label("Nazwa")
+        descriptionLabel.padding = Insets(0.0, 0.0, 8.0, 0.0)
+        verContainer.children.add(descriptionLabel)
 
-        val title = TextField(input.description)
-        title.promptText = "Krótki tytuł"
+        val description = TextField(input.description)
+        description.promptText = "Krótka nazwa"
+        verContainer.children.add(description)
 
-        horContainer.children.add(Label("Tytuł:  "))
-        horContainer.children.add(title)
-        horContainer.alignment = Pos.CENTER_LEFT
-        verContainer.children.add(horContainer)
-
-        val contentLabel = Label("Zawartość:")
+        val contentLabel = Label("Zawartość")
         verContainer.children.add(contentLabel)
         contentLabel.padding = Insets(8.0, 0.0, 8.0, 0.0)
+
         val content = TextArea(input.code)
         content.promptText = "Kod"
         content.prefWidth = 400.0
         content.prefHeight = 400.0
         verContainer.children.add(content)
 
-        val loginButton = dialog.dialogPane.lookupButton(saveButtonType)
-        loginButton.isDisable = input.description.isEmpty()
+        val btnSave = dialog.dialogPane.lookupButton(saveButtonType)
+        btnSave.isDisable = input.description.isEmpty()
 
-        title.textProperty()
-            .addListener { _, _, newValue -> loginButton.isDisable = newValue.trim { it <= ' ' }.isEmpty() }
+        description.textProperty()
+            .addListener { _, _, newValue -> btnSave.isDisable = newValue.trim { it <= ' ' }.isEmpty() }
 
         dialog.dialogPane.content = verContainer
 
-        Platform.runLater { title.requestFocus() }
+        Platform.runLater { description.requestFocus() }
 
         dialog.setResultConverter { dialogButton ->
             if (dialogButton == saveButtonType) {
                 CodeAndDescription(
-                    title.text,
+                    description.text,
                     content.text
                 )
             } else null
