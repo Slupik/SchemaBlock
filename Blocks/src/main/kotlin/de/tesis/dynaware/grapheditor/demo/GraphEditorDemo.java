@@ -20,7 +20,7 @@ import java.net.URL;
 public class GraphEditorDemo extends Application {
 
     private static final String APPLICATION_TITLE = "Graph Editor Demo";
-    private static final String DEMO_STYLESHEET = "/de/tesis/dynaware/grapheditor/demo/demo.css";
+    public static final String DEMO_STYLESHEET = "/de/tesis/dynaware/grapheditor/demo/demo.css";
     private static final String TREE_SKIN_STYLESHEET = "treeskins.css";
     private static final String TITLED_SKIN_STYLESHEET = "titledskins.css";
     private static final String FONT_AWESOME = "fontawesome.ttf";
