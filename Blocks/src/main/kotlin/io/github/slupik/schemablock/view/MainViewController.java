@@ -31,6 +31,7 @@ import io.github.slupik.schemablock.view.logic.execution.diagram.exception.NextB
 import io.github.slupik.schemablock.view.logic.marker.BlockExecutionStateMarker;
 import io.github.slupik.schemablock.view.logic.memory.HeapValueFx;
 import io.github.slupik.schemablock.view.logic.memory.NewHeapSpy;
+import io.github.slupik.schemablock.view.logic.printer.GraphPrinter;
 import io.github.slupik.schemablock.view.logic.zoom.Zoomer;
 import io.github.slupik.schemablock.view.persistence.DiagramLoader;
 import io.github.slupik.schemablock.view.persistence.DiagramSaver;
@@ -90,6 +91,8 @@ public class MainViewController implements Initializable {
     BlockExecutionStateMarker stateMarker;
     @Inject
     ErrorTranslator translator;
+    @Inject
+    GraphPrinter printer;
     @FXML
     private JFXButton btnRun;
     @FXML
@@ -339,6 +342,11 @@ public class MainViewController implements Initializable {
             graphLoader.loadDiagram(diagram, file);
         }
         checkSkinType();
+    }
+
+    @FXML
+    public void print() {
+        printer.print(graphEditorContainer, graphEditor);
     }
 
     /**

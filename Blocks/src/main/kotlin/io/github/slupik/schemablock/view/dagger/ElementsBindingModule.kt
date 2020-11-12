@@ -6,6 +6,8 @@ import io.github.slupik.schemablock.view.entity.DefaultDiagram
 import io.github.slupik.schemablock.view.entity.Diagram
 import io.github.slupik.schemablock.view.logic.communication.output.ErrorTranslator
 import io.github.slupik.schemablock.view.logic.communication.output.PolishErrorTranslator
+import io.github.slupik.schemablock.view.logic.printer.GraphPrinter
+import io.github.slupik.schemablock.view.logic.printer.JavaFxGraphPrinter
 import io.github.slupik.schemablock.view.logic.zoom.ZoomController
 import io.github.slupik.schemablock.view.logic.zoom.Zoomer
 import io.github.slupik.schemablock.view.persistence.*
@@ -49,5 +51,9 @@ abstract class ElementsBindingModule {
     @Binds
     @Singleton
     abstract fun translator(translator: PolishErrorTranslator): ErrorTranslator
+
+    @Binds
+    @Singleton
+    abstract fun printer(printer: JavaFxGraphPrinter): GraphPrinter
 
 }

@@ -1,145 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.*?>
-<?import de.tesis.dynaware.grapheditor.GraphEditorContainer?>
-<?import javafx.geometry.Insets?>
+<?import de.tesis.dynaware.grapheditor.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.web.WebView?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="root" stylesheets="@demo.css"
-            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="io.github.slupik.schemablock.view.MainViewController">
+<?import javafx.scene.web.*?>
+
+<AnchorPane fx:id="root" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.MainViewController">
     <VBox fx:id="mainContainer" maxHeight="+Infinity" maxWidth="+Infinity" prefHeight="556.0" prefWidth="900.0">
         <children>
             <MenuBar fx:id="menuBar">
                 <menus>
                     <Menu text="File">
                         <items>
-                            <MenuItem fx:id="miNew" mnemonicParsing="false" onAction="#createNew" text="New File"/>
-                            <MenuItem onAction="#load" text="Load File"/>
+                            <MenuItem fx:id="miNew" mnemonicParsing="false" onAction="#createNew" text="New File" />
+                            <MenuItem onAction="#load" text="Load File" />
                             <Menu text="Load Sample">
                                 <items>
-                                    <MenuItem onAction="#loadSample" text="Default Skins - Small"/>
-                                    <MenuItem onAction="#loadSampleLarge" text="Default Skins - Large"/>
+                                    <MenuItem onAction="#loadSample" text="Default Skins - Small" />
+                                    <MenuItem onAction="#loadSampleLarge" text="Default Skins - Large" />
                                 </items>
                             </Menu>
-                            <MenuItem onAction="#save" text="Save"/>
-                            <MenuItem onAction="#clearModel" text="Clear All"/>
-                            <SeparatorMenuItem/>
-                            <MenuItem onAction="#exit" text="Exit"/>
+                            <MenuItem onAction="#save" text="Save" />
+                     <MenuItem mnemonicParsing="false" onAction="#print" text="Print" />
+                            <MenuItem onAction="#clearModel" text="Clear All" />
+                            <SeparatorMenuItem />
+                            <MenuItem onAction="#exit" text="Exit" />
                         </items>
                     </Menu>
                     <Menu text="Edit">
                         <items>
-                            <MenuItem accelerator="Shortcut+Z" onAction="#undo" text="Undo"/>
-                            <MenuItem accelerator="Shortcut+Y" onAction="#redo" text="Redo"/>
-                            <SeparatorMenuItem/>
-                            <MenuItem accelerator="Shortcut+X" onAction="#cut" text="Cut"/>
-                            <MenuItem accelerator="Shortcut+C" onAction="#copy" text="Copy"/>
-                            <MenuItem accelerator="Shortcut+V" onAction="#paste" text="Paste"/>
-                            <SeparatorMenuItem/>
+                            <MenuItem accelerator="Shortcut+Z" onAction="#undo" text="Undo" />
+                            <MenuItem accelerator="Shortcut+Y" onAction="#redo" text="Redo" />
+                            <SeparatorMenuItem />
+                            <MenuItem accelerator="Shortcut+X" onAction="#cut" text="Cut" />
+                            <MenuItem accelerator="Shortcut+C" onAction="#copy" text="Copy" />
+                            <MenuItem accelerator="Shortcut+V" onAction="#paste" text="Paste" />
+                            <SeparatorMenuItem />
                             <!-- Added blank spaces to force menu to be wider. -->
-                            <MenuItem accelerator="Shortcut+A" onAction="#selectAll" text="Select All          "/>
-                            <MenuItem accelerator="Delete" onAction="#deleteSelection" text="Delete"/>
+                            <MenuItem accelerator="Shortcut+A" onAction="#selectAll" text="Select All          " />
+                            <MenuItem accelerator="Delete" onAction="#deleteSelection" text="Delete" />
                         </items>
                     </Menu>
                     <Menu text="Actions">
                         <items>
                             <Menu mnemonicParsing="false" text="Add Node">
                                 <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#addCalculationsNode"
-                                              text="Calculations"/>
-                                    <MenuItem mnemonicParsing="false" onAction="#addConditionNode" text="Condition"/>
-                                    <MenuItem mnemonicParsing="false" onAction="#addIoNode" text="I/O"/>
-                                    <MenuItem mnemonicParsing="false" onAction="#addStopNode" text="Stop"/>
+                                    <MenuItem mnemonicParsing="false" onAction="#addCalculationsNode" text="Calculations" />
+                                    <MenuItem mnemonicParsing="false" onAction="#addConditionNode" text="Condition" />
+                                    <MenuItem mnemonicParsing="false" onAction="#addIoNode" text="I/O" />
+                                    <MenuItem mnemonicParsing="false" onAction="#addStopNode" text="Stop" />
                                 </items>
                             </Menu>
-                            <MenuItem fx:id="addConnectorButton" accelerator="Shortcut+E" onAction="#addConnector"
-                                      text="Add Connector"/>
-                            <MenuItem fx:id="clearConnectorsButton" accelerator="Shortcut+W" onAction="#clearConnectors"
-                                      text="Clear Connectors"/>
+                            <MenuItem fx:id="addConnectorButton" accelerator="Shortcut+E" onAction="#addConnector" text="Add Connector" />
+                            <MenuItem fx:id="clearConnectorsButton" accelerator="Shortcut+W" onAction="#clearConnectors" text="Clear Connectors" />
                             <Menu fx:id="connectorTypeMenu" text="Connector Type">
                                 <items>
-                                    <RadioMenuItem fx:id="inputConnectorTypeButton" selected="true" text="Input"/>
-                                    <RadioMenuItem fx:id="outputConnectorTypeButton" text="Output"/>
+                                    <RadioMenuItem fx:id="inputConnectorTypeButton" selected="true" text="Input" />
+                                    <RadioMenuItem fx:id="outputConnectorTypeButton" text="Output" />
                                 </items>
                             </Menu>
                             <Menu fx:id="connectorPositionMenu" text="Connector Position">
                                 <items>
-                                    <RadioMenuItem fx:id="leftConnectorPositionButton" selected="true" text="Left"/>
-                                    <RadioMenuItem fx:id="rightConnectorPositionButton" text="Right"/>
-                                    <RadioMenuItem fx:id="topConnectorPositionButton" text="Top"/>
-                                    <RadioMenuItem fx:id="bottomConnectorPositionButton" text="Bottom"/>
+                                    <RadioMenuItem fx:id="leftConnectorPositionButton" selected="true" text="Left" />
+                                    <RadioMenuItem fx:id="rightConnectorPositionButton" text="Right" />
+                                    <RadioMenuItem fx:id="topConnectorPositionButton" text="Top" />
+                                    <RadioMenuItem fx:id="bottomConnectorPositionButton" text="Bottom" />
                                 </items>
                             </Menu>
                         </items>
                     </Menu>
                     <Menu text="Settings">
                         <items>
-                            <RadioMenuItem fx:id="showGridButton" text="Show Grid"/>
-                            <RadioMenuItem fx:id="snapToGridButton" text="Snap to Grid"/>
+                            <RadioMenuItem fx:id="showGridButton" text="Show Grid" />
+                            <RadioMenuItem fx:id="snapToGridButton" text="Snap to Grid" />
                             <!-- Added blank spaces to force menu to be wider. -->
                             <Menu fx:id="intersectionStyle" text="Intersection Style  ">
                                 <items>
-                                    <RadioMenuItem fx:id="detouredStyleButton" onAction="#setDetouredStyle"
-                                                   selected="true" text="Detours"/>
-                                    <RadioMenuItem fx:id="gappedStyleButton" onAction="#setGappedStyle" text="Gaps"/>
+                                    <RadioMenuItem fx:id="detouredStyleButton" onAction="#setDetouredStyle" selected="true" text="Detours" />
+                                    <RadioMenuItem fx:id="gappedStyleButton" onAction="#setGappedStyle" text="Gaps" />
                                 </items>
                             </Menu>
-                            <Menu fx:id="zoomOptions" text="Zoom Level"/>
+                            <Menu fx:id="zoomOptions" text="Zoom Level" />
                         </items>
                     </Menu>
                     <Menu mnemonicParsing="false" text="Help">
                         <items>
-                            <MenuItem fx:id="miAbout" mnemonicParsing="false" text="About"/>
+                            <MenuItem fx:id="miAbout" mnemonicParsing="false" text="About" />
                         </items>
                     </Menu>
                 </menus>
             </MenuBar>
             <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: lightgray;">
                 <items>
-                    <JFXButton buttonType="FLAT" managed="false" mnemonicParsing="false" styleClass="jfx-button-flat"
-                               text="Dummy button to keep right colors of other buttons"/>
-                    <JFXButton fx:id="btnRun" buttonType="FLAT" defaultButton="true" mnemonicParsing="false"
-                               onAction="#runDiagram" styleClass="jfx-button-flat" text="Run"/>
-                    <JFXButton fx:id="btnDebug" buttonType="FLAT" mnemonicParsing="false" onAction="#debugDiagram"
-                               styleClass="jfx-button-flat" text="Debug"/>
-                    <JFXButton fx:id="btnContinue" buttonType="FLAT" mnemonicParsing="false"
-                               styleClass="jfx-button-flat" text="Continue"/>
-                    <JFXButton fx:id="btnStop" buttonType="FLAT" layoutX="107.0" layoutY="13.0" mnemonicParsing="false"
-                               onAction="#stopExecution" styleClass="jfx-button-flat" text="Stop"/>
+                    <JFXButton buttonType="FLAT" managed="false" mnemonicParsing="false" styleClass="jfx-button-flat" text="Dummy button to keep right colors of other buttons" />
+                    <JFXButton fx:id="btnRun" buttonType="FLAT" defaultButton="true" mnemonicParsing="false" onAction="#runDiagram" styleClass="jfx-button-flat" text="Run" />
+                    <JFXButton fx:id="btnDebug" buttonType="FLAT" mnemonicParsing="false" onAction="#debugDiagram" styleClass="jfx-button-flat" text="Debug" />
+                    <JFXButton fx:id="btnContinue" buttonType="FLAT" mnemonicParsing="false" styleClass="jfx-button-flat" text="Continue" />
+                    <JFXButton fx:id="btnStop" buttonType="FLAT" layoutX="107.0" layoutY="13.0" mnemonicParsing="false" onAction="#stopExecution" styleClass="jfx-button-flat" text="Stop" />
                     <HBox fx:id="availableBlocks" spacing="16.0">
                         <padding>
-                            <Insets left="16.0"/>
+                            <Insets left="16.0" />
                         </padding>
                     </HBox>
                 </items>
             </ToolBar>
-            <SplitPane fx:id="centerContainer" dividerPositions="0.7" maxHeight="1.7976931348623157E308"
-                       maxWidth="1.7976931348623157E308" orientation="VERTICAL" VBox.vgrow="ALWAYS">
+            <SplitPane fx:id="centerContainer" dividerPositions="0.7" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="VERTICAL" VBox.vgrow="ALWAYS">
                 <items>
-                    <GraphEditorContainer fx:id="graphEditorContainer" maxHeight="+Infinity" maxWidth="+Infinity"
-                                          minHeight="0" minWidth="0"/>
-                    <SplitPane dividerPositions="0.62" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0"
-                               minWidth="0" VBox.vgrow="ALWAYS">
+                    <GraphEditorContainer fx:id="graphEditorContainer" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0" minWidth="0" />
+                    <SplitPane dividerPositions="0.62" maxHeight="+Infinity" maxWidth="+Infinity" minHeight="0" minWidth="0" VBox.vgrow="ALWAYS">
                         <items>
                             <VBox fx:id="vbIOContainer">
                                 <children>
-                                    <WebView fx:id="outputView" prefHeight="200.0" prefWidth="594.0"
-                                             VBox.vgrow="ALWAYS"/>
+                                    <WebView fx:id="outputView" prefHeight="200.0" prefWidth="594.0" VBox.vgrow="ALWAYS" />
                                     <HBox fx:id="hbInputContainer">
                                         <children>
-                                            <TextField fx:id="tfInput" promptText="Wpisz tekst lub liczbę"
-                                                       HBox.hgrow="ALWAYS">
+                                            <TextField fx:id="tfInput" promptText="Wpisz tekst lub liczbę" HBox.hgrow="ALWAYS">
                                                 <HBox.margin>
-                                                    <Insets bottom="8.0" top="8.0"/>
+                                                    <Insets bottom="8.0" top="8.0" />
                                                 </HBox.margin>
                                             </TextField>
-                                            <JFXButton fx:id="btnEnter" mnemonicParsing="false" prefHeight="25.0"
-                                                       prefWidth="86.0"
-                                                       style="-fx-background-color: white; -fx-text-fill: black;"
-                                                       styleClass="jfx-button-raised" text="Wyślij">
+                                            <JFXButton fx:id="btnEnter" mnemonicParsing="false" prefHeight="25.0" prefWidth="86.0" style="-fx-background-color: white; -fx-text-fill: black;" styleClass="jfx-button-raised" text="Wyślij">
                                                 <HBox.margin>
-                                                    <Insets left="16.0" right="16.0" top="8.0"/>
+                                                    <Insets left="16.0" right="16.0" top="8.0" />
                                                 </HBox.margin>
                                             </JFXButton>
                                         </children>
@@ -148,22 +132,19 @@
                             </VBox>
                             <JFXTreeTableView fx:id="tvVariables" prefHeight="200.0" prefWidth="200.0">
                                 <columns>
-                                    <JFXTreeTableColumn fx:id="tcVarType" minWidth="50.0" prefWidth="75.0" text="Typ"/>
-                                    <JFXTreeTableColumn fx:id="tcVarName" minWidth="50.0" prefWidth="100.0"
-                                                        text="Nazwa"/>
-                                    <JFXTreeTableColumn fx:id="tcVarValue" minWidth="50.0" prefWidth="150.0"
-                                                        text="Wartość"/>
+                                    <JFXTreeTableColumn fx:id="tcVarType" minWidth="50.0" prefWidth="75.0" text="Typ" />
+                                    <JFXTreeTableColumn fx:id="tcVarName" minWidth="50.0" prefWidth="100.0" text="Nazwa" />
+                                    <JFXTreeTableColumn fx:id="tcVarValue" minWidth="50.0" prefWidth="150.0" text="Wartość" />
                                 </columns>
                             </JFXTreeTableView>
                         </items>
                         <padding>
-                            <Insets bottom="8.0" left="8.0" right="8.0"/>
+                            <Insets bottom="8.0" left="8.0" right="8.0" />
                         </padding>
                     </SplitPane>
                 </items>
             </SplitPane>
         </children>
     </VBox>
-    <ToggleButton fx:id="minimapButton" focusTraversable="false" onAction="#toggleMinimap" AnchorPane.rightAnchor="10"
-                  AnchorPane.topAnchor="4"/>
+    <ToggleButton fx:id="minimapButton" focusTraversable="false" onAction="#toggleMinimap" AnchorPane.rightAnchor="10" AnchorPane.topAnchor="4" />
 </AnchorPane>
