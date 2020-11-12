@@ -1,18 +1,27 @@
 package io.github.slupik.schemablock.view.dialog
 
+import de.tesis.dynaware.grapheditor.demo.GraphEditorDemo
+import de.tesis.dynaware.grapheditor.demo.GraphEditorDemo.MAIN_RESOURCE_ROOT
+import io.github.slupik.schemablock.view.dialog.controller.OperationsDialogController
 import io.github.slupik.schemablock.view.dialog.data.CodeAndDescription
 import io.github.slupik.schemablock.view.dialog.data.DescriptionAndIO
 import io.github.slupik.schemablock.view.dialog.data.UiBlockSettings
 import javafx.application.Platform
 import javafx.collections.ListChangeListener
+import javafx.fxml.FXMLLoader
 import javafx.geometry.Insets
 import javafx.geometry.Orientation
 import javafx.geometry.Pos
 import javafx.scene.Node
+import javafx.scene.Parent
+import javafx.scene.Scene
 import javafx.scene.control.*
 import javafx.scene.control.ButtonType
 import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
+import javafx.stage.Modality
+import javafx.stage.Stage
+import javafx.stage.StageStyle
 import java.util.*
 
 
@@ -21,56 +30,26 @@ import java.util.*
  */
 object DialogFactory {
 
+    fun buildWithDescAndContent(input: CodeAndDescription): OperationsDialogController {
+        val fxmlLoader = FXMLLoader(javaClass.getResource(MAIN_RESOURCE_ROOT + "dialog/OperationsDialog.fxml"))
+        val parent = fxmlLoader.load<Parent>()
 
-    fun buildWithDescAndContent(input: CodeAndDescription): Dialog<UiBlockSettings> {
-        val dialog = Dialog<UiBlockSettings>()
-        dialog.title = "Edycja bloku"
+        val scene = Scene(parent, 350.0, 500.0)
+        scene.stylesheets.add(GraphEditorDemo::class.java.getResource(GraphEditorDemo.MAIN_STYLESHEET).toExternalForm())
+        val stage = Stage()
+        stage.minWidth = scene.width + 16
+        stage.minHeight = scene.height + 40
+        stage.initModality(Modality.APPLICATION_MODAL)
+        stage.initStyle(StageStyle.UTILITY)
+        stage.title = "Edycja bloku"
+        stage.scene = scene
 
-        val saveButtonType = ButtonType("Zapisz", ButtonBar.ButtonData.OK_DONE)
-        dialog.dialogPane.buttonTypes.addAll(saveButtonType, ButtonType.CANCEL)
+        val dialogController: OperationsDialogController = fxmlLoader.getController<OperationsDialogController>()
+        dialogController.loadModel(input)
+        dialogController.injectStage(stage)
 
-        val verContainer = VBox()
-        verContainer.padding = Insets(20.0, 150.0, 10.0, 10.0)
-
-        val horContainer = HBox()
-
-        val title = TextField(input.description)
-        title.promptText = "Krótki tytuł"
-
-        horContainer.children.add(Label("Tytuł:  "))
-        horContainer.children.add(title)
-        horContainer.alignment = Pos.CENTER_LEFT
-        verContainer.children.add(horContainer)
-
-        val contentLabel = Label("Zawartość:")
-        verContainer.children.add(contentLabel)
-        contentLabel.padding = Insets(8.0, 0.0, 8.0, 0.0)
-        val content = TextArea(input.code)
-        content.promptText = "Kod"
-        content.prefWidth = 400.0
-        content.prefHeight = 400.0
-        verContainer.children.add(content)
-
-        val loginButton = dialog.dialogPane.lookupButton(saveButtonType)
-        loginButton.isDisable = input.description.isEmpty()
-
-        title.textProperty()
-            .addListener { _, _, newValue -> loginButton.isDisable = newValue.trim { it <= ' ' }.isEmpty() }
-
-        dialog.dialogPane.content = verContainer
-
-        Platform.runLater { title.requestFocus() }
-
-        dialog.setResultConverter { dialogButton ->
-            if (dialogButton == saveButtonType) {
-                CodeAndDescription(
-                    title.text,
-                    content.text
-                )
-            } else null
-        }
-
-        return dialog
+        stage.showAndWait()
+        return dialogController
     }
 
     fun buildWithDescAndShortContent(input: CodeAndDescription): Dialog<UiBlockSettings> {

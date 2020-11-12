@@ -36,7 +36,7 @@ public class OperationsBlock extends Block {
     public OperationsBlock(GNode node) {
         super(node);
         initElements();
-        initLabel("Operations");
+        initLabel("Operacje");
     }
 
     @Override
