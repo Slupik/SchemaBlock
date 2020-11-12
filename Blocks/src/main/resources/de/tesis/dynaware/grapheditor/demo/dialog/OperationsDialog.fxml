@@ -7,7 +7,7 @@
 
 <BorderPane prefHeight="383.0" prefWidth="450.0" stylesheets="@../demo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.dialog.controller.OperationsDialogController">
     <center>
-        <TextArea fx:id="code" prefHeight="107.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+        <TextArea fx:id="code" prefHeight="107.0" prefWidth="450.0" promptText="Wpisz kod, który ma się wykonać" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets top="5.0" />
          </BorderPane.margin></TextArea>
@@ -20,7 +20,7 @@
                         <Insets />
                     </VBox.margin>
                 </Label>
-                <JFXTextField fx:id="name" prefWidth="450.0" style="-fx-background-color: white;">
+                <JFXTextField fx:id="name" prefWidth="450.0" promptText="Tekst widoczny na schemacie" style="-fx-background-color: white;">
                     <VBox.margin>
                         <Insets top="4.0" />
                     </VBox.margin>
