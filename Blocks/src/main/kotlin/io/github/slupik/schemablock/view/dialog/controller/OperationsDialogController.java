@@ -30,7 +30,7 @@ public class OperationsDialogController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        code.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
+
     }
 
     @FXML

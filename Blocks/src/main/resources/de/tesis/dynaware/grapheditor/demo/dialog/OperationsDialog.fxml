@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="383.0" prefWidth="450.0" stylesheets="@../demo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.dialog.controller.OperationsDialogController">
+<BorderPane minHeight="500.0" minWidth="350.0" prefHeight="500.0" prefWidth="350.0" stylesheets="@../demo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.dialog.controller.OperationsDialogController">
     <center>
         <TextArea fx:id="code" prefHeight="107.0" prefWidth="450.0" promptText="Wpisz kod, który ma się wykonać" BorderPane.alignment="CENTER">
          <BorderPane.margin>

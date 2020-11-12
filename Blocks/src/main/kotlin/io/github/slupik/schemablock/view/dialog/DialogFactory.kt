@@ -1,6 +1,7 @@
 package io.github.slupik.schemablock.view.dialog
 
 import de.tesis.dynaware.grapheditor.demo.GraphEditorDemo
+import de.tesis.dynaware.grapheditor.demo.GraphEditorDemo.MAIN_RESOURCE_ROOT
 import io.github.slupik.schemablock.view.dialog.controller.OperationsDialogController
 import io.github.slupik.schemablock.view.dialog.data.CodeAndDescription
 import io.github.slupik.schemablock.view.dialog.data.DescriptionAndIO
@@ -30,12 +31,14 @@ import java.util.*
 object DialogFactory {
 
     fun buildWithDescAndContent(input: CodeAndDescription): OperationsDialogController {
-        val fxmlLoader = FXMLLoader(javaClass.getResource("/de/tesis/dynaware/grapheditor/demo/dialog/OperationsDialog.fxml"))
+        val fxmlLoader = FXMLLoader(javaClass.getResource(MAIN_RESOURCE_ROOT + "dialog/OperationsDialog.fxml"))
         val parent = fxmlLoader.load<Parent>()
 
-        val scene = Scene(parent, 400.0, 647.0)
-        scene.stylesheets.add(GraphEditorDemo::class.java.getResource(GraphEditorDemo.DEMO_STYLESHEET).toExternalForm())
+        val scene = Scene(parent, 350.0, 500.0)
+        scene.stylesheets.add(GraphEditorDemo::class.java.getResource(GraphEditorDemo.MAIN_STYLESHEET).toExternalForm())
         val stage = Stage()
+        stage.minWidth = scene.width + 16
+        stage.minHeight = scene.height + 40
         stage.initModality(Modality.APPLICATION_MODAL)
         stage.initStyle(StageStyle.UTILITY)
         stage.title = "Edycja bloku"
