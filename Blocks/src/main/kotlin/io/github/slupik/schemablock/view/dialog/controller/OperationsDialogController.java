@@ -48,6 +48,7 @@ public class OperationsDialogController implements Initializable {
     public void loadModel(@NotNull CodeAndDescription input) {
         name.setText(input.getDescription());
         code.setText(input.getCode());
+        code.positionCaret(input.getCode().length());
     }
 
     public void injectStage(@NotNull Stage stage) {
