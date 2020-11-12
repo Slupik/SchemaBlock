@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * All rights reserved & copyright ©
  */
-public class OperationsDialogController extends DialogController<CodeAndDescription> {
+public class ConditionDialogController extends DialogController<CodeAndDescription> {
 
     @FXML
     private JFXTextField name;

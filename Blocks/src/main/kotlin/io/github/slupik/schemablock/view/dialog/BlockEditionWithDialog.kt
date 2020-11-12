@@ -7,6 +7,7 @@ import de.tesis.dynaware.grapheditor.core.skins.defaults.node.OperationsBlock
 import io.github.slupik.schemablock.view.dialog.data.CodeAndDescription
 import io.github.slupik.schemablock.view.dialog.data.DescriptionAndIO
 import io.github.slupik.schemablock.view.dialog.data.UiBlockSettings
+import io.github.slupik.schemablock.view.dialog.factory.DialogFactoryFacade
 import java.util.*
 import javax.inject.Inject
 
@@ -48,17 +49,17 @@ class BlockEditionWithDialog @Inject constructor() : BlockEdition {
     private fun showDialog(block: Block): Optional<UiBlockSettings>? =
         when (block) {
             is ConditionalBlock -> {
-                DialogFactory.buildWithDescAndShortContent(
+                DialogFactoryFacade.buildWithDescAndShortContent(
                     CodeAndDescription(description = block.description, code = block.code)
-                ).showAndWait()
+                ).result
             }
             is OperationsBlock -> {
-                DialogFactory.buildWithDescAndContent(
+                DialogFactoryFacade.buildWithDescAndContent(
                     CodeAndDescription(description = block.description, code = block.code)
                 ).result
             }
             is IoBlock -> {
-                DialogFactory.buildIO(
+                DialogFactoryFacade.buildIO(
                     DescriptionAndIO(description = block.description, operations = block.operations)
                 ).showAndWait()
             }
