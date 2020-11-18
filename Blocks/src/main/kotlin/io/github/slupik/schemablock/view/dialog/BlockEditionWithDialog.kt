@@ -61,7 +61,7 @@ class BlockEditionWithDialog @Inject constructor() : BlockEdition {
             is IoBlock -> {
                 DialogFactoryFacade.buildIO(
                     DescriptionAndIO(description = block.description, operations = block.operations)
-                ).showAndWait()
+                ).result
             }
             else -> Optional.ofNullable(null)
         }

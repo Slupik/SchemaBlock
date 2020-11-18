@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.materialicons.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.controlsfx.control.textfield.*?>
+
+<HBox alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.dialog.controller.IoItemController">
+   <children>
+      <VBox alignment="CENTER_LEFT">
+         <Label fx:id="operationTypeInfo" text="Wyświetl wynik">
+            <VBox.margin>
+               <Insets bottom="4.0" />
+            </VBox.margin>
+            <font>
+               <Font size="14.0" />
+            </font></Label>
+         <CustomTextField fx:id="code" prefHeight="25.0" prefWidth="288.0" />
+      </VBox>
+       <MaterialIconView fx:id="delete" glyphName="DELETE_FOREVER" size="35">
+         <HBox.margin>
+            <Insets left="8.0" />
+         </HBox.margin>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></MaterialIconView>
+   </children>
+</HBox>

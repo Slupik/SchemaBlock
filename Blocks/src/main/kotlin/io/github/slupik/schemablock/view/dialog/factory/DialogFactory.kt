@@ -9,12 +9,11 @@ import javafx.scene.Scene
 import javafx.stage.Modality
 import javafx.stage.Stage
 import javafx.stage.StageStyle
-import javax.inject.Inject
 
 /**
  * All rights reserved & copyright ©
  */
-abstract class DialogFactory<ControllerType : DialogController<InputType>, InputType: UiBlockSettings> @Inject constructor(
+abstract class DialogFactory<ControllerType : DialogController<InputType>, InputType: UiBlockSettings> constructor(
     xmlFileName: String,
     input: InputType
 ) {
