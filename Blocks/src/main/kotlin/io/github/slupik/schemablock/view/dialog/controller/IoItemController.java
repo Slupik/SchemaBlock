@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.controlsfx.control.textfield.CustomTextField;
 
 import java.net.URL;
@@ -26,6 +28,12 @@ public class IoItemController implements Initializable {
     @FXML
     Label operationTypeInfo;
 
+    @FXML
+    HBox container;
+
+    @FXML
+    VBox fieldContainer;
+
     private final IoItemTypeSwitcher typeSwitcher = new IoItemTypeSwitcher();
     private final List<Runnable> deletionListeners = new ArrayList<>();
 
@@ -40,6 +48,13 @@ public class IoItemController implements Initializable {
             }
         });
         delete.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> deletionListeners.forEach(Runnable::run));
+        bindSize();
+    }
+
+    private void bindSize() {
+        container.widthProperty().addListener((observableValue, oldValue, newValue) -> {
+            fieldContainer.setPrefWidth(newValue.doubleValue() - delete.getBoundsInLocal().getWidth());
+        });
     }
 
     public void addDeletionListener(Runnable runnable) {

@@ -74,9 +74,13 @@
       <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
    </padding>
    <center>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_LEFT">
          <content>
-            <VBox fx:id="ioItems" spacing="8.0" />
+            <VBox fx:id="ioItems" spacing="8.0">
+               <padding>
+                  <Insets bottom="16.0" />
+               </padding>
+            </VBox>
          </content>
       </ScrollPane>
    </center>

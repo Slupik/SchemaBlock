@@ -8,9 +8,9 @@
 <?import javafx.scene.text.*?>
 <?import org.controlsfx.control.textfield.*?>
 
-<HBox alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.dialog.controller.IoItemController">
+<HBox fx:id="container" alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.dialog.controller.IoItemController">
    <children>
-      <VBox alignment="CENTER_LEFT">
+      <VBox fx:id="fieldContainer" alignment="CENTER_LEFT">
          <Label fx:id="operationTypeInfo" text="Wyświetl wynik">
             <VBox.margin>
                <Insets bottom="4.0" />
