@@ -6,10 +6,12 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import de.tesis.dynaware.grapheditor.Commands;
+import de.tesis.dynaware.grapheditor.GNodeSkin;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
 import de.tesis.dynaware.grapheditor.core.skins.UiElementType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.SimpleConnectionSkin;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.node.StartBlock;
 import de.tesis.dynaware.grapheditor.demo.customskins.DefaultSkinController;
 import de.tesis.dynaware.grapheditor.demo.customskins.SkinController;
 import de.tesis.dynaware.grapheditor.demo.utils.AwesomeIcon;
@@ -62,6 +64,7 @@ import javax.inject.Inject;
 import java.io.File;
 import java.net.URL;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -468,7 +471,19 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void deleteSelection() {
+        Optional<GNodeSkin> originalStartBlock = getStartBlock();
+        originalStartBlock.ifPresent(gNodeSkin -> gNodeSkin.setSelected(false));
         graphEditor.getSelectionManager().deleteSelection();
+        originalStartBlock.ifPresent(gNodeSkin -> gNodeSkin.setSelected(true));
+    }
+
+    private Optional<GNodeSkin> getStartBlock() {
+        return graphEditor.getSelectionManager()
+                .getSelectedNodes()
+                .stream()
+                .map(selectedNode -> graphEditor.getSkinLookup().lookupNode(selectedNode))
+                .filter(element -> element instanceof StartBlock)
+                .findFirst();
     }
 
     @FXML
