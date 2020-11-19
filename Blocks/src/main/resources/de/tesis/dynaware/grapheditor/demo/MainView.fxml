@@ -12,45 +12,45 @@
         <children>
             <MenuBar fx:id="menuBar">
                 <menus>
-                    <Menu text="File">
+                    <Menu text="Plik">
                         <items>
-                            <MenuItem fx:id="miNew" mnemonicParsing="false" onAction="#createNew" text="New File" />
-                            <MenuItem onAction="#load" text="Load File" />
-                            <Menu text="Load Sample">
+                            <MenuItem fx:id="miNew" mnemonicParsing="false" onAction="#createNew" text="Nowy" />
+                            <MenuItem onAction="#load" text="Wczytaj" />
+                            <Menu text="Wczytaj przykład">
                                 <items>
                                     <MenuItem onAction="#loadSample" text="Default Skins - Small" />
                                     <MenuItem onAction="#loadSampleLarge" text="Default Skins - Large" />
                                 </items>
                             </Menu>
-                            <MenuItem onAction="#save" text="Save" />
-                     <MenuItem mnemonicParsing="false" onAction="#print" text="Print" />
-                            <MenuItem onAction="#clearModel" text="Clear All" />
+                            <MenuItem onAction="#save" text="Zapisz" />
+                     <MenuItem mnemonicParsing="false" onAction="#print" text="Drukuj" />
+                            <MenuItem onAction="#clearModel" text="Wyczyść" />
                             <SeparatorMenuItem />
-                            <MenuItem onAction="#exit" text="Exit" />
+                            <MenuItem onAction="#exit" text="Wyjdź" />
                         </items>
                     </Menu>
-                    <Menu text="Edit">
+                    <Menu text="Edytuj">
                         <items>
-                            <MenuItem accelerator="Shortcut+Z" onAction="#undo" text="Undo" />
-                            <MenuItem accelerator="Shortcut+Y" onAction="#redo" text="Redo" />
+                            <MenuItem accelerator="Shortcut+Z" onAction="#undo" text="Cofnij" />
+                            <MenuItem accelerator="Shortcut+Y" onAction="#redo" text="Potwórz" />
                             <SeparatorMenuItem />
-                            <MenuItem accelerator="Shortcut+X" onAction="#cut" text="Cut" />
-                            <MenuItem accelerator="Shortcut+C" onAction="#copy" text="Copy" />
-                            <MenuItem accelerator="Shortcut+V" onAction="#paste" text="Paste" />
+                            <MenuItem accelerator="Shortcut+X" onAction="#cut" text="Wytnij" />
+                            <MenuItem accelerator="Shortcut+C" onAction="#copy" text="Kopiuj" />
+                            <MenuItem accelerator="Shortcut+V" onAction="#paste" text="Wklej" />
+                            <MenuItem accelerator="Delete" onAction="#deleteSelection" text="Delete" />
                             <SeparatorMenuItem />
                             <!-- Added blank spaces to force menu to be wider. -->
-                            <MenuItem accelerator="Shortcut+A" onAction="#selectAll" text="Select All          " />
-                            <MenuItem accelerator="Delete" onAction="#deleteSelection" text="Delete" />
+                            <MenuItem accelerator="Shortcut+A" onAction="#selectAll" text="Zaznacz wszystko" />
                         </items>
                     </Menu>
-                    <Menu text="Actions">
+                    <Menu text="Akcje">
                         <items>
-                            <Menu mnemonicParsing="false" text="Add Node">
+                            <Menu mnemonicParsing="false" text="Dodaj blok">
                                 <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#addCalculationsNode" text="Calculations" />
-                                    <MenuItem mnemonicParsing="false" onAction="#addConditionNode" text="Condition" />
-                                    <MenuItem mnemonicParsing="false" onAction="#addIoNode" text="I/O" />
-                                    <MenuItem mnemonicParsing="false" onAction="#addStopNode" text="Stop" />
+                                    <MenuItem mnemonicParsing="false" onAction="#addCalculationsNode" text="Operacji" />
+                                    <MenuItem mnemonicParsing="false" onAction="#addConditionNode" text="Warunkowy" />
+                                    <MenuItem mnemonicParsing="false" onAction="#addIoNode" text="Wejście/Wyjście" />
+                                    <MenuItem mnemonicParsing="false" onAction="#addStopNode" text="Stopu" />
                                 </items>
                             </Menu>
                             <MenuItem fx:id="addConnectorButton" accelerator="Shortcut+E" onAction="#addConnector" text="Add Connector" />
@@ -71,23 +71,23 @@
                             </Menu>
                         </items>
                     </Menu>
-                    <Menu text="Settings">
+                    <Menu text="Ustawienia">
                         <items>
-                            <RadioMenuItem fx:id="showGridButton" text="Show Grid" />
-                            <RadioMenuItem fx:id="snapToGridButton" text="Snap to Grid" />
+                            <RadioMenuItem fx:id="showGridButton" text="Pokaż siatkę" />
+                            <RadioMenuItem fx:id="snapToGridButton" text="Zawijaj do siatki" />
                             <!-- Added blank spaces to force menu to be wider. -->
-                            <Menu fx:id="intersectionStyle" text="Intersection Style  ">
+                            <Menu fx:id="intersectionStyle" text="Styl przecięć">
                                 <items>
-                                    <RadioMenuItem fx:id="detouredStyleButton" onAction="#setDetouredStyle" selected="true" text="Detours" />
-                                    <RadioMenuItem fx:id="gappedStyleButton" onAction="#setGappedStyle" text="Gaps" />
+                                    <RadioMenuItem fx:id="detouredStyleButton" onAction="#setDetouredStyle" selected="true" text="Mosty" />
+                                    <RadioMenuItem fx:id="gappedStyleButton" onAction="#setGappedStyle" text="Przerwy" />
                                 </items>
                             </Menu>
-                            <Menu fx:id="zoomOptions" text="Zoom Level" />
+                            <Menu fx:id="zoomOptions" text="Stopień przybliżenia" />
                         </items>
                     </Menu>
-                    <Menu mnemonicParsing="false" text="Help">
+                    <Menu mnemonicParsing="false" text="Pomoc">
                         <items>
-                            <MenuItem fx:id="miAbout" mnemonicParsing="false" text="About" />
+                            <MenuItem fx:id="miAbout" mnemonicParsing="false" text="O aplikacji" />
                         </items>
                     </Menu>
                 </menus>
@@ -95,10 +95,10 @@
             <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: lightgray;">
                 <items>
                     <JFXButton buttonType="FLAT" managed="false" mnemonicParsing="false" styleClass="jfx-button-flat" text="Dummy button to keep right colors of other buttons" />
-                    <JFXButton fx:id="btnRun" buttonType="FLAT" defaultButton="true" mnemonicParsing="false" onAction="#runDiagram" styleClass="jfx-button-flat" text="Run" />
-                    <JFXButton fx:id="btnDebug" buttonType="FLAT" mnemonicParsing="false" onAction="#debugDiagram" styleClass="jfx-button-flat" text="Debug" />
-                    <JFXButton fx:id="btnContinue" buttonType="FLAT" mnemonicParsing="false" styleClass="jfx-button-flat" text="Continue" />
-                    <JFXButton fx:id="btnStop" buttonType="FLAT" layoutX="107.0" layoutY="13.0" mnemonicParsing="false" onAction="#stopExecution" styleClass="jfx-button-flat" text="Stop" />
+                    <JFXButton fx:id="btnRun" buttonType="FLAT" defaultButton="true" mnemonicParsing="false" onAction="#runDiagram" styleClass="jfx-button-flat" text="Uruchom" />
+                    <JFXButton fx:id="btnDebug" buttonType="FLAT" mnemonicParsing="false" onAction="#debugDiagram" styleClass="jfx-button-flat" text="Debuguj" />
+                    <JFXButton fx:id="btnContinue" buttonType="FLAT" mnemonicParsing="false" styleClass="jfx-button-flat" text="Kontynuuj" />
+                    <JFXButton fx:id="btnStop" buttonType="FLAT" layoutX="107.0" layoutY="13.0" mnemonicParsing="false" onAction="#stopExecution" styleClass="jfx-button-flat" text="Wyłącz" />
                     <HBox fx:id="availableBlocks" spacing="16.0">
                         <padding>
                             <Insets left="16.0" />
@@ -131,6 +131,11 @@
                                 </children>
                             </VBox>
                             <JFXTreeTableView fx:id="tvVariables" prefHeight="200.0" prefWidth="200.0">
+                                <placeholder>
+                                    <Label>
+                                        Zmienne pojawią się, gdy uruchomisz algorytm
+                                    </Label>
+                                </placeholder>
                                 <columns>
                                     <JFXTreeTableColumn fx:id="tcVarType" minWidth="50.0" prefWidth="75.0" text="Typ" />
                                     <JFXTreeTableColumn fx:id="tcVarName" minWidth="50.0" prefWidth="100.0" text="Nazwa" />
