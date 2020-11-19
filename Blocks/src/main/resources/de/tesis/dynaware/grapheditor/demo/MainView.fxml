@@ -43,32 +43,12 @@
                             <MenuItem accelerator="Shortcut+A" onAction="#selectAll" text="Zaznacz wszystko" />
                         </items>
                     </Menu>
-                    <Menu text="Akcje">
+                    <Menu text="Dodaj blok">
                         <items>
-                            <Menu mnemonicParsing="false" text="Dodaj blok">
-                                <items>
-                                    <MenuItem mnemonicParsing="false" onAction="#addCalculationsNode" text="Operacji" />
-                                    <MenuItem mnemonicParsing="false" onAction="#addConditionNode" text="Warunkowy" />
-                                    <MenuItem mnemonicParsing="false" onAction="#addIoNode" text="Wejście/Wyjście" />
-                                    <MenuItem mnemonicParsing="false" onAction="#addStopNode" text="Stopu" />
-                                </items>
-                            </Menu>
-                            <MenuItem fx:id="addConnectorButton" accelerator="Shortcut+E" onAction="#addConnector" text="Add Connector" />
-                            <MenuItem fx:id="clearConnectorsButton" accelerator="Shortcut+W" onAction="#clearConnectors" text="Clear Connectors" />
-                            <Menu fx:id="connectorTypeMenu" text="Connector Type">
-                                <items>
-                                    <RadioMenuItem fx:id="inputConnectorTypeButton" selected="true" text="Input" />
-                                    <RadioMenuItem fx:id="outputConnectorTypeButton" text="Output" />
-                                </items>
-                            </Menu>
-                            <Menu fx:id="connectorPositionMenu" text="Connector Position">
-                                <items>
-                                    <RadioMenuItem fx:id="leftConnectorPositionButton" selected="true" text="Left" />
-                                    <RadioMenuItem fx:id="rightConnectorPositionButton" text="Right" />
-                                    <RadioMenuItem fx:id="topConnectorPositionButton" text="Top" />
-                                    <RadioMenuItem fx:id="bottomConnectorPositionButton" text="Bottom" />
-                                </items>
-                            </Menu>
+                              <MenuItem mnemonicParsing="false" onAction="#addCalculationsNode" text="Operacji" />
+                              <MenuItem mnemonicParsing="false" onAction="#addConditionNode" text="Warunkowy" />
+                              <MenuItem mnemonicParsing="false" onAction="#addIoNode" text="Wejście/Wyjście" />
+                              <MenuItem mnemonicParsing="false" onAction="#addStopNode" text="Stopu" />
                         </items>
                     </Menu>
                     <Menu text="Ustawienia">

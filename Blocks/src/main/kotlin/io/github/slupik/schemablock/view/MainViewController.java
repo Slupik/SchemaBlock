@@ -44,10 +44,8 @@ import io.reactivex.subjects.PublishSubject;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -107,26 +105,6 @@ public class MainViewController implements Initializable {
     private VBox mainContainer;
     @FXML
     private MenuBar menuBar;
-    @FXML
-    private MenuItem addConnectorButton;
-    @FXML
-    private MenuItem clearConnectorsButton;
-    @FXML
-    private Menu connectorTypeMenu;
-    @FXML
-    private Menu connectorPositionMenu;
-    @FXML
-    private RadioMenuItem inputConnectorTypeButton;
-    @FXML
-    private RadioMenuItem outputConnectorTypeButton;
-    @FXML
-    private RadioMenuItem leftConnectorPositionButton;
-    @FXML
-    private RadioMenuItem rightConnectorPositionButton;
-    @FXML
-    private RadioMenuItem topConnectorPositionButton;
-    @FXML
-    private RadioMenuItem bottomConnectorPositionButton;
     @FXML
     private RadioMenuItem showGridButton;
     @FXML
@@ -210,24 +188,12 @@ public class MainViewController implements Initializable {
         final ToggleGroup connectionStyleGroup = new ToggleGroup();
         connectionStyleGroup.getToggles().addAll(gappedStyleButton, detouredStyleButton);
 
-        final ToggleGroup connectorTypeGroup = new ToggleGroup();
-        connectorTypeGroup.getToggles().addAll(inputConnectorTypeButton, outputConnectorTypeButton);
-
-        final ToggleGroup positionGroup = new ToggleGroup();
-        positionGroup.getToggles().addAll(leftConnectorPositionButton, rightConnectorPositionButton);
-        positionGroup.getToggles().addAll(topConnectorPositionButton, bottomConnectorPositionButton);
-
         graphEditor.getProperties().gridVisibleProperty().bind(showGridButton.selectedProperty());
         graphEditor.getProperties().snapToGridProperty().bind(snapToGridButton.selectedProperty());
 
         minimapButton.setGraphic(AwesomeIcon.MAP.node());
 
         initializeZoomOptions();
-
-        final ListChangeListener<? super GNode> selectedNodesListener = change -> checkConnectorButtonsToDisable();
-
-        graphEditor.getSelectionManager().getSelectedNodes().addListener(selectedNodesListener);
-        checkConnectorButtonsToDisable();
     }
 
     /**
@@ -283,7 +249,6 @@ public class MainViewController implements Initializable {
         clearModel();
         stopExecution();
         flushCommandStack();
-        checkConnectorButtonsToDisable();
         graphEditor.getSelectionManager().clearMemory();
     }
 
@@ -295,22 +260,6 @@ public class MainViewController implements Initializable {
         if (editingDomain != null) {
             editingDomain.getCommandStack().flush();
         }
-    }
-
-    /**
-     * Checks if the connector buttons need disabling (e.g. because no nodes are selected).
-     */
-    private void checkConnectorButtonsToDisable() {
-        final boolean nothingSelected = graphEditor.getSelectionManager().getSelectedNodes().isEmpty();
-        if (nothingSelected) {
-            addConnectorButton.setDisable(true);
-            clearConnectorsButton.setDisable(true);
-        } else {
-            addConnectorButton.setDisable(false);
-            clearConnectorsButton.setDisable(false);
-        }
-        connectorTypeMenu.setDisable(false);
-        connectorPositionMenu.setDisable(false);
     }
 
     private void enableResizing() {
@@ -528,28 +477,6 @@ public class MainViewController implements Initializable {
     @FXML
     public void addStopNode() {
         activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), UiElementType.STOP);
-    }
-
-    @FXML
-    public void addConnector() {
-        activeSkinController.get().addConnector(getSelectedConnectorPosition(), inputConnectorTypeButton.isSelected());
-    }
-
-    /**
-     * Gets the side corresponding to the currently selected connector position in the menu.
-     *
-     * @return the {@link Side} corresponding to the currently selected connector position
-     */
-    private Side getSelectedConnectorPosition() {
-        if (leftConnectorPositionButton.isSelected()) {
-            return Side.LEFT;
-        } else if (rightConnectorPositionButton.isSelected()) {
-            return Side.RIGHT;
-        } else if (topConnectorPositionButton.isSelected()) {
-            return Side.TOP;
-        } else {
-            return Side.BOTTOM;
-        }
     }
 
     @FXML
