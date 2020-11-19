@@ -47,7 +47,7 @@
                         <items>
                               <MenuItem mnemonicParsing="false" onAction="#addCalculationsNode" text="Operacji" />
                               <MenuItem mnemonicParsing="false" onAction="#addConditionNode" text="Warunkowy" />
-                              <MenuItem mnemonicParsing="false" onAction="#addIoNode" text="Wejście/Wyjście" />
+                              <MenuItem mnemonicParsing="false" onAction="#addIoNode" text="Wejścia/Wyjścia" />
                               <MenuItem mnemonicParsing="false" onAction="#addStopNode" text="Stopu" />
                         </items>
                     </Menu>
