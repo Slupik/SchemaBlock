@@ -37,6 +37,7 @@ import io.github.slupik.schemablock.view.persistence.DiagramLoader;
 import io.github.slupik.schemablock.view.persistence.DiagramSaver;
 import io.github.slupik.schemablock.view.persistence.FileChooser;
 import io.github.slupik.schemablock.view.persistence.graph.SampleLoader;
+import io.github.slupik.schemablock.view.utils.ShortcutLoader;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -47,6 +48,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -162,7 +166,15 @@ public class MainViewController implements Initializable {
         enableResizing();
         initializeMenuBar();
         bindTable();
+        Platform.runLater(this::setupShortcutsForButtons);
         Platform.runLater(this::addStartNode);
+    }
+
+    private void setupShortcutsForButtons() {
+        ShortcutLoader.saveAccelerator(btnRun, new KeyCodeCombination(KeyCode.F10, KeyCombination.SHIFT_ANY));
+        ShortcutLoader.saveAccelerator(btnDebug, new KeyCodeCombination(KeyCode.F9, KeyCombination.SHIFT_ANY));
+        ShortcutLoader.saveAccelerator(btnStop, new KeyCodeCombination(KeyCode.F2, KeyCombination.CONTROL_ANY));
+        ShortcutLoader.saveAccelerator(btnContinue, new KeyCodeCombination(KeyCode.F9));
     }
 
     private void bindTable() {

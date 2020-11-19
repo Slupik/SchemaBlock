@@ -58,8 +58,8 @@
                             <!-- Added blank spaces to force menu to be wider. -->
                             <Menu fx:id="intersectionStyle" text="Styl przecięć">
                                 <items>
-                                    <RadioMenuItem fx:id="detouredStyleButton" onAction="#setDetouredStyle" selected="true" text="Mosty" />
-                                    <RadioMenuItem fx:id="gappedStyleButton" onAction="#setGappedStyle" text="Przerwy" />
+                                    <RadioMenuItem fx:id="detouredStyleButton" onAction="#setDetouredStyle" text="Mosty" />
+                                    <RadioMenuItem fx:id="gappedStyleButton" onAction="#setGappedStyle" selected="true" text="Przerwy" />
                                 </items>
                             </Menu>
                             <Menu fx:id="zoomOptions" text="Stopień przybliżenia" />
@@ -75,10 +75,18 @@
             <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: lightgray;">
                 <items>
                     <JFXButton buttonType="FLAT" managed="false" mnemonicParsing="false" styleClass="jfx-button-flat" text="Dummy button to keep right colors of other buttons" />
-                    <JFXButton fx:id="btnRun" buttonType="FLAT" defaultButton="true" mnemonicParsing="false" onAction="#runDiagram" styleClass="jfx-button-flat" text="Uruchom" />
-                    <JFXButton fx:id="btnDebug" buttonType="FLAT" mnemonicParsing="false" onAction="#debugDiagram" styleClass="jfx-button-flat" text="Debuguj" />
-                    <JFXButton fx:id="btnContinue" buttonType="FLAT" mnemonicParsing="false" styleClass="jfx-button-flat" text="Kontynuuj" />
-                    <JFXButton fx:id="btnStop" buttonType="FLAT" layoutX="107.0" layoutY="13.0" mnemonicParsing="false" onAction="#stopExecution" styleClass="jfx-button-flat" text="Wyłącz" />
+                    <JFXButton fx:id="btnRun" buttonType="FLAT" defaultButton="true" mnemonicParsing="false" onAction="#runDiagram" styleClass="jfx-button-flat" text="Uruchom">
+                        <tooltip><Tooltip text="SHIFT+F10" /></tooltip>
+                    </JFXButton>
+                    <JFXButton fx:id="btnDebug" buttonType="FLAT" mnemonicParsing="false" onAction="#debugDiagram" styleClass="jfx-button-flat" text="Debuguj">
+                        <tooltip><Tooltip text="SHIFT+9" /></tooltip>
+                    </JFXButton>
+                    <JFXButton fx:id="btnContinue" buttonType="FLAT" mnemonicParsing="false" styleClass="jfx-button-flat" text="Kontynuuj">
+                        <tooltip><Tooltip text="F9" /></tooltip>
+                    </JFXButton>
+                    <JFXButton fx:id="btnStop" buttonType="FLAT" layoutX="107.0" layoutY="13.0" mnemonicParsing="false" onAction="#stopExecution" styleClass="jfx-button-flat" text="Wyłącz">
+                        <tooltip><Tooltip text="CTRL+F2" /></tooltip>
+                    </JFXButton>
                     <HBox fx:id="availableBlocks" spacing="16.0">
                         <padding>
                             <Insets left="16.0" />
