@@ -212,3 +212,21 @@
 .default-node-label {
     -fx-font-size: 20pt;
 }
+
+
+.ioItemType .radio {
+    -fx-padding: 200px;
+}
+
+.ioItemType .dot {
+    -fx-background-radius: 15px;
+    -fx-padding: 120px;
+}
+
+.ioItemType {
+    -fx-border-width: 3px;
+    -fx-border-color: red;
+    -fx-background-color: white;
+    -fx-border-radius: 15px;
+    -fx-padding: 0px;
+}

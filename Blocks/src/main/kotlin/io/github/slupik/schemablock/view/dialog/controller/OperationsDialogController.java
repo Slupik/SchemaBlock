@@ -5,6 +5,7 @@ import io.github.slupik.schemablock.view.dialog.data.CodeAndDescription;
 import io.github.slupik.schemablock.view.dialog.data.UiBlockSettings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -16,7 +17,7 @@ public class OperationsDialogController extends DialogController<CodeAndDescript
     private JFXTextField name;
 
     @FXML
-    private JFXTextField code;
+    private TextArea code;
 
     @FXML
     void onCancel(ActionEvent event) {

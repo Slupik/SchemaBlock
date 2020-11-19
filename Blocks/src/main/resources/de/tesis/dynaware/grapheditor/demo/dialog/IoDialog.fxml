@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import de.jensd.fx.glyphs.materialicons.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="165.0" prefWidth="466.0" stylesheets="@../demo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.dialog.controller.IoDialogController">
+    <top>
+        <VBox BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Nazwa">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </Label>
+                <JFXTextField fx:id="name" prefWidth="450.0" promptText="Tekst widoczny na schemacie" style="-fx-background-color: white;">
+                    <VBox.margin>
+                        <Insets top="4.0" />
+                    </VBox.margin>
+                </JFXTextField>
+            <HBox>
+               <VBox.margin>
+                  <Insets bottom="16.0" top="16.0" />
+               </VBox.margin>
+               <children>
+                  <HBox fx:id="addMoreContainer" alignment="CENTER_LEFT">
+                     <children>
+                         <MaterialIconView glyphName="CONTROL_POINT" size="23">
+
+                         </MaterialIconView>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Dodaj zadanie">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="8.0" />
+                           </HBox.margin>
+                        </Text>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets right="16.0" />
+                     </padding></HBox>
+               </children>
+            </HBox>
+            </children>
+        </VBox>
+    </top>
+    <bottom>
+        <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
+            <children>
+                <JFXButton cancelButton="true" onAction="#onCancel" styleClass="jfx-button-flat" text="Anuluj">
+                    <HBox.margin>
+                        <Insets right="16.0" />
+                    </HBox.margin>
+                </JFXButton>
+                <JFXButton defaultButton="true" onAction="#onSave" styleClass="jfx-button-flat" text="Zapisz" />
+            </children>
+         <BorderPane.margin>
+            <Insets top="16.0" />
+         </BorderPane.margin>
+        </HBox>
+    </bottom>
+   <padding>
+      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+   </padding>
+   <center>
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_LEFT">
+         <content>
+            <VBox fx:id="ioItems" spacing="8.0">
+               <padding>
+                  <Insets bottom="16.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+</BorderPane>
