@@ -49,6 +49,8 @@ public class GraphEditorDemo extends Application {
         stage.setScene(scene);
         stage.setTitle(APPLICATION_TITLE);
 
+        stage.setOnCloseRequest(event -> System.exit(0));
+
         stage.show();
 
         controller.panToCenter();
