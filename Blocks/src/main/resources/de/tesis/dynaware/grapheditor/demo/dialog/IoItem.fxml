@@ -22,7 +22,7 @@
       </VBox>
        <MaterialIconView fx:id="delete" glyphName="DELETE_FOREVER" size="35">
          <HBox.margin>
-            <Insets left="8.0" />
+            <Insets left="8.0" top="22.0" />
          </HBox.margin>
          <cursor>
             <Cursor fx:constant="HAND" />
