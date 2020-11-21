@@ -29,7 +29,6 @@ import io.github.slupik.schemablock.view.logic.execution.diagram.DiagramExecutor
 import io.github.slupik.schemablock.view.logic.execution.diagram.ErrorEvent;
 import io.github.slupik.schemablock.view.logic.execution.diagram.ExecutionEvent;
 import io.github.slupik.schemablock.view.logic.execution.diagram.PostExecutionEvent;
-import io.github.slupik.schemablock.view.logic.execution.diagram.exception.NextBlockNotFound;
 import io.github.slupik.schemablock.view.logic.marker.BlockExecutionStateMarker;
 import io.github.slupik.schemablock.view.logic.memory.HeapValueFx;
 import io.github.slupik.schemablock.view.logic.memory.NewHeapSpy;
@@ -390,20 +389,16 @@ public class MainViewController implements Initializable {
                     } else if (executionEvent instanceof ErrorEvent) {
                         output.printAlgorithmError(translator.translateError(((ErrorEvent) executionEvent).getError()));
                     }
-                    System.out.println("executionEvent = " + executionEvent);
                 },
                 throwable -> {
-                    System.out.println("throwable = " + throwable);
-                    if (throwable instanceof NextBlockNotFound) {
-                        System.out.println("type " + ((NextBlockNotFound) throwable).getCurrentBlock());
+                    if (translator.handles(throwable)) {
+                        output.printAlgorithmError(translator.translateError(throwable));
+                    } else {
+                        output.printProgramError(throwable.getMessage());
                     }
-                    output.printProgramError(throwable.getMessage());
                     onExecutionEnd();
                 },
-                () -> {
-                    System.out.println("END");
-                    onExecutionEnd();
-                }
+                this::onExecutionEnd
         );
         composite.add(disp);
     }

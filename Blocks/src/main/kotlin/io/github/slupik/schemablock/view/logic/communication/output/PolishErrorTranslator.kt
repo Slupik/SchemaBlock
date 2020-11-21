@@ -29,6 +29,9 @@ import javax.inject.Inject
  */
 class PolishErrorTranslator @Inject constructor() : ErrorTranslator {
 
+    override fun handles(error: Throwable): Boolean =
+        error is DiagramException || error is CompilationException || error is AlgorithmException
+
     override fun translateError(error: Throwable): String =
         when (error) {
             is DiagramException -> {
