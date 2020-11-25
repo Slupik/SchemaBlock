@@ -1,8 +1,13 @@
 package io.github.slupik.schemablock.newparser.executor.implementation;
 
+import io.github.slupik.schemablock.InternalException;
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.model.ui.error.UnknownError;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.*;
+import io.github.slupik.schemablock.newparser.executor.implementation.exception.SimpleValueExpected;
+import io.github.slupik.schemablock.newparser.executor.implementation.exception.UnknownMemoryElement;
+import io.github.slupik.schemablock.newparser.executor.implementation.exception.UnknownOperation;
+import io.github.slupik.schemablock.newparser.executor.implementation.exception.VariableIsNotArray;
 import io.github.slupik.schemablock.newparser.function.Function;
 import io.github.slupik.schemablock.newparser.function.FunctionContainer;
 import io.github.slupik.schemablock.newparser.function.FunctionExecutor;
@@ -28,7 +33,7 @@ class ByteCodeExe {
                 execute(cmd, memory, register, functionContainer, executor);
             } catch (Throwable throwable) {
                 if (throwable instanceof AlgorithmException) {
-                    throw throwable;
+                    throw ((AlgorithmException) throwable);
                 } else {
                     throwable.printStackTrace();
                     throw new UnknownError();
@@ -37,7 +42,11 @@ class ByteCodeExe {
         }
     }
 
-    private static void execute(ByteCommand cmd, Memory memory, Register register, FunctionContainer functionContainer, FunctionExecutor executor) throws AlgorithmException {
+    private static void execute(ByteCommand cmd,
+                                Memory memory,
+                                Register register,
+                                FunctionContainer functionContainer,
+                                FunctionExecutor executor) throws AlgorithmException, InternalException {
         switch (cmd.getCommandType()) {
             case HEAP_VAR: {
                 ByteCommandHeapVariable bc = ((ByteCommandHeapVariable) cmd);
@@ -56,17 +65,14 @@ class ByteCodeExe {
                                 if (arg instanceof SimpleValue) {
                                     indexes[args.length - 1 - i] = ((SimpleValue) arg).getCastedValue();
                                 } else {
-                                    System.err.println("BCE exe heap_1");
-                                    System.err.println("Here should be an error");
-                                    //TODO error
+                                    throw new SimpleValueExpected(bc.getLine(), bc.getPosition());
                                 }
                             }
                         }
 
                         register.add(array.getCell(indexes));
                     } else {
-                        System.err.println("Here should be an error");
-                        //TODO error
+                        throw new VariableIsNotArray(var.getName(), bc.getLine(), bc.getPosition());
                     }
                 } else {
                     register.add(var);
@@ -105,8 +111,7 @@ class ByteCodeExe {
                 for (int i = 0; i < argsCount; i++) {
                     Value val = pollValue(register);
                     if (val.isArray()) {
-                        System.err.println("Here should be an error");
-                        //TODO throw error
+                        throw new SimpleValueExpected(bc.getLine(), bc.getPosition());
                     } else {
                         args[argsCount - 1 - i] = ((SimpleValue) val);
                     }
@@ -218,9 +223,7 @@ class ByteCodeExe {
                         if (value instanceof SimpleValue) {
                             indexes[i] = ((SimpleValue) value).getCastedValue();
                         } else {
-                            System.err.println("Heap_array_1");
-                            System.err.println("Here should be an error");
-                            //TODO throw error
+                            throw new SimpleValueExpected(bc.getLine(), bc.getPosition());
                         }
                     }
 
@@ -255,9 +258,7 @@ class ByteCodeExe {
                         } else if (values[i] instanceof SimpleValue) {
                             array.setValue(new int[]{i}, (SimpleValue) values[values.length - 1 - i]);
                         } else {
-                            System.err.println("Heap_array_2");
-                            System.err.println("Here should be an error");
-                            //TODO throw error
+                            throw new UnknownMemoryElement();
                         }
                     }
                     register.add(array);
@@ -298,7 +299,7 @@ class ByteCodeExe {
         }
     }
 
-    private static Value[] getValues(Register register, int amount) {
+    private static Value[] getValues(Register register, int amount) throws InternalException {
         Value[] args = new Value[amount];
         for (int i = 0; i < amount; i++) {
             Value val = pollValue(register);
@@ -307,7 +308,7 @@ class ByteCodeExe {
         return args;
     }
 
-    private static Value pollValue(Register register) {
+    private static Value pollValue(Register register) throws InternalException {
         Memoryable memoried = register.pop();
 
         Value value = null;
@@ -320,8 +321,7 @@ class ByteCodeExe {
         } else if (memoried instanceof Array) {
             value = ((Array) memoried);
         } else {
-            System.err.println("Here should be an error");
-            //TODO throw error
+            throw new UnknownMemoryElement();
         }
         return value;
     }

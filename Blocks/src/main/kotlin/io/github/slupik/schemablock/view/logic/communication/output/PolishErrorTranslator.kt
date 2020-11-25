@@ -7,10 +7,14 @@ import io.github.slupik.schemablock.newparser.compilator.exception.*
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.CompilationException
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.ExceptedTypeOfArray
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.NameForDeclarationCannotBeFound
-import io.github.slupik.schemablock.newparser.executor.implementation.IllegalOperation
-import io.github.slupik.schemablock.newparser.executor.implementation.UnknownOperation
+import io.github.slupik.schemablock.newparser.executor.implementation.exception.IllegalOperation
+import io.github.slupik.schemablock.newparser.executor.implementation.exception.SimpleValueExpected
+import io.github.slupik.schemablock.newparser.executor.implementation.exception.UnknownOperation
+import io.github.slupik.schemablock.newparser.executor.implementation.exception.VariableIsNotArray
 import io.github.slupik.schemablock.newparser.function.exception.CannotParseData
 import io.github.slupik.schemablock.newparser.function.exception.NoMatchingFunction
+import io.github.slupik.schemablock.newparser.function.exception.WrongAmountOfArguments
+import io.github.slupik.schemablock.newparser.function.exception.WrongTypeOfArgument
 import io.github.slupik.schemablock.newparser.memory.ExceptedEndOfIndex
 import io.github.slupik.schemablock.newparser.memory.UnexpectedCharBetweenIndexes
 import io.github.slupik.schemablock.newparser.memory.VariableAlreadyDefined
@@ -28,6 +32,9 @@ import javax.inject.Inject
  * All rights reserved & copyright ©
  */
 class PolishErrorTranslator @Inject constructor() : ErrorTranslator {
+
+    override fun handles(error: Throwable): Boolean =
+        error is DiagramException || error is CompilationException || error is AlgorithmException
 
     override fun translateError(error: Throwable): String =
         when (error) {
@@ -70,6 +77,12 @@ class PolishErrorTranslator @Inject constructor() : ErrorTranslator {
             }
             is NextElementNotFound -> {
                 "Wystąpił wewnętrzny błąd modelu danych algorytmu. Nie udało się odnaleźć następnego elementu do wykonania, mimo, że znaleziono odpowiedni blok. Spróbuj ponownie połączyć elementy."
+            }
+            is SimpleValueExpected -> {
+                "Oczekiwano zwykłej wartości, a otrzymano coś innego (np. tablicę lub jej element). Sprawdź używane indeksy i nazwy zmiennych."
+            }
+            is VariableIsNotArray -> {
+                "Oczekiwano, że zmienna będzie tablicą, a nie jest."
             }
             is UnknownError -> {
                 "Wystąpił nieznany błąd przy uruchamianiu kodu. Sprawdź składnię poleceń. Być może gdzieś brakuje średnika (;)."
@@ -122,6 +135,12 @@ class PolishErrorTranslator @Inject constructor() : ErrorTranslator {
             }
             is ValueTooBig -> {
                 "Wartość '${error.value}' jest zbyt duża by zapisać ją za pomocą zaimplementowanych typów liczbowych."
+            }
+            is WrongTypeOfArgument -> {
+                "Funkcja '${error.name}' nie istnieje dla podanych typów argumentów."
+            }
+            is WrongAmountOfArguments -> {
+                "Funkcja '${error.name}' nie istnieje z podaną liczbą argumentów."
             }
             else -> {
                 "Nieznany błąd: ${error.message}"

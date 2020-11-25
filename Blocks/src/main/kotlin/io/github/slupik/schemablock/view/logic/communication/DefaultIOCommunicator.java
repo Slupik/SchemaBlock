@@ -9,8 +9,6 @@ import java.util.Scanner;
  */
 public class DefaultIOCommunicator implements IOCommunicable {
 
-    //TODO change to execution's console
-
     @Override
     public String getInput() {
         Scanner sc = new Scanner(System.in);
