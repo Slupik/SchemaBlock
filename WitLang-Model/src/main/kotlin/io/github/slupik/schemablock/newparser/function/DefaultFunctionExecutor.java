@@ -2,6 +2,8 @@ package io.github.slupik.schemablock.newparser.function;
 
 import io.github.slupik.schemablock.model.ui.error.AlgorithmException;
 import io.github.slupik.schemablock.newparser.bytecode.bytecommand.abstraction.ByteCommandExecute;
+import io.github.slupik.schemablock.newparser.function.exception.WrongAmountOfArguments;
+import io.github.slupik.schemablock.newparser.function.exception.WrongTypeOfArgument;
 import io.github.slupik.schemablock.newparser.memory.element.Value;
 import io.github.slupik.schemablock.newparser.memory.element.ValueType;
 
@@ -14,12 +16,10 @@ public class DefaultFunctionExecutor implements FunctionExecutor {
 
     @Override
     public Value execute(List<Function> availableFunctions, List<Value> args, ByteCommandExecute bc) throws AlgorithmException {
-        //TODO add exceptions:
-        // - no enough arguments
-        // - too many arguments
-        // - type of argument not match
+        boolean existsFunctionWithRightAmountOfArguments = false;
         for (Function function : availableFunctions) {
             if (function.getArgumentsType().size() == args.size()) {
+                existsFunctionWithRightAmountOfArguments = true;
                 boolean isCompatible = true;
                 for (int i = 0; i < args.size(); i++) {
                     Value arg = args.get(i);
@@ -33,7 +33,11 @@ public class DefaultFunctionExecutor implements FunctionExecutor {
                 }
             }
         }
-        return null;
+        if (!existsFunctionWithRightAmountOfArguments) {
+            throw new WrongTypeOfArgument(bc.getLine(), bc.getPosition(), bc.getName());
+        } else {
+            throw new WrongAmountOfArguments(bc.getLine(), bc.getPosition(), bc.getName());
+        }
     }
 
     private boolean isArgumentMatch(Value value, FunctionArgType argType) {
