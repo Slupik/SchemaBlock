@@ -282,15 +282,15 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    public void loadSample() {
+    public void loadAbsoluteValueSample() {
         setDefaultSkin();
-        sampleLoader.loadSmallSample(graphEditor);
+        sampleLoader.loadAbsoluteValueSample(diagram);
     }
 
     @FXML
-    public void loadSampleLarge() {
+    public void loadArraySumSample() {
         setDefaultSkin();
-        sampleLoader.loadBigSample(graphEditor);
+        sampleLoader.loadArraySumSample(diagram);
     }
 
     @FXML

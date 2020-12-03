@@ -18,8 +18,8 @@
                             <MenuItem onAction="#load" text="Wczytaj" />
                             <Menu text="Wczytaj przykład">
                                 <items>
-                                    <MenuItem onAction="#loadSample" text="Default Skins - Small" />
-                                    <MenuItem onAction="#loadSampleLarge" text="Default Skins - Large" />
+                                    <MenuItem onAction="#loadAbsoluteValueSample" text="Wartość bezwzględna" />
+                                    <MenuItem onAction="#loadArraySumSample" text="Suma elementów" />
                                 </items>
                             </Menu>
                             <MenuItem onAction="#save" text="Zapisz" />
