@@ -48,6 +48,7 @@ class PolishErrorTranslator @Inject constructor() : ErrorTranslator {
                 handleAlgorithmError(error)
             }
             else -> {
+                error.printStackTrace()
                 "Nieznany błąd: ${error.message}"
             }
         }
@@ -143,6 +144,7 @@ class PolishErrorTranslator @Inject constructor() : ErrorTranslator {
                 "Funkcja '${error.name}' nie istnieje z podaną liczbą argumentów."
             }
             else -> {
+                error.printStackTrace()
                 "Nieznany błąd: ${error.message}"
             }
         }
@@ -157,6 +159,7 @@ class PolishErrorTranslator @Inject constructor() : ErrorTranslator {
                 "Nie znaleziono następnego bloku po bloku nazwanym jako: ${error.currentBlock.description}"
             }
             else -> {
+                error.printStackTrace()
                 "Nieznany błąd: ${error.message}"
             }
         }
