@@ -46,8 +46,6 @@ public class VariableImpl implements Variable {
                     if (array.getDimensionsCount() != dimensions) {
                         throw new IncompatibleArrayException(dimensions, array.getDimensionsCount());
                     }
-                } else {
-                    throw new ExceptedArray();
                 }
             } else {
                 if (dimensions != 0) {
