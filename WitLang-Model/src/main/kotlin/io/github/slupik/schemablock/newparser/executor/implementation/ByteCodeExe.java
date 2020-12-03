@@ -221,7 +221,7 @@ class ByteCodeExe {
                     for (int i = 0; i < values.length; i++) {
                         Value value = values[i];
                         if (value instanceof SimpleValue) {
-                            indexes[i] = ((SimpleValue) value).getCastedValue();
+                            indexes[values.length - i - 1] = ((SimpleValue) value).getCastedValue();
                         } else {
                             throw new SimpleValueExpected(bc.getLine(), bc.getPosition());
                         }
