@@ -15,9 +15,19 @@ public class SimpleValueImpl implements SimpleValue {
             this.array = new SimpleValue[]{((SimpleValue) value)};
             this.single = null;
         } else {
+            if (null == value) {
+                value = DefaultValueProvider.getDefaultValue(type);
+            }
+            value = ValueConverter.castValueToType(type, value);
             this.single = value;
             this.array = null;
         }
+    }
+
+    public SimpleValueImpl(ValueType type) {
+        this.type = type;
+        single = DefaultValueProvider.getDefaultValue(type);
+        this.array = null;
     }
 
     public SimpleValueImpl(ValueType type, SimpleValue[] value) {

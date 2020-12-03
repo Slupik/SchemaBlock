@@ -24,7 +24,6 @@ public class MemoryImpl implements Memory {
         if (data.containsKey(variable.getName())) {
             throw new VariableAlreadyDefined(variable.getName());
         }
-        System.out.println("variable.getName() = " + variable.getName());
         data.put(variable.getName(), variable);
     }
 
