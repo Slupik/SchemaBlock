@@ -228,8 +228,8 @@ class ByteCodeExe {
                     }
 
                     List<Array> arrays = new ArrayList<>();
+                    int dimensions = bc.getElementsCount();
                     for (int index : indexes) {
-                        int dimensions = bc.getElementsCount();
                         if (arrays.isEmpty()) {
                             Array array = new ArrayImpl(bc.getType(), dimensions, index);
                             register.add(array);
@@ -245,6 +245,7 @@ class ByteCodeExe {
                                 }
                             }
                         }
+                        dimensions--;
                     }
                 } else {
                     int dimensions = 1;
