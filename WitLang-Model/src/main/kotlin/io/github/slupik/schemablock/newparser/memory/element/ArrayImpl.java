@@ -22,8 +22,14 @@ public class ArrayImpl implements Array {
         VALUES = new ArrayCell[size];
         for (int i = 0; i < size; i++) {
             ArrayCell cell = new ArrayCellImpl(type);
+            cell.setDimensionCount(dimensions - 1);
+            cell.setIndex(i);
             if (dimensions == 1) {
-                cell.setValue(new SimpleValueImpl(type));
+                try {
+                    cell.setValue(new SimpleValueImpl(type));
+                } catch (AlgorithmException e) {
+                    e.printStackTrace();
+                }
             }
             VALUES[i] = cell;
         }
