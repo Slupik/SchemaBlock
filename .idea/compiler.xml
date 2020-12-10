@@ -17,10 +17,10 @@
         <sourceTestOutputDir name="target/generated-sources/apt-test" />
         <outputRelativeToContentRoot value="true" />
         <module name="JavaFx" />
-        <module name="WitLang" />
         <module name="Entity" />
-        <module name="WitLang-Model" />
+        <module name="WitLang" />
         <module name="WitLang-Parser" />
+        <module name="WitLang-Model" />
         <module name="Blocks" />
         <module name="UltimateDetail" />
         <module name="PandaLang" />
