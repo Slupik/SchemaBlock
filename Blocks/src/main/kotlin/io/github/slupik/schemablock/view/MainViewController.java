@@ -294,6 +294,24 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
+    public void loadHeronSample() {
+        setDefaultSkin();
+        sampleLoader.loadHeronSample(diagram);
+    }
+
+    @FXML
+    public void loadEquationSample() {
+        setDefaultSkin();
+        sampleLoader.loadEquationSample(diagram);
+    }
+
+    @FXML
+    public void loadParadoxSample() {
+        setDefaultSkin();
+        sampleLoader.loadParadoxSample(diagram);
+    }
+
+    @FXML
     public void setDefaultSkin() {
         activeSkinController.set(defaultSkinController);
     }

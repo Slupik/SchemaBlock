@@ -12,6 +12,9 @@ import javax.inject.Inject
 private const val PATH = "/io/github/slupik/schemablock/view/persistence/graph/"
 private const val ABSOLUTE_VALUE_FILE: String = "absolute-value$FILE_EXTENSION"
 private const val SUMMING_ARRAY_FILE = "summing-array$FILE_EXTENSION"
+private const val HERON_FILE = "heron$FILE_EXTENSION"
+private const val EQUATION_FILE = "equation$FILE_EXTENSION"
+private const val PARADOX_FILE = "paradox$FILE_EXTENSION"
 
 class SampleLoader @Inject constructor(
     private val loader: JsonDiagramLoader
@@ -23,6 +26,18 @@ class SampleLoader @Inject constructor(
 
     fun loadArraySumSample(diagram: Diagram) {
         load(diagram, SUMMING_ARRAY_FILE)
+    }
+
+    fun loadHeronSample(diagram: Diagram) {
+        load(diagram, HERON_FILE)
+    }
+
+    fun loadEquationSample(diagram: Diagram) {
+        load(diagram, EQUATION_FILE)
+    }
+
+    fun loadParadoxSample(diagram: Diagram) {
+        load(diagram, PARADOX_FILE)
     }
 
     private fun load(diagram: Diagram, fileName: String) {
