@@ -18,8 +18,11 @@
                             <MenuItem onAction="#load" text="Wczytaj" />
                             <Menu text="Wczytaj przykład">
                                 <items>
-                                    <MenuItem onAction="#loadSample" text="Default Skins - Small" />
-                                    <MenuItem onAction="#loadSampleLarge" text="Default Skins - Large" />
+                                    <MenuItem onAction="#loadAbsoluteValueSample" text="Wartość bezwzględna" />
+                                    <MenuItem onAction="#loadArraySumSample" text="Suma elementów" />
+                                    <MenuItem onAction="#loadHeronSample" text="Wzór herona" />
+                                    <MenuItem onAction="#loadEquationSample" text="Pierwiastki równania kwadratowego" />
+                                    <MenuItem onAction="#loadParadoxSample" text="Paradoks zera" />
                                 </items>
                             </Menu>
                             <MenuItem onAction="#save" text="Zapisz" />

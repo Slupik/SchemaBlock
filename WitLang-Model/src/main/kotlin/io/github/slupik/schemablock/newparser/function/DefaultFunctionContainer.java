@@ -49,6 +49,8 @@ public class DefaultFunctionContainer implements FunctionContainer {
         IMPLEMENTED_FUNCTIONS.add(new FunctionContains());
         IMPLEMENTED_FUNCTIONS.add(new FunctionStartsWith());
         IMPLEMENTED_FUNCTIONS.add(new FunctionEndsWith());
+        //array
+        IMPLEMENTED_FUNCTIONS.add(new FunctionSize());
     }
 
     @Override
