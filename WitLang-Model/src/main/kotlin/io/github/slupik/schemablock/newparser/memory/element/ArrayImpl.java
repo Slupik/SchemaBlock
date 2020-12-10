@@ -21,7 +21,17 @@ public class ArrayImpl implements Array {
         DIMENSIONS = dimensions;
         VALUES = new ArrayCell[size];
         for (int i = 0; i < size; i++) {
-            VALUES[i] = new ArrayCellImpl(type);
+            ArrayCell cell = new ArrayCellImpl(type);
+            cell.setDimensionCount(dimensions - 1);
+            cell.setIndex(i);
+            if (dimensions == 1) {
+                try {
+                    cell.setValue(new SimpleValueImpl(type));
+                } catch (AlgorithmException e) {
+                    e.printStackTrace();
+                }
+            }
+            VALUES[i] = cell;
         }
     }
 
