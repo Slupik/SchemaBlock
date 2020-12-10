@@ -2,8 +2,8 @@ package io.github.slupik.schemablock.view.persistence.graph
 
 import io.github.slupik.schemablock.view.entity.Diagram
 import io.github.slupik.schemablock.view.persistence.JsonDiagramLoader
-import java.io.File
-import java.net.URI
+import org.apache.commons.io.IOUtils
+import java.nio.charset.StandardCharsets
 import javax.inject.Inject
 
 /**
@@ -41,10 +41,11 @@ class SampleLoader @Inject constructor(
     }
 
     private fun load(diagram: Diagram, fileName: String) {
-        val file = File(URI.create(javaClass.getResource(PATH + fileName).toExternalForm()))
+        val fileContent = IOUtils.toString(
+            javaClass.getResourceAsStream(PATH + fileName), StandardCharsets.UTF_8.name());
         loader.loadDiagram(
             diagram,
-            file
+            fileContent
         )
     }
 
