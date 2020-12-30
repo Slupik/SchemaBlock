@@ -30,17 +30,17 @@ class ExecutorImplTest {
 
     @Test
     void execute() throws Throwable {
-        check("double a = 5 + 3;", 8);
+        check("double a = 5 + 3;", 8.0);
 
-        check("double a = 5 - 3;", 2);
-        check("double a = 5 - 9;", -4);
+        check("double a = 5 - 3;", 2.0);
+        check("double a = 5 - 9;", -4.0);
 
-        check("double a = 5 * 9;", 45);
-        check("double a = 5 * -9;", 5 * -9);
-        check("double a = 5 * (-9);", 5 * (-9));
-        check("double a = 5 * (+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+9);", 5 * (+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+9));
-        check("double a = +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+5 * (+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+9);", +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+5 * (+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+9));
-        check("double a = 5 * 9+3;", 48);
+        check("double a = 5 * 9;", 45.0);
+        check("double a = 5 * -9;", 5.0 * -9);
+        check("double a = 5 * (-9);", 5.0 * (-9));
+        check("double a = 5 * (+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+9);", 5.0 * (+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+9));
+        check("double a = +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+5 * (+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+9);", +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+5.0 * (+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+9));
+        check("double a = 5 * 9+3;", 48.0);
 
         check("String a = \"test \"+\"aaa\";",
                 "test aaa");
@@ -48,29 +48,31 @@ class ExecutorImplTest {
         check("int b = 5 * 9+3;" +
                         "double c = 5/2;" +
                         "String a = \"text\"+b+c;",
-                "text482");
+                "text482.0");
 
         check("double[] b = {1, 2};" +
-                "double a = b[1];", 2);
+                "double a = b[1];", 2.0);
         check("double[4] b;" +
                 "b[1] = 2;" +
-                "double a = b[1];", 2);
+                "double a = b[1];", 2.0);
         check("double[][] b = {{1}};" +
-                "double a = b[0][0];", 1);
+                "double a = b[0][0];", 1.0);
         check("double[][][] b = {{{1}}};" +
-                "double a = b[0][0][0];", 1);
+                "double a = b[0][0][0];", 1.0);
         check("double[][] b = {{1}, {2}};" +
-                "double a = b[0][0];", 1);
+                "double a = b[0][0];", 1.0);
+        check("double[][] b = {{1, 2}, {2, 3}};" +
+                "double a = b[0][0];", 1.0);
         check("double[][] b = {{1}, {2}};" +
-                "double a = b[1][0];", 2);
+                "double a = b[1][0];", 2.0);
         check("double[][] b = {{1, 4}, {3, 2}};" +
-                "double a = b[1][1];", 2);
+                "double a = b[1][1];", 2.0);
         check("double[][] b = new double[8][9];" +
                 "b[0][0] = 5;" +
-                "double a = b[0][0];", 5);
+                "double a = b[0][0];", 5.0);
         check("double[8][9] b;" +
                 "b[0][0] = 5;" +
-                "double a = b[0][0];", 5);
+                "double a = b[0][0];", 5.0);
 
         check("double a = 0;" +
                 "a = sqrt(4);",2.0);
