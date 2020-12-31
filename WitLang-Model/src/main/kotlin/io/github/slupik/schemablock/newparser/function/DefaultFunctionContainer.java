@@ -25,7 +25,6 @@ public class DefaultFunctionContainer implements FunctionContainer {
         IMPLEMENTED_FUNCTIONS.add(new FunctionFloor());
         IMPLEMENTED_FUNCTIONS.add(new FunctionLn());
         IMPLEMENTED_FUNCTIONS.add(new FunctionLog10());
-        IMPLEMENTED_FUNCTIONS.add(new FunctionMax());
         IMPLEMENTED_FUNCTIONS.add(new FunctionSin());
         IMPLEMENTED_FUNCTIONS.add(new FunctionTan());
         //convert
@@ -49,6 +48,7 @@ public class DefaultFunctionContainer implements FunctionContainer {
         IMPLEMENTED_FUNCTIONS.add(new FunctionContains());
         IMPLEMENTED_FUNCTIONS.add(new FunctionStartsWith());
         IMPLEMENTED_FUNCTIONS.add(new FunctionEndsWith());
+        IMPLEMENTED_FUNCTIONS.add(new FunctionCharAt());
         //array
         IMPLEMENTED_FUNCTIONS.add(new FunctionSize());
     }
