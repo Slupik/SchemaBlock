@@ -138,10 +138,10 @@ public abstract class NodeSkin extends GNodeSkin {
         // The following logic is required because the connectors are offset slightly from the node edges.
         final double x, y;
         if (side.equals(Side.LEFT)) {
-            x = 0;
+            x = connectorSkin.getRoot().getBoundsInParent().getCenterX();
             y = connectorRoot.getLayoutY() + connectorSkin.getHeight() / 2;
         } else if (side.equals(Side.RIGHT)) {
-            x = getRoot().getWidth();
+            x = connectorSkin.getRoot().getBoundsInParent().getCenterX();
             y = connectorRoot.getLayoutY() + connectorSkin.getHeight() / 2;
         } else if (side.equals(Side.TOP)) {
             x = connectorRoot.getLayoutX() + connectorSkin.getWidth() / 2;
