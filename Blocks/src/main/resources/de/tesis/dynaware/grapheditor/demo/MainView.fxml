@@ -70,7 +70,7 @@
                     </Menu>
                     <Menu mnemonicParsing="false" text="Pomoc">
                         <items>
-                            <MenuItem fx:id="miAbout" mnemonicParsing="false" text="O aplikacji" />
+                            <MenuItem fx:id="miAbout" onAction="#showAboutProgram"  mnemonicParsing="false" text="O aplikacji" />
                         </items>
                     </Menu>
                 </menus>

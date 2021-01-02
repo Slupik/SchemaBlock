@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.*?>
 
-<TabPane prefHeight="460.0" prefWidth="704.0" stylesheets="@../../demo.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.dialog.controller.AboutProgramDialogController">
+<TabPane prefHeight="460.0" prefWidth="700.0" stylesheets="@../../demo.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.dialog.controller.AboutProgramDialogController">
 
     <tabs>
         <Tab text="Użyte biblioteki">
