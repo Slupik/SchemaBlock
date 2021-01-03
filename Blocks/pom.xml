@@ -86,7 +86,7 @@
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
-            <version>1</version>
+            <version>${javax.inject.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.google.dagger/dagger -->
@@ -136,33 +136,33 @@
         <dependency>
             <groupId>io.reactivex.rxjava3</groupId>
             <artifactId>rxjava</artifactId>
-            <version>3.0.0-RC1</version>
+            <version>${rxjava.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>de.jensd</groupId>
             <artifactId>fontawesomefx-commons</artifactId>
-            <version>11.0</version>
+            <version>${fontawesomefx.commons.version}</version>
         </dependency>
         <dependency>
             <groupId>de.jensd</groupId>
             <artifactId>fontawesomefx-materialdesignfont</artifactId>
-            <version>1.7.22-11</version>
+            <version>${fontawesomefx.materialdesignfont.version}</version>
         </dependency>
         <dependency>
             <groupId>de.jensd</groupId>
             <artifactId>fontawesomefx-materialicons</artifactId>
-            <version>2.2.0-11</version>
+            <version>${fontawesomefx.materialicons.version}</version>
         </dependency>
         <dependency>
             <groupId>de.jensd</groupId>
             <artifactId>fontawesomefx-materialstackicons</artifactId>
-            <version>2.1-11</version>
+            <version>${fontawesomefx.materialstackicons.version}</version>
         </dependency>
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
-            <version>11.0.3</version>
+            <version>${org.controlsfx.version}</version>
         </dependency>
     </dependencies>
 
