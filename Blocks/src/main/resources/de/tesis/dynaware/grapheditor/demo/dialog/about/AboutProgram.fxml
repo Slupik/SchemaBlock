@@ -7,6 +7,14 @@
 <TabPane prefHeight="460.0" prefWidth="700.0" stylesheets="@../../demo.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.dialog.controller.AboutProgramDialogController">
 
     <tabs>
+        <Tab text="Główne informacje">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <WebView fx:id="wvMainInfo" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+               </children></StackPane>
+            </content>
+        </Tab>
         <Tab text="Użyte biblioteki">
             <content>
                 <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

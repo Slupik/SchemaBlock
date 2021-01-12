@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 public class AboutProgramDialogController implements Initializable {
 
     private static final String PATH = "/de/tesis/dynaware/grapheditor/demo/dialog/about/";
+    private static final String MAIN_INFO_FILENAME = "main_info.html";
     private static final String USED_LIBRARIES_FILENAME = "libraries.html";
     private static final String ECLIPSE1_LICENSE_FILENAME = "eclipse1_license.html";
     private static final String ECLIPSE2_LICENSE_FILENAME = "eclipse2_license.html";
@@ -24,6 +25,8 @@ public class AboutProgramDialogController implements Initializable {
     private static final String MIT_LICENSE_FILENAME = "mit_license.html";
     private static final String BSD3_LICENSE_FILENAME = "bsd3_license.html";
 
+    @FXML
+    private WebView wvMainInfo;
     @FXML
     private WebView wvUsedLibraries;
     @FXML
@@ -41,6 +44,7 @@ public class AboutProgramDialogController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setupWebView(wvMainInfo, MAIN_INFO_FILENAME);
         setupWebView(wvUsedLibraries, USED_LIBRARIES_FILENAME);
         setupWebView(wvEclipse1License, ECLIPSE1_LICENSE_FILENAME);
         setupWebView(wvEclipse2License, ECLIPSE2_LICENSE_FILENAME);
