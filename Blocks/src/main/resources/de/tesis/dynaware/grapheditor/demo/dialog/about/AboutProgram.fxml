@@ -15,19 +15,51 @@
                </children></StackPane>
             </content>
         </Tab>
-        <Tab text="Eclipse Public License 1.0">
-            <content>
-                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                    <children>
-                        <WebView fx:id="wvEclipseLicense" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
-                    </children></StackPane>
-            </content>
-        </Tab>
         <Tab text="Apache License 2.0">
             <content>
                 <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
                         <WebView fx:id="wvApacheLicense" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
+            </content>
+        </Tab>
+        <Tab text="Eclipse Public License 1.0">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvEclipse1License" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
+            </content>
+        </Tab>
+        <Tab text="Eclipse Public License 2.0">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvEclipse2License" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
+            </content>
+        </Tab>
+        <Tab text="Licencja MIT">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvMitLicense" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
+            </content>
+        </Tab>
+        <Tab text="Licencja BSD 3">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvBsd3License" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
+            </content>
+        </Tab>
+        <Tab text="Licencja OpenFx">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvOpenFxLicense" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
                     </children></StackPane>
             </content>
         </Tab>
