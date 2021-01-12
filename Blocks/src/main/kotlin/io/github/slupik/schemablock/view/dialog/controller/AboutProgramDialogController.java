@@ -10,12 +10,14 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ResourceBundle;
 
+import static de.tesis.dynaware.grapheditor.demo.GraphEditorDemo.MAIN_RESOURCE_ROOT;
+
 /**
  * All rights reserved & copyright ©
  */
 public class AboutProgramDialogController implements Initializable {
 
-    private static final String PATH = "/de/tesis/dynaware/grapheditor/demo/dialog/about/";
+    private static final String PATH = MAIN_RESOURCE_ROOT + "dialog/about/";
     private static final String MAIN_INFO_FILENAME = "main_info.html";
     private static final String USED_LIBRARIES_FILENAME = "libraries.html";
     private static final String ECLIPSE1_LICENSE_FILENAME = "eclipse1_license.html";

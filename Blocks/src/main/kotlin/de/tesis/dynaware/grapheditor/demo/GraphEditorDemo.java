@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -19,6 +20,7 @@ import java.net.URL;
  */
 public class GraphEditorDemo extends Application {
 
+    public static final String CUSTOM_RESOURCE_ROOT = "/io/github/slupik/schemablock/";
     public static final String MAIN_RESOURCE_ROOT = "/de/tesis/dynaware/grapheditor/demo/";
     public static final String MAIN_STYLESHEET = MAIN_RESOURCE_ROOT + "demo.css";
     private static final String TREE_SKIN_STYLESHEET = "treeskins.css";
@@ -48,6 +50,7 @@ public class GraphEditorDemo extends Application {
 
         stage.setScene(scene);
         stage.setTitle(APPLICATION_TITLE);
+        stage.getIcons().add(new Image(CUSTOM_RESOURCE_ROOT + "program_icon.png"));
         stage.setMaximized(true);
 
         stage.setOnCloseRequest(event -> System.exit(0));
