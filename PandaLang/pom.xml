@@ -16,11 +16,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.panda-lang</groupId>
-            <artifactId>panda</artifactId>
-            <version>${panda.version}</version>
-        </dependency>
-        <dependency>
             <groupId>io.github.slupik</groupId>
             <artifactId>Entity</artifactId>
             <version>1.0.0</version>
