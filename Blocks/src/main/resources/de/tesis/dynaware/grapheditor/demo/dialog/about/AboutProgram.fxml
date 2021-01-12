@@ -11,7 +11,7 @@
             <content>
                 <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <WebView layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                  <WebView fx:id="wvUsedLibraries" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
                </children></StackPane>
             </content>
         </Tab>
