@@ -23,9 +23,12 @@
                     </children></StackPane>
             </content>
         </Tab>
-        <Tab text="Eclipse Public License 1.0">
+        <Tab text="Apache License 2.0">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvApacheLicense" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
             </content>
         </Tab>
     </tabs>
