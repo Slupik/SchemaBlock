@@ -24,6 +24,11 @@ public class AboutProgramDialogController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         wvUsedLibraries.getEngine().loadContent(getUsedLibraries());
+        enableOpeningLinksInSystemBrowser(wvUsedLibraries);
+    }
+
+    private void enableOpeningLinksInSystemBrowser(WebView webView) {
+        webView.getEngine().getLoadWorker().stateProperty().addListener(new HyperLinkRedirectListener(webView));
     }
 
     private String getUsedLibraries() {
