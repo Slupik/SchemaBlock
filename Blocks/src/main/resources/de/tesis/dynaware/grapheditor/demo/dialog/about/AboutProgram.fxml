@@ -63,6 +63,14 @@
                     </children></StackPane>
             </content>
         </Tab>
+        <Tab text="SIL Open Font License 1.1">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvSilLicense" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
+            </content>
+        </Tab>
         <Tab text="Licencja OpenFx">
             <content>
                 <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

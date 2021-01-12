@@ -24,6 +24,7 @@ public class AboutProgramDialogController implements Initializable {
     private static final String OPENFX_LICENSE_FILENAME = "openfx_license.html";
     private static final String MIT_LICENSE_FILENAME = "mit_license.html";
     private static final String BSD3_LICENSE_FILENAME = "bsd3_license.html";
+    private static final String SIL_LICENSE_FILENAME = "sil_license.html";
 
     @FXML
     private WebView wvMainInfo;
@@ -41,6 +42,8 @@ public class AboutProgramDialogController implements Initializable {
     private WebView wvMitLicense;
     @FXML
     private WebView wvBsd3License;
+    @FXML
+    private WebView wvSilLicense;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -52,6 +55,7 @@ public class AboutProgramDialogController implements Initializable {
         setupWebView(wvOpenFxLicense, OPENFX_LICENSE_FILENAME);
         setupWebView(wvMitLicense, MIT_LICENSE_FILENAME);
         setupWebView(wvBsd3License, BSD3_LICENSE_FILENAME);
+        setupWebView(wvSilLicense, SIL_LICENSE_FILENAME);
     }
 
     private void setupWebView(WebView webView, String filename) {
