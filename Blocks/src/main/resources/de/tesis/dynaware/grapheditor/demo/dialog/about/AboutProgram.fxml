@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
+
+<TabPane prefHeight="460.0" prefWidth="700.0" stylesheets="@../../demo.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.dialog.controller.AboutProgramDialogController">
+
+    <tabs>
+        <Tab text="Główne informacje">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <WebView fx:id="wvMainInfo" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+               </children></StackPane>
+            </content>
+        </Tab>
+        <Tab text="Użyte biblioteki">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <WebView fx:id="wvUsedLibraries" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+               </children></StackPane>
+            </content>
+        </Tab>
+        <Tab text="Apache License 2.0">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvApacheLicense" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
+            </content>
+        </Tab>
+        <Tab text="Eclipse Public License 1.0">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvEclipse1License" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
+            </content>
+        </Tab>
+        <Tab text="Eclipse Public License 2.0">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvEclipse2License" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
+            </content>
+        </Tab>
+        <Tab text="Licencja MIT">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvMitLicense" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
+            </content>
+        </Tab>
+        <Tab text="Licencja BSD 3">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvBsd3License" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
+            </content>
+        </Tab>
+        <Tab text="SIL Open Font License 1.1">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvSilLicense" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
+            </content>
+        </Tab>
+        <Tab text="Licencja OpenFx">
+            <content>
+                <StackPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <WebView fx:id="wvOpenFxLicense" layoutX="-21.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" />
+                    </children></StackPane>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>
