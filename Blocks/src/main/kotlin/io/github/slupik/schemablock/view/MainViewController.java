@@ -388,6 +388,7 @@ public class MainViewController implements Initializable {
         onExecutionEnd();
         resetUserView();
         executor.stop();
+        output.stop();
     }
 
     private void onExecutionStart() {

@@ -50,6 +50,10 @@ class StatelessBlockExecutor @Inject constructor(
         for (operation in operations) {
             if (operation.input) {
                 val input = communicator.input
+                if (input == null) {
+                    System.err.println("Execution of block was interrupted by null string");
+                    return
+                }
                 val value = ValueFactory.createValue(
                     heap.getVariableType(operation.code),
                     input

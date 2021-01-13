@@ -22,6 +22,7 @@ public class UIIOCommunicator implements IOCommunicable {
     private String outputData = "";
 
     private String text = null;
+    private boolean stop = false;
 
     public UIIOCommunicator(TextField input, WebView output, Button btnSend) {
         this.input = input;
@@ -43,13 +44,14 @@ public class UIIOCommunicator implements IOCommunicable {
 
     @Override
     public String getInput() {
-        while (text == null) {
+        while (text == null && !stop) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        stop = false;
         String temp = text;
         text = null;
         return temp;
@@ -84,6 +86,11 @@ public class UIIOCommunicator implements IOCommunicable {
     @Override
     public void printProgramError(String text) {
         printOnUiThread("<font color=\"#FF0000\"><b>[INTERNAL ERROR] " + text + "</b></font>" + '\n');
+    }
+
+    @Override
+    public void stop() {
+        stop = true;
     }
 
     private void printOnUiThread(String value) {
