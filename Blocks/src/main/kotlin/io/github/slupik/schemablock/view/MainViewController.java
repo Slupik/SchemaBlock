@@ -26,10 +26,7 @@ import io.github.slupik.schemablock.view.logic.communication.output.ErrorTransla
 import io.github.slupik.schemablock.view.logic.execution.dagger.DiagramExecutorElementsModule;
 import io.github.slupik.schemablock.view.logic.execution.dagger.ExecutionElementsModule;
 import io.github.slupik.schemablock.view.logic.execution.dagger.HeapControllerCallbackModule;
-import io.github.slupik.schemablock.view.logic.execution.diagram.DiagramExecutor;
-import io.github.slupik.schemablock.view.logic.execution.diagram.ErrorEvent;
-import io.github.slupik.schemablock.view.logic.execution.diagram.ExecutionEvent;
-import io.github.slupik.schemablock.view.logic.execution.diagram.PostExecutionEvent;
+import io.github.slupik.schemablock.view.logic.execution.diagram.*;
 import io.github.slupik.schemablock.view.logic.marker.BlockExecutionStateMarker;
 import io.github.slupik.schemablock.view.logic.memory.HeapValueFx;
 import io.github.slupik.schemablock.view.logic.memory.NewHeapSpy;
@@ -411,7 +408,14 @@ public class MainViewController implements Initializable {
         stateMarker.handleObservable(observable);
         Disposable disp = observable.subscribe(
                 executionEvent -> {
-                    if (executionEvent instanceof PostExecutionEvent) {
+                    if (executionEvent instanceof PreExecutionEvent) {
+                        if(UiElementType.IO.equals(((PreExecutionEvent) executionEvent).getExecutingBlock().getType())) {
+                            btnContinue.setDisable(true);
+                        }
+                    } else if (executionEvent instanceof PostExecutionEvent) {
+                        if(UiElementType.IO.equals(((PostExecutionEvent) executionEvent).getExecutedBlock().getType())) {
+                            btnContinue.setDisable(false);
+                        }
                         memory.refresh();
                     } else if (executionEvent instanceof ErrorEvent) {
                         output.printAlgorithmError(translator.translateError(((ErrorEvent) executionEvent).getError()));
