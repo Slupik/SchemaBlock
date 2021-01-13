@@ -13,17 +13,19 @@ class ContinuousDiagramExecutor @Inject constructor(
     @OneTime private val executorProvider: Provider<DiagramExecutor>
 ) : DiagramExecutor {
 
-    private val executionController = ContinuousExecutionController()
     private var publisher = PublishSubject.create<ExecutionEvent>()
     override val eventSource: Observable<ExecutionEvent>
         get() = publisher
+    private var executionController = ContinuousExecutionController()
 
     override fun resetState() {
         publisher = PublishSubject.create<ExecutionEvent>()
     }
 
-    override fun run() =
+    override fun run() {
+        executionController = ContinuousExecutionController()
         debug(executionController)
+    }
 
     override fun debug(controller: DiagramExecutionController) {
         val executor = createOneTimeExecutor()
@@ -32,7 +34,7 @@ class ContinuousDiagramExecutor @Inject constructor(
     }
 
     override fun stop() {
-        executionController.stop();
+        executionController.stop()
     }
 
     private fun createOneTimeExecutor(): DiagramExecutor =
