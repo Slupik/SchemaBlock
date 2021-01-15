@@ -40,7 +40,7 @@
                             <MenuItem accelerator="Shortcut+X" onAction="#cut" text="Wytnij" />
                             <MenuItem accelerator="Shortcut+C" onAction="#copy" text="Kopiuj" />
                             <MenuItem accelerator="Shortcut+V" onAction="#paste" text="Wklej" />
-                            <MenuItem accelerator="Delete" onAction="#deleteSelection" text="Delete" />
+                            <MenuItem accelerator="Delete" onAction="#deleteSelection" text="Usuń" />
                             <SeparatorMenuItem />
                             <!-- Added blank spaces to force menu to be wider. -->
                             <MenuItem accelerator="Shortcut+A" onAction="#selectAll" text="Zaznacz wszystko" />
