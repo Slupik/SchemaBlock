@@ -35,7 +35,7 @@ public class FunctionAsShort implements Function {
         try {
             return new SimpleValueImpl(
                     ValueType.SHORT,
-                    Short.parseShort(value.toString())
+                    ((short) Double.parseDouble(value.toString()))
             );
         } catch (Exception e) {
             throw new CannotParseData(value, ValueType.SHORT, line, position);

@@ -35,7 +35,7 @@ public class FunctionAsLong implements Function {
         try {
             return new SimpleValueImpl(
                     ValueType.LONG,
-                    Long.parseLong(value.toString())
+                    ((long) Double.parseDouble(value.toString()))
             );
         } catch (Exception e) {
             throw new CannotParseData(value, ValueType.LONG, line, position);
