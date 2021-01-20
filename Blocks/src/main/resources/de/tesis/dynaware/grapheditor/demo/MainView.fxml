@@ -48,10 +48,10 @@
                     </Menu>
                     <Menu text="Dodaj blok">
                         <items>
-                              <MenuItem mnemonicParsing="false" onAction="#addCalculationsNode" text="Operacji" />
-                              <MenuItem mnemonicParsing="false" onAction="#addConditionNode" text="Warunkowy" />
-                              <MenuItem mnemonicParsing="false" onAction="#addIoNode" text="Wejścia/Wyjścia" />
-                              <MenuItem mnemonicParsing="false" onAction="#addStopNode" text="Stopu" />
+                              <MenuItem accelerator="Shortcut+1" mnemonicParsing="false" onAction="#addCalculationsNode" text="Operacji" />
+                              <MenuItem accelerator="Shortcut+2" mnemonicParsing="false" onAction="#addConditionNode" text="Warunkowy" />
+                              <MenuItem accelerator="Shortcut+3" mnemonicParsing="false" onAction="#addIoNode" text="Wejścia/Wyjścia" />
+                              <MenuItem accelerator="Shortcut+4" mnemonicParsing="false" onAction="#addStopNode" text="Stopu" />
                         </items>
                     </Menu>
                     <Menu text="Ustawienia">
