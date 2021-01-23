@@ -13,7 +13,7 @@ class ArrayImplTest {
     @Test
     void checkOneDim() throws AlgorithmException {
         ArrayImpl array = new ArrayImpl(ValueType.INTEGER, 1, 10);
-        assertNull(array.getElement(new int[]{5}));
+        assertEquals(0, ((Integer) ((SimpleValue) array.getElement(new int[]{5})).getValue()));
 
         array.setValue(new int[]{5}, new SimpleValueImpl(ValueType.INTEGER, 99));
         assertEquals(99, ((SimpleValue) array.getElement(new int[]{5})).getValue());
