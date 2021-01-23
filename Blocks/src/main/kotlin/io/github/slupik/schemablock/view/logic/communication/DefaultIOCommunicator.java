@@ -9,12 +9,12 @@ import java.util.Scanner;
  */
 public class DefaultIOCommunicator implements IOCommunicable {
 
-    //TODO change to execution's console
+    private Scanner scanner = new Scanner(System.in);
 
     @Override
     public String getInput() {
-        Scanner sc = new Scanner(System.in);
-        return sc.next();
+        scanner = new Scanner(System.in);
+        return scanner.next();
     }
 
     @Override
@@ -37,5 +37,10 @@ public class DefaultIOCommunicator implements IOCommunicable {
     @Override
     public void printProgramError(String text) {
         System.err.println(text);
+    }
+
+    @Override
+    public void stop() {
+        scanner.close();
     }
 }

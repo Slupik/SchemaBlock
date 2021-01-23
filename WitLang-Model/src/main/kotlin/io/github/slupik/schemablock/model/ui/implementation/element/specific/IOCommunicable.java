@@ -14,4 +14,6 @@ public interface IOCommunicable {
     void printAlgorithmError(String text);
 
     void printProgramError(String text);
+
+    void stop();
 }

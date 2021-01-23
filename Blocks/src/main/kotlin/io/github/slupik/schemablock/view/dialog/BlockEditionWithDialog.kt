@@ -7,7 +7,7 @@ import de.tesis.dynaware.grapheditor.core.skins.defaults.node.OperationsBlock
 import io.github.slupik.schemablock.view.dialog.data.CodeAndDescription
 import io.github.slupik.schemablock.view.dialog.data.DescriptionAndIO
 import io.github.slupik.schemablock.view.dialog.data.UiBlockSettings
-import javafx.scene.control.Dialog
+import io.github.slupik.schemablock.view.dialog.factory.DialogFactoryFacade
 import java.util.*
 import javax.inject.Inject
 
@@ -46,26 +46,24 @@ class BlockEditionWithDialog @Inject constructor() : BlockEdition {
         }
     }
 
-    private fun showDialog(block: Block): Optional<UiBlockSettings>? {
-        var dialog: Dialog<UiBlockSettings>? = null
+    private fun showDialog(block: Block): Optional<UiBlockSettings>? =
         when (block) {
             is ConditionalBlock -> {
-                dialog = DialogFactory.buildWithDescAndShortContent(
+                DialogFactoryFacade.buildWithDescAndShortContent(
                     CodeAndDescription(description = block.description, code = block.code)
-                )
+                ).result
             }
             is OperationsBlock -> {
-                dialog = DialogFactory.buildWithDescAndContent(
+                DialogFactoryFacade.buildWithDescAndContent(
                     CodeAndDescription(description = block.description, code = block.code)
-                )
+                ).result
             }
             is IoBlock -> {
-                dialog = DialogFactory.buildIO(
+                DialogFactoryFacade.buildIO(
                     DescriptionAndIO(description = block.description, operations = block.operations)
-                )
+                ).result
             }
+            else -> Optional.ofNullable(null)
         }
-        return dialog?.showAndWait()
-    }
 
 }

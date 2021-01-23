@@ -60,7 +60,12 @@ public class DefaultSkinController implements SkinController {
 
         node.setX(NODE_INITIAL_X + windowXOffset);
 
-        if (UiElementType.STOP == uiElementType) {
+        if (UiElementType.START == uiElementType) {
+            rightOutput.setType(DefaultConnectorTypes.RIGHT_OUTPUT);
+            leftInput.setType(DefaultConnectorTypes.LEFT_OUTPUT);
+            topInput.setType(DefaultConnectorTypes.TOP_OUTPUT);
+            bottomInput.setType(DefaultConnectorTypes.BOTTOM_OUTPUT);
+        } else if (UiElementType.STOP == uiElementType) {
             rightOutput.setType(DefaultConnectorTypes.RIGHT_INPUT);
             leftInput.setType(DefaultConnectorTypes.LEFT_INPUT);
             topInput.setType(DefaultConnectorTypes.TOP_INPUT);

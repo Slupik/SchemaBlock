@@ -45,31 +45,31 @@ public enum ValueType {
     }
 
     public static ValueType getType(String token) {
-        if (token.equals("short")) {
+        if (token.equalsIgnoreCase("short")) {
             return SHORT;
         }
-        if (token.equals("int")) {
+        if (token.equalsIgnoreCase("int") || token.equalsIgnoreCase("integer")) {
             return INTEGER;
         }
-        if (token.equals("long")) {
+        if (token.equalsIgnoreCase("long")) {
             return LONG;
         }
-        if (token.equals("float")) {
+        if (token.equalsIgnoreCase("float")) {
             return FLOAT;
         }
-        if (token.equals("double")) {
+        if (token.equalsIgnoreCase("double")) {
             return DOUBLE;
         }
-        if (token.equals("string") || token.equals("String")) {
+        if (token.equalsIgnoreCase("string") || token.equalsIgnoreCase("text")) {
             return STRING;
         }
-        if (token.equals("byte")) {
+        if (token.equalsIgnoreCase("byte")) {
             return BYTE;
         }
-        if (token.equals("boolean") || token.equals("bool")) {
+        if (token.equalsIgnoreCase("boolean") || token.equalsIgnoreCase("bool")) {
             return BOOLEAN;
         }
-        if (token.equals("void")) {
+        if (token.equalsIgnoreCase("void")) {
             return VOID;
         }
         return UNKNOWN;

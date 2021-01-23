@@ -19,6 +19,9 @@ public class VariableImpl implements Variable {
         this.type = type;
         this.dimensions = dimensions;
         this.name = name;
+        if (0 == dimensions) {
+            value = new SimpleValueImpl(type);
+        }
     }
 
     @Override
@@ -43,16 +46,21 @@ public class VariableImpl implements Variable {
                     if (array.getDimensionsCount() != dimensions) {
                         throw new IncompatibleArrayException(dimensions, array.getDimensionsCount());
                     }
-                } else {
-                    throw new ExceptedArray();
                 }
             } else {
                 if (dimensions != 0) {
                     throw new ExceptedValue();
                 }
             }
+            if (value instanceof SimpleValue) {
+                Object castedValueContent = ValueConverter.castValueToType(type, ((SimpleValue) value).getValue());
+                this.value = new SimpleValueImpl(type, castedValueContent);
+            } else {
+                this.value = value;
+            }
+        } else {
+            this.value = null;
         }
-        this.value = value;
     }
 
     @Override

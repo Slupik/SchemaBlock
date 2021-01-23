@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
  */
 public class NoMatchingFunction extends FunctionExecutionException {
 
-    public final String name;
     public final List<ValueType> argsTypes;
 
     public NoMatchingFunction(String name, List<ValueType> argsTypes, int line, int position) {
@@ -19,9 +18,8 @@ public class NoMatchingFunction extends FunctionExecutionException {
                 argsTypes.stream()
                         .map(String::valueOf)
                         .collect(Collectors.joining(", ", "", ""))
-                + " doesn't exists.", line, position
-        );
-        this.name = name;
+                + " doesn't exists.", line, position,
+                name);
         this.argsTypes = argsTypes;
     }
 

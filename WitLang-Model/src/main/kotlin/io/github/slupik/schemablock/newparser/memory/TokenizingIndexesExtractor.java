@@ -9,14 +9,6 @@ import java.util.List;
 /**
  * All rights reserved & copyright ©
  */
-/*
-TODO !!!!
-Zrobić z tego IndexTokenizer
-pobierać listę String z kodem który kompiluje się na wartości indexów
-W NewHeapSpy dorzucić Executora i stamtąd brać result (wartości indexów ze stringu)
-Dorobić logikę używania indexów
-
- */
 public class TokenizingIndexesExtractor implements IndexesExtractor {
 
     private static final char INDEX_OPEN_CHAR = '[';

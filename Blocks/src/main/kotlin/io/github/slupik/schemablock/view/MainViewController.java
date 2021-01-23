@@ -6,10 +6,13 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import de.tesis.dynaware.grapheditor.Commands;
+import de.tesis.dynaware.grapheditor.GNodeSkin;
 import de.tesis.dynaware.grapheditor.GraphEditor;
 import de.tesis.dynaware.grapheditor.GraphEditorContainer;
 import de.tesis.dynaware.grapheditor.core.skins.UiElementType;
 import de.tesis.dynaware.grapheditor.core.skins.defaults.connection.SimpleConnectionSkin;
+import de.tesis.dynaware.grapheditor.core.skins.defaults.node.StartBlock;
+import de.tesis.dynaware.grapheditor.demo.GraphEditorDemo;
 import de.tesis.dynaware.grapheditor.demo.customskins.DefaultSkinController;
 import de.tesis.dynaware.grapheditor.demo.customskins.SkinController;
 import de.tesis.dynaware.grapheditor.demo.utils.AwesomeIcon;
@@ -23,19 +26,17 @@ import io.github.slupik.schemablock.view.logic.communication.output.ErrorTransla
 import io.github.slupik.schemablock.view.logic.execution.dagger.DiagramExecutorElementsModule;
 import io.github.slupik.schemablock.view.logic.execution.dagger.ExecutionElementsModule;
 import io.github.slupik.schemablock.view.logic.execution.dagger.HeapControllerCallbackModule;
-import io.github.slupik.schemablock.view.logic.execution.diagram.DiagramExecutor;
-import io.github.slupik.schemablock.view.logic.execution.diagram.ErrorEvent;
-import io.github.slupik.schemablock.view.logic.execution.diagram.ExecutionEvent;
-import io.github.slupik.schemablock.view.logic.execution.diagram.PostExecutionEvent;
-import io.github.slupik.schemablock.view.logic.execution.diagram.exception.NextBlockNotFound;
+import io.github.slupik.schemablock.view.logic.execution.diagram.*;
 import io.github.slupik.schemablock.view.logic.marker.BlockExecutionStateMarker;
 import io.github.slupik.schemablock.view.logic.memory.HeapValueFx;
 import io.github.slupik.schemablock.view.logic.memory.NewHeapSpy;
+import io.github.slupik.schemablock.view.logic.printer.GraphPrinter;
 import io.github.slupik.schemablock.view.logic.zoom.Zoomer;
 import io.github.slupik.schemablock.view.persistence.DiagramLoader;
 import io.github.slupik.schemablock.view.persistence.DiagramSaver;
 import io.github.slupik.schemablock.view.persistence.FileChooser;
 import io.github.slupik.schemablock.view.persistence.graph.SampleLoader;
+import io.github.slupik.schemablock.view.utils.ShortcutLoader;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -43,22 +44,32 @@ import io.reactivex.subjects.PublishSubject;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Side;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 
 import javax.inject.Inject;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -90,6 +101,8 @@ public class MainViewController implements Initializable {
     BlockExecutionStateMarker stateMarker;
     @Inject
     ErrorTranslator translator;
+    @Inject
+    GraphPrinter printer;
     @FXML
     private JFXButton btnRun;
     @FXML
@@ -104,26 +117,6 @@ public class MainViewController implements Initializable {
     private VBox mainContainer;
     @FXML
     private MenuBar menuBar;
-    @FXML
-    private MenuItem addConnectorButton;
-    @FXML
-    private MenuItem clearConnectorsButton;
-    @FXML
-    private Menu connectorTypeMenu;
-    @FXML
-    private Menu connectorPositionMenu;
-    @FXML
-    private RadioMenuItem inputConnectorTypeButton;
-    @FXML
-    private RadioMenuItem outputConnectorTypeButton;
-    @FXML
-    private RadioMenuItem leftConnectorPositionButton;
-    @FXML
-    private RadioMenuItem rightConnectorPositionButton;
-    @FXML
-    private RadioMenuItem topConnectorPositionButton;
-    @FXML
-    private RadioMenuItem bottomConnectorPositionButton;
     @FXML
     private RadioMenuItem showGridButton;
     @FXML
@@ -181,7 +174,15 @@ public class MainViewController implements Initializable {
         enableResizing();
         initializeMenuBar();
         bindTable();
+        Platform.runLater(this::setupShortcutsForButtons);
         Platform.runLater(this::addStartNode);
+    }
+
+    private void setupShortcutsForButtons() {
+        ShortcutLoader.saveAccelerator(btnRun, new KeyCodeCombination(KeyCode.F10, KeyCombination.SHIFT_ANY));
+        ShortcutLoader.saveAccelerator(btnDebug, new KeyCodeCombination(KeyCode.F9, KeyCombination.SHIFT_ANY));
+        ShortcutLoader.saveAccelerator(btnStop, new KeyCodeCombination(KeyCode.F2, KeyCombination.CONTROL_ANY));
+        ShortcutLoader.saveAccelerator(btnContinue, new KeyCodeCombination(KeyCode.F9));
     }
 
     private void bindTable() {
@@ -207,24 +208,12 @@ public class MainViewController implements Initializable {
         final ToggleGroup connectionStyleGroup = new ToggleGroup();
         connectionStyleGroup.getToggles().addAll(gappedStyleButton, detouredStyleButton);
 
-        final ToggleGroup connectorTypeGroup = new ToggleGroup();
-        connectorTypeGroup.getToggles().addAll(inputConnectorTypeButton, outputConnectorTypeButton);
-
-        final ToggleGroup positionGroup = new ToggleGroup();
-        positionGroup.getToggles().addAll(leftConnectorPositionButton, rightConnectorPositionButton);
-        positionGroup.getToggles().addAll(topConnectorPositionButton, bottomConnectorPositionButton);
-
         graphEditor.getProperties().gridVisibleProperty().bind(showGridButton.selectedProperty());
         graphEditor.getProperties().snapToGridProperty().bind(snapToGridButton.selectedProperty());
 
         minimapButton.setGraphic(AwesomeIcon.MAP.node());
 
         initializeZoomOptions();
-
-        final ListChangeListener<? super GNode> selectedNodesListener = change -> checkConnectorButtonsToDisable();
-
-        graphEditor.getSelectionManager().getSelectedNodes().addListener(selectedNodesListener);
-        checkConnectorButtonsToDisable();
     }
 
     /**
@@ -280,7 +269,6 @@ public class MainViewController implements Initializable {
         clearModel();
         stopExecution();
         flushCommandStack();
-        checkConnectorButtonsToDisable();
         graphEditor.getSelectionManager().clearMemory();
     }
 
@@ -294,37 +282,39 @@ public class MainViewController implements Initializable {
         }
     }
 
-    /**
-     * Checks if the connector buttons need disabling (e.g. because no nodes are selected).
-     */
-    private void checkConnectorButtonsToDisable() {
-        final boolean nothingSelected = graphEditor.getSelectionManager().getSelectedNodes().isEmpty();
-        if (nothingSelected) {
-            addConnectorButton.setDisable(true);
-            clearConnectorsButton.setDisable(true);
-        } else {
-            addConnectorButton.setDisable(false);
-            clearConnectorsButton.setDisable(false);
-        }
-        connectorTypeMenu.setDisable(false);
-        connectorPositionMenu.setDisable(false);
-    }
-
     private void enableResizing() {
         mainContainer.prefWidthProperty().bind(root.widthProperty());
         mainContainer.prefHeightProperty().bind(root.heightProperty());
     }
 
     @FXML
-    public void loadSample() {
+    public void loadAbsoluteValueSample() {
         setDefaultSkin();
-        sampleLoader.loadSmallSample(graphEditor);
+        sampleLoader.loadAbsoluteValueSample(diagram);
     }
 
     @FXML
-    public void loadSampleLarge() {
+    public void loadArraySumSample() {
         setDefaultSkin();
-        sampleLoader.loadBigSample(graphEditor);
+        sampleLoader.loadArraySumSample(diagram);
+    }
+
+    @FXML
+    public void loadHeronSample() {
+        setDefaultSkin();
+        sampleLoader.loadHeronSample(diagram);
+    }
+
+    @FXML
+    public void loadEquationSample() {
+        setDefaultSkin();
+        sampleLoader.loadEquationSample(diagram);
+    }
+
+    @FXML
+    public void loadParadoxSample() {
+        setDefaultSkin();
+        sampleLoader.loadParadoxSample(diagram);
     }
 
     @FXML
@@ -339,6 +329,11 @@ public class MainViewController implements Initializable {
             graphLoader.loadDiagram(diagram, file);
         }
         checkSkinType();
+    }
+
+    @FXML
+    public void print() {
+        printer.print(graphEditorContainer, graphEditor);
     }
 
     /**
@@ -393,6 +388,7 @@ public class MainViewController implements Initializable {
         onExecutionEnd();
         resetUserView();
         executor.stop();
+        output.stop();
     }
 
     private void onExecutionStart() {
@@ -413,25 +409,28 @@ public class MainViewController implements Initializable {
         stateMarker.handleObservable(observable);
         Disposable disp = observable.subscribe(
                 executionEvent -> {
-                    if (executionEvent instanceof PostExecutionEvent) {
+                    if (executionEvent instanceof PreExecutionEvent) {
+                        if(UiElementType.IO.equals(((PreExecutionEvent) executionEvent).getExecutingBlock().getType())) {
+                            btnContinue.setDisable(true);
+                        }
+                    } else if (executionEvent instanceof PostExecutionEvent) {
+                        if(UiElementType.IO.equals(((PostExecutionEvent) executionEvent).getExecutedBlock().getType())) {
+                            btnContinue.setDisable(false);
+                        }
                         memory.refresh();
                     } else if (executionEvent instanceof ErrorEvent) {
                         output.printAlgorithmError(translator.translateError(((ErrorEvent) executionEvent).getError()));
                     }
-                    System.out.println("executionEvent = " + executionEvent);
                 },
                 throwable -> {
-                    System.out.println("throwable = " + throwable);
-                    if (throwable instanceof NextBlockNotFound) {
-                        System.out.println("type " + ((NextBlockNotFound) throwable).getCurrentBlock());
+                    if (translator.handles(throwable)) {
+                        output.printAlgorithmError(translator.translateError(throwable));
+                    } else {
+                        output.printProgramError(throwable.getMessage());
                     }
-                    output.printProgramError(throwable.getMessage());
                     onExecutionEnd();
                 },
-                () -> {
-                    System.out.println("END");
-                    onExecutionEnd();
-                }
+                this::onExecutionEnd
         );
         composite.add(disp);
     }
@@ -499,7 +498,19 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void deleteSelection() {
+        Optional<GNodeSkin> originalStartBlock = getStartBlock();
+        originalStartBlock.ifPresent(gNodeSkin -> gNodeSkin.setSelected(false));
         graphEditor.getSelectionManager().deleteSelection();
+        originalStartBlock.ifPresent(gNodeSkin -> gNodeSkin.setSelected(true));
+    }
+
+    private Optional<GNodeSkin> getStartBlock() {
+        return graphEditor.getSelectionManager()
+                .getSelectedNodes()
+                .stream()
+                .map(selectedNode -> graphEditor.getSkinLookup().lookupNode(selectedNode))
+                .filter(element -> element instanceof StartBlock)
+                .findFirst();
     }
 
     @FXML
@@ -520,28 +531,6 @@ public class MainViewController implements Initializable {
     @FXML
     public void addStopNode() {
         activeSkinController.get().addNode(zoomer.getCurrentZoomFactor(), UiElementType.STOP);
-    }
-
-    @FXML
-    public void addConnector() {
-        activeSkinController.get().addConnector(getSelectedConnectorPosition(), inputConnectorTypeButton.isSelected());
-    }
-
-    /**
-     * Gets the side corresponding to the currently selected connector position in the menu.
-     *
-     * @return the {@link Side} corresponding to the currently selected connector position
-     */
-    private Side getSelectedConnectorPosition() {
-        if (leftConnectorPositionButton.isSelected()) {
-            return Side.LEFT;
-        } else if (rightConnectorPositionButton.isSelected()) {
-            return Side.RIGHT;
-        } else if (topConnectorPositionButton.isSelected()) {
-            return Side.TOP;
-        } else {
-            return Side.BOTTOM;
-        }
     }
 
     @FXML
@@ -571,4 +560,19 @@ public class MainViewController implements Initializable {
         graphEditorContainer.panTo(WindowPosition.CENTER);
     }
 
+    @FXML
+    public void showAboutProgram(ActionEvent actionEvent) throws IOException {
+        final URL location = getClass().getResource(GraphEditorDemo.MAIN_RESOURCE_ROOT + "dialog/about/AboutProgram.fxml");
+        Parent parent = FXMLLoader.load(location);
+        Scene scene = new Scene(parent, 700.0, 460);
+        scene.getStylesheets().add(GraphEditorDemo.class.getResource(GraphEditorDemo.MAIN_STYLESHEET).toExternalForm());
+        Stage stage = new Stage();
+        stage.setMinWidth(scene.getWidth());
+        stage.setMinHeight(scene.getHeight());
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UTILITY);
+        stage.setTitle("O programie...");
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
 }

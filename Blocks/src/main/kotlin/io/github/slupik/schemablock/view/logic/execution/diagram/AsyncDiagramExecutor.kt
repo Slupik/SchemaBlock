@@ -27,7 +27,7 @@ class AsyncDiagramExecutor @Inject constructor(
 
     private val executor: ExecutorService = Executors.newSingleThreadExecutor()
 
-    private var stop = false;
+    private var stop = false
     private var publisher = PublishSubject.create<ExecutionEvent>()
     override val eventSource: Observable<ExecutionEvent>
         get() = publisher

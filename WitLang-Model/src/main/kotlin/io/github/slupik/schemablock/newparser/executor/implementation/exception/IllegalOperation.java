@@ -1,4 +1,4 @@
-package io.github.slupik.schemablock.newparser.executor.implementation;
+package io.github.slupik.schemablock.newparser.executor.implementation.exception;
 
 import io.github.slupik.schemablock.model.ui.error.AlgorithmErrorType;
 import io.github.slupik.schemablock.newparser.compilator.implementation.compilator.CompilationException;

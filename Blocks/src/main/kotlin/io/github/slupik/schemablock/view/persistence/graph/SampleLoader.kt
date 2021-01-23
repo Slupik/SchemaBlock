@@ -1,34 +1,52 @@
 package io.github.slupik.schemablock.view.persistence.graph
 
-import de.tesis.dynaware.grapheditor.GraphEditor
-import io.github.slupik.schemablock.view.persistence.GraphToDiagramConverter
-import org.eclipse.emf.common.util.URI
+import io.github.slupik.schemablock.view.entity.Diagram
+import io.github.slupik.schemablock.view.persistence.JsonDiagramLoader
+import org.apache.commons.io.IOUtils
+import java.nio.charset.StandardCharsets
 import javax.inject.Inject
 
 /**
  * All rights reserved & copyright ©
  */
-private const val SAMPLE_FILE: String = "sample$FILE_EXTENSION"
-private const val SAMPLE_FILE_LARGE = "sample-large$FILE_EXTENSION"
+private const val PATH = "/io/github/slupik/schemablock/view/persistence/graph/"
+private const val ABSOLUTE_VALUE_FILE: String = "absolute-value$FILE_EXTENSION"
+private const val SUMMING_ARRAY_FILE = "summing-array$FILE_EXTENSION"
+private const val HERON_FILE = "heron$FILE_EXTENSION"
+private const val EQUATION_FILE = "equation$FILE_EXTENSION"
+private const val PARADOX_FILE = "paradox$FILE_EXTENSION"
 
 class SampleLoader @Inject constructor(
-    private val graphLoader: GraphLoader,
-    private val converter: GraphToDiagramConverter
+    private val loader: JsonDiagramLoader
 ) {
 
-    fun loadSmallSample(graphEditor: GraphEditor) {
-        load(graphEditor, SAMPLE_FILE)
+    fun loadAbsoluteValueSample(diagram: Diagram) {
+        load(diagram, ABSOLUTE_VALUE_FILE)
     }
 
-    fun loadBigSample(graphEditor: GraphEditor) {
-        load(graphEditor, SAMPLE_FILE_LARGE)
+    fun loadArraySumSample(diagram: Diagram) {
+        load(diagram, SUMMING_ARRAY_FILE)
     }
 
-    private fun load(graphEditor: GraphEditor, path: String) {
-        val samplePath = javaClass.getResource(path).toExternalForm()
-        val fileUri = URI.createURI(samplePath)
-        graphLoader.loadModel(graphEditor, fileUri)
-        converter.convert(fileUri)
+    fun loadHeronSample(diagram: Diagram) {
+        load(diagram, HERON_FILE)
+    }
+
+    fun loadEquationSample(diagram: Diagram) {
+        load(diagram, EQUATION_FILE)
+    }
+
+    fun loadParadoxSample(diagram: Diagram) {
+        load(diagram, PARADOX_FILE)
+    }
+
+    private fun load(diagram: Diagram, fileName: String) {
+        val fileContent = IOUtils.toString(
+            javaClass.getResourceAsStream(PATH + fileName), StandardCharsets.UTF_8.name());
+        loader.loadDiagram(
+            diagram,
+            fileContent
+        )
     }
 
 }

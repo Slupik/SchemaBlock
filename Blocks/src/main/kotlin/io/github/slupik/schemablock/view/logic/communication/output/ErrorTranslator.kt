@@ -7,4 +7,6 @@ interface ErrorTranslator {
 
     fun translateError(error: Throwable): String
 
+    fun handles(error: Throwable): Boolean
+
 }

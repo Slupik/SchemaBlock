@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane minHeight="500.0" minWidth="350.0" prefHeight="500.0" prefWidth="350.0" stylesheets="@../demo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.dialog.controller.OperationsDialogController">
+    <center>
+        <TextArea fx:id="code" prefHeight="107.0" prefWidth="450.0" promptText="Wpisz kod, który ma się wykonać" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin></TextArea>
+    </center>
+    <top>
+        <VBox BorderPane.alignment="CENTER">
+            <children>
+                <Label text="Nazwa">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </Label>
+                <JFXTextField fx:id="name" prefWidth="450.0" promptText="Tekst widoczny na schemacie" style="-fx-background-color: white;">
+                    <VBox.margin>
+                        <Insets top="4.0" />
+                    </VBox.margin>
+                </JFXTextField>
+                <Label text="Kod">
+                    <VBox.margin>
+                        <Insets top="16.0" />
+                    </VBox.margin>
+                </Label>
+            </children>
+        </VBox>
+    </top>
+    <bottom>
+        <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
+            <children>
+                <JFXButton cancelButton="true" onAction="#onCancel" styleClass="jfx-button-flat" text="Anuluj">
+                    <HBox.margin>
+                        <Insets right="16.0" />
+                    </HBox.margin>
+                </JFXButton>
+                <JFXButton defaultButton="true" onAction="#onSave" styleClass="jfx-button-flat" text="Zapisz" />
+            </children>
+         <BorderPane.margin>
+            <Insets top="16.0" />
+         </BorderPane.margin>
+        </HBox>
+    </bottom>
+   <padding>
+      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+   </padding>
+</BorderPane>

@@ -1,3 +1,12 @@
+@font-face {
+    src: url('font/cascadia/CascadiaCode.ttf');
+}
+
+.root {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Cascadia Code";
+}
+
 #minimapButton {
 	-fx-background-color: null;
 	-fx-background-insets: 0;

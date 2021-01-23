@@ -1,5 +1,6 @@
 package io.github.slupik.schemablock.newparser.executor.implementation;
 
+import io.github.slupik.schemablock.newparser.executor.implementation.exception.IllegalOperation;
 import io.github.slupik.schemablock.newparser.memory.element.SimpleValue;
 import io.github.slupik.schemablock.newparser.memory.element.SimpleValueImpl;
 import org.junit.jupiter.api.Test;

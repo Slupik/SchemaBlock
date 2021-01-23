@@ -35,7 +35,7 @@ public class FunctionAsInteger implements Function {
         try {
             return new SimpleValueImpl(
                     ValueType.INTEGER,
-                    Integer.parseInt(value.toString())
+                    ((int) Double.parseDouble(value.toString()))
             );
         } catch (Exception e) {
             throw new CannotParseData(value, ValueType.INTEGER, line, position);

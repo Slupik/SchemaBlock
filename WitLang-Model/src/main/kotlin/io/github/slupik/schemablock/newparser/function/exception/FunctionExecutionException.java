@@ -7,8 +7,11 @@ import io.github.slupik.schemablock.newparser.compilator.implementation.compilat
  */
 public abstract class FunctionExecutionException extends CompilationException {
 
-    public FunctionExecutionException(String error, int line, int position) {
+    public final String name;
+
+    public FunctionExecutionException(String error, int line, int position, String name) {
         super(error, line, position);
+        this.name = name;
     }
 
 }
