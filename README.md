@@ -1,14 +1,10 @@
 # SchemaBlock
 
-* [Warning for this branch](#warning-for-this-branch)
 * [Description](#description)
 * [Features](#features)
 * [Future features](#future-features)
 
 ------------
-
-### WARNING FOR THIS BRANCH
-This version of the program is still not completed. I plan to end this before 10.2019.
 
 TODO:
  - Clean code ;) Now I try to make it work... :)
