@@ -49,6 +49,7 @@
         <fontawesomefx.materialicons.version>2.2.0-11</fontawesomefx.materialicons.version>
         <fontawesomefx.materialstackicons.version>2.1-11</fontawesomefx.materialstackicons.version>
         <org.controlsfx.version>11.0.3</org.controlsfx.version>
+        <slf4j.version>1.7.30</slf4j.version>
     </properties>
 
     <repositories>
@@ -125,6 +126,17 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.engine.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
 
     </dependencies>
@@ -212,28 +224,6 @@
                 </dependencies>
 
             </plugin>
-
-
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-surefire-plugin</artifactId>-->
-<!--                <version>2.22.0</version>-->
-<!--                <configuration>-->
-<!--                    <argLine>-->
-<!--                        &#45;&#45;illegal-access=permit-->
-<!--                    </argLine>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-failsafe-plugin</artifactId>-->
-<!--                <version>2.22.0</version>-->
-<!--                <configuration>-->
-<!--                    <argLine>-->
-<!--                        &#45;&#45;illegal-access=permit-->
-<!--                    </argLine>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
 
             <plugin>
                 <groupId>org.bsc.maven</groupId>
