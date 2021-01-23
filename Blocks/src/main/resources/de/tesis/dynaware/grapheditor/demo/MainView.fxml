@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.*?>
 
-<AnchorPane fx:id="root" stylesheets="@demo.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.MainViewController">
+<AnchorPane fx:id="root" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.slupik.schemablock.view.MainViewController">
     <VBox fx:id="mainContainer" maxHeight="+Infinity" maxWidth="+Infinity" prefHeight="556.0" prefWidth="900.0">
         <children>
             <MenuBar fx:id="menuBar">
