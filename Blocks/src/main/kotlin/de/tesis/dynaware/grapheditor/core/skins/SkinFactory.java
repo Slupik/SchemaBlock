@@ -16,13 +16,13 @@ import de.tesis.dynaware.grapheditor.model.GConnection;
 import de.tesis.dynaware.grapheditor.model.GConnector;
 import de.tesis.dynaware.grapheditor.model.GJoint;
 import de.tesis.dynaware.grapheditor.model.GNode;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.emf.ecore.xml.type.internal.DataValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Constructor;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -135,7 +135,10 @@ public class SkinFactory {
     }
 
     private String generateId() {
-        return "Block_" + DataValue.Base64.encode(RandomStringUtils.random(32).getBytes());
+        SecureRandom random = new SecureRandom();
+        byte[] bytes = new byte[32];
+        random.nextBytes(bytes);
+        return "Block_" + DataValue.Base64.encode(bytes);
     }
 
     /**
